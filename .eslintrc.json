@@ -3,7 +3,8 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended"
   ],
   "plugins": ["filename-rules", "@typescript-eslint", "prettier"],
   "parserOptions": {
@@ -14,6 +15,8 @@
     "filename-rules/match": [2, "kebab-case"],
     "prettier/prettier": "error",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error"
+    "@typescript-eslint/no-unused-vars": "error",
+    "tailwindcss/enforces-shorthand": "error",
+    "tailwindcss/no-unnecessary-arbitrary-value": "error"
   }
 }
