@@ -12,6 +12,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "max-lines": ["error", { "max": 500 }],
     "filename-rules/match": [2, "kebab-case"],
     "prettier/prettier": "error",
     "no-unused-vars": "off",
