@@ -16,7 +16,7 @@ switch (ENV) {
   case ENVIRONMENT.LOCAL:
   case ENVIRONMENT.DEVELOPMENT:
     // TODO: switch to gql API endpoint service
-    API_ENDPOINT = 'https://daily-cms-dev-axzdcnzvtq-de.a.run.app/api/graphql'
+    API_ENDPOINT = 'https://daily-gql-dev-axzdcnzvtq-de.a.run.app/api/graphql'
     break
 
   default:
