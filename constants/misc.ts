@@ -10,6 +10,7 @@ type SocialLinks = {
   url: string
 }
 
+// TODO: update url values
 export const SOCIAL_LINKS = [
   {
     name: 'Facebook',

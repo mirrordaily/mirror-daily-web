@@ -15,6 +15,7 @@ type PageLink = {
 }
 
 export default function Footer(): React.ReactElement {
+  // TODO: update url values
   const PAGE_LINKS: PageLink[] = [
     {
       name: '廣告業務',
