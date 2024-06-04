@@ -1,6 +1,6 @@
+import '@/shared-styles/global.css'
 import type { Metadata } from 'next'
 import { Noto_Sans_TC } from 'next/font/google'
-import './globals.css'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
