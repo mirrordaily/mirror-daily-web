@@ -80,13 +80,15 @@ export default function Footer(): React.ReactElement {
   return (
     <footer className="flex w-full flex-col bg-[#2B2B2B]">
       <div className="flex w-full max-w-screen-lg flex-col items-center gap-y-5 self-center lg:flex-row lg:gap-y-0">
-        <NextImage
-          className="order-1 mt-[34px] md:mt-[37px] lg:ml-10 lg:mt-0"
-          src={IconMirrorDaily}
-          alt="Mirror Daily"
-          width={60}
-          height={49}
-        />
+        <NextLink href="/">
+          <NextImage
+            className="order-1 mt-[34px] md:mt-[37px] lg:ml-10 lg:mt-0"
+            src={IconMirrorDaily}
+            alt="Mirror Daily"
+            width={60}
+            height={49}
+          />
+        </NextLink>
         <section className="order-2 text-center text-sm font-normal leading-normal tracking-[0.5px] lg:ml-9 lg:space-x-2 lg:leading-8">
           {CONTACT_LINKS.map(({ name, href, text }) => (
             <>
