@@ -69,7 +69,12 @@ export default function Footer(): React.ReactElement {
         />
         <section className="order-2 text-center text-sm font-normal leading-normal tracking-[0.5px] lg:ml-9 lg:space-x-2 lg:leading-8">
           <p className="text-[#a6a6a6] lg:inline-block">鏡報客服</p>
-          <p className="text-white lg:inline-block">(02)7737-4683</p>
+          <a
+            href="tel:+886(02)7737-4683"
+            className="text-white lg:inline-block"
+          >
+            (02)7737-4683
+          </a>
           <p className="text-[#a6a6a6] lg:inline-block">客服信箱</p>
           <a
             href="mailto:movieservice@nexttv.com.tw"
