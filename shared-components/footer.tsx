@@ -75,7 +75,7 @@ export default function Footer(): React.ReactElement {
   ] as const
 
   return (
-    <footer className="flex w-full flex-col bg-[#2B2B2B]">
+    <footer className="flex w-full flex-col bg-primary-700">
       <div className="flex w-full max-w-screen-lg flex-col items-center gap-y-5 self-center lg:flex-row lg:gap-y-0">
         <NextLink href="/">
           <NextImage
@@ -86,7 +86,7 @@ export default function Footer(): React.ReactElement {
             height={49}
           />
         </NextLink>
-        <section className="order-2 text-center text-sm font-normal leading-normal tracking-[0.5px] lg:ml-9 lg:space-x-2 lg:leading-8">
+        <section className="order-2 text-center text-sm font-normal leading-[19px] tracking-[0.5px] lg:ml-9 lg:space-x-2 lg:leading-7">
           {CONTACT_LINKS.map(({ name, href, text }) => (
             <Fragment key={name}>
               <p className="text-[#a6a6a6] lg:inline-block">{name}</p>
@@ -96,9 +96,9 @@ export default function Footer(): React.ReactElement {
             </Fragment>
           ))}
         </section>
-        <hr className="order-3 block h-px w-[200px] bg-[#a6a6a6] lg:order-4 lg:ml-9 lg:h-[76px] lg:w-px lg:bg-white" />
+        <hr className="order-3 block h-px w-[200px] bg-[#a6a6a6] lg:order-4 lg:ml-[56.5px] lg:h-[76px] lg:w-px lg:bg-white" />
         <section
-          className={`relative order-4 text-center text-sm font-normal leading-normal text-white lg:order-5 lg:my-9 lg:ml-[10px] lg:mr-[79px]`}
+          className={`relative order-4 text-center text-sm font-normal leading-normal text-white lg:order-5 lg:my-9 lg:ml-[10.5px] lg:mr-[79px]`}
         >
           {PAGE_LINKS.map(({ name, href, isExternal }) => (
             <NextLink

@@ -9,7 +9,13 @@ module.exports = {
       md: '720px',
       lg: '1200px',
     },
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          700: '#212944',
+        },
+      },
+    },
   },
   plugins: [],
 }
