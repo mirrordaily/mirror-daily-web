@@ -7,6 +7,7 @@ import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
+import { Fragment } from 'react'
 
 type PageLink = SocialLinks & {
   isExternal?: boolean
@@ -87,12 +88,12 @@ export default function Footer(): React.ReactElement {
         </NextLink>
         <section className="order-2 text-center text-sm font-normal leading-normal tracking-[0.5px] lg:ml-9 lg:space-x-2 lg:leading-8">
           {CONTACT_LINKS.map(({ name, href, text }) => (
-            <>
+            <Fragment key={name}>
               <p className="text-[#a6a6a6] lg:inline-block">{name}</p>
               <a href={href} className="text-white lg:inline-block">
                 {text}
               </a>
-            </>
+            </Fragment>
           ))}
         </section>
         <hr className="order-3 block h-px w-[200px] bg-[#a6a6a6] lg:order-4 lg:ml-9 lg:h-[76px] lg:w-px lg:bg-white" />
