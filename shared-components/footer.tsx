@@ -93,7 +93,7 @@ export default function Footer(): React.ReactElement {
             </NextLink>
           ))}
         </section>
-        <section className="order-5 mb-5 mt-[14px] flex flex-row items-center gap-x-4 md:mb-[51px] md:mt-2 lg:order-3 lg:my-0 lg:ml-auto">
+        <section className="order-5 mb-5 mt-[26px] flex flex-row items-center gap-x-4 md:mb-[51px] md:mt-5 lg:order-3 lg:my-0 lg:ml-auto">
           {ExtendedSocialLinks.map(({ name, url, icon }) => (
             <a key={name} href={url}>
               <NextImage src={icon} alt={name} />
