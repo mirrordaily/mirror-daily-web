@@ -14,6 +14,12 @@ type PageLink = {
   isExternal?: boolean
 }
 
+type ContactLink = {
+  name: string
+  href: string
+  text: string
+}
+
 export default function Footer(): React.ReactElement {
   // TODO: update url values
   const PAGE_LINKS: PageLink[] = [
@@ -32,6 +38,19 @@ export default function Footer(): React.ReactElement {
     {
       name: '新聞自律',
       url: '/',
+    },
+  ]
+
+  const CONTACT_LINKS: ContactLink[] = [
+    {
+      name: '鏡報客服',
+      href: 'tel:+886(02)7737-4683',
+      text: '(02)7737-4683',
+    },
+    {
+      name: '客服信箱',
+      href: 'mailto:movieservice@nexttv.com.tw',
+      text: 'movieservice@nexttv.com.tw',
     },
   ]
 
@@ -69,20 +88,14 @@ export default function Footer(): React.ReactElement {
           height={49}
         />
         <section className="order-2 text-center text-sm font-normal leading-normal tracking-[0.5px] lg:ml-9 lg:space-x-2 lg:leading-8">
-          <p className="text-[#a6a6a6] lg:inline-block">鏡報客服</p>
-          <a
-            href="tel:+886(02)7737-4683"
-            className="text-white lg:inline-block"
-          >
-            (02)7737-4683
-          </a>
-          <p className="text-[#a6a6a6] lg:inline-block">客服信箱</p>
-          <a
-            href="mailto:movieservice@nexttv.com.tw"
-            className="inline-block text-white"
-          >
-            movieservice@nexttv.com.tw
-          </a>
+          {CONTACT_LINKS.map(({ name, href, text }) => (
+            <>
+              <p className="text-[#a6a6a6] lg:inline-block">{name}</p>
+              <a href={href} className="text-white lg:inline-block">
+                {text}
+              </a>
+            </>
+          ))}
         </section>
         <hr className="order-3 block h-px w-[200px] bg-[#a6a6a6] lg:order-4 lg:ml-9 lg:h-[76px] lg:w-px lg:bg-white" />
         <section
