@@ -4,3 +4,31 @@ export enum ENVIRONMENT {
   STAGING = 'staging',
   PRODUCTION = 'prod',
 }
+
+type SocialLinks = {
+  name: string
+  url: string
+}
+
+export const SOCIAL_LINKS = [
+  {
+    name: 'Facebook',
+    url: '/',
+  },
+  {
+    name: 'Instagram',
+    url: '/',
+  },
+  {
+    name: 'Threads',
+    url: '/',
+  },
+  {
+    name: 'YouTube',
+    url: '/',
+  },
+  {
+    name: 'LINE',
+    url: '/',
+  },
+] as const satisfies SocialLinks[]

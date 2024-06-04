@@ -1,6 +1,7 @@
 import '@/shared-styles/global.css'
 import type { Metadata } from 'next'
 import { Noto_Sans_TC } from 'next/font/google'
+import Footer from '@/shared-components/footer'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
@@ -27,7 +28,7 @@ export default function RootLayout({
         </div>
         {/* newsletter subscription */}
         <section className="min-h-[266px] w-full bg-[#004EBC]"></section>
-        <footer className="min-h-[150px] w-full bg-[#2B2B2B]"></footer>
+        <Footer />
       </body>
     </html>
   )
