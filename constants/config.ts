@@ -1,3 +1,12 @@
+/**
+ * 環境變數設定
+ *
+ * 前綴含 `NEXT_PUBLIC_` - build 時寫入，無法在 runtime 設定
+ * 前綴不含 `NEXT_PUBLIC_` - runtime 時可被設定
+ *
+ * 參考：https://paper.dropbox.com/doc/--CQb4squ7BM_WCI1h96LWcZ8IAg-1sRvBsDLCqGg7F4G9mIuI
+ */
+
 import { ENVIRONMENT } from './misc'
 
 const ENV = (function () {
@@ -10,17 +19,6 @@ const ENV = (function () {
   return ENVIRONMENT.LOCAL
 })()
 
-let API_ENDPOINT = ''
+const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
-switch (ENV) {
-  case ENVIRONMENT.LOCAL:
-  case ENVIRONMENT.DEVELOPMENT:
-    // TODO: switch to gql API endpoint service
-    API_ENDPOINT = 'https://daily-gql-dev-axzdcnzvtq-de.a.run.app/api/graphql'
-    break
-
-  default:
-    break
-}
-
-export { API_ENDPOINT, ENV }
+export { ENV, API_ENDPOINT }
