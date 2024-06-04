@@ -1,6 +1,6 @@
 import NextImage from 'next/image'
 import NextLink from 'next/link'
-import { SOCIAL_LINKS } from '@/constants/misc'
+import { SOCIAL_LINKS, type SocialLinks } from '@/constants/misc'
 import IconMirrorDaily from '@/public/icons/logos/mirror-daily.svg'
 import IconFacebook from '@/public/icons/logos/facebook-white.svg'
 import IconInstagram from '@/public/icons/logos/instagram-white.svg'
@@ -8,15 +8,11 @@ import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
 
-type PageLink = {
-  name: string
-  url: string
+type PageLink = SocialLinks & {
   isExternal?: boolean
 }
 
-type ContactLink = {
-  name: string
-  href: string
+type ContactLink = SocialLinks & {
   text: string
 }
 
@@ -25,19 +21,19 @@ export default function Footer(): React.ReactElement {
   const PAGE_LINKS: PageLink[] = [
     {
       name: '廣告業務',
-      url: '/',
+      href: '/',
     },
     {
       name: '內容授權',
-      url: '/',
+      href: '/',
     },
     {
       name: '下載APP',
-      url: '/',
+      href: '/',
     },
     {
       name: '新聞自律',
-      url: '/',
+      href: '/',
     },
   ]
 
@@ -103,11 +99,11 @@ export default function Footer(): React.ReactElement {
         <section
           className={`relative order-4 text-center text-sm font-normal leading-normal text-white lg:order-5 lg:my-9 lg:ml-[10px] lg:mr-[79px]`}
         >
-          {PAGE_LINKS.map(({ name, url, isExternal }) => (
+          {PAGE_LINKS.map(({ name, href, isExternal }) => (
             <NextLink
               className="block"
               key={name}
-              href={url}
+              href={href}
               target={isExternal ? '_blank' : '_self'}
             >
               {name}
@@ -115,8 +111,8 @@ export default function Footer(): React.ReactElement {
           ))}
         </section>
         <section className="order-5 mb-5 mt-[26px] flex flex-row items-center gap-x-4 md:mb-[51px] md:mt-5 lg:order-3 lg:my-0 lg:ml-auto">
-          {ExtendedSocialLinks.map(({ name, url, icon }) => (
-            <a key={name} href={url}>
+          {ExtendedSocialLinks.map(({ name, href, icon }) => (
+            <a key={name} href={href}>
               <NextImage src={icon} alt={name} />
             </a>
           ))}

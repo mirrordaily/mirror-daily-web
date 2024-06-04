@@ -5,31 +5,31 @@ export enum ENVIRONMENT {
   PRODUCTION = 'prod',
 }
 
-type SocialLinks = {
+export type SocialLinks = {
   name: string
-  url: string
+  href: string
 }
 
 // TODO: update url values
 export const SOCIAL_LINKS = [
   {
     name: 'Facebook',
-    url: '/',
+    href: '/',
   },
   {
     name: 'Instagram',
-    url: '/',
+    href: '/',
   },
   {
     name: 'Threads',
-    url: '/',
+    href: '/',
   },
   {
     name: 'YouTube',
-    url: '/',
+    href: '/',
   },
   {
     name: 'LINE',
-    url: '/',
+    href: '/',
   },
 ] as const satisfies SocialLinks[]
