@@ -1,6 +1,7 @@
 import '@/shared-styles/global.css'
 import type { Metadata } from 'next'
 import { Noto_Sans_TC } from 'next/font/google'
+import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import Footer from '@/shared-components/footer'
 
 const notoSans = Noto_Sans_TC({
@@ -26,8 +27,7 @@ export default function RootLayout({
         <div className="flex w-full max-w-screen-lg grow flex-col overflow-x-hidden">
           {children}
         </div>
-        {/* newsletter subscription */}
-        <section className="min-h-[266px] w-full bg-[#004EBC]"></section>
+        <NewsletterSubscription />
         <Footer />
       </body>
     </html>
