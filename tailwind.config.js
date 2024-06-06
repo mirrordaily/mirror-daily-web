@@ -10,7 +10,13 @@ module.exports = {
       md: '720px',
       lg: '1200px',
     },
-    extend: {},
+    extend: {
+      colors: {
+        mirror: {
+          500: '#004EBC',
+        },
+      },
+    },
   },
   plugins: [],
 }
