@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './shared-components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
@@ -10,7 +9,13 @@ module.exports = {
       md: '720px',
       lg: '1200px',
     },
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          700: '#212944',
+        },
+      },
+    },
   },
   plugins: [],
 }
