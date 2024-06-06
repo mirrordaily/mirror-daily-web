@@ -75,7 +75,7 @@ export default function Footer(): React.ReactElement {
   ] as const
 
   return (
-    <footer className="bg-primary-700 flex w-full flex-col">
+    <footer className="flex w-full flex-col bg-mirror-700">
       <div className="flex w-full max-w-screen-lg flex-col items-center gap-y-5 self-center lg:flex-row lg:gap-y-0">
         <NextLink href="/">
           <NextImage
