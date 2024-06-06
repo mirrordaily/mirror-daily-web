@@ -14,6 +14,7 @@ module.exports = {
       colors: {
         mirror: {
           500: '#004EBC',
+          800: '#000928',
         },
       },
     },
