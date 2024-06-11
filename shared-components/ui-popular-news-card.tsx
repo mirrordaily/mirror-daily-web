@@ -36,7 +36,7 @@ export default function UiPopularNewsCard({ news }: Prop): ReactElement {
           defaultImage={'/images/default-og-img.png'}
         />
       </figure>
-      <figcaption className="text-lg font-normal text-mirror-800 md:line-clamp-2 lg:line-clamp-3">
+      <figcaption className="text-lg font-normal text-[#000928] md:line-clamp-2 lg:line-clamp-3">
         {news.title}
       </figcaption>
     </Link>
