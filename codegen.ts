@@ -16,6 +16,12 @@ const config: CodegenConfig = {
       },
       hooks: { afterOneFileWrite: ['prettier --write'] },
     },
+    'introspection.json': {
+      plugins: ['introspection'],
+      config: {
+        minify: true,
+      },
+    },
   },
 }
 
