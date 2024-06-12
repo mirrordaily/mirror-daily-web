@@ -39,7 +39,7 @@ export default function UiPopularNewsCard({
           defaultImage={'/images/default-og-img.png'}
         />
         <div
-          className={`absolute bottom-2 left-2 rounded-lg px-1 py-0 text-[10px] font-bold ${categoryColor} text-[#ffffff]`}
+          className={`absolute bottom-2 left-2 rounded-lg px-1 py-0 text-[10px] font-bold leading-4 tracking-[0.5px] ${categoryColor} text-[#ffffff]`}
         >
           {categoryName}
         </div>
