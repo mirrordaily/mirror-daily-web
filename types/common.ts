@@ -12,3 +12,21 @@ export type HeroImage = {
   resized: ResizedImage
   resizedWebp: ResizedImage
 }
+
+type Sections = {
+  id: string
+  state: 'active' | 'inactive'
+  name: string
+  slug: string
+}
+
+export type PopularNews = {
+  id: string
+  slug: string
+  sections: Sections[]
+  sectionsInInputOrder: Sections[]
+  title: string
+  style: string
+  state: string
+  heroImage: HeroImage | null
+}
