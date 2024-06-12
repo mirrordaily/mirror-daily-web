@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "yarn run codegen",
+    "codegen": "graphql-codegen",
+    "codegen:watch": "graphql-codegen -w"
   },
   "engines": {
     "node": ">=18.17.0"
@@ -24,6 +27,10 @@
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.6",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@parcel/watcher": "^2.4.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

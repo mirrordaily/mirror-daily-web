@@ -7,6 +7,9 @@
  * 參考：https://paper.dropbox.com/doc/--CQb4squ7BM_WCI1h96LWcZ8IAg-1sRvBsDLCqGg7F4G9mIuI
  */
 
+// environment variables is used by codegen script, so manually loading is required
+import dotenv from 'dotenv'
+dotenv.config({ path: '.env.local', override: true })
 import { ENVIRONMENT } from './misc'
 
 const ENV = (function () {
