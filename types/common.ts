@@ -13,7 +13,7 @@ export type HeroImage = {
   resizedWebp: ResizedImage
 }
 
-type Sections = {
+type Section = {
   id: string
   state: 'active' | 'inactive'
   name: string
@@ -23,8 +23,8 @@ type Sections = {
 export type PopularNews = {
   id: string
   slug: string
-  sections: Sections[]
-  sectionsInInputOrder: Sections[]
+  sections: Section[]
+  sectionsInInputOrder: Section[]
   title: string
   style: string
   state: string

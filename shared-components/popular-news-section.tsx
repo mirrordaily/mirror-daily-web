@@ -10,7 +10,7 @@ async function getPopularNews(): Promise<PopularNews[] | undefined> {
     const newsItem: PopularNews[] = await res.json()
     return newsItem.slice(0, 10)
   } catch (err) {
-    console.log(err)
+    console.error(err)
     // TODO: send error log
     return
   }
