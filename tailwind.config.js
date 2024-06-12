@@ -11,7 +11,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: {
+        mirror: {
+          500: '#004EBC',
           700: '#212944',
         },
       },

@@ -7,7 +7,7 @@ import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
-import { Fragment } from 'react'
+import { Fragment, type ReactElement } from 'react'
 
 type PageLink = SocialLinks & {
   isExternal?: boolean
@@ -17,7 +17,7 @@ type ContactLink = SocialLinks & {
   text: string
 }
 
-export default function Footer(): React.ReactElement {
+export default function Footer(): ReactElement {
   // TODO: update url values
   const PAGE_LINKS: PageLink[] = [
     {
@@ -75,7 +75,7 @@ export default function Footer(): React.ReactElement {
   ] as const
 
   return (
-    <footer className="flex w-full flex-col bg-primary-700">
+    <footer className="flex w-full flex-col bg-mirror-700">
       <div className="flex w-full max-w-screen-lg flex-col items-center gap-y-5 self-center lg:flex-row lg:gap-y-0">
         <NextLink href="/">
           <NextImage
