@@ -9,6 +9,9 @@
 
 import { ENVIRONMENT } from './misc'
 
+let STATIC_FILE_DOMAIN = ''
+let URL_STATIC_POPULAR_NEWS = ''
+
 const ENV = (function () {
   const env = process.env.NEXT_PUBLIC_ENV
 
@@ -19,6 +22,17 @@ const ENV = (function () {
   return ENVIRONMENT.LOCAL
 })()
 
+switch (ENV) {
+  case ENVIRONMENT.DEVELOPMENT:
+    STATIC_FILE_DOMAIN = 'v3-statics-dev.mirrormedia.mg'
+    URL_STATIC_POPULAR_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/popular.json`
+    break
+
+  default:
+    STATIC_FILE_DOMAIN = 'v3-statics-dev.mirrormedia.mg'
+    URL_STATIC_POPULAR_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/popular.json`
+}
+
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
-export { ENV, API_ENDPOINT }
+export { ENV, API_ENDPOINT, URL_STATIC_POPULAR_NEWS }
