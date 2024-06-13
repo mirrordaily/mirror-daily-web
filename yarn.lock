@@ -1278,6 +1278,11 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
   integrity sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==
 
+"@readr-media/react-image@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-image/-/react-image-2.2.3.tgz#859e04d7c91d1d8a71aafbbd52e58b032cafbe52"
+  integrity sha512-cB0o4wtbngppLDnMRYyX7ZRGsNwneVbqFHJ9q4nw9p8ZFEhUuInaZpJLfdvZq4L74YvNk9iWCnY+nwwP406saA==
+
 "@repeaterjs/repeater@^3.0.4":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/@repeaterjs/repeater/-/repeater-3.0.6.tgz#be23df0143ceec3c69f8b6c2517971a5578fdaa2"
