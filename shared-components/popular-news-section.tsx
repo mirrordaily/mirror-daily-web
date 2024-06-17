@@ -28,7 +28,7 @@ export default async function PopularNewsSection(): Promise<JSX.Element> {
   const articles = await getPopularNews()
 
   return (
-    <section className="hidden md:flex md:w-[588px] md:flex-col md:items-center md:gap-y-[31px] lg:w-[240px] lg:gap-y-[19px]">
+    <section className="hidden md:flex md:w-[588px] md:flex-col md:items-center md:gap-y-[31px] lg:w-60 lg:gap-y-[19px]">
       <p className="text-lg font-bold leading-normal text-mirror-500">
         熱門新聞
       </p>
