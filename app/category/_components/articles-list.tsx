@@ -2,7 +2,6 @@
 import { ReactElement } from 'react'
 import MainArticleCard from './main-article-card'
 import SecondaryArticleCard from './secondary-article-card'
-// import { type GetPostsBySectionSlugQuery } from '@/graphql/__generated__/graphql'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { fetchSectionPosts } from './action'
 import type { Posts } from '@/types/posts'
@@ -53,17 +52,19 @@ type Props = {
   initialPosts: Posts | null
   slug: string
 }
-
+/* TODO:
+  1. change section name
+ */
 export default function ArticlesList({
   initialPosts,
   slug,
 }: Props): ReactElement {
-  const PAGE_SIZE = 13
-
+  let PAGE_SIZE = 13
   const firstPost = initialPosts ? initialPosts[0] : undefined
   const otherPosts = initialPosts ? initialPosts.slice(1) : undefined
 
   const fetchMorePosts = async (page: number) => {
+    PAGE_SIZE = page === 2 ? 13 : 12
     const posts = await fetchSectionPosts(page, PAGE_SIZE, slug)
     return posts || []
   }
@@ -80,7 +81,7 @@ export default function ArticlesList({
           className={`w-[342px] border-4 ${colors?.border} md:w-[670px] lg:w-[740px]`}
         />
       </div>
-      <div className="mb-9 md:mb-20">
+      <div>
         <div className="mb-10 md:mb-[50px]">
           <MainArticleCard postItem={firstPost} colors={colors} />
         </div>
@@ -91,7 +92,7 @@ export default function ArticlesList({
             fetchListInPage={fetchMorePosts}
             isAutoFetch={false}
             loader={
-              <div className="flex justify-center">
+              <div className="mt-4 flex justify-center md:mt-12">
                 <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493]">
                   看更多
                 </button>
