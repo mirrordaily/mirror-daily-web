@@ -1,14 +1,19 @@
 'use client'
 import Image from '@readr-media/react-image'
 import type { ReactElement } from 'react'
-import type { ResizedImage } from '@/types/common'
+import type { Posts } from '@/types/posts'
+
+type Post = Posts[number]
+type HeroImage = NonNullable<Post['heroImage']>
+type ResizedImage = HeroImage['resized']
+type ResizedWebp = HeroImage['resizedWebp']
 
 type Props = {
-  images: ResizedImage | undefined
-  imagesWebP: ResizedImage | undefined
-  alt: string
+  images: ResizedImage
+  imagesWebP: ResizedWebp
   loadingImage: string
   defaultImage: string
+  alt: string | undefined
 }
 
 export default function CustomImage({
