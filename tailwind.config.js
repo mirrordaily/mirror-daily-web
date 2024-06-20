@@ -10,11 +10,10 @@ module.exports = {
       lg: '1200px',
     },
     extend: {
-      colors: {
-        mirror: {
-          500: '#004EBC',
-          700: '#212944',
-        },
+      colors: {},
+      backgroundImage: {
+        'image-mask':
+          'linear-gradient(180deg, rgba(0, 0, 0, 0) 40.54%, #000 100%)',
       },
     },
   },
