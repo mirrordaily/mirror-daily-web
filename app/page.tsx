@@ -1,11 +1,19 @@
+import SectionDivider from './_components/divider'
 import LatestNewsSection from './_components/latest-news/section'
 
 export default function Home() {
   return (
     <main className="flex w-full grow flex-col items-center justify-center">
-      <div className="section-in-homepage w-full md:max-w-screen-md lg:max-w-none">
-        <hr className="mb-9 mt-[34px] h-px border-none bg-[#000928] lg:mt-9" />
-      </div>
+      {/* 編輯精選（5則輪播） */}
+      <SectionDivider />
+      {/* 即時新聞/熱門新聞（10則） */}
+      <SectionDivider />
+      {/* 短影音新聞 */}
+      <SectionDivider />
+      {/* Topic（4則）＋遊戲區 */}
+      <SectionDivider />
+      {/* 短影音．二創 */}
+      <SectionDivider />
       <LatestNewsSection />
     </main>
   )
