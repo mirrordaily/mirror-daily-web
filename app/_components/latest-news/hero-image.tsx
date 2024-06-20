@@ -16,7 +16,7 @@ export default function HeroImage({
   alt,
 }: Props): ReactNode {
   return (
-    <div className="relative h-[182px] w-full overflow-hidden group-hover/card:*:scale-110 md:h-[134px]">
+    <div className="relative h-[182px] w-full overflow-hidden group-hover/card:*:scale-110 group-active/card:*:scale-110 md:h-[134px]">
       <ReactImage
         alt={alt}
         images={resized}

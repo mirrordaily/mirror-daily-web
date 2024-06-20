@@ -39,7 +39,7 @@ export default function LatestNewsCard({
           resizedWebp={heroImage.resizedWebp}
           alt="最新文章首圖"
         />
-        <p className="mt-2 line-clamp-2 h-[54px] text-ellipsis text-lg font-normal leading-normal text-[#000928] group-hover/card:text-[#575D71] md:mt-3 md:line-clamp-3 md:h-[81px]">
+        <p className="mt-2 line-clamp-2 h-[54px] text-ellipsis text-lg font-normal leading-normal text-[#000928] group-hover/card:text-[#575D71] group-active/card:text-[#575D71] md:mt-3 md:line-clamp-3 md:h-[81px]">
           {postName}
         </p>
       </NextLink>
