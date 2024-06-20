@@ -17,6 +17,9 @@
     "prettier/prettier": "error",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/consistent-type-imports": ["error", {
+      "prefer": "type-imports"
+    }],
     "tailwindcss/classnames-order": "off",
     "tailwindcss/enforces-shorthand": "error",
     "tailwindcss/no-unnecessary-arbitrary-value": "error"
