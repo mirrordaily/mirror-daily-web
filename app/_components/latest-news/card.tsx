@@ -3,19 +3,13 @@
 import type { ReactNode } from 'react'
 import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
-import type { ResizedImage } from '@/types/common'
 import { getPostPageUrl } from '@/utils/site-urls'
+import type { LatestPost } from '@/types/homepage'
 
-type Props = {
-  categoryName: string
-  categoryColor: string
-  postName: string
-  postSlug: string
-  heroImage: {
-    resized?: Partial<ResizedImage>
-    resizedWebp?: Partial<ResizedImage>
-  }
-}
+type Props = Pick<
+  LatestPost,
+  'categoryName' | 'categoryColor' | 'postName' | 'postSlug' | 'heroImage'
+>
 
 export default function LatestNewsCard({
   categoryName,

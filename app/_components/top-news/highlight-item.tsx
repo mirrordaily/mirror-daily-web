@@ -1,18 +1,12 @@
 'use client'
 import type { ReactNode } from 'react'
-import type { ResizedImage } from '@/types/common'
 import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
 import { getPostPageUrl } from '@/utils/site-urls'
+import type { LatestPost } from '@/types/homepage'
 
-type Props = {
-  postName: string
-  postSlug: string
-  heroImage: {
-    resized?: Partial<ResizedImage>
-    resizedWebp?: Partial<ResizedImage>
-  }
-}
+type Props = Pick<LatestPost, 'postName' | 'postSlug' | 'heroImage'>
+
 export default function HighlightItem({
   heroImage,
   postName,
