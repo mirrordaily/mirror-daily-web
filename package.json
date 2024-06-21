@@ -15,6 +15,7 @@
   "dependencies": {
     "@apollo/client": "^3.10.4",
     "@readr-media/react-image": "^2.2.3",
+    "@readr-media/react-infinite-scroll-list": "^1.0.0",
     "@twreporter/errors": "^1.1.2",
     "dayjs": "^1.11.11",
     "graphql": "^16.8.1",
@@ -49,7 +50,7 @@
     "postcss": "^8",
     "prettier": "^3.3.0",
     "prettier-plugin-tailwindcss": "^0.6.1",
-    "tailwindcss": "^3.3.0",
+    "tailwindcss": "^3.4",
     "typescript": "^5"
   },
   "lint-staged": {

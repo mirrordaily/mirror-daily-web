@@ -12,8 +12,9 @@ import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local', override: true })
 import { ENVIRONMENT } from './misc'
 
-let STATIC_FILE_DOMAIN = ''
-let URL_STATIC_POPULAR_NEWS = ''
+let STATIC_FILE_DOMAIN: string
+let URL_STATIC_POPULAR_NEWS: string
+let URL_STATIC_LATEST_NEWS: string
 
 const ENV = (function () {
   const env = process.env.NEXT_PUBLIC_ENV
@@ -29,13 +30,15 @@ switch (ENV) {
   case ENVIRONMENT.DEVELOPMENT:
     STATIC_FILE_DOMAIN = 'v3-statics-dev.mirrormedia.mg'
     URL_STATIC_POPULAR_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/popular.json`
+    URL_STATIC_LATEST_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/post_external`
     break
 
   default:
     STATIC_FILE_DOMAIN = 'v3-statics-dev.mirrormedia.mg'
     URL_STATIC_POPULAR_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/popular.json`
+    URL_STATIC_LATEST_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/post_external`
 }
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
-export { ENV, API_ENDPOINT, URL_STATIC_POPULAR_NEWS }
+export { ENV, API_ENDPOINT, URL_STATIC_POPULAR_NEWS, URL_STATIC_LATEST_NEWS }
