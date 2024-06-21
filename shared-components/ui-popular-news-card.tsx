@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CustomImage from './custom-image'
 import type { PopularNews } from '@/types/common'
 import type { ReactElement } from 'react'
+import { getPostPageUrl } from '@/utils/site-urls'
 
 type Props = {
   news: PopularNews
@@ -25,7 +26,7 @@ export default function UiPopularNewsCard({
 
   return (
     <Link
-      href={`/story/${slug}`}
+      href={getPostPageUrl(slug)}
       target="_blank"
       rel="noopener noreferrer"
       className="flex flex-col md:gap-y-2 lg:w-60 lg:gap-y-3"

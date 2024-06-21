@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import type { ResizedImage } from '@/types/common'
 import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
-import { getPostUrl } from '@/utils/site-urls'
+import { getPostPageUrl } from '@/utils/site-urls'
 
 type Props = {
   postName: string
@@ -21,7 +21,7 @@ export default function HighlightItem({
   return (
     <NextLink
       className="group/highlight-item w-full md:w-[312px] lg:w-[560px]"
-      href={getPostUrl(postSlug)}
+      href={getPostPageUrl(postSlug)}
       target="_blank"
     >
       <div className="aspect-[297/165] overflow-hidden rounded group-hover/highlight-item:*:scale-110 group-active/highlight-item:*:scale-110 md:aspect-auto md:h-[174px] lg:h-[311px]">

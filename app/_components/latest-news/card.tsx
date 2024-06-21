@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
 import type { ResizedImage } from '@/types/common'
+import { getPostPageUrl } from '@/utils/site-urls'
 
 type Props = {
   categoryName: string
@@ -36,7 +37,7 @@ export default function LatestNewsCard({
         {categoryName}
       </p>
       <NextLink
-        href={`/story/${postSlug}`}
+        href={getPostPageUrl(postSlug)}
         target="_blank"
         className="group/card"
       >
