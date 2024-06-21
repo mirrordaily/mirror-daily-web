@@ -24,6 +24,7 @@ type RawPost = {
   sections: Section[]
   categories: Category[]
   partner: Partner | string
+  redirect: string
 }
 
 // TODO: replace with real data
@@ -92,6 +93,19 @@ const getCategoryConfig = (rawPosts: RawPost): CategoryConfig => {
   }
 }
 
+const isValidUrl = (url: string): boolean => {
+  try {
+    return Boolean(new URL(url))
+  } catch (e) {
+    return false
+  }
+}
+
+const hasExternalLink = (rawPost: RawPost): boolean => {
+  const { redirect } = rawPost
+  return isValidUrl(redirect)
+}
+
 const transformRawPost = (rawPosts: RawPost): PropsOfCard => {
   const { title, slug, heroImage } = rawPosts
   const { name, color } = getCategoryConfig(rawPosts)
@@ -113,8 +127,11 @@ const fetchLatestPost = async (page: number = 0): Promise<PropsOfCard[]> => {
     })
 
     const rawPostData: Record<'latest', RawPost[]> = await resp.json()
+    const filteredData = rawPostData.latest.filter(
+      (rawPost) => !hasExternalLink(rawPost)
+    )
 
-    return rawPostData.latest.map(transformRawPost)
+    return filteredData.map(transformRawPost)
   } catch (e) {
     console.error(e)
     return []
