@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CustomImage from './custom-image'
 import type { PopularNews } from '@/types/common'
 import type { ReactElement } from 'react'
+import { IMAGE_PATH, LOADING_ANIMATION_PATH } from '@/constants/default-path'
 
 type Props = {
   news: PopularNews
@@ -35,8 +36,8 @@ export default function UiPopularNewsCard({
           images={news?.heroImage?.resized}
           imagesWebP={news?.heroImage?.resizedWebp}
           alt={news.title}
-          loadingImage={'/images/loading.gif'}
-          defaultImage={'/images/default-og-img.png'}
+          loadingImage={LOADING_ANIMATION_PATH}
+          defaultImage={IMAGE_PATH}
         />
         <div
           className={`absolute bottom-2 left-2 rounded-lg px-1 py-0 text-[10px] font-bold leading-4 tracking-[0.5px] ${categoryColor} text-[#ffffff]`}

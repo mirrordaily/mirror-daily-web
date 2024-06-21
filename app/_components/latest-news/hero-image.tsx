@@ -3,6 +3,7 @@ import ReactImage from '@readr-media/react-image'
 import type { ReactNode } from 'react'
 import type { ResizedImage } from '@/types/common'
 import { IMAGE_BREAKPOINT } from '@/constants/misc'
+import { IMAGE_PATH, LOADING_ANIMATION_PATH } from '@/constants/default-path'
 
 type Props = {
   resized?: Partial<ResizedImage>
@@ -22,8 +23,8 @@ export default function HeroImage({
         images={resized}
         imagesWebP={resizedWebp}
         objectFit="cover"
-        loadingImage={'/images/loading.gif'}
-        defaultImage={'/images/default-og-img.png'}
+        loadingImage={LOADING_ANIMATION_PATH}
+        defaultImage={IMAGE_PATH}
         breakpoint={IMAGE_BREAKPOINT}
         rwd={{
           mobile: '100%',
