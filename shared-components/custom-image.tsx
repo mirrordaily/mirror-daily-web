@@ -1,30 +1,23 @@
 'use client'
 import Image from '@readr-media/react-image'
 import type { ReactElement } from 'react'
-import type { ResizedImage } from '@/types/common'
+import { IMAGE_PATH, LOADING_ANIMATION_PATH } from '@/constants/default-path'
 
-type Props = {
-  images: ResizedImage | undefined
-  imagesWebP: ResizedImage | undefined
-  alt: string
-  loadingImage: string
-  defaultImage: string
-}
+type Props = Parameters<typeof Image>[0]
 
-export default function CustomImage({
-  images,
-  imagesWebP,
-  alt,
-  loadingImage,
-  defaultImage,
-}: Props): ReactElement {
+export default function CustomImage(props: Props): ReactElement {
+  const {
+    alt = '',
+    defaultImage = IMAGE_PATH,
+    loadingImage = LOADING_ANIMATION_PATH,
+  } = props
+
   return (
     <Image
-      images={images}
+      {...props}
       alt={alt}
-      imagesWebP={imagesWebP}
-      loadingImage={loadingImage}
       defaultImage={defaultImage}
+      loadingImage={loadingImage}
     />
   )
 }
