@@ -1,7 +1,7 @@
 'use server'
 
 import type { HeroImage } from '@/types/common'
-import type { PropsOfCard } from './_components/latest-news/post-list'
+import type { LatestPost } from '@/types/homepage'
 import { URL_STATIC_LATEST_NEWS } from '@/constants/config'
 
 type Category = {
@@ -25,6 +25,7 @@ type RawPost = {
   categories: Category[]
   partner: Partner | string
   redirect: string
+  publishedDate: string
 }
 
 // TODO: replace with real data
@@ -42,7 +43,7 @@ const getCategoryColor = () => {
 
 const getHeroImage = (
   rawImageObj: RawPost['heroImage']
-): PropsOfCard['heroImage'] => {
+): LatestPost['heroImage'] => {
   if (typeof rawImageObj === 'object') {
     if (rawImageObj !== null) return rawImageObj
     else
@@ -106,8 +107,8 @@ const hasExternalLink = (rawPost: RawPost): boolean => {
   return isValidUrl(redirect)
 }
 
-const transformRawPost = (rawPosts: RawPost): PropsOfCard => {
-  const { title, slug, heroImage } = rawPosts
+const transformRawPost = (rawPosts: RawPost): LatestPost => {
+  const { title, slug, heroImage, publishedDate } = rawPosts
   const { name, color } = getCategoryConfig(rawPosts)
 
   return {
@@ -116,11 +117,12 @@ const transformRawPost = (rawPosts: RawPost): PropsOfCard => {
     postName: title,
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
+    publishedDate,
   }
 }
 
 // TODO: change source and update related handle
-const fetchLatestPost = async (page: number = 0): Promise<PropsOfCard[]> => {
+const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   try {
     const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`, {
       next: { revalidate: 300 },
