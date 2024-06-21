@@ -40,7 +40,7 @@ export default function LatestNewsCard({
         target="_blank"
         className="group/card"
       >
-        <div className="relative h-[182px] w-full overflow-hidden group-hover/card:*:scale-110 group-active/card:*:scale-110 md:h-[134px]">
+        <div className="relative aspect-[329/182] w-full overflow-hidden rounded group-hover/card:*:scale-110 group-active/card:*:scale-110 md:aspect-auto md:h-[134px]">
           <CustomImage
             images={heroImage.resized}
             imagesWebP={heroImage.resizedWebp}
