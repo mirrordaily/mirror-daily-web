@@ -1,17 +1,19 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import HeroImage from './hero-image'
+import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
-
-type PropsOfHeroImage = Parameters<typeof HeroImage>[0]
+import type { ResizedImage } from '@/types/common'
 
 type Props = {
   categoryName: string
   categoryColor: string
   postName: string
   postSlug: string
-  heroImage: Pick<PropsOfHeroImage, 'resized' | 'resizedWebp'>
+  heroImage: {
+    resized?: Partial<ResizedImage>
+    resizedWebp?: Partial<ResizedImage>
+  }
 }
 
 export default function LatestNewsCard({
@@ -38,11 +40,19 @@ export default function LatestNewsCard({
         target="_blank"
         className="group/card"
       >
-        <HeroImage
-          resized={heroImage.resized}
-          resizedWebp={heroImage.resizedWebp}
-          alt="最新文章首圖"
-        />
+        <div className="relative h-[182px] w-full overflow-hidden group-hover/card:*:scale-110 group-active/card:*:scale-110 md:h-[134px]">
+          <CustomImage
+            images={heroImage.resized}
+            imagesWebP={heroImage.resizedWebp}
+            objectFit="cover"
+            alt="最新文章首圖"
+            rwd={{
+              mobile: '100%',
+              tablet: '100%',
+              default: '100%',
+            }}
+          />
+        </div>
         <p className="mt-2 line-clamp-2 h-[54px] text-ellipsis text-lg font-normal leading-normal text-[#000928] group-hover/card:text-[#575D71] group-active/card:text-[#575D71] md:mt-3 md:line-clamp-3 md:h-[81px]">
           {postName}
         </p>
