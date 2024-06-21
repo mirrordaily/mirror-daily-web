@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Selector from './selector'
+import PostList from './post-list'
 
 export const TAB = {
   Latest: '即時新聞',
@@ -13,7 +14,7 @@ export default function TopNewsMain() {
   return (
     <>
       <Selector selectedTab={tab} setTab={setTab} />
-      <div>{/* 新聞清單 */}</div>
+      <PostList />
     </>
   )
 }
