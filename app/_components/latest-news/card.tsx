@@ -24,7 +24,7 @@ export default function LatestNewsCard({
   return (
     <div className="flex w-full max-w-[329px] flex-col md:w-[200px] [&:nth-last-child(2)]:mr-auto">
       <span
-        className="mb-1 inline-block h-1 w-3"
+        className={`mb-1 inline-block h-1 w-3 ${!categoryName ? 'invisible' : ''}`}
         style={{ backgroundColor: categoryColor }}
       ></span>
       <p
@@ -33,7 +33,11 @@ export default function LatestNewsCard({
       >
         {categoryName}
       </p>
-      <NextLink href={`/story/${postSlug}`} className="group/card">
+      <NextLink
+        href={`/story/${postSlug}`}
+        target="_blank"
+        className="group/card"
+      >
         <HeroImage
           resized={heroImage.resized}
           resizedWebp={heroImage.resizedWebp}

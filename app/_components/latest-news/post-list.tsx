@@ -21,6 +21,7 @@ export default function PostList({
     <InfiniteScrollList
       initialList={initialList}
       pageSize={RENDER_PAGE_SIZE}
+      amountOfElements={200}
       fetchListInPage={fetchLatestPost}
       isAutoFetch={false}
       loader={

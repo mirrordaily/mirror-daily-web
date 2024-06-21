@@ -1,7 +1,7 @@
 'use server'
 
 import type { HeroImage } from '@/types/common'
-import type { PropsOfCard } from '../_components/latest-news/post-list'
+import type { PropsOfCard } from './_components/latest-news/post-list'
 import { URL_STATIC_LATEST_NEWS } from '@/constants/config'
 
 type Category = {
@@ -9,11 +9,21 @@ type Category = {
   slug: string
 }
 
+type Section = {
+  slug: string
+}
+
+type Partner = {
+  slug: string
+}
+
 type RawPost = {
   title: string
   slug: string
   heroImage: Pick<HeroImage, 'resized' | 'resizedWebp'> | string | null
+  sections: Section[]
   categories: Category[]
+  partner: Partner | string
 }
 
 // TODO: replace with real data
@@ -49,13 +59,46 @@ const getHeroImage = (
   }
 }
 
+type CategoryConfig = {
+  name: string
+  color: string
+}
+
+const getCategoryConfig = (rawPosts: RawPost): CategoryConfig => {
+  const { partner, categories } = rawPosts
+
+  if (typeof partner === 'string') {
+    const name = categories[0]?.name || ''
+    const color = getCategoryColor()
+
+    return {
+      name,
+      color,
+    }
+  } else {
+    const { slug } = partner
+    if (slug === 'healthnews') {
+      return {
+        name: '生活',
+        color: '#03C121',
+      }
+    } else {
+      // ebc and others
+      return {
+        name: '時事',
+        color: '#D0D2D8',
+      }
+    }
+  }
+}
+
 const transformRawPost = (rawPosts: RawPost): PropsOfCard => {
-  const { title, slug, heroImage, categories } = rawPosts
-  const categoryName = categories[0]?.name || ''
+  const { title, slug, heroImage } = rawPosts
+  const { name, color } = getCategoryConfig(rawPosts)
 
   return {
-    categoryName,
-    categoryColor: getCategoryColor(),
+    categoryName: name,
+    categoryColor: color,
     postName: title,
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
