@@ -21,10 +21,11 @@ export default function PostList({
     <InfiniteScrollList
       initialList={initialList}
       pageSize={RENDER_PAGE_SIZE}
+      amountOfElements={200}
       fetchListInPage={fetchLatestPost}
       isAutoFetch={false}
       loader={
-        <button className="mt-4 inline-block rounded border-2 border-solid border-[#1f668e] p-[10px] text-lg font-bold leading-normal text-[#1f668e] md:mt-5 lg:mt-5">
+        <button className="mt-4 inline-block rounded border-2 border-solid border-[#1f668e] p-[10px] text-lg font-bold leading-normal text-[#1f668e] hover-or-active:border-[#119cc9] hover-or-active:text-[#119cc9] md:mt-5 lg:mt-5">
           看更多
         </button>
       }
