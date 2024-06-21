@@ -57,7 +57,7 @@ export default function NewsletterSubscription(): ReactElement {
 
         <button
           type="button"
-          className="order-3 rounded-lg bg-[#cab572] px-4 py-3 text-lg font-medium leading-normal text-[#004EBC] shadow-[0_4px_8px_0_rgba(0,0,0,0.1)] hover:bg-[#ad8c21] active:bg-[#ad8c21] md:order-2"
+          className="order-3 rounded-lg bg-[#cab572] px-4 py-3 text-lg font-medium leading-normal text-[#004EBC] shadow-[0_4px_8px_0_rgba(0,0,0,0.1)] hover-or-active:bg-[#ad8c21] md:order-2"
           onClick={subscribe}
         >
           訂閱

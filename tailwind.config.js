@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: [
     plugin(function ({ addVariant }) {
+      // apply to both :hover and :active but doesn't work for group-*
       addVariant('hover-or-active', ['&:hover', '&:active'])
     }),
   ],

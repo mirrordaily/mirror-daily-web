@@ -23,26 +23,30 @@ export default function Footer(): ReactElement {
     {
       name: '廣告業務',
       href: '/',
+      isExternal: true,
     },
     {
       name: '內容授權',
       href: '/',
+      isExternal: true,
     },
     {
       name: '下載APP',
       href: '/',
+      isExternal: true,
     },
     {
       name: '新聞自律',
       href: '/',
+      isExternal: true,
     },
   ]
 
   const CONTACT_LINKS: ContactLink[] = [
     {
       name: '鏡報客服',
-      href: 'tel:+886(02)7737-4683',
-      text: '(02)7737-4683',
+      href: 'tel:+886(02)7752-5678',
+      text: '(02)7752-5678',
     },
     {
       name: '客服信箱',
@@ -122,7 +126,7 @@ export default function Footer(): ReactElement {
         </section>
         <section className="order-5 mb-5 mt-[30px] flex flex-row items-center gap-x-4 md:mb-[51px] md:mt-6 lg:order-3 lg:my-0 lg:ml-auto">
           {ExtendedSocialLinks.map(({ name, href, icon }) => (
-            <a key={name} href={href}>
+            <a key={name} href={href} target="_blank">
               <NextImage src={icon} alt={name} />
             </a>
           ))}

@@ -1,5 +1,5 @@
 import PostList from './post-list'
-import { fetchLatestPost } from '@/app/category/action'
+import { fetchLatestPost } from '@/app/action'
 
 export default async function LatestNewsSection() {
   const initialList = await fetchLatestPost(0)
