@@ -1,3 +1,6 @@
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
+const plugin = require('tailwindcss/plugin')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,13 +13,17 @@ module.exports = {
       lg: '1200px',
     },
     extend: {
-      colors: {
-        mirror: {
-          500: '#004EBC',
-          700: '#212944',
-        },
+      colors: {},
+      backgroundImage: {
+        'image-mask':
+          'linear-gradient(180deg, rgba(0, 0, 0, 0) 40.54%, #000 100%)',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      // apply to both :hover and :active but doesn't work for group-*
+      addVariant('hover-or-active', ['&:hover', '&:active'])
+    }),
+  ],
 }

@@ -36,7 +36,7 @@ export default function NewsletterSubscription(): ReactElement {
   }
 
   return (
-    <section className="flex w-full flex-col items-center bg-mirror-500 px-[38px] pb-7 pt-8 text-white md:px-0 md:pb-[42px] md:pt-[54px] lg:pb-9">
+    <section className="flex w-full flex-col items-center bg-[#004EBC] px-[38px] pb-7 pt-8 text-white md:px-0 md:pb-[42px] md:pt-[54px] lg:pb-9">
       <p className="text-lg font-bold leading-normal">訂閱鏡爆電子報</p>
       <p className="mt-[7px] text-sm font-normal leading-normal md:w-[442px]">
         說明文字說明文字說明文字說明文字說明文字說明文字說明文字說明文字說明文字
@@ -57,7 +57,7 @@ export default function NewsletterSubscription(): ReactElement {
 
         <button
           type="button"
-          className="order-3 rounded-lg bg-[#cab572] px-4 py-3 text-lg font-medium leading-normal text-mirror-500 shadow-[0_4px_8px_0_rgba(0,0,0,0.1)] hover:bg-[#ad8c21] active:bg-[#ad8c21] md:order-2"
+          className="order-3 rounded-lg bg-[#cab572] px-4 py-3 text-lg font-medium leading-normal text-[#004EBC] shadow-[0_4px_8px_0_rgba(0,0,0,0.1)] hover-or-active:bg-[#ad8c21] md:order-2"
           onClick={subscribe}
         >
           訂閱

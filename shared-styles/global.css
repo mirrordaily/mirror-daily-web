@@ -10,6 +10,12 @@
 
 }
 
+@layer components {
+  .section-in-homepage {
+    @apply px-[23px] md:px-5 lg:px-9;
+  }
+}
+
 @layer utilities {
 
 }

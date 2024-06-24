@@ -1,35 +1,25 @@
 'use client'
 import Image from '@readr-media/react-image'
 import type { ReactElement } from 'react'
-import type { Posts } from '@/types/posts'
+import { IMAGE_PATH, LOADING_ANIMATION_PATH } from '@/constants/default-path'
+import { IMAGE_BREAKPOINT } from '@/constants/misc'
 
-type Post = Posts[number]
-type HeroImage = NonNullable<Post['heroImage']>
-type ResizedImage = HeroImage['resized']
-type ResizedWebp = HeroImage['resizedWebp']
+type Props = Parameters<typeof Image>[0]
 
-type Props = {
-  images: ResizedImage
-  imagesWebP: ResizedWebp
-  loadingImage: string
-  defaultImage: string
-  alt: string | undefined
-}
+export default function CustomImage(props: Props): ReactElement {
+  const {
+    alt = '',
+    defaultImage = IMAGE_PATH,
+    loadingImage = LOADING_ANIMATION_PATH,
+  } = props
 
-export default function CustomImage({
-  images,
-  imagesWebP,
-  alt,
-  loadingImage,
-  defaultImage,
-}: Props): ReactElement {
   return (
     <Image
-      images={images}
+      {...props}
       alt={alt}
-      imagesWebP={imagesWebP}
-      loadingImage={loadingImage}
       defaultImage={defaultImage}
+      loadingImage={loadingImage}
+      breakpoint={IMAGE_BREAKPOINT}
     />
   )
 }

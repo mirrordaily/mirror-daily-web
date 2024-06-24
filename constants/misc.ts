@@ -33,3 +33,8 @@ export const SOCIAL_LINKS = [
     href: '/',
   },
 ] as const satisfies SocialLinks[]
+
+export const IMAGE_BREAKPOINT = {
+  mobile: '719px',
+  tablet: '1199px',
+} as const
