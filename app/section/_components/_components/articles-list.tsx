@@ -1,5 +1,5 @@
 'use client'
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import MainArticleCard from './main-article-card'
 import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
