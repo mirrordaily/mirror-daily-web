@@ -1,44 +1,31 @@
 import type { LatestPost } from '@/types/homepage'
 import HighlightItem from './highlight-item'
+import ListItem from './list-item'
 
-export default function PostList() {
-  const highlight: LatestPost = {
-    categoryName: '廚房密技',
-    categoryColor: 'rgb(203,174,94)',
-    postName:
-      '測試 rss 分類手動排序只抓第一個_萬象測試 rss 分類手動排序只抓第一個_萬象',
-    postSlug: 'test_manualOrderOfCategories_2',
-    heroImage: {
-      resized: {
-        original:
-          'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c.webp',
-        w480: 'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w480.webp',
-        w800: 'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w800.webp',
-        w1200: '',
-        w1600:
-          'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w1600.webp',
-        w2400:
-          'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w2400.webp',
-      },
-      resizedWebp: {
-        original:
-          'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c.webP',
-        w480: 'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w480.webP',
-        w800: 'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w800.webP',
-        w1200: '',
-        w1600:
-          'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w1600.webP',
-        w2400:
-          'https://v3-statics-dev.mirrormedia.mg/images/ca661b5c-a75e-42f9-8201-4ff43eae9f3c-w2400.webP',
-      },
-    },
-    publishedDate: '2024-03-21T06:52:00.000Z',
+type Props = {
+  list: LatestPost[]
+}
+
+function hasOneMore<T>(x: T[]): x is [T, ...T[]] {
+  return x.length > 0
+}
+
+export default function PostList({ list }: Props) {
+  if (!hasOneMore(list)) {
+    return null
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [highlight, ...others] = list
+
   return (
-    <div className="mt-4 flex w-full flex-col md:mt-[6px] lg:mt-[11px]">
+    <div className="mt-4 flex w-full flex-col gap-y-[34px] px-[15px] md:mt-[6px] md:flex-row md:px-0 lg:mt-[11px]">
       <HighlightItem {...highlight} />
-      <div>{/* other items */}</div>
+      <div className="flex flex-col gap-y-[10px] md:ml-6 md:mt-[3px] md:gap-y-2 lg:ml-5 lg:mt-[5px] lg:border-l-[0.5px] lg:border-l-[#000928] lg:pl-5">
+        {others.map((post) => (
+          <ListItem key={post.postSlug} {...post} />
+        ))}
+      </div>
     </div>
   )
 }

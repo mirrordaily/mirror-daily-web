@@ -1,4 +1,5 @@
 'use client'
+import type { LatestPost } from '@/types/homepage'
 import { useState } from 'react'
 import Selector from './selector'
 import PostList from './post-list'
@@ -8,13 +9,19 @@ export const TAB = {
   Hot: '熱門新聞',
 } as const
 
-export default function TopNewsMain() {
+type Props = {
+  postsOfTab: Record<keyof typeof TAB, LatestPost[]>
+}
+
+export default function TopNewsMain({ postsOfTab }: Props) {
   const [tab, setTab] = useState<keyof typeof TAB>('Latest')
+
+  const posts = postsOfTab[tab]
 
   return (
     <>
       <Selector selectedTab={tab} setTab={setTab} />
-      <PostList />
+      <PostList list={posts} />
     </>
   )
 }
