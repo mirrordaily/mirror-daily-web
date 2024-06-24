@@ -14,7 +14,7 @@ export default function HighlightItem({
 }: Props): ReactNode {
   return (
     <NextLink
-      className="group/highlight-item w-full md:w-[312px] lg:w-[560px]"
+      className="group/highlight-item w-full shrink-0 md:w-[312px] lg:w-[560px]"
       href={getPostPageUrl(postSlug)}
       target="_blank"
     >
