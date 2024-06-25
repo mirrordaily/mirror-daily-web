@@ -47,6 +47,7 @@ export function gql(
 ): (typeof documents)['query GetLiveEventForHomepage($startDate: DateTime!) {\n  events(\n    orderBy: {publishedDate: desc}\n    take: 1\n    where: {eventType: {equals: "livestreaming"}, state: {equals: "published"}, startDate: {lte: $startDate}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}']
 
 export function gql(source: string) {
+  // @ts-expect-error
   return (documents as any)[source] ?? {}
 }
 
