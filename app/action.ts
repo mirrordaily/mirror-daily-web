@@ -171,7 +171,7 @@ const hasExternalLink = (rawPost: RawLatestPost): boolean => {
 }
 
 const transformRawLatestPost = (rawPosts: RawLatestPost): LatestPost => {
-  const { title, slug, heroImage, publishedDate } = rawPosts
+  const { title, slug, heroImage, publishedDate, partner } = rawPosts
   const { name, color } = getCategoryConfig(rawPosts)
 
   return {
@@ -181,7 +181,7 @@ const transformRawLatestPost = (rawPosts: RawLatestPost): LatestPost => {
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
     publishedDate,
-    link: getPostPageUrl(slug),
+    link: getPostPageUrl(slug, !!partner),
   }
 }
 
