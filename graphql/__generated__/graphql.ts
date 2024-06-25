@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core'
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -480,6 +481,122 @@ export type EditorChoiceWhereInput = {
 export type EditorChoiceWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
   order?: InputMaybe<Scalars['Int']['input']>
+}
+
+export type Event = {
+  __typename?: 'Event'
+  createdAt?: Maybe<Scalars['DateTime']['output']>
+  createdBy?: Maybe<User>
+  endDate?: Maybe<Scalars['DateTime']['output']>
+  eventType?: Maybe<Scalars['String']['output']>
+  heroImage?: Maybe<Photo>
+  id: Scalars['ID']['output']
+  isFeatured?: Maybe<Scalars['Boolean']['output']>
+  link?: Maybe<Scalars['String']['output']>
+  name?: Maybe<Scalars['String']['output']>
+  publishedDate?: Maybe<Scalars['DateTime']['output']>
+  sections?: Maybe<Array<Section>>
+  sectionsCount?: Maybe<Scalars['Int']['output']>
+  slug?: Maybe<Scalars['String']['output']>
+  startDate?: Maybe<Scalars['DateTime']['output']>
+  state?: Maybe<Scalars['String']['output']>
+  updatedAt?: Maybe<Scalars['DateTime']['output']>
+  updatedBy?: Maybe<User>
+}
+
+export type EventSectionsArgs = {
+  cursor?: InputMaybe<SectionWhereUniqueInput>
+  orderBy?: Array<SectionOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: SectionWhereInput
+}
+
+export type EventSectionsCountArgs = {
+  where?: SectionWhereInput
+}
+
+export type EventCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>
+  createdBy?: InputMaybe<UserRelateToOneForCreateInput>
+  endDate?: InputMaybe<Scalars['DateTime']['input']>
+  eventType?: InputMaybe<Scalars['String']['input']>
+  heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
+  isFeatured?: InputMaybe<Scalars['Boolean']['input']>
+  link?: InputMaybe<Scalars['String']['input']>
+  name?: InputMaybe<Scalars['String']['input']>
+  publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  sections?: InputMaybe<SectionRelateToManyForCreateInput>
+  slug?: InputMaybe<Scalars['String']['input']>
+  startDate?: InputMaybe<Scalars['DateTime']['input']>
+  state?: InputMaybe<Scalars['String']['input']>
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>
+  updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
+}
+
+export type EventOrderByInput = {
+  createdAt?: InputMaybe<OrderDirection>
+  endDate?: InputMaybe<OrderDirection>
+  eventType?: InputMaybe<OrderDirection>
+  id?: InputMaybe<OrderDirection>
+  isFeatured?: InputMaybe<OrderDirection>
+  link?: InputMaybe<OrderDirection>
+  name?: InputMaybe<OrderDirection>
+  publishedDate?: InputMaybe<OrderDirection>
+  slug?: InputMaybe<OrderDirection>
+  startDate?: InputMaybe<OrderDirection>
+  state?: InputMaybe<OrderDirection>
+  updatedAt?: InputMaybe<OrderDirection>
+}
+
+export type EventUpdateArgs = {
+  data: EventUpdateInput
+  where: EventWhereUniqueInput
+}
+
+export type EventUpdateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>
+  createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
+  endDate?: InputMaybe<Scalars['DateTime']['input']>
+  eventType?: InputMaybe<Scalars['String']['input']>
+  heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
+  isFeatured?: InputMaybe<Scalars['Boolean']['input']>
+  link?: InputMaybe<Scalars['String']['input']>
+  name?: InputMaybe<Scalars['String']['input']>
+  publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  sections?: InputMaybe<SectionRelateToManyForUpdateInput>
+  slug?: InputMaybe<Scalars['String']['input']>
+  startDate?: InputMaybe<Scalars['DateTime']['input']>
+  state?: InputMaybe<Scalars['String']['input']>
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>
+  updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
+}
+
+export type EventWhereInput = {
+  AND?: InputMaybe<Array<EventWhereInput>>
+  NOT?: InputMaybe<Array<EventWhereInput>>
+  OR?: InputMaybe<Array<EventWhereInput>>
+  createdAt?: InputMaybe<DateTimeNullableFilter>
+  createdBy?: InputMaybe<UserWhereInput>
+  endDate?: InputMaybe<DateTimeNullableFilter>
+  eventType?: InputMaybe<StringNullableFilter>
+  heroImage?: InputMaybe<PhotoWhereInput>
+  id?: InputMaybe<IdFilter>
+  isFeatured?: InputMaybe<BooleanFilter>
+  link?: InputMaybe<StringFilter>
+  name?: InputMaybe<StringFilter>
+  publishedDate?: InputMaybe<DateTimeNullableFilter>
+  sections?: InputMaybe<SectionManyRelationFilter>
+  slug?: InputMaybe<StringFilter>
+  startDate?: InputMaybe<DateTimeFilter>
+  state?: InputMaybe<StringNullableFilter>
+  updatedAt?: InputMaybe<DateTimeNullableFilter>
+  updatedBy?: InputMaybe<UserWhereInput>
+}
+
+export type EventWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>
+  slug?: InputMaybe<Scalars['String']['input']>
 }
 
 export type External = {
@@ -1086,6 +1203,8 @@ export type Mutation = {
   createContacts?: Maybe<Array<Maybe<Contact>>>
   createEditorChoice?: Maybe<EditorChoice>
   createEditorChoices?: Maybe<Array<Maybe<EditorChoice>>>
+  createEvent?: Maybe<Event>
+  createEvents?: Maybe<Array<Maybe<Event>>>
   createExternal?: Maybe<External>
   createExternals?: Maybe<Array<Maybe<External>>>
   createGame?: Maybe<Game>
@@ -1119,6 +1238,8 @@ export type Mutation = {
   deleteContacts?: Maybe<Array<Maybe<Contact>>>
   deleteEditorChoice?: Maybe<EditorChoice>
   deleteEditorChoices?: Maybe<Array<Maybe<EditorChoice>>>
+  deleteEvent?: Maybe<Event>
+  deleteEvents?: Maybe<Array<Maybe<Event>>>
   deleteExternal?: Maybe<External>
   deleteExternals?: Maybe<Array<Maybe<External>>>
   deleteGame?: Maybe<Game>
@@ -1152,6 +1273,8 @@ export type Mutation = {
   updateContacts?: Maybe<Array<Maybe<Contact>>>
   updateEditorChoice?: Maybe<EditorChoice>
   updateEditorChoices?: Maybe<Array<Maybe<EditorChoice>>>
+  updateEvent?: Maybe<Event>
+  updateEvents?: Maybe<Array<Maybe<Event>>>
   updateExternal?: Maybe<External>
   updateExternals?: Maybe<Array<Maybe<External>>>
   updateGame?: Maybe<Game>
@@ -1213,6 +1336,14 @@ export type MutationCreateEditorChoiceArgs = {
 
 export type MutationCreateEditorChoicesArgs = {
   data: Array<EditorChoiceCreateInput>
+}
+
+export type MutationCreateEventArgs = {
+  data: EventCreateInput
+}
+
+export type MutationCreateEventsArgs = {
+  data: Array<EventCreateInput>
 }
 
 export type MutationCreateExternalArgs = {
@@ -1347,6 +1478,14 @@ export type MutationDeleteEditorChoicesArgs = {
   where: Array<EditorChoiceWhereUniqueInput>
 }
 
+export type MutationDeleteEventArgs = {
+  where: EventWhereUniqueInput
+}
+
+export type MutationDeleteEventsArgs = {
+  where: Array<EventWhereUniqueInput>
+}
+
 export type MutationDeleteExternalArgs = {
   where: ExternalWhereUniqueInput
 }
@@ -1477,6 +1616,15 @@ export type MutationUpdateEditorChoiceArgs = {
 
 export type MutationUpdateEditorChoicesArgs = {
   data: Array<EditorChoiceUpdateArgs>
+}
+
+export type MutationUpdateEventArgs = {
+  data: EventUpdateInput
+  where: EventWhereUniqueInput
+}
+
+export type MutationUpdateEventsArgs = {
+  data: Array<EventUpdateArgs>
 }
 
 export type MutationUpdateExternalArgs = {
@@ -2300,6 +2448,9 @@ export type Query = {
   editorChoice?: Maybe<EditorChoice>
   editorChoices?: Maybe<Array<EditorChoice>>
   editorChoicesCount?: Maybe<Scalars['Int']['output']>
+  event?: Maybe<Event>
+  events?: Maybe<Array<Event>>
+  eventsCount?: Maybe<Scalars['Int']['output']>
   external?: Maybe<External>
   externals?: Maybe<Array<External>>
   externalsCount?: Maybe<Scalars['Int']['output']>
@@ -2401,6 +2552,22 @@ export type QueryEditorChoicesArgs = {
 
 export type QueryEditorChoicesCountArgs = {
   where?: EditorChoiceWhereInput
+}
+
+export type QueryEventArgs = {
+  where: EventWhereUniqueInput
+}
+
+export type QueryEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>
+  orderBy?: Array<EventOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: EventWhereInput
+}
+
+export type QueryEventsCountArgs = {
+  where?: EventWhereInput
 }
 
 export type QueryExternalArgs = {
@@ -3439,3 +3606,296 @@ export type VideoWhereInput = {
 export type VideoWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
 }
+
+export type HeroImageFragment = {
+  __typename?: 'Photo'
+  id: string
+  resized?: {
+    __typename?: 'ResizedImages'
+    original?: string | null
+    w480?: string | null
+    w800?: string | null
+    w1200?: string | null
+    w1600?: string | null
+    w2400?: string | null
+  } | null
+  resizedWebp?: {
+    __typename?: 'ResizedWebPImages'
+    original?: string | null
+    w480?: string | null
+    w800?: string | null
+    w1200?: string | null
+    w1600?: string | null
+    w2400?: string | null
+  } | null
+}
+
+export type GetLiveEventForHomepageQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input']
+}>
+
+export type GetLiveEventForHomepageQuery = {
+  __typename?: 'Query'
+  events?: Array<{
+    __typename?: 'Event'
+    name?: string | null
+    link?: string | null
+    heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+  }> | null
+}
+
+export const HeroImageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'HeroImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<HeroImageFragment, unknown>
+export const GetLiveEventForHomepageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetLiveEventForHomepage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'events' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'publishedDate' },
+                      value: { kind: 'EnumValue', value: 'desc' },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: { kind: 'IntValue', value: '1' },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'eventType' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'livestreaming',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'publishedDate' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'link' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'heroImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'HeroImage' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'HeroImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetLiveEventForHomepageQuery,
+  GetLiveEventForHomepageQueryVariables
+>

@@ -1,11 +1,23 @@
 'use server'
 
-import type { HeroImage } from '@/types/common'
-import type { LatestPost } from '@/types/homepage'
+import type {
+  LatestPost,
+  PickupItemInTopNewsSection,
+  HeroImage,
+} from '@/types/homepage'
 import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
 } from '@/constants/config'
+import { createErrorLogger, getTraceObject } from '@/utils/log/common'
+import { headers } from 'next/headers'
+import { fetchGQLData } from '@/utils/graphql'
+import type {
+  GetLiveEventForHomepageQuery,
+  HeroImageFragment,
+} from '@/graphql/__generated__/graphql'
+import { GetLiveEventForHomepageDocument } from '@/graphql/__generated__/graphql'
+import dayjs from 'dayjs'
 
 type Category = {
   name: string
@@ -24,7 +36,7 @@ type Partner = {
 type RawLatestPost = {
   title: string
   slug: string
-  heroImage: Pick<HeroImage, 'resized' | 'resizedWebp'> | string | null
+  heroImage: HeroImage | string | null | undefined
   sections: Pick<Section, 'slug'>[]
   categories: Category[]
   partner: Partner | string
@@ -46,11 +58,57 @@ const getCategoryColor = () => {
 }
 
 const getHeroImage = (
-  rawImageObj: RawLatestPost['heroImage']
-): LatestPost['heroImage'] => {
-  if (typeof rawImageObj === 'object') {
-    if (rawImageObj !== null) return rawImageObj
-    else
+  rawImageObj:
+    | Pick<HeroImageFragment, 'resized' | 'resizedWebp'>
+    | string
+    | null
+    | undefined
+): HeroImage => {
+  if (typeof rawImageObj === 'object' || typeof rawImageObj === 'undefined') {
+    if (rawImageObj !== null && rawImageObj !== undefined) {
+      return Object.entries(rawImageObj).reduce<HeroImage>(
+        (
+          obj: HeroImage,
+          [typeKey, valueObj]: [
+            string,
+            HeroImageFragment[keyof HeroImageFragment],
+          ]
+        ) => {
+          type RawResziedImages = NonNullable<HeroImageFragment['resized']>
+          type ResizedImages = NonNullable<HeroImage['resized']>
+
+          if (['resized', 'resizedWebp'].includes(typeKey) && valueObj) {
+            const newValueObj = Object.entries(valueObj).reduce<ResizedImages>(
+              (
+                values,
+                [sizeKey, value]: [
+                  string,
+                  RawResziedImages[keyof RawResziedImages],
+                ]
+              ) => {
+                if (value) {
+                  values[sizeKey as keyof ResizedImages] = value
+                }
+
+                return values
+              },
+              {
+                original: '',
+              } satisfies ResizedImages
+            )
+
+            obj[typeKey as keyof HeroImage] = newValueObj
+          }
+
+          return obj
+        },
+        {
+          resized: {
+            original: '',
+          },
+        } satisfies HeroImage
+      )
+    } else
       return {
         resized: {
           original: '',
@@ -179,4 +237,39 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
   }
 }
 
-export { fetchLatestPost, fetchPopularPost }
+const transformRawLiveEvents = (
+  rawLiveEvents: GetLiveEventForHomepageQuery['events']
+): PickupItemInTopNewsSection | null => {
+  const event = (rawLiveEvents ? rawLiveEvents[0] : null) ?? null
+
+  if (!event) return event
+
+  return {
+    postName: event.name ?? '',
+    link: event.link ?? '',
+    heroImage: getHeroImage(event.heroImage),
+  }
+}
+
+const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching live event data in homepage',
+    getTraceObject(headers())
+  )
+
+  const result = await fetchGQLData(
+    errorLogger,
+    GetLiveEventForHomepageDocument,
+    {
+      startDate: dayjs().subtract(5, 'minutes').toISOString(),
+    }
+  )
+
+  if (result) {
+    const { events } = result
+    return transformRawLiveEvents(events)
+  }
+  return null
+}
+
+export { fetchLatestPost, fetchPopularPost, fetchLiveEvent }
