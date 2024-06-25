@@ -30,8 +30,8 @@ export default function SecondaryArticleCard({ postItem, colors }: Props) {
           images={postItem?.heroImage?.resized}
           imagesWebP={postItem?.heroImage?.resizedWebp}
           alt={postItem?.title ?? 'article image'}
-          loadingImage={'/images/loading.gif'}
-          defaultImage={'/images/default-og-img.png'}
+          loadingImage={'/images-next/loading.gif'}
+          defaultImage={'/images-next/default-og-img.png'}
         />
       </figure>
       <div className="leading-[1.3]">

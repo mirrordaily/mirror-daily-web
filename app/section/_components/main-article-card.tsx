@@ -20,8 +20,8 @@ export default function MainArticleCard({ postItem, colors }: Props) {
           images={postItem?.heroImage?.resized}
           imagesWebP={postItem?.heroImage?.resizedWebp}
           alt={postItem?.title ?? 'article image'}
-          loadingImage={'/images/loading.gif'}
-          defaultImage={'/images/default-og-img.png'}
+          loadingImage={'/images-next/loading.gif'}
+          defaultImage={'/images-next/default-og-img.png'}
         />
       </figure>
       <div className="flex flex-row justify-center gap-x-2 md:justify-start md:gap-x-3">
