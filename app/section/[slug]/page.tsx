@@ -7,11 +7,9 @@ export default async function Page({
 }: {
   params: { slug: string }
 }): Promise<JSX.Element> {
-  const current = 1
-  const INITIAL_POSTS = 13
   const slug = params.slug
 
-  const posts = await fetchSectionPosts(current, INITIAL_POSTS, slug)
+  const posts = await fetchSectionPosts(1, slug)
 
   return (
     <main className="mb-10 flex flex-col items-center md:mb-[72px] lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">

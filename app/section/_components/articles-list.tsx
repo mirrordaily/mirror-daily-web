@@ -59,13 +59,12 @@ export default function ArticlesList({
   initialPosts,
   slug,
 }: Props): ReactElement {
-  let PAGE_SIZE = 13
+  const PAGE_SIZE = 12
   const firstPost = initialPosts ? initialPosts[0] : undefined
-  const otherPosts = initialPosts ? initialPosts.slice(1) : undefined
+  const otherPosts = initialPosts ? initialPosts.slice(1, 13) : undefined
 
   const fetchMorePosts = async (page: number) => {
-    PAGE_SIZE = page === 2 ? 13 : 12
-    const posts = await fetchSectionPosts(page, PAGE_SIZE, slug)
+    const posts = await fetchSectionPosts(page, slug)
     return posts || []
   }
 
