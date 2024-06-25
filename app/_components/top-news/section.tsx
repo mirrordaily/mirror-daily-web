@@ -1,61 +1,30 @@
-/* 即時新聞、熱門新聞 */
-import TopNewsMain from './main'
-import { fetchLatestPost, fetchPopularPost, fetchLiveEvent } from '@/app/action'
+'use client'
+import { useState } from 'react'
+import Selector from './selector'
+import PostList from './post-list'
 import type { ParameterOfComponent } from '@/types/common'
 
-export default async function TopNewsSection() {
-  const liveEvent = await fetchLiveEvent()
-  const latestPosts = await fetchLatestPost(0)
-  const popularPosts = await fetchPopularPost()
+export const TAB = {
+  Latest: '即時新聞',
+  Hot: '熱門新聞',
+} as const
 
-  let latestList: ParameterOfComponent<
-    typeof TopNewsMain
-  >['postsOfTab']['Latest'] = [undefined]
+type Props = {
+  postsOfTab: Record<
+    keyof typeof TAB,
+    ParameterOfComponent<typeof PostList>['list']
+  >
+}
 
-  if (liveEvent) {
-    latestList = [liveEvent, ...latestPosts.slice(0, 9)]
-  } else {
-    const first = latestPosts[0]
+export default function TopNewsSection({ postsOfTab }: Props) {
+  const [tab, setTab] = useState<keyof typeof TAB>('Latest')
 
-    if (first) {
-      latestList = [
-        {
-          postName: first.postName,
-          heroImage: first.heroImage,
-          link: first.link,
-        },
-        ...latestPosts.slice(1, 9),
-      ]
-    }
-  }
-
-  let hotList: ParameterOfComponent<typeof TopNewsMain>['postsOfTab']['Hot'] = [
-    undefined,
-  ]
-
-  {
-    const first = popularPosts[0]
-
-    if (first) {
-      hotList = [
-        {
-          postName: first.postName,
-          heroImage: first.heroImage,
-          link: first.link,
-        },
-        ...popularPosts.slice(1, 9),
-      ]
-    }
-  }
-
-  const postsOfTab: ParameterOfComponent<typeof TopNewsMain>['postsOfTab'] = {
-    Latest: latestList,
-    Hot: hotList,
-  }
+  const posts = postsOfTab[tab]
 
   return (
     <section className="section-in-homepage my-9 md:mt-6 lg:mb-[30px] lg:mt-7">
-      <TopNewsMain postsOfTab={postsOfTab} />
+      <Selector selectedTab={tab} setTab={setTab} />
+      <PostList list={posts} />
     </section>
   )
 }

@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { TAB } from './main'
+import { TAB } from './section'
 
 export default function Selector({
   selectedTab,
