@@ -18,6 +18,7 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { GetLiveEventForHomepageDocument } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
+import { getPostPageUrl } from '@/utils/site-urls'
 
 type Category = {
   name: string
@@ -180,6 +181,7 @@ const transformRawLatestPost = (rawPosts: RawLatestPost): LatestPost => {
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
     publishedDate,
+    link: getPostPageUrl(slug),
   }
 }
 
@@ -219,6 +221,7 @@ const transformRawPopularPost = (rawPosts: RawPopularPost): LatestPost => {
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
     publishedDate: new Date().toISOString(),
+    link: getPostPageUrl(slug),
   }
 }
 

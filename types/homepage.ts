@@ -22,16 +22,20 @@ export type LatestPost = {
   postSlug: string
   heroImage: HeroImage
   publishedDate: string
+  link: string
 }
 
 export type ItemInTopNewsSection = Pick<
   LatestPost,
-  'categoryName' | 'categoryColor' | 'postName' | 'postSlug' | 'publishedDate'
+  | 'categoryName'
+  | 'categoryColor'
+  | 'postName'
+  | 'postSlug'
+  | 'publishedDate'
+  | 'link'
 >
 
 export type PickupItemInTopNewsSection = Pick<
   LatestPost,
-  'postName' | 'heroImage'
-> & {
-  link: string
-}
+  'postName' | 'heroImage' | 'link'
+>

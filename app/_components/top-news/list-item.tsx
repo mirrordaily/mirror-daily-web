@@ -1,20 +1,24 @@
-import type { LatestPost } from '@/types/homepage'
+import type { ItemInTopNewsSection } from '@/types/homepage'
 import dayjs from 'dayjs'
 import NextLink from 'next/link'
-import { getPostPageUrl } from '@/utils/site-urls'
 import type { CSSProperties } from 'react'
 
 type Props = Pick<
-  LatestPost,
-  'categoryColor' | 'categoryName' | 'postName' | 'postSlug' | 'publishedDate'
+  ItemInTopNewsSection,
+  | 'categoryColor'
+  | 'categoryName'
+  | 'postName'
+  | 'postSlug'
+  | 'publishedDate'
+  | 'link'
 >
 
 export default function ListItem({
   categoryColor,
   categoryName,
   publishedDate,
-  postSlug,
   postName,
+  link,
 }: Props) {
   const timeStr = dayjs(publishedDate).format('YYYY/MM/DD HH:mm:ss')
 
@@ -35,7 +39,7 @@ export default function ListItem({
         </time>
       </div>
       <NextLink
-        href={getPostPageUrl(postSlug)}
+        href={link}
         target="_blank"
         className="mt-[6px] line-clamp-2 h-[42px] text-base font-medium leading-[21px] text-[#575D71] hover-or-active:text-[color:var(--custom-active-color)] md:h-10 md:text-sm md:font-normal md:leading-[20px] lg:line-clamp-1 lg:h-auto lg:text-base lg:font-medium lg:leading-normal"
         style={

@@ -2,7 +2,6 @@
 import TopNewsMain from './main'
 import { fetchLatestPost, fetchPopularPost, fetchLiveEvent } from '@/app/action'
 import type { ParameterOfComponent } from '@/types/common'
-import { getPostPageUrl } from '@/utils/site-urls'
 
 export default async function TopNewsSection() {
   const liveEvent = await fetchLiveEvent()
@@ -23,7 +22,7 @@ export default async function TopNewsSection() {
         {
           postName: first.postName,
           heroImage: first.heroImage,
-          link: getPostPageUrl(first.postSlug),
+          link: first.link,
         },
         ...latestPosts.slice(1, 9),
       ]
@@ -42,7 +41,7 @@ export default async function TopNewsSection() {
         {
           postName: first.postName,
           heroImage: first.heroImage,
-          link: getPostPageUrl(first.postSlug),
+          link: first.link,
         },
         ...popularPosts.slice(1, 9),
       ]
