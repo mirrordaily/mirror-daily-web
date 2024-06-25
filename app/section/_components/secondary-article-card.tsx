@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import { type GetPostsBySectionSlugQuery } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import type { Posts } from '@/types/posts'
 
-type Post = NonNullable<GetPostsBySectionSlugQuery['posts']>[number]
+type Post = Posts[number]
 
 type Props = {
   postItem: Post | undefined
