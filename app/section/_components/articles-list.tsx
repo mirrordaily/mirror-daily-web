@@ -92,7 +92,7 @@ export default function ArticlesList({
             isAutoFetch={false}
             loader={
               <div className="mt-4 flex justify-center md:mt-12">
-                <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493]">
+                <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493] hover-or-active:border-[#119CC7] hover-or-active:text-[#119CC7]">
                   看更多
                 </button>
               </div>
