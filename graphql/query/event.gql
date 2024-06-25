@@ -3,9 +3,11 @@ query GetLiveEventForHomepage($startDate: DateTime!) {
     orderBy: { publishedDate: desc},
     take: 1,
     where:  {
-     eventType: { equals: "livestreaming" }
-     state: { equals: "published" }
-     publishedDate: { lte: $startDate }
+      eventType: { equals: "livestreaming" }
+      state: { equals: "published" }
+      startDate:  {
+        lte: $startDate
+      }
     }
   ) {
     name

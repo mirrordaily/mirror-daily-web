@@ -264,7 +264,7 @@ const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
     errorLogger,
     GetLiveEventForHomepageDocument,
     {
-      startDate: dayjs().subtract(5, 'minutes').toISOString(),
+      startDate: dayjs().add(5, 'minutes').toISOString(),
     }
   )
 

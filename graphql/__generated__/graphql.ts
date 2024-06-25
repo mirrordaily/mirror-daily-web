@@ -3807,7 +3807,7 @@ export const GetLiveEventForHomepageDocument = {
                     },
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'publishedDate' },
+                      name: { kind: 'Name', value: 'startDate' },
                       value: {
                         kind: 'ObjectValue',
                         fields: [
