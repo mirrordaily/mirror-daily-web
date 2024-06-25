@@ -2,20 +2,17 @@
 import type { ReactNode } from 'react'
 import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
-import { getPostPageUrl } from '@/utils/site-urls'
-import type { LatestPost } from '@/types/homepage'
-
-type Props = Pick<LatestPost, 'postName' | 'postSlug' | 'heroImage'>
+import type { PickupItemInTopNewsSection } from '@/types/homepage'
 
 export default function HighlightItem({
   heroImage,
   postName,
-  postSlug,
-}: Props): ReactNode {
+  link,
+}: PickupItemInTopNewsSection): ReactNode {
   return (
     <NextLink
       className="group/highlight-item w-full shrink-0 md:w-[312px] lg:w-[560px]"
-      href={getPostPageUrl(postSlug)}
+      href={link}
       target="_blank"
     >
       <div className="aspect-[297/165] overflow-hidden rounded group-hover/highlight-item:*:scale-110 group-active/highlight-item:*:scale-110 md:aspect-auto md:h-[174px] lg:h-[311px]">

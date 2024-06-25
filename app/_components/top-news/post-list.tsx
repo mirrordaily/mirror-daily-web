@@ -1,22 +1,18 @@
-import type { LatestPost } from '@/types/homepage'
+import type {
+  ItemInTopNewsSection,
+  PickupItemInTopNewsSection,
+} from '@/types/homepage'
 import HighlightItem from './highlight-item'
 import ListItem from './list-item'
 
 type Props = {
-  list: LatestPost[]
-}
-
-function hasOneMore<T>(x: T[]): x is [T, ...T[]] {
-  return x.length > 0
+  list: [PickupItemInTopNewsSection | undefined, ...ItemInTopNewsSection[]]
 }
 
 export default function PostList({ list }: Props) {
-  if (!hasOneMore(list)) {
-    return null
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [highlight, ...others] = list
+
+  if (!highlight) return null
 
   return (
     <div className="mt-4 flex w-full flex-col gap-y-[34px] px-[15px] md:mt-[6px] md:flex-row md:px-0 lg:mt-[11px]">

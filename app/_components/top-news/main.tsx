@@ -1,8 +1,8 @@
 'use client'
-import type { LatestPost } from '@/types/homepage'
 import { useState } from 'react'
 import Selector from './selector'
 import PostList from './post-list'
+import type { ParameterOfComponent } from '@/types/common'
 
 export const TAB = {
   Latest: '即時新聞',
@@ -10,7 +10,10 @@ export const TAB = {
 } as const
 
 type Props = {
-  postsOfTab: Record<keyof typeof TAB, LatestPost[]>
+  postsOfTab: Record<
+    keyof typeof TAB,
+    ParameterOfComponent<typeof PostList>['list']
+  >
 }
 
 export default function TopNewsMain({ postsOfTab }: Props) {
