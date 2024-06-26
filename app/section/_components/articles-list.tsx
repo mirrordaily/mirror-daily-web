@@ -79,7 +79,7 @@ export default function ArticlesList({
           className={`w-[342px] border-4 ${colors?.border} md:w-[670px] lg:w-[740px]`}
         />
       </div>
-      <div>
+      <div className="flex flex-col items-center">
         <div className="mb-10 md:mb-[50px]">
           <MainArticleCard postItem={firstPost} colors={colors} />
         </div>
