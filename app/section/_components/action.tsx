@@ -24,15 +24,7 @@ async function fetchSectionPosts(
     {
       skip: skip,
       take: take,
-      where: {
-        sections: {
-          some: {
-            slug: {
-              equals: slug,
-            },
-          },
-        },
-      },
+      slug: slug,
     }
   )
   return result?.posts ? result.posts : null

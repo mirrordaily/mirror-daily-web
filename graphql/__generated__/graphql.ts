@@ -3610,7 +3610,7 @@ export type VideoWhereUniqueInput = {
 export type GetPostsBySectionSlugQueryVariables = Exact<{
   skip: Scalars['Int']['input']
   take?: InputMaybe<Scalars['Int']['input']>
-  where: PostWhereInput
+  slug: Scalars['String']['input']
 }>
 
 export type GetPostsBySectionSlugQuery = {
@@ -3669,15 +3669,12 @@ export const GetPostsBySectionSlugDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'where' },
-          },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
           type: {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'PostWhereInput' },
+              name: { kind: 'Name', value: 'String' },
             },
           },
         },
@@ -3709,8 +3706,44 @@ export const GetPostsBySectionSlugDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
                 value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'where' },
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'sections' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'some' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'slug' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'equals' },
+                                        value: {
+                                          kind: 'Variable',
+                                          name: { kind: 'Name', value: 'slug' },
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
                 },
               },
               {

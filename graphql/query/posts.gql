@@ -1,8 +1,8 @@
-query GetPostsBySectionSlug($skip: Int!, $take: Int, $where: PostWhereInput!) {
+query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
   posts(
     skip: $skip
     take: $take
-    where: $where
+    where: { sections: { some: { slug: { equals: $slug } } } }
     orderBy: { publishedDate: desc }
   ) {
     title
