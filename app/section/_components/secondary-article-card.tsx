@@ -7,7 +7,7 @@ import type { Posts } from '@/types/section'
 type Post = Posts[number]
 
 type Props = {
-  postItem: Post | undefined
+  postItem: Post
   colors: { border: string; bg: string; color: string } | undefined
 }
 
