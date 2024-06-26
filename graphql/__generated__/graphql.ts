@@ -3646,6 +3646,19 @@ export type GetPostsBySectionSlugQuery = {
   }> | null
 }
 
+export type GetSectionsSlugAndNameQueryVariables = Exact<{
+  skip: Scalars['Int']['input']
+}>
+
+export type GetSectionsSlugAndNameQuery = {
+  __typename?: 'Query'
+  sections?: Array<{
+    __typename?: 'Section'
+    slug?: string | null
+    name?: string | null
+  }> | null
+}
+
 export const GetPostsBySectionSlugDocument = {
   kind: 'Document',
   definitions: [
@@ -3854,4 +3867,53 @@ export const GetPostsBySectionSlugDocument = {
 } as unknown as DocumentNode<
   GetPostsBySectionSlugQuery,
   GetPostsBySectionSlugQueryVariables
+>
+export const GetSectionsSlugAndNameDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetSectionsSlugAndName' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'sections' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetSectionsSlugAndNameQuery,
+  GetSectionsSlugAndNameQueryVariables
 >

@@ -1,14 +1,17 @@
 'use server'
 import { fetchGQLData } from '@/utils/graphql'
-import { GetPostsBySectionSlugDocument } from '@/graphql/__generated__/graphql'
+import {
+  GetPostsBySectionSlugDocument,
+  GetSectionsSlugAndNameDocument,
+} from '@/graphql/__generated__/graphql'
 import { logGQLError } from '@/utils/log/common'
-import type { Posts } from '@/types/posts'
+import type { Posts } from '@/types/section'
 
 async function fetchSectionPosts(
   page: number,
   slug: string
 ): Promise<Posts | null> {
-  const handleError = logGQLError('Failed to fetch category articles')
+  const handleError = logGQLError('Failed to fetch section articles')
 
   const firstPageSize = 13
   const subsequentPageSize = 12
@@ -30,4 +33,17 @@ async function fetchSectionPosts(
   return result?.posts ? result.posts : null
 }
 
-export { fetchSectionPosts }
+async function fetchSectionsSlugAndName(skip: number) {
+  const handleError = logGQLError('Failed to fetch sections information')
+
+  const result = await fetchGQLData(
+    handleError,
+    GetSectionsSlugAndNameDocument,
+    {
+      skip: skip,
+    }
+  )
+  return result?.sections ? result.sections : null
+}
+
+export { fetchSectionPosts, fetchSectionsSlugAndName }
