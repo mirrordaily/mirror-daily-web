@@ -3,8 +3,8 @@ import type { ReactElement } from 'react'
 import MainArticleCard from './main-article-card'
 import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import { fetchSectionPosts } from './action'
-import type { Posts } from '@/types/posts'
+import { fetchSectionPosts } from '../action'
+import type { Posts } from '@/types/section'
 
 type SectionColors = {
   [key: string]: { border: string; bg: string; color: string }
@@ -60,8 +60,7 @@ export default function ArticlesList({
   slug,
 }: Props): ReactElement {
   const PAGE_SIZE = 12
-  const firstPost = initialPosts ? initialPosts[0] : undefined
-  const otherPosts = initialPosts ? initialPosts.slice(1, 13) : undefined
+  const [firstPost, ...otherPosts] = initialPosts ?? []
 
   const fetchMorePosts = async (page: number) => {
     const posts = await fetchSectionPosts(page, slug)

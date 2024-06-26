@@ -2,7 +2,7 @@ import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import type { Posts } from '@/types/posts'
+import type { Posts } from '@/types/section'
 
 type Post = Posts[number]
 

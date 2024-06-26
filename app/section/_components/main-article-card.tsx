@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import type { Posts } from '@/types/posts'
+import type { Posts } from '@/types/section'
 
 type Props = {
   postItem: Posts[number] | undefined

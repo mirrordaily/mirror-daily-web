@@ -1,6 +1,6 @@
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '../_components/articles-list'
-import { fetchSectionPosts } from '../_components/action'
+import { fetchSectionPosts } from '../action'
 
 export default async function Page({
   params,
