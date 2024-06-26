@@ -1,6 +1,7 @@
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '../_components/articles-list'
 import { fetchSectionPosts, fetchSectionsSlugAndName } from '../action'
+import { notFound } from 'next/navigation'
 
 export default async function Page({
   params,
@@ -13,15 +14,12 @@ export default async function Page({
   const posts = await fetchSectionPosts(1, slug)
 
   const IsSectionExist = sections?.some((section) => section.slug === slug)
-  //TODO: redirect to a 404 page
+
+  if (!IsSectionExist) notFound()
+
   return (
     <main className="mb-10 flex flex-col items-center md:mb-[72px] lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">
-      {IsSectionExist ? (
-        <ArticlesList initialPosts={posts} slug={slug} />
-      ) : (
-        <p>Page not found</p>
-      )}
-
+      <ArticlesList initialPosts={posts} slug={slug} />
       <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
       <PopularNewsSection />
     </main>

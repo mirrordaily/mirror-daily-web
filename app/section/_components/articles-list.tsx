@@ -5,6 +5,7 @@ import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { fetchSectionPosts } from '../action'
 import type { Posts } from '@/types/section'
+import { notFound } from 'next/navigation'
 
 type SectionColors = {
   [key: string]: { border: string; bg: string; color: string }
@@ -68,6 +69,8 @@ export default function ArticlesList({
   }
 
   const colors = sectionColors[slug]
+
+  if (!firstPost) notFound()
 
   return (
     <div className="flex flex-col items-center">
