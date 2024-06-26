@@ -1,6 +1,7 @@
 import UiPopularNewsCard from './ui-popular-news-card'
 import { URL_STATIC_POPULAR_NEWS } from '@/constants/config'
 import type { PopularNews } from '@/types/common'
+import { getPostPageUrl } from '@/utils/site-urls'
 
 async function getPopularNews(): Promise<PopularNews[] | undefined> {
   try {
@@ -38,7 +39,7 @@ export default async function PopularNewsSection(): Promise<JSX.Element> {
             <UiPopularNewsCard
               news={item}
               key={item.id}
-              slug={item.slug}
+              link={getPostPageUrl(item.slug)}
               categoryColors={categoryColors}
             />
           ))}

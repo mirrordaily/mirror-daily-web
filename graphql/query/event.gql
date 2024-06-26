@@ -1,0 +1,19 @@
+query GetLiveEventForHomepage($startDate: DateTime!) {
+  events(
+    orderBy: { publishedDate: desc},
+    take: 1,
+    where:  {
+      eventType: { equals: "livestreaming" }
+      state: { equals: "published" }
+      startDate:  {
+        lte: $startDate
+      }
+    }
+  ) {
+    name
+    link
+    heroImage {
+      ...HeroImage
+    }
+  }
+}

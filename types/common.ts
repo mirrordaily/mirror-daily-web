@@ -30,3 +30,7 @@ export type PopularNews = {
   state: string
   heroImage: HeroImage | null
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ParameterOfComponent<T extends (...args: any) => any> =
+  Parameters<T>[0]

@@ -26,6 +26,8 @@ const ENV = (function () {
   return ENVIRONMENT.LOCAL
 })()
 
+const GCP_PROJECT_ID = 'mirrordaily'
+
 switch (ENV) {
   case ENVIRONMENT.DEVELOPMENT:
     STATIC_FILE_DOMAIN = 'v3-statics-dev.mirrormedia.mg'
@@ -41,4 +43,10 @@ switch (ENV) {
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
-export { ENV, API_ENDPOINT, URL_STATIC_POPULAR_NEWS, URL_STATIC_LATEST_NEWS }
+export {
+  ENV,
+  API_ENDPOINT,
+  URL_STATIC_POPULAR_NEWS,
+  URL_STATIC_LATEST_NEWS,
+  GCP_PROJECT_ID,
+}
