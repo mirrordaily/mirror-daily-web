@@ -25,7 +25,7 @@ export default function SecondaryArticleCard({ postItem, color }: Props) {
       rel="noopener noreferrer"
       className="flex flex-row gap-x-3 md:gap-x-6 lg:gap-x-8"
     >
-      <figure className="relative h-[88px] w-40 shrink-0 rounded md:h-[133px] md:w-60">
+      <figure className="relative h-[88px] w-40 shrink-0 overflow-hidden rounded md:h-[133px] md:w-60">
         <CustomImage
           images={postItem?.heroImage?.resized}
           imagesWebP={postItem?.heroImage?.resizedWebp}
