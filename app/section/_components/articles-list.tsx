@@ -46,29 +46,31 @@ export default function ArticlesList({
           <MainArticleCard color={color} postItem={firstPost} />
         </div>
         <div className="flex max-w-[330px] flex-col gap-y-5 md:max-w-[670px] md:gap-y-8 lg:max-w-[725px]">
-          <InfiniteScrollList
-            initialList={otherPosts}
-            pageSize={PAGE_SIZE}
-            fetchListInPage={fetchMorePosts}
-            isAutoFetch={false}
-            loader={
-              <div className="mt-4 flex justify-center md:mt-12">
-                <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493] hover-or-active:border-[#119CC7] hover-or-active:text-[#119CC7]">
-                  看更多
-                </button>
-              </div>
-            }
-          >
-            {(posts) =>
-              posts.map((post) => (
-                <SecondaryArticleCard
-                  key={post.title}
-                  color={color}
-                  postItem={post}
-                />
-              ))
-            }
-          </InfiniteScrollList>
+          {otherPosts.length !== 0 && (
+            <InfiniteScrollList
+              initialList={otherPosts}
+              pageSize={PAGE_SIZE}
+              fetchListInPage={fetchMorePosts}
+              isAutoFetch={false}
+              loader={
+                <div className="mt-4 flex justify-center md:mt-12">
+                  <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493] hover-or-active:border-[#119CC7] hover-or-active:text-[#119CC7]">
+                    看更多
+                  </button>
+                </div>
+              }
+            >
+              {(posts) =>
+                posts.map((post) => (
+                  <SecondaryArticleCard
+                    key={post.title}
+                    color={color}
+                    postItem={post}
+                  />
+                ))
+              }
+            </InfiniteScrollList>
+          )}
         </div>
       </div>
     </div>
