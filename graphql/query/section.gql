@@ -1,0 +1,7 @@
+query GetSectionInformation($slug: String!) {
+  section(where: { slug: $slug }) {
+    slug
+    name
+    color
+  }
+}
