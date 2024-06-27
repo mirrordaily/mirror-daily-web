@@ -24,7 +24,7 @@ export default function MainArticleCard({ postItem, color }: Props) {
           defaultImage={'/images-next/default-og-img.png'}
         />
       </figure>
-      <div className="flex flex-row justify-center gap-x-2 md:justify-start md:gap-x-3">
+      <div className="flex flex-row justify-center gap-x-2 pl-[23px] pr-[22px] md:justify-start md:gap-x-3 md:px-0">
         <div
           style={{ backgroundColor: color || 'FF5A36' }}
           className={`h-20 w-7 shrink-0 md:h-12`}
