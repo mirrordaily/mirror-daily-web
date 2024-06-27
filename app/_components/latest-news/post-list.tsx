@@ -6,11 +6,11 @@ import type { ReactNode } from 'react'
 /** the amount of articles each time load-more is clicked  */
 const RENDER_PAGE_SIZE = 20
 
-export type PropsOfCard = Parameters<typeof LatestNewsCard>[0]
+import type { LatestPost } from '@/types/homepage'
 
 type PostListProps = {
-  initialList: PropsOfCard[]
-  fetchLatestPost: (page: number) => Promise<PropsOfCard[]>
+  initialList: LatestPost[]
+  fetchLatestPost: (page: number) => Promise<LatestPost[]>
 }
 
 export default function PostList({
@@ -30,7 +30,7 @@ export default function PostList({
         </button>
       }
     >
-      {(posts: PropsOfCard[]) =>
+      {(posts: LatestPost[]) =>
         posts.map((post) => <LatestNewsCard {...post} key={post.postSlug} />)
       }
     </InfiniteScrollList>

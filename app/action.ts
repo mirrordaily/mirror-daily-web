@@ -1,8 +1,24 @@
 'use server'
 
-import type { HeroImage } from '@/types/common'
-import type { PropsOfCard } from './_components/latest-news/post-list'
-import { URL_STATIC_LATEST_NEWS } from '@/constants/config'
+import type {
+  LatestPost,
+  PickupItemInTopNewsSection,
+  HeroImage,
+} from '@/types/homepage'
+import {
+  URL_STATIC_LATEST_NEWS,
+  URL_STATIC_POPULAR_NEWS,
+} from '@/constants/config'
+import { createErrorLogger, getTraceObject } from '@/utils/log/common'
+import { headers } from 'next/headers'
+import { fetchGQLData } from '@/utils/graphql'
+import type {
+  GetLiveEventForHomepageQuery,
+  HeroImageFragment,
+} from '@/graphql/__generated__/graphql'
+import { GetLiveEventForHomepageDocument } from '@/graphql/__generated__/graphql'
+import dayjs from 'dayjs'
+import { getPostPageUrl } from '@/utils/site-urls'
 
 type Category = {
   name: string
@@ -11,20 +27,22 @@ type Category = {
 
 type Section = {
   slug: string
+  name: string
 }
 
 type Partner = {
   slug: string
 }
 
-type RawPost = {
+type RawLatestPost = {
   title: string
   slug: string
-  heroImage: Pick<HeroImage, 'resized' | 'resizedWebp'> | string | null
-  sections: Section[]
+  heroImage: HeroImage | string | null | undefined
+  sections: Pick<Section, 'slug'>[]
   categories: Category[]
   partner: Partner | string
   redirect: string
+  publishedDate: string
 }
 
 // TODO: replace with real data
@@ -41,11 +59,57 @@ const getCategoryColor = () => {
 }
 
 const getHeroImage = (
-  rawImageObj: RawPost['heroImage']
-): PropsOfCard['heroImage'] => {
-  if (typeof rawImageObj === 'object') {
-    if (rawImageObj !== null) return rawImageObj
-    else
+  rawImageObj:
+    | Pick<HeroImageFragment, 'resized' | 'resizedWebp'>
+    | string
+    | null
+    | undefined
+): HeroImage => {
+  if (typeof rawImageObj === 'object' || typeof rawImageObj === 'undefined') {
+    if (rawImageObj !== null && rawImageObj !== undefined) {
+      return Object.entries(rawImageObj).reduce<HeroImage>(
+        (
+          obj: HeroImage,
+          [typeKey, valueObj]: [
+            string,
+            HeroImageFragment[keyof HeroImageFragment],
+          ]
+        ) => {
+          type RawResziedImages = NonNullable<HeroImageFragment['resized']>
+          type ResizedImages = NonNullable<HeroImage['resized']>
+
+          if (['resized', 'resizedWebp'].includes(typeKey) && valueObj) {
+            const newValueObj = Object.entries(valueObj).reduce<ResizedImages>(
+              (
+                values,
+                [sizeKey, value]: [
+                  string,
+                  RawResziedImages[keyof RawResziedImages],
+                ]
+              ) => {
+                if (value) {
+                  values[sizeKey as keyof ResizedImages] = value
+                }
+
+                return values
+              },
+              {
+                original: '',
+              } satisfies ResizedImages
+            )
+
+            obj[typeKey as keyof HeroImage] = newValueObj
+          }
+
+          return obj
+        },
+        {
+          resized: {
+            original: '',
+          },
+        } satisfies HeroImage
+      )
+    } else
       return {
         resized: {
           original: '',
@@ -65,7 +129,7 @@ type CategoryConfig = {
   color: string
 }
 
-const getCategoryConfig = (rawPosts: RawPost): CategoryConfig => {
+const getCategoryConfig = (rawPosts: RawLatestPost): CategoryConfig => {
   const { partner, categories } = rawPosts
 
   if (typeof partner === 'string') {
@@ -101,13 +165,13 @@ const isValidUrl = (url: string): boolean => {
   }
 }
 
-const hasExternalLink = (rawPost: RawPost): boolean => {
+const hasExternalLink = (rawPost: RawLatestPost): boolean => {
   const { redirect } = rawPost
   return isValidUrl(redirect)
 }
 
-const transformRawPost = (rawPosts: RawPost): PropsOfCard => {
-  const { title, slug, heroImage } = rawPosts
+const transformRawLatestPost = (rawPosts: RawLatestPost): LatestPost => {
+  const { title, slug, heroImage, publishedDate, partner } = rawPosts
   const { name, color } = getCategoryConfig(rawPosts)
 
   return {
@@ -116,26 +180,99 @@ const transformRawPost = (rawPosts: RawPost): PropsOfCard => {
     postName: title,
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
+    publishedDate,
+    link: getPostPageUrl(slug, !!partner),
   }
 }
 
 // TODO: change source and update related handle
-const fetchLatestPost = async (page: number = 0): Promise<PropsOfCard[]> => {
+const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   try {
     const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`, {
       next: { revalidate: 300 },
     })
 
-    const rawPostData: Record<'latest', RawPost[]> = await resp.json()
+    const rawPostData: Record<'latest', RawLatestPost[]> = await resp.json()
     const filteredData = rawPostData.latest.filter(
       (rawPost) => !hasExternalLink(rawPost)
     )
 
-    return filteredData.map(transformRawPost)
+    return filteredData.map(transformRawLatestPost)
   } catch (e) {
     console.error(e)
     return []
   }
 }
 
-export { fetchLatestPost }
+type RawPopularPost = {
+  title: string
+  slug: string
+  heroImage: Pick<HeroImage, 'resized' | 'resizedWebp'> | string | null
+  sectionsInInputOrder: Section[]
+}
+
+const transformRawPopularPost = (rawPosts: RawPopularPost): LatestPost => {
+  const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
+
+  return {
+    categoryName: sections[0]?.name ?? '',
+    categoryColor: getCategoryColor(),
+    postName: title,
+    postSlug: slug,
+    heroImage: getHeroImage(heroImage),
+    publishedDate: new Date().toISOString(),
+    link: getPostPageUrl(slug),
+  }
+}
+
+// TODO: change source and update related handle
+const fetchPopularPost = async (): Promise<LatestPost[]> => {
+  try {
+    const resp = await fetch(URL_STATIC_POPULAR_NEWS, {
+      next: { revalidate: 300 },
+    })
+
+    const rawPostData: RawPopularPost[] = await resp.json()
+    return rawPostData.map(transformRawPopularPost).slice(10)
+  } catch (e) {
+    console.error(e)
+    return []
+  }
+}
+
+const transformRawLiveEvents = (
+  rawLiveEvents: GetLiveEventForHomepageQuery['events']
+): PickupItemInTopNewsSection | null => {
+  const event = (rawLiveEvents ? rawLiveEvents[0] : null) ?? null
+
+  if (!event) return event
+
+  return {
+    postName: event.name ?? '',
+    link: event.link ?? '',
+    heroImage: getHeroImage(event.heroImage),
+  }
+}
+
+const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching live event data in homepage',
+    getTraceObject(headers())
+  )
+
+  const result = await fetchGQLData(
+    errorLogger,
+    GetLiveEventForHomepageDocument,
+    {
+      startDate: dayjs().add(5, 'minutes').toISOString(),
+    }
+  )
+
+  if (result) {
+    const { events } = result
+    return transformRawLiveEvents(events)
+  }
+  return null
+}
+
+export { fetchLatestPost, fetchPopularPost, fetchLiveEvent }
