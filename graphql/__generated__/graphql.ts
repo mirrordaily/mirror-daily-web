@@ -3656,6 +3656,7 @@ export type GetSectionsSlugAndNameQuery = {
     __typename?: 'Section'
     slug?: string | null
     name?: string | null
+    color?: string | null
   }> | null
 }
 
@@ -3906,6 +3907,7 @@ export const GetSectionsSlugAndNameDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'color' } },
               ],
             },
           },

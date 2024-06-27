@@ -35,5 +35,6 @@ query GetSectionsSlugAndName($skip: Int!) {
   sections(skip: $skip) {
     slug
     name
+    color
   }
 }

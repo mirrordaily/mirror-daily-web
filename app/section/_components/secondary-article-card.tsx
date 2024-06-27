@@ -8,7 +8,7 @@ type Post = Posts[number]
 
 type Props = {
   postItem: Post
-  colors: { border: string; bg: string; color: string } | undefined
+  color: string | null | undefined
 }
 
 const dateFormatter = (date: string) => {
@@ -17,7 +17,7 @@ const dateFormatter = (date: string) => {
   return utcDate
 }
 
-export default function SecondaryArticleCard({ postItem, colors }: Props) {
+export default function SecondaryArticleCard({ postItem, color }: Props) {
   return (
     <Link
       href={`/story/${postItem?.slug}`}
@@ -36,7 +36,8 @@ export default function SecondaryArticleCard({ postItem, colors }: Props) {
       </figure>
       <div className="leading-[1.3]">
         <p
-          className={`mb-[5px] text-sm font-normal ${colors?.color} md:mb-[17px]`}
+          style={{ color: color || '#FF5A36' }}
+          className={`$md:mb-[17px] mb-[5px] text-sm font-normal`}
         >
           {dateFormatter(postItem?.createdAt)}
         </p>

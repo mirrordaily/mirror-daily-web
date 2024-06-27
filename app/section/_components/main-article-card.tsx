@@ -4,10 +4,10 @@ import type { Posts } from '@/types/section'
 
 type Props = {
   postItem: Posts[number] | undefined
-  colors: { border: string; bg: string; color: string } | undefined
+  color: string | null | undefined
 }
 
-export default function MainArticleCard({ postItem, colors }: Props) {
+export default function MainArticleCard({ postItem, color }: Props) {
   return (
     <Link
       href={`/story/${postItem?.slug}`}
@@ -25,7 +25,10 @@ export default function MainArticleCard({ postItem, colors }: Props) {
         />
       </figure>
       <div className="flex flex-row justify-center gap-x-2 md:justify-start md:gap-x-3">
-        <div className={`h-20 w-7 shrink-0 ${colors?.bg} md:h-12`} />
+        <div
+          style={{ backgroundColor: color || 'FF5A36' }}
+          className={`h-20 w-7 shrink-0 md:h-12`}
+        />
         <figcaption className="line-clamp-3 w-[294px] text-xl font-bold leading-[1.3] text-[#000928] md:line-clamp-2 md:w-[506px]">
           {postItem?.title}
         </figcaption>
