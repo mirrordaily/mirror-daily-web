@@ -13,13 +13,10 @@ export default async function Page({
   const section = await fetchSectionInformation(slug)
   const posts = await fetchSectionPosts(1, slug)
 
-  const color = section?.color
+  if (!section) notFound()
 
-  const name = section?.name
-
-  const IsSectionExist = section?.slug === slug
-
-  if (!IsSectionExist) notFound()
+  const color = section.color
+  const name = section.name
 
   return (
     <main className="mb-10 flex flex-col items-center md:mb-[72px] lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">
