@@ -28,25 +28,24 @@ export default function ArticlesList({
     return posts || []
   }
 
-  // const colors = sectionColors[slug]
   if (!firstPost) notFound()
 
   return (
     <div className="flex flex-col items-center">
-      <div className="mb-5 md:mb-7">
+      <div className="mb-5 w-full max-w-[342px] md:mb-7 md:max-w-[670px] lg:max-w-[740px]">
         <h1
           style={{ color: color || '#FF5A36' }}
           className="mb-3 text-xl font-bold leading-[1.3] lg:text-2xl"
         >
           section name
         </h1>
-        <hr className={`w-[342px] border-4 md:w-[670px] lg:w-[740px]`} />
+        <hr style={{ borderColor: color || '#FF5A36' }} className="border-4" />
       </div>
       <div className="flex flex-col items-center">
         <div className="mb-10 md:mb-[50px]">
           <MainArticleCard color={color} postItem={firstPost} />
         </div>
-        <div className="flex w-[330px] flex-col gap-y-5 md:w-[670px] md:gap-y-8 lg:w-[725px]">
+        <div className="flex max-w-[330px] flex-col gap-y-5 md:max-w-[670px] md:gap-y-8 lg:max-w-[725px]">
           <InfiniteScrollList
             initialList={otherPosts}
             pageSize={PAGE_SIZE}
