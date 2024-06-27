@@ -3,25 +3,19 @@
 import type { ReactNode } from 'react'
 import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
-import type { ResizedImage } from '@/types/common'
+import type { LatestPost } from '@/types/homepage'
 
-type Props = {
-  categoryName: string
-  categoryColor: string
-  postName: string
-  postSlug: string
-  heroImage: {
-    resized?: Partial<ResizedImage>
-    resizedWebp?: Partial<ResizedImage>
-  }
-}
+type Props = Pick<
+  LatestPost,
+  'categoryName' | 'categoryColor' | 'postName' | 'heroImage' | 'link'
+>
 
 export default function LatestNewsCard({
   categoryName,
   categoryColor,
   postName,
-  postSlug,
   heroImage,
+  link,
 }: Props): ReactNode {
   return (
     <div className="flex w-full max-w-[329px] flex-col md:w-[200px] [&:nth-last-child(2)]:mr-auto">
@@ -35,11 +29,7 @@ export default function LatestNewsCard({
       >
         {categoryName}
       </p>
-      <NextLink
-        href={`/story/${postSlug}`}
-        target="_blank"
-        className="group/card"
-      >
+      <NextLink href={link} target="_blank" className="group/card">
         <div className="relative aspect-[329/182] w-full overflow-hidden rounded group-hover/card:*:scale-110 group-active/card:*:scale-110 md:aspect-auto md:h-[134px]">
           <CustomImage
             images={heroImage.resized}

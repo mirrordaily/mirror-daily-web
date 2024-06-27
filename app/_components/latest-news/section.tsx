@@ -1,11 +1,13 @@
+import type { LatestPost } from '@/types/homepage'
 import PostList from './post-list'
 import { fetchLatestPost } from '@/app/action'
 
-export default async function LatestNewsSection() {
-  const initialList = await fetchLatestPost(0)
-
+type Props = {
+  initialList: LatestPost[]
+}
+export default async function LatestNewsSection({ initialList }: Props) {
   return (
-    <section className="section-in-homepage w-full max-w-[375px] md:max-w-screen-md lg:max-w-none">
+    <section className="section-in-homepage mt-9">
       <p className="mb-[34px] text-base font-bold leading-normal text-[#119CC7] md:mb-[26px] md:text-lg">
         最新新聞
       </p>
