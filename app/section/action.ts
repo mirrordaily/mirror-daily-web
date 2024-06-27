@@ -38,10 +38,13 @@ async function fetchSectionPosts(
 }
 
 async function fetchSectionsSlugAndName(skip: number) {
-  const handleError = logGQLError('Failed to fetch sections information')
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching sections information',
+    getTraceObject(headers())
+  )
 
   const result = await fetchGQLData(
-    handleError,
+    errorLogger,
     GetSectionsSlugAndNameDocument,
     {
       skip: skip,
