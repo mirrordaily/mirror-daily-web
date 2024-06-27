@@ -4,14 +4,18 @@ import {
   GetPostsBySectionSlugDocument,
   GetSectionsSlugAndNameDocument,
 } from '@/graphql/__generated__/graphql'
-import { logGQLError } from '@/utils/log/common'
+import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { Posts } from '@/types/section'
+import { headers } from 'next/headers'
 
 async function fetchSectionPosts(
   page: number,
   slug: string
 ): Promise<Posts | null> {
-  const handleError = logGQLError('Failed to fetch section articles')
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching section posts in section page',
+    getTraceObject(headers())
+  )
 
   const firstPageSize = 13
   const subsequentPageSize = 12
@@ -22,7 +26,7 @@ async function fetchSectionPosts(
   const take = isFirstPage ? firstPageSize * 2 : subsequentPageSize * 2
 
   const result = await fetchGQLData(
-    handleError,
+    errorLogger,
     GetPostsBySectionSlugDocument,
     {
       skip: skip,
