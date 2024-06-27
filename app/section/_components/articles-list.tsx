@@ -11,14 +11,14 @@ type Props = {
   initialPosts: Posts | null
   slug: string
   color: string | undefined | null
+  name: string | undefined | null
 }
-/* TODO:
-  1. change section name
- */
+
 export default function ArticlesList({
   initialPosts,
   slug,
   color,
+  name,
 }: Props): ReactElement {
   const PAGE_SIZE = 12
   const [firstPost, ...otherPosts] = initialPosts ?? []
@@ -37,7 +37,7 @@ export default function ArticlesList({
           style={{ color: color || '#FF5A36' }}
           className="mb-3 text-xl font-bold leading-[1.3] lg:text-2xl"
         >
-          section name
+          {name}
         </h1>
         <hr style={{ borderColor: color || '#FF5A36' }} className="border-4" />
       </div>
