@@ -1,6 +1,6 @@
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '../_components/articles-list'
-import { fetchSectionPosts, fetchSectionsSlugAndName } from '../action'
+import { fetchSectionPosts, fetchSectionInformation } from '../action'
 import { notFound } from 'next/navigation'
 
 export default async function Page({
@@ -10,14 +10,14 @@ export default async function Page({
 }): Promise<JSX.Element> {
   const slug = params.slug
 
-  const sections = await fetchSectionsSlugAndName(0)
+  const section = await fetchSectionInformation(slug)
   const posts = await fetchSectionPosts(1, slug)
 
-  const color = sections && sections?.find((item) => slug === item.slug)?.color
+  const color = section?.color
 
-  const name = sections && sections?.find((item) => slug === item.slug)?.name
+  const name = section?.name
 
-  const IsSectionExist = sections?.some((section) => section.slug === slug)
+  const IsSectionExist = section?.slug === slug
 
   if (!IsSectionExist) notFound()
 

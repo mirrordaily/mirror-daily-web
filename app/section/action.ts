@@ -2,7 +2,7 @@
 import { fetchGQLData } from '@/utils/graphql'
 import {
   GetPostsBySectionSlugDocument,
-  GetSectionsSlugAndNameDocument,
+  GetSectionInformationDocument,
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { Posts } from '@/types/section'
@@ -37,7 +37,7 @@ async function fetchSectionPosts(
   return result?.posts ? result.posts : null
 }
 
-async function fetchSectionsSlugAndName(skip: number) {
+async function fetchSectionInformation(slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching sections information',
     getTraceObject(headers())
@@ -45,12 +45,12 @@ async function fetchSectionsSlugAndName(skip: number) {
 
   const result = await fetchGQLData(
     errorLogger,
-    GetSectionsSlugAndNameDocument,
+    GetSectionInformationDocument,
     {
-      skip: skip,
+      slug: slug,
     }
   )
-  return result?.sections ? result.sections : null
+  return result?.section ? result.section : null
 }
 
-export { fetchSectionPosts, fetchSectionsSlugAndName }
+export { fetchSectionPosts, fetchSectionInformation }

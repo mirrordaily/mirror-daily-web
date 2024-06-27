@@ -30,11 +30,3 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
     slug
   }
 }
-
-query GetSectionsSlugAndName($skip: Int!) {
-  sections(skip: $skip) {
-    slug
-    name
-    color
-  }
-}
