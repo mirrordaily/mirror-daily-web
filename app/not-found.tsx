@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export default function NotFound() {
-  //TODO: 404 and 500 page ui
+  //TODO: 404 page ui
   return (
     <div>
       <h2>Not Found</h2>
