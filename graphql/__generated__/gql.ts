@@ -17,8 +17,10 @@ const documents = {
     types.HeroImageFragmentDoc,
   'query GetLiveEventForHomepage($startDate: DateTime!) {\n  events(\n    orderBy: {publishedDate: desc}\n    take: 1\n    where: {eventType: {equals: "livestreaming"}, state: {equals: "published"}, startDate: {lte: $startDate}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}':
     types.GetLiveEventForHomepageDocument,
-  'query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {sections: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    title\n    createdAt\n    brief\n    heroImage {\n      id\n      resized {\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n        original\n      }\n      resizedWebp {\n        original\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n      }\n    }\n    slug\n  }\n}\n\nquery GetSectionsSlugAndName($skip: Int!) {\n  sections(skip: $skip) {\n    slug\n    name\n    color\n  }\n}':
+  'query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {sections: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    title\n    createdAt\n    brief\n    heroImage {\n      id\n      resized {\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n        original\n      }\n      resizedWebp {\n        original\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n      }\n    }\n    slug\n  }\n}':
     types.GetPostsBySectionSlugDocument,
+  'query GetSectionInformation($slug: String!) {\n  section(where: {slug: $slug}) {\n    slug\n    name\n    color\n  }\n}':
+    types.GetSectionInformationDocument,
 }
 
 /**
@@ -51,8 +53,14 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: 'query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {sections: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    title\n    createdAt\n    brief\n    heroImage {\n      id\n      resized {\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n        original\n      }\n      resizedWebp {\n        original\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n      }\n    }\n    slug\n  }\n}\n\nquery GetSectionsSlugAndName($skip: Int!) {\n  sections(skip: $skip) {\n    slug\n    name\n    color\n  }\n}'
-): (typeof documents)['query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {sections: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    title\n    createdAt\n    brief\n    heroImage {\n      id\n      resized {\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n        original\n      }\n      resizedWebp {\n        original\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n      }\n    }\n    slug\n  }\n}\n\nquery GetSectionsSlugAndName($skip: Int!) {\n  sections(skip: $skip) {\n    slug\n    name\n    color\n  }\n}']
+  source: 'query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {sections: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    title\n    createdAt\n    brief\n    heroImage {\n      id\n      resized {\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n        original\n      }\n      resizedWebp {\n        original\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n      }\n    }\n    slug\n  }\n}'
+): (typeof documents)['query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {sections: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    title\n    createdAt\n    brief\n    heroImage {\n      id\n      resized {\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n        original\n      }\n      resizedWebp {\n        original\n        w1200\n        w1600\n        w2400\n        w480\n        w800\n      }\n    }\n    slug\n  }\n}']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: 'query GetSectionInformation($slug: String!) {\n  section(where: {slug: $slug}) {\n    slug\n    name\n    color\n  }\n}'
+): (typeof documents)['query GetSectionInformation($slug: String!) {\n  section(where: {slug: $slug}) {\n    slug\n    name\n    color\n  }\n}']
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {}

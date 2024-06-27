@@ -3704,18 +3704,18 @@ export type GetPostsBySectionSlugQuery = {
   }> | null
 }
 
-export type GetSectionsSlugAndNameQueryVariables = Exact<{
-  skip: Scalars['Int']['input']
+export type GetSectionInformationQueryVariables = Exact<{
+  slug: Scalars['String']['input']
 }>
 
-export type GetSectionsSlugAndNameQuery = {
+export type GetSectionInformationQuery = {
   __typename?: 'Query'
-  sections?: Array<{
+  section?: {
     __typename?: 'Section'
     slug?: string | null
     name?: string | null
     color?: string | null
-  }> | null
+  } | null
 }
 
 export const HeroImageFragmentDoc = {
@@ -4161,20 +4161,23 @@ export const GetPostsBySectionSlugDocument = {
   GetPostsBySectionSlugQuery,
   GetPostsBySectionSlugQueryVariables
 >
-export const GetSectionsSlugAndNameDocument = {
+export const GetSectionInformationDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetSectionsSlugAndName' },
+      name: { kind: 'Name', value: 'GetSectionInformation' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
           },
         },
       ],
@@ -4183,14 +4186,23 @@ export const GetSectionsSlugAndNameDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'sections' },
+            name: { kind: 'Name', value: 'section' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'skip' },
+                name: { kind: 'Name', value: 'where' },
                 value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'skip' },
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'slug' },
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -4208,6 +4220,6 @@ export const GetSectionsSlugAndNameDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetSectionsSlugAndNameQuery,
-  GetSectionsSlugAndNameQueryVariables
+  GetSectionInformationQuery,
+  GetSectionInformationQueryVariables
 >
