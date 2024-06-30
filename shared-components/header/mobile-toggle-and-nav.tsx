@@ -4,6 +4,7 @@ import type { SectionAndCategory } from '@/types/homepage'
 import NextImage from 'next/image'
 import { useState } from 'react'
 import { SOCIAL_LINKS } from '@/constants/misc'
+import MobileNavList from './mobile-nav-list'
 import IconHamburger from '@/public/icons/hamburger.svg'
 import IconClose from '@/public/icons/sidebar-close.svg'
 import IconFacebook from '@/public/icons/logos/facebook-white.svg'
@@ -16,9 +17,7 @@ type Props = {
   data: SectionAndCategory[]
 }
 
-export default function MobileToggleAndNav({
-  /* eslint-disable-line @typescript-eslint/no-unused-vars */ data,
-}: Props) {
+export default function MobileToggleAndNav({ data }: Props) {
   const ExtendedSocialLinks = [
     {
       ...SOCIAL_LINKS[0],
@@ -71,7 +70,7 @@ export default function MobileToggleAndNav({
           >
             <NextImage src={IconClose} alt="關閉導覽" width={20} height={20} />
           </button>
-          {/* 導覽列項目清單 */}
+          <MobileNavList data={data} />
           <div className="mt-5 flex shrink-0 items-center gap-x-4 self-center">
             {ExtendedSocialLinks.map(({ name, href, icon }) => (
               <a key={name} href={href} target="_blank">
