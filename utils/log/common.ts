@@ -1,7 +1,9 @@
+import 'server-only'
+
 import { ApolloError } from '@apollo/client'
 import errors from '@twreporter/errors'
 import { GCP_PROJECT_ID } from '@/constants/config'
-import type { headers } from 'next/headers'
+import { headers } from 'next/headers'
 
 const createErrorLogger = (
   errorMessage: string,
@@ -82,8 +84,8 @@ const createErrorLogger = (
   }
 }
 
-const getTraceObject = (header: ReturnType<typeof headers>) => {
-  const traceHeader = header.get('x-cloud-trace-context')
+const getTraceObject = () => {
+  const traceHeader = headers().get('x-cloud-trace-context')
   const globalLogFields: Record<string, string> = {}
   if (traceHeader) {
     const [trace] = traceHeader.split('/')

@@ -10,7 +10,6 @@ import {
   URL_STATIC_POPULAR_NEWS,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { headers } from 'next/headers'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
   GetLiveEventForHomepageQuery,
@@ -257,7 +256,7 @@ const transformRawLiveEvents = (
 const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching live event data in homepage',
-    getTraceObject(headers())
+    getTraceObject()
   )
 
   const result = await fetchGQLData(
