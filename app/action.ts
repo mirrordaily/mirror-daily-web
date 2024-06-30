@@ -4,6 +4,7 @@ import type {
   LatestPost,
   PickupItemInTopNewsSection,
   HeroImage,
+  SectionAndCategory,
 } from '@/types/homepage'
 import {
   URL_STATIC_LATEST_NEWS,
@@ -13,9 +14,13 @@ import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
   GetLiveEventForHomepageQuery,
+  GetSectionsAndCategoriesQuery,
   HeroImageFragment,
 } from '@/graphql/__generated__/graphql'
-import { GetLiveEventForHomepageDocument } from '@/graphql/__generated__/graphql'
+import {
+  GetLiveEventForHomepageDocument,
+  GetSectionsAndCategoriesDocument,
+} from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
 import { getPostPageUrl } from '@/utils/site-urls'
 
@@ -274,4 +279,57 @@ const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
   return null
 }
 
-export { fetchLatestPost, fetchPopularPost, fetchLiveEvent }
+const transformRawSectionsAndCategories = (
+  rawData: GetSectionsAndCategoriesQuery['sections']
+): SectionAndCategory[] => {
+  if (!rawData) return []
+
+  return rawData.map((rawSection) => {
+    const name = rawSection.name ?? ''
+    const slug = rawSection.slug ?? ''
+    const color = rawSection.color ?? ''
+    const categories = (rawSection.categories ?? []).map((rawCategory) => {
+      const name = rawCategory.name ?? ''
+      const slug = rawCategory.slug ?? ''
+
+      return {
+        name,
+        slug,
+        color,
+      }
+    })
+
+    return {
+      name,
+      slug,
+      color,
+      categories,
+    }
+  })
+}
+
+const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching sections and categories',
+    getTraceObject()
+  )
+
+  const result = await fetchGQLData(
+    errorLogger,
+    GetSectionsAndCategoriesDocument
+  )
+
+  if (result) {
+    const { sections } = result
+    return transformRawSectionsAndCategories(sections)
+  } else {
+    return []
+  }
+}
+
+export {
+  fetchLatestPost,
+  fetchPopularPost,
+  fetchLiveEvent,
+  fetchSectionsAndCategories,
+}
