@@ -18,6 +18,9 @@ module.exports = {
         'image-mask':
           'linear-gradient(180deg, rgba(0, 0, 0, 0) 40.54%, #000 100%)',
       },
+      zIndex: {
+        'mobile-nav': 1000000000,
+      },
     },
   },
   plugins: [

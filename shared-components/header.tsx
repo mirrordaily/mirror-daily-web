@@ -1,6 +1,8 @@
 import NextImage from 'next/image'
 import NextLink from 'next/link'
 import { SOCIAL_LINKS } from '@/constants/misc'
+import MobileToggleAndNav from './header/mobile-toggle-and-nav'
+import { fetchSectionsAndCategories } from '@/app/action'
 import IconSearch from '@/public/icons/search.svg'
 import IconLogo from '@/public/icons/logos/mirror-daily-full-color.svg'
 import IconFacebook from '@/public/icons/logos/facebook-black.svg'
@@ -33,10 +35,12 @@ export default async function Header() {
     },
   ] as const
 
+  const data = await fetchSectionsAndCategories()
+
   return (
     <header className="flex h-[150px] w-full max-w-[375px] flex-col items-center md:h-[134px] md:w-[720px] md:max-w-none lg:h-[144px] lg:w-[1200px]">
       <div className="flex h-[68px] w-full border-b border-[#ccced4] pl-[17px] pr-5 md:border-0 md:pl-6 lg:h-[82px] lg:pl-5">
-        {/* mobile, tablet 按鈕與膽覽列 */}
+        <MobileToggleAndNav data={data} />
         <div className="hidden overflow-hidden lg:order-2 lg:flex lg:grow">
           {/* desktop 導覽列 */}
         </div>
