@@ -2,6 +2,7 @@ import NextImage from 'next/image'
 import NextLink from 'next/link'
 import { SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './header/mobile-toggle-and-nav'
+import DesktopNavList from './header/desktop-nav-list'
 import { fetchSectionsAndCategories } from '@/app/action'
 import IconSearch from '@/public/icons/search.svg'
 import IconLogo from '@/public/icons/logos/mirror-daily-full-color.svg'
@@ -42,7 +43,7 @@ export default async function Header() {
       <div className="flex h-[68px] w-full border-b border-[#ccced4] pl-[17px] pr-5 md:border-0 md:pl-6 lg:h-[82px] lg:pl-5">
         <MobileToggleAndNav data={data} />
         <div className="hidden overflow-hidden lg:order-2 lg:flex lg:grow">
-          {/* desktop 導覽列 */}
+          <DesktopNavList data={data} />
         </div>
         <button className="ml-5 mt-[22px] h-7 shrink-0 rounded-[29px] bg-[#D94141] px-[10px] py-[3px] text-[15px] font-normal leading-[22px] text-white md:ml-[18px] md:mt-6 md:h-5 md:px-[6px] md:py-0 md:text-[13px] md:leading-5 lg:order-3 lg:ml-[26px] lg:mt-[30px] lg:h-7 lg:px-[10px] lg:py-[3px] lg:text-[15px] lg:leading-[22px]">
           我要爆料
