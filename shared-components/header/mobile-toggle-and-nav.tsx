@@ -63,20 +63,27 @@ export default function MobileToggleAndNav({ data }: Props) {
         checked={isOpen}
       />
       {isOpen && (
-        <div className="fixed left-0 top-0 z-mobile-nav hidden h-screen w-screen flex-col bg-[#000928] px-[46px] pb-[40px] pt-[20px] peer-checked:flex peer-checked:lg:hidden">
-          <button
-            className="absolute right-5 top-5 inline-block"
-            onClick={toggleOpen}
-          >
-            <NextImage src={IconClose} alt="關閉導覽" width={20} height={20} />
-          </button>
-          <MobileNavList data={data} />
-          <div className="mt-5 flex shrink-0 items-center gap-x-4 self-center">
-            {ExtendedSocialLinks.map(({ name, href, icon }) => (
-              <a key={name} href={href} target="_blank">
-                <NextImage src={icon} alt={name} />
-              </a>
-            ))}
+        <div className="fixed left-0 top-0 z-mobile-nav hidden h-screen w-screen flex-col bg-[#000928] peer-checked:flex md:bg-[rgba(12,12,12,0.7)] peer-checked:lg:hidden">
+          <div className="relative flex h-full flex-col bg-[#000928] px-[46px] pb-[40px] pt-[20px] md:w-[375px]">
+            <button
+              className="absolute right-5 top-5 inline-block"
+              onClick={toggleOpen}
+            >
+              <NextImage
+                src={IconClose}
+                alt="關閉導覽"
+                width={20}
+                height={20}
+              />
+            </button>
+            <MobileNavList data={data} />
+            <div className="mt-5 flex shrink-0 items-center gap-x-4 self-center">
+              {ExtendedSocialLinks.map(({ name, href, icon }) => (
+                <a key={name} href={href} target="_blank">
+                  <NextImage src={icon} alt={name} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       )}
