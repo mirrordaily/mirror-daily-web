@@ -39,7 +39,7 @@ export default async function Header() {
   const data = await fetchSectionsAndCategories()
 
   return (
-    <header className="flex h-[150px] w-full max-w-[375px] flex-col items-center md:h-[134px] md:w-[720px] md:max-w-none lg:h-[144px] lg:w-[1200px]">
+    <header className="flex h-[150px] w-full max-w-[375px] shrink-0 flex-col items-center md:h-[134px] md:w-[720px] md:max-w-none lg:h-[144px] lg:w-[1200px]">
       <div className="flex h-[68px] w-full border-b border-[#ccced4] pl-[17px] pr-5 md:border-0 md:pl-6 lg:h-[82px] lg:pl-5">
         <MobileToggleAndNav data={data} />
         <div className="hidden overflow-hidden lg:order-2 lg:flex lg:grow">
