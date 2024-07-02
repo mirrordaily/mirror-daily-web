@@ -31,6 +31,9 @@ export type PopularNews = {
   heroImage: HeroImage | null
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ParameterOfComponent<T extends (...args: any) => any> =
-  Parameters<T>[0]
+export type ParameterOfComponent<T> = T extends (
+  props: infer P,
+  ...args: any[] // eslint-disable-line @typescript-eslint/no-explicit-any
+) => any // eslint-disable-line @typescript-eslint/no-explicit-any
+  ? P
+  : never
