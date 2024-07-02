@@ -26,7 +26,7 @@ export default function MainArticleCard({ postItem, color }: Props) {
       </figure>
       <div className="flex flex-row justify-center gap-x-2 pl-[23px] pr-[22px] md:justify-start md:gap-x-3 md:px-0">
         <div
-          style={{ backgroundColor: color || 'FF5A36' }}
+          style={{ backgroundColor: color || '#FF5A36' }}
           className={`h-20 w-7 shrink-0 md:h-12`}
         />
         <figcaption className="line-clamp-3 max-w-[294px] text-xl font-bold leading-[1.3] text-[#000928] md:line-clamp-2 md:max-w-[506px]">
