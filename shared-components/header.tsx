@@ -51,9 +51,11 @@ export default async function Header() {
           <DesktopNavList data={data} />
         </div>
         <button className="ml-5 mt-[22px] h-7 shrink-0 rounded-[29px] bg-[#D94141] px-[10px] py-[3px] text-[15px] font-normal leading-[22px] text-white md:ml-[18px] md:mt-6 md:h-5 md:px-[6px] md:py-0 md:text-[13px] md:leading-5 lg:order-3 lg:ml-[26px] lg:mt-[30px] lg:h-7 lg:px-[10px] lg:py-[3px] lg:text-[15px] lg:leading-[22px]">
+          {/* TODO: click handler */}
           我要爆料
         </button>
         <div className="ml-4 mt-[26px] flex shrink-0 md:ml-[18px] md:mt-6 md:gap-x-[5px] lg:order-4 lg:ml-3 lg:mt-[34px] lg:gap-x-[6px]">
+          {/* TODO: form submit handler, expanded search bar on mobile device */}
           <input
             type="text"
             name="search"
