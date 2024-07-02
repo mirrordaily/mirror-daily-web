@@ -3665,6 +3665,17 @@ export type GetLiveEventForHomepageQuery = {
   }> | null
 }
 
+export type GetFlashNewsQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetFlashNewsQuery = {
+  __typename?: 'Query'
+  posts?: Array<{
+    __typename?: 'Post'
+    title?: string | null
+    slug?: string | null
+  }> | null
+}
+
 export type GetSectionsAndCategoriesQueryVariables = Exact<{
   [key: string]: never
 }>
@@ -3918,6 +3929,80 @@ export const GetLiveEventForHomepageDocument = {
   GetLiveEventForHomepageQuery,
   GetLiveEventForHomepageQueryVariables
 >
+export const GetFlashNewsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetFlashNews' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'posts' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: { kind: 'IntValue', value: '8' },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'publishedDate' },
+                      value: { kind: 'EnumValue', value: 'desc' },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetFlashNewsQuery, GetFlashNewsQueryVariables>
 export const GetSectionsAndCategoriesDocument = {
   kind: 'Document',
   definitions: [

@@ -17,6 +17,8 @@ const documents = {
     types.HeroImageFragmentDoc,
   'query GetLiveEventForHomepage($startDate: DateTime!) {\n  events(\n    orderBy: {publishedDate: desc}\n    take: 1\n    where: {eventType: {equals: "livestreaming"}, state: {equals: "published"}, startDate: {lte: $startDate}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}':
     types.GetLiveEventForHomepageDocument,
+  'query GetFlashNews {\n  posts(\n    take: 8\n    orderBy: {publishedDate: desc}\n    where: {state: {equals: "published"}}\n  ) {\n    title\n    slug\n  }\n}':
+    types.GetFlashNewsDocument,
   'query GetSectionsAndCategories {\n  sections(orderBy: {order: asc}, where: {state: {equals: "active"}}) {\n    name\n    slug\n    color\n    categories(orderBy: {order: asc}, where: {state: {equals: "active"}}) {\n      name\n      slug\n    }\n  }\n}':
     types.GetSectionsAndCategoriesDocument,
 }
@@ -47,6 +49,12 @@ export function gql(
 export function gql(
   source: 'query GetLiveEventForHomepage($startDate: DateTime!) {\n  events(\n    orderBy: {publishedDate: desc}\n    take: 1\n    where: {eventType: {equals: "livestreaming"}, state: {equals: "published"}, startDate: {lte: $startDate}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}'
 ): (typeof documents)['query GetLiveEventForHomepage($startDate: DateTime!) {\n  events(\n    orderBy: {publishedDate: desc}\n    take: 1\n    where: {eventType: {equals: "livestreaming"}, state: {equals: "published"}, startDate: {lte: $startDate}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: 'query GetFlashNews {\n  posts(\n    take: 8\n    orderBy: {publishedDate: desc}\n    where: {state: {equals: "published"}}\n  ) {\n    title\n    slug\n  }\n}'
+): (typeof documents)['query GetFlashNews {\n  posts(\n    take: 8\n    orderBy: {publishedDate: desc}\n    where: {state: {equals: "published"}}\n  ) {\n    title\n    slug\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

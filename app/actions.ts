@@ -5,6 +5,7 @@ import type {
   PickupItemInTopNewsSection,
   HeroImage,
   SectionAndCategory,
+  FlashNews,
 } from '@/types/homepage'
 import {
   URL_STATIC_LATEST_NEWS,
@@ -13,16 +14,18 @@ import {
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
+  GetFlashNewsQuery,
   GetLiveEventForHomepageQuery,
   GetSectionsAndCategoriesQuery,
   HeroImageFragment,
 } from '@/graphql/__generated__/graphql'
 import {
+  GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
   GetSectionsAndCategoriesDocument,
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
-import { getPostPageUrl } from '@/utils/site-urls'
+import { getPostPageUrl, getStoryPageUrl } from '@/utils/site-urls'
 
 type Category = {
   name: string
@@ -327,9 +330,44 @@ const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
   }
 }
 
+const transformRawFlashNews = (
+  rawData: GetFlashNewsQuery['posts']
+): FlashNews[] => {
+  if (!rawData) return []
+
+  return rawData.map((rawPost) => {
+    const postName = rawPost.title ?? ''
+    const postSlug = rawPost.slug ?? ''
+    const link = getStoryPageUrl(postSlug)
+
+    return {
+      postName,
+      postSlug,
+      link,
+    }
+  })
+}
+
+const fetchFlashNews = async (): Promise<FlashNews[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching flash news',
+    getTraceObject()
+  )
+
+  const result = await fetchGQLData(errorLogger, GetFlashNewsDocument)
+
+  if (result) {
+    const { posts } = result
+    return transformRawFlashNews(posts)
+  } else {
+    return []
+  }
+}
+
 export {
   fetchLatestPost,
   fetchPopularPost,
   fetchLiveEvent,
   fetchSectionsAndCategories,
+  fetchFlashNews,
 }
