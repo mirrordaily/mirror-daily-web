@@ -3,6 +3,7 @@ import NextLink from 'next/link'
 import { SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './header/mobile-toggle-and-nav'
 import DesktopNavList from './header/desktop-nav-list'
+import FlashNewsList from './header/flash-news-list'
 import { fetchSectionsAndCategories } from '@/app/action'
 import IconSearch from '@/public/icons/search.svg'
 import IconLogo from '@/public/icons/logos/mirror-daily-full-color.svg'
@@ -86,7 +87,33 @@ export default async function Header() {
         <p className="ml-[13px] mr-8 shrink-0 font-bold leading-normal text-[#D94141] md:ml-0 md:mr-2 lg:ml-[17px] lg:mr-3">
           快訊
         </p>
-        {/* 快訊清單*/}
+        <FlashNewsList
+          items={[
+            {
+              link: '',
+              postName:
+                '111 商業事件審理專法即將上路  商業事件審理專法即將上路 商業事件審理專法即將上路',
+              postSlug: '1',
+            },
+            {
+              link: '',
+              postName:
+                '222 商業事件審理專法即將上路  商業事件審理專法即將上路 商業事件審理專法即將上路 商業事件審理專法即將上路  商業事件審理專法即將上路 商業事件審理專法即將上路',
+              postSlug: '2',
+            },
+            {
+              link: '',
+              postName: '333 商業事件審理專法即將上路',
+              postSlug: '3',
+            },
+            {
+              link: '',
+              postName:
+                '444 商業事件審理專法即將上路  商業事件審理專法即將上路',
+              postSlug: '4',
+            },
+          ]}
+        />
         <div className="mb-[2px] ml-[22px] hidden shrink-0 gap-x-3 md:flex lg:mb-[6px]">
           <a target="_blank" href="https://www.mirrormedia.mg/">
             <NextImage

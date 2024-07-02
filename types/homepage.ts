@@ -50,3 +50,5 @@ export type SectionAndCategory = {
     color: string
   }[]
 }
+
+export type FlashNews = Pick<LatestPost, 'postSlug' | 'postName' | 'link'>
