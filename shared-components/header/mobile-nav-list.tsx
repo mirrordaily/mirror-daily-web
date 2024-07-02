@@ -20,7 +20,10 @@ export default function MobileNavList({ data }: Props) {
   const [activeItem, setActiveItem] = useState('')
 
   const toggleActiveItem = (item: string, color: string) => {
-    if (item === activeItem) return
+    if (item === activeItem) {
+      setActiveItem('')
+      return
+    }
 
     setActiveItem(item)
 
