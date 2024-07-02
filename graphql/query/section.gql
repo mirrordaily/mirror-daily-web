@@ -19,3 +19,10 @@ query GetSectionsAndCategories {
     }
   }
 }
+query GetSectionInformation($slug: String!) {
+  section(where: { slug: $slug }) {
+    slug
+    name
+    color
+  }
+}

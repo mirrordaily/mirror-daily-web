@@ -28,7 +28,7 @@ export default function UiPopularNewsCard({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex flex-col md:gap-y-2 lg:w-60 lg:gap-y-3"
+      className="flex flex-col md:gap-y-2 lg:gap-y-3"
     >
       <figure className="relative md:h-[154px] lg:h-[133px]">
         <CustomImage
