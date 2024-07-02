@@ -1,4 +1,8 @@
-import { fetchLatestPost, fetchPopularPost, fetchLiveEvent } from '@/app/action'
+import {
+  fetchLatestPost,
+  fetchPopularPost,
+  fetchLiveEvent,
+} from '@/app/actions'
 import type { ParameterOfComponent } from '@/types/common'
 
 import SectionDivider from './_components/divider'
