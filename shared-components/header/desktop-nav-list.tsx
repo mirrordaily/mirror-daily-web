@@ -51,7 +51,7 @@ export default function DesktopNavList({ data }: Props) {
                   return (
                     <li
                       key={slug}
-                      className="whitespace-nowrap hover-or-active:text-[color:var(--active-section-color)]"
+                      className="whitespace-nowrap focus-within:text-[color:var(--active-section-color)] hover-or-active:text-[color:var(--active-section-color)]"
                     >
                       <NextLink href={getCategoryPageUrl(slug)}>
                         {name}
