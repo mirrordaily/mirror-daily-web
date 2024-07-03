@@ -31,35 +31,13 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
   }
 }
 
-query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {
+query GetFlashNews {
   posts(
-    skip: $skip
-    take: $take
-    where: { categories: { some: { slug: { equals: $slug } } } }
+    take: 8
     orderBy: { publishedDate: desc }
+    where: { state: { equals: "published" } }
   ) {
     title
-    createdAt
-    brief
-    heroImage {
-      id
-      resized {
-        w1200
-        w1600
-        w2400
-        w480
-        w800
-        original
-      }
-      resizedWebp {
-        original
-        w1200
-        w1600
-        w2400
-        w480
-        w800
-      }
-    }
     slug
   }
 }

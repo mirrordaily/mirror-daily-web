@@ -1,6 +1,6 @@
 import type { LatestPost } from '@/types/homepage'
 import PostList from './post-list'
-import { fetchLatestPost } from '@/app/action'
+import { fetchLatestPost } from '@/app/actions'
 
 type Props = {
   initialList: LatestPost[]

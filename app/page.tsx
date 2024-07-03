@@ -1,4 +1,8 @@
-import { fetchLatestPost, fetchPopularPost, fetchLiveEvent } from '@/app/action'
+import {
+  fetchLatestPost,
+  fetchPopularPost,
+  fetchLiveEvent,
+} from '@/app/actions'
 import type { ParameterOfComponent } from '@/types/common'
 
 import SectionDivider from './_components/divider'
@@ -65,15 +69,18 @@ export default async function Home() {
 
   return (
     <main className="flex w-full grow flex-col items-center justify-center">
-      {/* 編輯精選（5則輪播） */}
+      <SectionDivider customClasses="hidden md:block" />
+      <div className="h-10 w-full bg-slate-200">
+        {/* 編輯精選（5則輪播） */}
+      </div>
       <SectionDivider />
       {/* 即時新聞/熱門新聞（10則） */}
       <TopNewsSection postsOfTab={postsOfTab} />
       <SectionDivider />
       {/* 短影音新聞 */}
-      <SectionDivider />
+      <SectionDivider customClasses="hidden" />
       {/* Topic（4則）＋遊戲區 */}
-      <SectionDivider />
+      <SectionDivider customClasses="hidden" />
       {/* 短影音．二創 */}
       <SectionDivider />
       {/* 最新新聞 */}

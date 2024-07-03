@@ -6,7 +6,6 @@ import {
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { Posts } from '@/types/section'
-import { headers } from 'next/headers'
 
 async function fetchSectionPosts(
   page: number,
@@ -14,7 +13,7 @@ async function fetchSectionPosts(
 ): Promise<Posts | null> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching section posts in section page',
-    getTraceObject(headers())
+    getTraceObject()
   )
 
   const firstPageSize = 13
@@ -40,7 +39,7 @@ async function fetchSectionPosts(
 async function fetchSectionInformation(slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching sections information',
-    getTraceObject(headers())
+    getTraceObject()
   )
 
   const result = await fetchGQLData(
