@@ -1,19 +1,4 @@
-import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
-
-export type HeroImage = {
-  resized?: Partial<
-    Record<
-      keyof Omit<NonNullable<HeroImageFragment['resized']>, '__typename'>,
-      string
-    >
-  >
-  resizedWebp?: Partial<
-    Record<
-      keyof Omit<NonNullable<HeroImageFragment['resizedWebp']>, '__typename'>,
-      string
-    >
-  >
-}
+import type { HeroImage } from './common'
 
 export type LatestPost = {
   categoryName: string

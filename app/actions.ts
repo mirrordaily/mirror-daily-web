@@ -3,10 +3,10 @@
 import type {
   LatestPost,
   PickupItemInTopNewsSection,
-  HeroImage,
   SectionAndCategory,
   FlashNews,
 } from '@/types/homepage'
+import type { HeroImage } from '@/types/common'
 import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
@@ -17,7 +17,6 @@ import type {
   GetFlashNewsQuery,
   GetLiveEventForHomepageQuery,
   GetSectionsAndCategoriesQuery,
-  HeroImageFragment,
 } from '@/graphql/__generated__/graphql'
 import {
   GetFlashNewsDocument,
@@ -26,6 +25,7 @@ import {
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
 import { getPostPageUrl, getStoryPageUrl } from '@/utils/site-urls'
+import { getHeroImage } from '@/utils/common'
 
 type Category = {
   name: string
@@ -63,72 +63,6 @@ const getCategoryColor = () => {
   const green = getSingleColor()
   const blue = getSingleColor()
   return `rgb(${red},${green},${blue})`
-}
-
-const getHeroImage = (
-  rawImageObj:
-    | Pick<HeroImageFragment, 'resized' | 'resizedWebp'>
-    | string
-    | null
-    | undefined
-): HeroImage => {
-  if (typeof rawImageObj === 'object' || typeof rawImageObj === 'undefined') {
-    if (rawImageObj !== null && rawImageObj !== undefined) {
-      return Object.entries(rawImageObj).reduce<HeroImage>(
-        (
-          obj: HeroImage,
-          [typeKey, valueObj]: [
-            string,
-            HeroImageFragment[keyof HeroImageFragment],
-          ]
-        ) => {
-          type RawResziedImages = NonNullable<HeroImageFragment['resized']>
-          type ResizedImages = NonNullable<HeroImage['resized']>
-
-          if (['resized', 'resizedWebp'].includes(typeKey) && valueObj) {
-            const newValueObj = Object.entries(valueObj).reduce<ResizedImages>(
-              (
-                values,
-                [sizeKey, value]: [
-                  string,
-                  RawResziedImages[keyof RawResziedImages],
-                ]
-              ) => {
-                if (value) {
-                  values[sizeKey as keyof ResizedImages] = value
-                }
-
-                return values
-              },
-              {
-                original: '',
-              } satisfies ResizedImages
-            )
-
-            obj[typeKey as keyof HeroImage] = newValueObj
-          }
-
-          return obj
-        },
-        {
-          resized: {
-            original: '',
-          },
-        } satisfies HeroImage
-      )
-    } else
-      return {
-        resized: {
-          original: '',
-        },
-      }
-  } else {
-    return {
-      resized: {
-        original: rawImageObj,
-      },
-    }
-  }
 }
 
 type CategoryConfig = {

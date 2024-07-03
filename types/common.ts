@@ -1,16 +1,18 @@
-export type ResizedImage = {
-  original: string
-  w480: string
-  w800: string
-  w1200: string
-  w1600: string
-  w2400: string
-}
+import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
 
 export type HeroImage = {
-  id: string
-  resized: ResizedImage
-  resizedWebp: ResizedImage
+  resized?: Partial<
+    Record<
+      keyof Omit<NonNullable<HeroImageFragment['resized']>, '__typename'>,
+      string
+    >
+  >
+  resizedWebp?: Partial<
+    Record<
+      keyof Omit<NonNullable<HeroImageFragment['resizedWebp']>, '__typename'>,
+      string
+    >
+  >
 }
 
 type Section = {
