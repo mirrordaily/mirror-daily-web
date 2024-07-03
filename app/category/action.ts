@@ -5,12 +5,11 @@ import {
   GetPostsByCategorySlugDocument,
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { headers } from 'next/headers'
 
 async function fetchCategoryPosts(page: number, slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching category posts in category page',
-    getTraceObject(headers())
+    getTraceObject()
   )
 
   const firstPageSize = 13
@@ -36,7 +35,7 @@ async function fetchCategoryPosts(page: number, slug: string) {
 async function fetchCategoryInformation(slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching category information',
-    getTraceObject(headers())
+    getTraceObject()
   )
 
   const result = await fetchGQLData(
