@@ -2,5 +2,9 @@ query GetCategoryInformation($slug: String) {
   category(where: { slug: $slug }) {
     slug
     name
+    sections {
+      slug
+      color
+    }
   }
 }
