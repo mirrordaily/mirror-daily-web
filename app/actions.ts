@@ -4,21 +4,28 @@ import type {
   LatestPost,
   PickupItemInTopNewsSection,
   HeroImage,
+  SectionAndCategory,
+  FlashNews,
 } from '@/types/homepage'
 import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { headers } from 'next/headers'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
+  GetFlashNewsQuery,
   GetLiveEventForHomepageQuery,
+  GetSectionsAndCategoriesQuery,
   HeroImageFragment,
 } from '@/graphql/__generated__/graphql'
-import { GetLiveEventForHomepageDocument } from '@/graphql/__generated__/graphql'
+import {
+  GetFlashNewsDocument,
+  GetLiveEventForHomepageDocument,
+  GetSectionsAndCategoriesDocument,
+} from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
-import { getPostPageUrl } from '@/utils/site-urls'
+import { getPostPageUrl, getStoryPageUrl } from '@/utils/site-urls'
 
 type Category = {
   name: string
@@ -257,7 +264,7 @@ const transformRawLiveEvents = (
 const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching live event data in homepage',
-    getTraceObject(headers())
+    getTraceObject()
   )
 
   const result = await fetchGQLData(
@@ -275,4 +282,92 @@ const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
   return null
 }
 
-export { fetchLatestPost, fetchPopularPost, fetchLiveEvent }
+const transformRawSectionsAndCategories = (
+  rawData: GetSectionsAndCategoriesQuery['sections']
+): SectionAndCategory[] => {
+  if (!rawData) return []
+
+  return rawData.map((rawSection) => {
+    const name = rawSection.name ?? ''
+    const slug = rawSection.slug ?? ''
+    const color = rawSection.color ?? ''
+    const categories = (rawSection.categories ?? []).map((rawCategory) => {
+      const name = rawCategory.name ?? ''
+      const slug = rawCategory.slug ?? ''
+
+      return {
+        name,
+        slug,
+        color,
+      }
+    })
+
+    return {
+      name,
+      slug,
+      color,
+      categories,
+    }
+  })
+}
+
+const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching sections and categories',
+    getTraceObject()
+  )
+
+  const result = await fetchGQLData(
+    errorLogger,
+    GetSectionsAndCategoriesDocument
+  )
+
+  if (result) {
+    const { sections } = result
+    return transformRawSectionsAndCategories(sections)
+  } else {
+    return []
+  }
+}
+
+const transformRawFlashNews = (
+  rawData: GetFlashNewsQuery['posts']
+): FlashNews[] => {
+  if (!rawData) return []
+
+  return rawData.map((rawPost) => {
+    const postName = rawPost.title ?? ''
+    const postSlug = rawPost.slug ?? ''
+    const link = getStoryPageUrl(postSlug)
+
+    return {
+      postName,
+      postSlug,
+      link,
+    }
+  })
+}
+
+const fetchFlashNews = async (): Promise<FlashNews[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching flash news',
+    getTraceObject()
+  )
+
+  const result = await fetchGQLData(errorLogger, GetFlashNewsDocument)
+
+  if (result) {
+    const { posts } = result
+    return transformRawFlashNews(posts)
+  } else {
+    return []
+  }
+}
+
+export {
+  fetchLatestPost,
+  fetchPopularPost,
+  fetchLiveEvent,
+  fetchSectionsAndCategories,
+  fetchFlashNews,
+}

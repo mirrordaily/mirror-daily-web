@@ -1,7 +1,13 @@
-export default function SectionDivider() {
+import { twMerge } from 'tailwind-merge'
+
+type Props = {
+  customClasses?: string
+}
+
+export default function SectionDivider({ customClasses }: Props) {
   return (
-    <div className="section-in-homepage">
-      <hr className="h-px border-none bg-[#000928]" />
+    <div className={twMerge('section-in-homepage', customClasses ?? '')}>
+      <hr className="h-px border-none bg-[#000928] md:h-[2px]" />
     </div>
   )
 }

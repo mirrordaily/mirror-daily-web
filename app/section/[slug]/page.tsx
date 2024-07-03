@@ -19,7 +19,7 @@ export default async function Page({
   const name = section.name
 
   return (
-    <main className="mb-10 flex flex-col items-center md:mb-[72px] lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">
+    <main className="mb-10 flex flex-col items-center md:mb-[72px] md:mt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">
       <ArticlesList
         initialPosts={posts}
         slug={slug}

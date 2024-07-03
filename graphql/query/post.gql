@@ -30,3 +30,14 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
     slug
   }
 }
+
+query GetFlashNews {
+  posts(
+    take: 8
+    orderBy:  { publishedDate: desc }
+    where: { state: { equals: "published" } }
+  ) {
+    title
+    slug
+  }
+}

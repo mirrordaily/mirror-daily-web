@@ -39,3 +39,16 @@ export type PickupItemInTopNewsSection = Pick<
   LatestPost,
   'postName' | 'heroImage' | 'link'
 >
+
+export type SectionAndCategory = {
+  name: string
+  slug: string
+  color: string
+  categories: {
+    name: string
+    slug: string
+    color: string
+  }[]
+}
+
+export type FlashNews = Pick<LatestPost, 'postSlug' | 'postName' | 'link'>
