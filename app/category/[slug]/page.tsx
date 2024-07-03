@@ -8,7 +8,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const category = await fetchCategoryInformation(slug)
   const posts = await fetchCategoryPosts(1, slug)
-  console.log(category)
 
   if (!category) notFound()
 
