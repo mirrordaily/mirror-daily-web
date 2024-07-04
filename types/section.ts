@@ -1,3 +1,10 @@
-import type { GetPostsBySectionSlugQuery } from '@/graphql/__generated__/graphql'
+import type { HeroImage } from './common'
 
-export type Posts = NonNullable<GetPostsBySectionSlugQuery['posts']>
+export type SectionPost = {
+  title: string
+  slug: string
+  createdTime: string
+  brief: string
+  heroImage: HeroImage
+  link: string
+}

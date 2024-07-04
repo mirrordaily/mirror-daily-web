@@ -4,14 +4,14 @@ import MainArticleCard from '../../../shared-components/main-article-card'
 import SecondaryArticleCard from '../../../shared-components/secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { fetchSectionPosts } from '../action'
-import type { Posts } from '@/types/section'
+import type { SectionPost } from '@/types/section'
 import { notFound } from 'next/navigation'
 
 type Props = {
-  initialPosts: Posts | null
+  initialPosts: SectionPost[]
   slug: string
-  color: string | undefined | null
-  name: string | undefined | null
+  color: string
+  name: string
 }
 
 export default function ArticlesList({
@@ -25,7 +25,7 @@ export default function ArticlesList({
 
   const fetchMorePosts = async (page: number) => {
     const posts = await fetchSectionPosts(page, slug)
-    return posts || []
+    return posts
   }
 
   if (!firstPost) notFound()

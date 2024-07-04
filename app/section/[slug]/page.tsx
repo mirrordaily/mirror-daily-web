@@ -10,13 +10,13 @@ export default async function Page({
 }): Promise<JSX.Element> {
   const slug = params.slug
 
-  const section = await fetchSectionInformation(slug)
+  const sectionInfo = await fetchSectionInformation(slug)
   const posts = await fetchSectionPosts(1, slug)
 
-  if (!section) notFound()
+  if (!sectionInfo) notFound()
 
-  const color = section.color
-  const name = section.name
+  const color = sectionInfo.color
+  const name = sectionInfo.name
 
   return (
     <main className="mb-10 flex flex-col items-center md:mb-[72px] md:mt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">

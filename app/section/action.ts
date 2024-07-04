@@ -5,12 +5,39 @@ import {
   GetSectionInformationDocument,
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import type { Posts } from '@/types/section'
+import type {
+  GetPostsBySectionSlugQuery,
+  GetSectionInformationQuery,
+} from '@/graphql/__generated__/graphql'
+import { getStoryPageUrl } from '@/utils/site-urls'
+import { getHeroImage } from '@/utils/common'
+import type { SectionPost } from '@/types/section'
 
-async function fetchSectionPosts(
-  page: number,
-  slug: string
-): Promise<Posts | null> {
+function transformSectionPost(
+  rawData: GetPostsBySectionSlugQuery['posts']
+): SectionPost[] {
+  if (!rawData) return []
+
+  return rawData.map((rawPost) => {
+    const title = rawPost.title ?? ''
+    const slug = rawPost.slug ?? ''
+    const link = getStoryPageUrl(slug)
+    const createdTime = rawPost.createdAt
+    const heroImage = getHeroImage(rawPost.heroImage)
+    const brief = rawPost.brief.blocks[0].text ?? ''
+
+    return {
+      title,
+      slug,
+      link,
+      createdTime,
+      heroImage,
+      brief,
+    }
+  })
+}
+
+async function fetchSectionPosts(page: number, slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching section posts in section page',
     getTraceObject()
@@ -33,7 +60,27 @@ async function fetchSectionPosts(
       slug: slug,
     }
   )
-  return result?.posts ? result.posts : null
+
+  if (result) {
+    const { posts } = result
+    return transformSectionPost(posts)
+  } else {
+    return []
+  }
+}
+
+function transformCategoryInformation(
+  rawData: GetSectionInformationQuery['section']
+) {
+  if (!rawData) return null
+
+  const name = rawData.name ?? ''
+  const color = rawData.color ?? '#FF5A36'
+
+  return {
+    name,
+    color,
+  }
 }
 
 async function fetchSectionInformation(slug: string) {
@@ -49,7 +96,13 @@ async function fetchSectionInformation(slug: string) {
       slug: slug,
     }
   )
-  return result?.section ? result.section : null
+
+  if (result) {
+    const { section } = result
+    return transformCategoryInformation(section)
+  } else {
+    return null
+  }
 }
 
 export { fetchSectionPosts, fetchSectionInformation }

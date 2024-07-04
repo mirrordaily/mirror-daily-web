@@ -3,9 +3,10 @@ import CustomImage from '@/shared-components/custom-image'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { CategoryPost } from '@/types/category-page'
+import type { SectionPost } from '@/types/section'
 
 type Props = {
-  postItem: CategoryPost
+  postItem: CategoryPost | SectionPost
   color: string
 }
 
