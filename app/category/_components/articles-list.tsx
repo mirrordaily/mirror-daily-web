@@ -5,10 +5,10 @@ import SecondaryArticleCard from '../../../shared-components/secondary-article-c
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { fetchCategoryPosts } from '../actions'
 import { notFound } from 'next/navigation'
-import type { GetPostsByCategorySlugQuery } from '@/graphql/__generated__/graphql'
+import type { CategoryPost } from '@/types/category-page'
 
 type Props = {
-  initialPosts: GetPostsByCategorySlugQuery['posts']
+  initialPosts: CategoryPost[]
   slug: string
   color: string | undefined | null
   name: string | undefined | null
@@ -25,7 +25,7 @@ export default function ArticlesList({
 
   const fetchMorePosts = async (page: number) => {
     const posts = await fetchCategoryPosts(page, slug)
-    return posts || []
+    return posts
   }
 
   if (!firstPost) notFound()

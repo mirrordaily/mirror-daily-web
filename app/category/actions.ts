@@ -4,7 +4,36 @@ import {
   GetCategoryInformationDocument,
   GetPostsByCategorySlugDocument,
 } from '@/graphql/__generated__/graphql'
+import type { GetPostsByCategorySlugQuery } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
+import type { CategoryPost } from '@/types/category-page'
+import { getStoryPageUrl } from '@/utils/site-urls'
+import { getHeroImage } from '@/utils/common'
+
+function transformCategoryPost(
+  rawData: GetPostsByCategorySlugQuery['posts']
+): CategoryPost[] {
+  if (!rawData) return []
+
+  return rawData.map((rawPost) => {
+    const title = rawPost.title ?? ''
+    const slug = rawPost.slug ?? ''
+    const link = getStoryPageUrl(slug)
+    const createdTime = rawPost.createdAt
+    const heroImage = getHeroImage(rawPost.heroImage)
+    const brief = rawPost.brief.blocks[0].text ?? ''
+
+    console.log(heroImage)
+    return {
+      title,
+      slug,
+      link,
+      createdTime,
+      heroImage,
+      brief,
+    }
+  })
+}
 
 async function fetchCategoryPosts(page: number, slug: string) {
   const errorLogger = createErrorLogger(
@@ -29,7 +58,13 @@ async function fetchCategoryPosts(page: number, slug: string) {
       slug: slug,
     }
   )
-  return result?.posts
+
+  if (result) {
+    const { posts } = result
+    return transformCategoryPost(posts)
+  } else {
+    return []
+  }
 }
 
 async function fetchCategoryInformation(slug: string) {
