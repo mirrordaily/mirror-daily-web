@@ -1,6 +1,6 @@
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '../_components/articles-list'
-import { fetchSectionPosts, fetchSectionInformation } from '../action'
+import { fetchSectionPosts, fetchSectionInformation } from '../actions'
 import { notFound } from 'next/navigation'
 
 export default async function Page({
