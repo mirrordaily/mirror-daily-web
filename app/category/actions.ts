@@ -23,7 +23,6 @@ function transformCategoryPost(
     const heroImage = getHeroImage(rawPost.heroImage)
     const brief = rawPost.brief.blocks[0].text ?? ''
 
-    console.log(heroImage)
     return {
       title,
       slug,
