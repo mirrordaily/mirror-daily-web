@@ -4,7 +4,7 @@ import MainArticleCard from '../../../shared-components/main-article-card'
 import SecondaryArticleCard from '../../../shared-components/secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { fetchSectionPosts } from '../action'
-import type { SectionPost } from '@/types/section'
+import type { SectionPost } from '@/types/section-page'
 import { notFound } from 'next/navigation'
 
 type Props = {

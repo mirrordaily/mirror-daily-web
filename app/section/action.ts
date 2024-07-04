@@ -11,7 +11,7 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { getStoryPageUrl } from '@/utils/site-urls'
 import { getHeroImage } from '@/utils/common'
-import type { SectionPost } from '@/types/section'
+import type { SectionPost } from '@/types/section-page'
 
 function transformSectionPost(
   rawData: GetPostsBySectionSlugQuery['posts']
