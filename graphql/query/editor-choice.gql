@@ -1,0 +1,26 @@
+query GetEditorChoices {
+  editor: editorChoices(
+    orderBy:  [
+      { order: asc },
+      { publishedDate: desc }
+    ],
+    take: 10,
+    where: {
+      state:  { equals: "published" }
+    }
+  ) {
+    ...EditorChoiceData
+  }
+  ai: editorChoices(
+    orderBy: [
+      { order: desc }
+      { publishedDate: asc }
+    ],
+    take: 10,
+    where: {
+      state:  { equals: "published" }
+    }
+  ) {
+    ...EditorChoiceData
+  }
+}
