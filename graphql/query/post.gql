@@ -9,23 +9,7 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
     createdAt
     brief
     heroImage {
-      id
-      resized {
-        w1200
-        w1600
-        w2400
-        w480
-        w800
-        original
-      }
-      resizedWebp {
-        original
-        w1200
-        w1600
-        w2400
-        w480
-        w800
-      }
+      ...HeroImage
     }
     slug
   }
@@ -53,23 +37,7 @@ query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {
     createdAt
     brief
     heroImage {
-      id
-      resized {
-        w1200
-        w1600
-        w2400
-        w480
-        w800
-        original
-      }
-      resizedWebp {
-        original
-        w1200
-        w1600
-        w2400
-        w480
-        w800
-      }
+      ...HeroImage
     }
     slug
   }
