@@ -1,6 +1,7 @@
 'use client'
 
 import TabButton from './tab-button'
+import SwiperComponent from './swiper-component'
 import { useState } from 'react'
 
 export default function EditorChoiceMain() {
@@ -25,7 +26,7 @@ export default function EditorChoiceMain() {
           />
         ))}
       </div>
-      {/* Swiper Component */}
+      <SwiperComponent />
     </div>
   )
 }
