@@ -69,7 +69,7 @@ async function fetchSectionPosts(page: number, slug: string) {
   }
 }
 
-function transformCategoryInformation(
+function transformSectionInformation(
   rawData: GetSectionInformationQuery['section']
 ) {
   if (!rawData) return null
@@ -99,7 +99,7 @@ async function fetchSectionInformation(slug: string) {
 
   if (result) {
     const { section } = result
-    return transformCategoryInformation(section)
+    return transformSectionInformation(section)
   } else {
     return null
   }
