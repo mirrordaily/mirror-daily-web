@@ -3,7 +3,7 @@ import type { ReactElement } from 'react'
 import MainArticleCard from '../../../shared-components/main-article-card'
 import SecondaryArticleCard from '../../../shared-components/secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import { fetchCategoryPosts } from '../action'
+import { fetchCategoryPosts } from '../actions'
 import { notFound } from 'next/navigation'
 import type { GetPostsByCategorySlugQuery } from '@/graphql/__generated__/graphql'
 

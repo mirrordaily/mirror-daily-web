@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { fetchCategoryPosts, fetchCategoryInformation } from '../action'
+import { fetchCategoryPosts, fetchCategoryInformation } from '../actions'
 import ArticlesList from '../_components/articles-list'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 
