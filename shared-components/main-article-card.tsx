@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
 import type { CategoryPost } from '@/types/category-page'
-import type { SectionPost } from '@/types/section'
+import type { SectionPost } from '@/types/section-page'
 
 type Props = {
   postItem: CategoryPost | SectionPost
