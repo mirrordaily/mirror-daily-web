@@ -4,7 +4,10 @@ import {
   GetCategoryInformationDocument,
   GetPostsByCategorySlugDocument,
 } from '@/graphql/__generated__/graphql'
-import type { GetPostsByCategorySlugQuery } from '@/graphql/__generated__/graphql'
+import type {
+  GetPostsByCategorySlugQuery,
+  GetCategoryInformationQuery,
+} from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { CategoryPost } from '@/types/category-page'
 import { getStoryPageUrl } from '@/utils/site-urls'
@@ -66,6 +69,20 @@ async function fetchCategoryPosts(page: number, slug: string) {
   }
 }
 
+function transformCategoryInformation(
+  rawData: GetCategoryInformationQuery['category']
+) {
+  if (!rawData) return null
+
+  const name = rawData.name ?? ''
+  const color = rawData.sections?.[0]?.color ?? '#FF5A36'
+
+  return {
+    name,
+    color,
+  }
+}
+
 async function fetchCategoryInformation(slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching category information',
@@ -79,7 +96,13 @@ async function fetchCategoryInformation(slug: string) {
       slug: slug,
     }
   )
-  return result?.category
+
+  if (result) {
+    const { category } = result
+    return transformCategoryInformation(category)
+  } else {
+    return null
+  }
 }
 
 export { fetchCategoryPosts, fetchCategoryInformation }

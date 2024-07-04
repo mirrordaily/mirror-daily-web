@@ -6,7 +6,7 @@ import type { CategoryPost } from '@/types/category-page'
 
 type Props = {
   postItem: CategoryPost
-  color: string | null | undefined
+  color: string
 }
 
 const dateFormatter = (date: string) => {
@@ -32,7 +32,7 @@ export default function SecondaryArticleCard({ postItem, color }: Props) {
       </figure>
       <div className="leading-[1.3]">
         <p
-          style={{ color: color || '#FF5A36' }}
+          style={{ color: color }}
           className={`$md:mb-[17px] mb-[5px] text-sm font-normal`}
         >
           {dateFormatter(postItem.createdTime)}

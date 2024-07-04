@@ -6,13 +6,13 @@ import PopularNewsSection from '@/shared-components/popular-news-section'
 export default async function Page({ params }: { params: { slug: string } }) {
   const slug = params.slug
 
-  const category = await fetchCategoryInformation(slug)
+  const categoryInfo = await fetchCategoryInformation(slug)
   const posts = await fetchCategoryPosts(1, slug)
 
-  if (!category) notFound()
+  if (!categoryInfo) notFound()
 
-  const color = category.sections?.[0]?.color
-  const name = category.name
+  const color = categoryInfo.color
+  const name = categoryInfo.name
 
   return (
     <main className="mb-10 flex flex-col items-center md:mb-[72px] lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">
