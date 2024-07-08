@@ -3630,6 +3630,14 @@ export type HeroImageFragment = {
   } | null
 }
 
+export type PostDetailsFragment = {
+  __typename?: 'Post'
+  title?: string | null
+  createdAt?: any | null
+  brief?: any | null
+  slug?: string | null
+}
+
 export type GetCategoryInformationQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>
 }>
@@ -3854,6 +3862,28 @@ export const HeroImageFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<HeroImageFragment, unknown>
+export const PostDetailsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'PostDetails' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Post' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PostDetailsFragment, unknown>
 export const GetCategoryInformationDocument = {
   kind: 'Document',
   definitions: [
@@ -4223,9 +4253,10 @@ export const GetPostsBySectionSlugDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'PostDetails' },
+                },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'heroImage' },
@@ -4239,10 +4270,26 @@ export const GetPostsBySectionSlugDocument = {
                     ],
                   },
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
               ],
             },
           },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'PostDetails' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Post' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
         ],
       },
     },
@@ -4487,9 +4534,10 @@ export const GetPostsByCategorySlugDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'PostDetails' },
+                },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'heroImage' },
@@ -4503,10 +4551,26 @@ export const GetPostsByCategorySlugDocument = {
                     ],
                   },
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
               ],
             },
           },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'PostDetails' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Post' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
         ],
       },
     },

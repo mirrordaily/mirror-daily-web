@@ -1,0 +1,6 @@
+fragment PostDetails on Post {
+  title
+  createdAt
+  brief
+  slug
+}

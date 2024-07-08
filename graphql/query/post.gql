@@ -5,13 +5,10 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
     where: { sections: { some: { slug: { equals: $slug } } } }
     orderBy: { publishedDate: desc }
   ) {
-    title
-    createdAt
-    brief
+    ...PostDetails
     heroImage {
       ...HeroImage
     }
-    slug
   }
 }
 
@@ -33,12 +30,9 @@ query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {
     where: { categories: { some: { slug: { equals: $slug } } } }
     orderBy: { publishedDate: desc }
   ) {
-    title
-    createdAt
-    brief
+    ...PostDetails
     heroImage {
       ...HeroImage
     }
-    slug
   }
 }
