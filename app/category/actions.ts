@@ -11,7 +11,7 @@ import type {
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { CategoryPost } from '@/types/category-page'
 import { getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage } from '@/utils/common'
+import { getHeroImage } from '@/utils/data-process'
 
 function transformCategoryPost(
   rawData: GetPostsByCategorySlugQuery['posts']

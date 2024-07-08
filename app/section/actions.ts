@@ -10,7 +10,7 @@ import type {
   GetSectionInformationQuery,
 } from '@/graphql/__generated__/graphql'
 import { getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage } from '@/utils/common'
+import { getHeroImage } from '@/utils/data-process'
 import type { SectionPost } from '@/types/section-page'
 
 function transformSectionPost(
