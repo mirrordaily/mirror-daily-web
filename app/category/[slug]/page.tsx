@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { fetchCategoryPosts, fetchCategoryInformation } from '../actions'
-import ArticlesList from '../_components/articles-list'
+import ArticlesList from '../../../shared-components/articles-list'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -21,6 +21,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         slug={slug}
         color={color}
         name={name}
+        fetchPosts={fetchCategoryPosts}
       />
       <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
       <PopularNewsSection />

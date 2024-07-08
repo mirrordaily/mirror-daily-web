@@ -1,17 +1,18 @@
 'use client'
 import type { ReactElement } from 'react'
-import MainArticleCard from '../../../shared-components/main-article-card'
-import SecondaryArticleCard from '../../../shared-components/secondary-article-card'
+import MainArticleCard from './main-article-card'
+import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import { fetchSectionPosts } from '../actions'
-import type { SectionPost } from '@/types/section-page'
 import { notFound } from 'next/navigation'
+import type { CategoryPost } from '@/types/category-page'
+import type { SectionPost } from '@/types/section-page'
 
 type Props = {
-  initialPosts: SectionPost[]
+  initialPosts: CategoryPost[] | SectionPost[]
   slug: string
   color: string
   name: string
+  fetchPosts: (page: number, slug: string) => Promise<Props['initialPosts']>
 }
 
 export default function ArticlesList({
@@ -19,12 +20,13 @@ export default function ArticlesList({
   slug,
   color,
   name,
+  fetchPosts,
 }: Props): ReactElement {
   const PAGE_SIZE = 12
   const [firstPost, ...otherPosts] = initialPosts ?? []
 
   const fetchMorePosts = async (page: number) => {
-    const posts = await fetchSectionPosts(page, slug)
+    const posts = await fetchPosts(page, slug)
     return posts
   }
 
@@ -34,13 +36,13 @@ export default function ArticlesList({
     <div className="flex flex-col items-center">
       <div className="mb-5 w-full pl-[23px] pr-[22px] md:mb-7 md:px-0">
         <h1
-          style={{ color: color || '#FF5A36' }}
+          style={{ color: color }}
           className="mb-3 text-xl font-bold leading-[1.3] lg:text-2xl"
         >
           {name}
         </h1>
         <hr
-          style={{ borderColor: color || '#FF5A36' }}
+          style={{ borderColor: color }}
           className="max-w-[342px] border-4 md:max-w-[670px] lg:max-w-[740px]"
         />
       </div>
