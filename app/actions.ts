@@ -25,7 +25,7 @@ import {
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
 import { getPostPageUrl, getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage } from '@/utils/common'
+import { getHeroImage } from '@/utils/data-process'
 
 type Category = {
   name: string
