@@ -7,21 +7,21 @@ import { notFound } from 'next/navigation'
 import type { CategoryPost } from '@/types/category-page'
 import type { SectionPost } from '@/types/section-page'
 
-type Props = {
-  initialPosts: CategoryPost[] | SectionPost[]
+type Props<T> = {
+  initialPosts: T[]
   slug: string
   color: string
   name: string
-  fetchPosts: (page: number, slug: string) => Promise<Props['initialPosts']>
+  fetchPosts: (page: number, slug: string) => Promise<T[]>
 }
 
-export default function ArticlesList({
+export default function ArticlesList<T extends CategoryPost | SectionPost>({
   initialPosts,
   slug,
   color,
   name,
   fetchPosts,
-}: Props): ReactElement {
+}: Props<T>): ReactElement {
   const PAGE_SIZE = 12
   const [firstPost, ...otherPosts] = initialPosts ?? []
 
