@@ -24,7 +24,7 @@ function transformCategoryPost(
     const link = getStoryPageUrl(slug)
     const createdTime = rawPost.createdAt
     const heroImage = getHeroImage(rawPost.heroImage)
-    const brief = rawPost.brief.blocks[0].text ?? ''
+    const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
 
     return {
       title,
