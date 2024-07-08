@@ -43,7 +43,7 @@ export default function ArticlesList({
         </h1>
         <hr
           style={{ borderColor: color }}
-          className="max-w-[342px] border-4 md:max-w-[670px] lg:max-w-[740px]"
+          className="max-w-[342px] border-2 md:max-w-[670px] lg:max-w-[740px]"
         />
       </div>
       <div className="flex flex-col items-start">
