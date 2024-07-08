@@ -6,9 +6,6 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
     orderBy: { publishedDate: desc }
   ) {
     ...PostDetails
-    heroImage {
-      ...HeroImage
-    }
   }
 }
 
@@ -31,8 +28,5 @@ query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {
     orderBy: { publishedDate: desc }
   ) {
     ...PostDetails
-    heroImage {
-      ...HeroImage
-    }
   }
 }
