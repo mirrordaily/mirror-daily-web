@@ -46,7 +46,7 @@ export default function ArticlesList({
           className="max-w-[342px] border-4 md:max-w-[670px] lg:max-w-[740px]"
         />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-start">
         <div className="mb-10 md:mb-[50px]">
           <MainArticleCard color={color} postItem={firstPost} />
         </div>
