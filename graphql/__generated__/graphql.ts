@@ -3670,6 +3670,7 @@ export type GetCategoryInformationQuery = {
     __typename?: 'Category'
     slug?: string | null
     name?: string | null
+    state?: string | null
     sections?: Array<{
       __typename?: 'Section'
       slug?: string | null
@@ -3832,6 +3833,7 @@ export type GetSectionInformationQuery = {
     slug?: string | null
     name?: string | null
     color?: string | null
+    state?: string | null
   } | null
 }
 
@@ -4007,6 +4009,7 @@ export const GetCategoryInformationDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'state' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'sections' },
@@ -4880,6 +4883,7 @@ export const GetSectionInformationDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'state' } },
               ],
             },
           },

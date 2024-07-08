@@ -76,11 +76,14 @@ function transformCategoryInformation(
 
   const name = rawData.name ?? ''
   const color = rawData.sections?.[0]?.color ?? '#FF5A36'
+  const state = rawData.state
 
-  return {
-    name,
-    color,
-  }
+  if (state === 'active') {
+    return {
+      name,
+      color,
+    }
+  } else return null
 }
 
 async function fetchCategoryInformation(slug: string) {
