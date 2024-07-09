@@ -3695,36 +3695,6 @@ export type GetEditorChoicesQuery = {
       } | null
     } | null
   }> | null
-  ai?: Array<{
-    __typename?: 'EditorChoice'
-    choices?: {
-      __typename?: 'Post'
-      title?: string | null
-      slug?: string | null
-      heroImage?: {
-        __typename?: 'Photo'
-        id: string
-        resized?: {
-          __typename?: 'ResizedImages'
-          original?: string | null
-          w480?: string | null
-          w800?: string | null
-          w1200?: string | null
-          w1600?: string | null
-          w2400?: string | null
-        } | null
-        resizedWebp?: {
-          __typename?: 'ResizedWebPImages'
-          original?: string | null
-          w480?: string | null
-          w800?: string | null
-          w1200?: string | null
-          w1600?: string | null
-          w2400?: string | null
-        } | null
-      } | null
-    } | null
-  }> | null
 }
 
 export type GetLiveEventForHomepageQueryVariables = Exact<{
@@ -4007,93 +3977,6 @@ export const GetEditorChoicesDocument = {
                         {
                           kind: 'ObjectField',
                           name: { kind: 'Name', value: 'order' },
-                          value: { kind: 'EnumValue', value: 'asc' },
-                        },
-                      ],
-                    },
-                    {
-                      kind: 'ObjectValue',
-                      fields: [
-                        {
-                          kind: 'ObjectField',
-                          name: { kind: 'Name', value: 'publishedDate' },
-                          value: { kind: 'EnumValue', value: 'desc' },
-                        },
-                      ],
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'take' },
-                value: { kind: 'IntValue', value: '10' },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'state' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'equals' },
-                            value: {
-                              kind: 'StringValue',
-                              value: 'published',
-                              block: false,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'EditorChoiceData' },
-                },
-              ],
-            },
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'ai' },
-            name: { kind: 'Name', value: 'editorChoices' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: {
-                  kind: 'ListValue',
-                  values: [
-                    {
-                      kind: 'ObjectValue',
-                      fields: [
-                        {
-                          kind: 'ObjectField',
-                          name: { kind: 'Name', value: 'order' },
-                          value: { kind: 'EnumValue', value: 'desc' },
-                        },
-                      ],
-                    },
-                    {
-                      kind: 'ObjectValue',
-                      fields: [
-                        {
-                          kind: 'ObjectField',
-                          name: { kind: 'Name', value: 'publishedDate' },
                           value: { kind: 'EnumValue', value: 'asc' },
                         },
                       ],

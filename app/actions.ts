@@ -400,11 +400,12 @@ const fetchEditorChoices = async (): Promise<
   const result = await fetchGQLData(errorLogger, GetEditorChoicesDocument)
 
   if (result) {
-    const { editor, ai } = result
+    const { editor } = result
 
     return {
       editor: transformEditorChoices(editor),
-      ai: transformEditorChoices(ai),
+      // TODO: fetch AI data from JSON file (different to `editor`)
+      ai: [],
     }
   } else {
     return {
