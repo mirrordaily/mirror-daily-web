@@ -3607,6 +3607,37 @@ export type VideoWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
 }
 
+export type EditorChoiceDataFragment = {
+  __typename?: 'EditorChoice'
+  choices?: {
+    __typename?: 'Post'
+    title?: string | null
+    slug?: string | null
+    heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+  } | null
+}
+
 export type HeroImageFragment = {
   __typename?: 'Photo'
   id: string
@@ -3630,53 +3661,40 @@ export type HeroImageFragment = {
   } | null
 }
 
-export type PostDetailsFragment = {
-  __typename?: 'Post'
-  title?: string | null
-  createdAt?: any | null
-  brief?: any | null
-  slug?: string | null
-  heroImage?: {
-    __typename?: 'Photo'
-    id: string
-    resized?: {
-      __typename?: 'ResizedImages'
-      original?: string | null
-      w480?: string | null
-      w800?: string | null
-      w1200?: string | null
-      w1600?: string | null
-      w2400?: string | null
-    } | null
-    resizedWebp?: {
-      __typename?: 'ResizedWebPImages'
-      original?: string | null
-      w480?: string | null
-      w800?: string | null
-      w1200?: string | null
-      w1600?: string | null
-      w2400?: string | null
-    } | null
-  } | null
-}
+export type GetEditorChoicesQueryVariables = Exact<{ [key: string]: never }>
 
-export type GetCategoryInformationQueryVariables = Exact<{
-  slug?: InputMaybe<Scalars['String']['input']>
-}>
-
-export type GetCategoryInformationQuery = {
+export type GetEditorChoicesQuery = {
   __typename?: 'Query'
-  category?: {
-    __typename?: 'Category'
-    slug?: string | null
-    name?: string | null
-    state?: string | null
-    sections?: Array<{
-      __typename?: 'Section'
+  editor?: Array<{
+    __typename?: 'EditorChoice'
+    choices?: {
+      __typename?: 'Post'
+      title?: string | null
       slug?: string | null
-      color?: string | null
-    }> | null
-  } | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+    } | null
+  }> | null
 }
 
 export type GetLiveEventForHomepageQueryVariables = Exact<{
@@ -3886,32 +3904,39 @@ export const HeroImageFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<HeroImageFragment, unknown>
-export const PostDetailsFragmentDoc = {
+export const EditorChoiceDataFragmentDoc = {
   kind: 'Document',
   definitions: [
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'PostDetails' },
+      name: { kind: 'Name', value: 'EditorChoiceData' },
       typeCondition: {
         kind: 'NamedType',
-        name: { kind: 'Name', value: 'Post' },
+        name: { kind: 'Name', value: 'EditorChoice' },
       },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
-          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'heroImage' },
+            name: { kind: 'Name', value: 'choices' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                 {
-                  kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'HeroImage' },
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'heroImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'HeroImage' },
+                      },
+                    ],
+                  },
                 },
               ],
             },
@@ -3964,28 +3989,46 @@ export const PostDetailsFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<PostDetailsFragment, unknown>
-export const GetCategoryInformationDocument = {
+} as unknown as DocumentNode<EditorChoiceDataFragment, unknown>
+export const GetEditorChoicesDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetCategoryInformation' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-        },
-      ],
+      name: { kind: 'Name', value: 'GetEditorChoices' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'category' },
+            alias: { kind: 'Name', value: 'editor' },
+            name: { kind: 'Name', value: 'editorChoices' },
             arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'ListValue',
+                  values: [
+                    {
+                      kind: 'ObjectValue',
+                      fields: [
+                        {
+                          kind: 'ObjectField',
+                          name: { kind: 'Name', value: 'order' },
+                          value: { kind: 'EnumValue', value: 'asc' },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: { kind: 'IntValue', value: '10' },
+              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -3994,10 +4037,20 @@ export const GetCategoryInformationDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'slug' },
+                      name: { kind: 'Name', value: 'state' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'slug' },
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
                       },
                     },
                   ],
@@ -4007,17 +4060,88 @@ export const GetCategoryInformationDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'EditorChoiceData' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'HeroImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'EditorChoiceData' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'EditorChoice' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'choices' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'state' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'sections' },
+                  name: { kind: 'Name', value: 'heroImage' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'HeroImage' },
+                      },
                     ],
                   },
                 },
@@ -4029,8 +4153,8 @@ export const GetCategoryInformationDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetCategoryInformationQuery,
-  GetCategoryInformationQueryVariables
+  GetEditorChoicesQuery,
+  GetEditorChoicesQueryVariables
 >
 export const GetLiveEventForHomepageDocument = {
   kind: 'Document',

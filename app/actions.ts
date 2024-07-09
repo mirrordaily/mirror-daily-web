@@ -5,6 +5,7 @@ import type {
   PickupItemInTopNewsSection,
   SectionAndCategory,
   FlashNews,
+  EditorChoice,
 } from '@/types/homepage'
 import type { HeroImage } from '@/types/common'
 import {
@@ -14,11 +15,13 @@ import {
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
+  EditorChoiceDataFragment,
   GetFlashNewsQuery,
   GetLiveEventForHomepageQuery,
   GetSectionsAndCategoriesQuery,
 } from '@/graphql/__generated__/graphql'
 import {
+  GetEditorChoicesDocument,
   GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
   GetSectionsAndCategoriesDocument,
@@ -26,6 +29,8 @@ import {
 import dayjs from 'dayjs'
 import { getPostPageUrl, getStoryPageUrl } from '@/utils/site-urls'
 import { getHeroImage } from '@/utils/data-process'
+import type { ParameterOfComponent } from '@/types/common'
+import type EditorChoiceMain from './_components/editor-choice/main'
 
 type Category = {
   name: string
@@ -298,10 +303,57 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
   }
 }
 
+const transformEditorChoices = (
+  rawData: EditorChoiceDataFragment[] | null | undefined
+): EditorChoice[] => {
+  if (!rawData) return []
+
+  return rawData.map(({ choices: rawPost }) => {
+    const postName = rawPost?.title ?? ''
+    const postSlug = rawPost?.slug ?? ''
+    const link = getStoryPageUrl(postSlug)
+    const heroImage = getHeroImage(rawPost?.heroImage)
+
+    return {
+      postName,
+      postSlug,
+      link,
+      heroImage,
+    }
+  })
+}
+
+const fetchEditorChoices = async (): Promise<
+  ParameterOfComponent<typeof EditorChoiceMain>
+> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching editor choices',
+    getTraceObject()
+  )
+
+  const result = await fetchGQLData(errorLogger, GetEditorChoicesDocument)
+
+  if (result) {
+    const { editor } = result
+
+    return {
+      editor: transformEditorChoices(editor),
+      // TODO: fetch AI data from JSON file (different to `editor`)
+      ai: [],
+    }
+  } else {
+    return {
+      editor: [],
+      ai: [],
+    }
+  }
+}
+
 export {
   fetchLatestPost,
   fetchPopularPost,
   fetchLiveEvent,
   fetchSectionsAndCategories,
   fetchFlashNews,
+  fetchEditorChoices,
 }

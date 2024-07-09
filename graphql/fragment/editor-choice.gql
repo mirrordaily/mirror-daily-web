@@ -1,0 +1,9 @@
+fragment EditorChoiceData on EditorChoice {
+  choices {
+    title
+    slug
+    heroImage {
+      ...HeroImage
+    }
+  }
+}

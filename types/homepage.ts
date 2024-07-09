@@ -37,3 +37,8 @@ export type SectionAndCategory = {
 }
 
 export type FlashNews = Pick<LatestPost, 'postSlug' | 'postName' | 'link'>
+
+export type EditorChoice = Pick<
+  LatestPost,
+  'postName' | 'postSlug' | 'link' | 'heroImage'
+>
