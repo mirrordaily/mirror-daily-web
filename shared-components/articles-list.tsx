@@ -3,29 +3,31 @@ import type { ReactElement } from 'react'
 import MainArticleCard from './main-article-card'
 import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import { fetchSectionPosts } from '../action'
-import type { Posts } from '@/types/section'
 import { notFound } from 'next/navigation'
+import type { CategoryPost } from '@/types/category-page'
+import type { SectionPost } from '@/types/section-page'
 
-type Props = {
-  initialPosts: Posts | null
+type Props<T> = {
+  initialPosts: T[]
   slug: string
-  color: string | undefined | null
-  name: string | undefined | null
+  color: string
+  name: string
+  fetchPosts: (page: number, slug: string) => Promise<T[]>
 }
 
-export default function ArticlesList({
+export default function ArticlesList<T extends CategoryPost | SectionPost>({
   initialPosts,
   slug,
   color,
   name,
-}: Props): ReactElement {
+  fetchPosts,
+}: Props<T>): ReactElement {
   const PAGE_SIZE = 12
   const [firstPost, ...otherPosts] = initialPosts ?? []
 
   const fetchMorePosts = async (page: number) => {
-    const posts = await fetchSectionPosts(page, slug)
-    return posts || []
+    const posts = await fetchPosts(page, slug)
+    return posts
   }
 
   if (!firstPost) notFound()
@@ -34,17 +36,17 @@ export default function ArticlesList({
     <div className="flex flex-col items-center">
       <div className="mb-5 w-full pl-[23px] pr-[22px] md:mb-7 md:px-0">
         <h1
-          style={{ color: color || '#FF5A36' }}
+          style={{ color: color }}
           className="mb-3 text-xl font-bold leading-[1.3] lg:text-2xl"
         >
           {name}
         </h1>
         <hr
-          style={{ borderColor: color || '#FF5A36' }}
-          className="max-w-[342px] border-4 md:max-w-[670px] lg:max-w-[740px]"
+          style={{ borderColor: color }}
+          className="max-w-[342px] border-2 md:max-w-[670px] lg:max-w-[740px]"
         />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-start">
         <div className="mb-10 md:mb-[50px]">
           <MainArticleCard color={color} postItem={firstPost} />
         </div>

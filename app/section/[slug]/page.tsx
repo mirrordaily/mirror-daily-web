@@ -1,6 +1,6 @@
 import PopularNewsSection from '@/shared-components/popular-news-section'
-import ArticlesList from '../_components/articles-list'
-import { fetchSectionPosts, fetchSectionInformation } from '../action'
+import ArticlesList from '../../../shared-components/articles-list'
+import { fetchSectionPosts, fetchSectionInformation } from '../actions'
 import { notFound } from 'next/navigation'
 
 export default async function Page({
@@ -10,21 +10,22 @@ export default async function Page({
 }): Promise<JSX.Element> {
   const slug = params.slug
 
-  const section = await fetchSectionInformation(slug)
+  const sectionInfo = await fetchSectionInformation(slug)
   const posts = await fetchSectionPosts(1, slug)
 
-  if (!section) notFound()
+  if (!sectionInfo) notFound()
 
-  const color = section.color
-  const name = section.name
+  const color = sectionInfo.color
+  const name = sectionInfo.name
 
   return (
-    <main className="mb-10 flex flex-col items-center md:mb-[72px] md:mt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">
+    <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[128px]">
       <ArticlesList
         initialPosts={posts}
         slug={slug}
         color={color}
         name={name}
+        fetchPosts={fetchSectionPosts}
       />
       <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
       <PopularNewsSection />
