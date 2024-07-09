@@ -19,6 +19,7 @@ module.exports = {
           'linear-gradient(180deg, rgba(0, 0, 0, 0) 40.54%, #000 100%)',
       },
       zIndex: {
+        'over-editor-choice': 10,
         'mobile-nav': 1000000000,
       },
     },
