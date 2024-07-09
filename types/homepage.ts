@@ -42,3 +42,10 @@ export type EditorChoice = Pick<
   LatestPost,
   'postName' | 'postSlug' | 'link' | 'heroImage'
 >
+
+export type TopicPost = Pick<
+  LatestPost,
+  'postName' | 'postSlug' | 'link' | 'heroImage'
+> & {
+  topicLink: string
+}

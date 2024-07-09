@@ -8,6 +8,7 @@ import type { ParameterOfComponent } from '@/types/common'
 import SectionDivider from './_components/divider'
 import EditorChoiceSection from './_components/editor-choice/section'
 import TopNewsSection from './_components/top-news/section'
+import TopicAndGameSection from './_components/topic-and-game/section'
 import LatestNewsSection from './_components/latest-news/section'
 
 export default async function Home() {
@@ -78,7 +79,7 @@ export default async function Home() {
       <SectionDivider />
       {/* 短影音新聞 */}
       <SectionDivider customClasses="hidden" />
-      {/* Topic（4則）＋遊戲區 */}
+      <TopicAndGameSection />
       <SectionDivider customClasses="hidden" />
       {/* 短影音．二創 */}
       <SectionDivider />
