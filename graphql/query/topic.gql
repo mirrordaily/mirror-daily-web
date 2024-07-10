@@ -1,0 +1,13 @@
+query GetTopics {
+    topics(orderBy: { sortOrder: asc }, where: { state: { equals: "published" } }) {
+        name
+        slug
+        posts(
+            take: 4
+            orderBy: { publishedDate: desc }
+            where: { state: { equals: "published" } }
+        ) {
+            ...PostItem
+        }
+    }
+}

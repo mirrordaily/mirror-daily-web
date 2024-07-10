@@ -7,3 +7,11 @@ fragment PostDetails on Post {
     ...HeroImage
   }
 }
+
+fragment PostItem on Post {
+  title
+  slug
+  heroImage {
+    ...HeroImage
+  }
+}
