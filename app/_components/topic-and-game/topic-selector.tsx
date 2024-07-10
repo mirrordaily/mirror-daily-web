@@ -123,6 +123,13 @@ export default function TopicSelector({
     setAreaWidth(areaWidth)
   }, [desktopLowerBound, tabletLowerBound, width, topics])
 
+  // change to first item if active item doesn't exist in valid item list
+  useEffect(() => {
+    if (displayTopics.length > 0 && !displayTopics.includes(activeTopic)) {
+      setTopic(displayTopics[0]!)
+    }
+  }, [activeTopic, displayTopics, setTopic])
+
   return (
     <div className="flex w-full flex-row gap-x-3 text-base leading-normal md:text-lg lg:gap-x-5">
       {displayTopics.map((topic) => {
