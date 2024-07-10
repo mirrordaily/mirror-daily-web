@@ -6,7 +6,6 @@ type Props = TopicPost & { isFirst?: boolean }
 
 export default function TopicItem({
   postName,
-  postSlug,
   link,
   topicLink,
   heroImage,
@@ -17,7 +16,6 @@ export default function TopicItem({
       className={`group/card relative flex w-full flex-col gap-y-2 ${
         isFirst ? '' : 'md:w-[204px] lg:w-[232px]'
       } `}
-      key={postSlug}
     >
       <NextLink
         href={topicLink}
