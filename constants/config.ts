@@ -42,6 +42,7 @@ switch (ENV) {
 
 const URL_STATIC_POPULAR_NEWS = `${JSON_FILE_PATH}/popular.json`
 const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/latest_posts`
+const URL_STATIC_SECTION_AND_CATEGORY = `${JSON_FILE_PATH}/sections-and-categories.json`
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
@@ -50,5 +51,6 @@ export {
   API_ENDPOINT,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
+  URL_STATIC_SECTION_AND_CATEGORY,
   GCP_PROJECT_ID,
 }

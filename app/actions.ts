@@ -11,6 +11,7 @@ import type {
 import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
+  URL_STATIC_SECTION_AND_CATEGORY,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
@@ -25,7 +26,6 @@ import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
-  GetSectionsAndCategoriesDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
@@ -39,7 +39,11 @@ import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
 import type TopicMain from './_components/topic-and-game/topic-main'
 import { z } from 'zod'
-import { rawLatestPostSchema, rawPopularPostSchema } from '@/utils/data-schema'
+import {
+  rawLatestPostSchema,
+  rawPopularPostSchema,
+  sectionSchema,
+} from '@/utils/data-schema'
 
 // TODO: replace with real data
 const getSingleColor = () => {
@@ -174,7 +178,7 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
 
     const rawPostData = await z
       .promise(z.array(rawPopularPostSchema))
-      .parseAsync(resp.json())
+      .parse(resp.json())
     return rawPostData.map(transformRawPopularPost).slice(10)
   } catch (e) {
     errorLogger(e)
@@ -252,15 +256,18 @@ const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
     getTraceObject()
   )
 
-  const result = await fetchGQLData(
-    errorLogger,
-    GetSectionsAndCategoriesDocument
-  )
+  try {
+    const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY, {
+      next: { revalidate: 0 },
+    })
 
-  if (result) {
+    const result = await z
+      .promise(z.object({ sections: z.array(sectionSchema) }))
+      .parse(resp.json())
     const { sections } = result
     return transformRawSectionsAndCategories(sections)
-  } else {
+  } catch (e) {
+    errorLogger(e)
     return []
   }
 }

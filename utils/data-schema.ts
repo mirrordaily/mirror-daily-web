@@ -45,9 +45,11 @@ const categorySchema = z.object({
   slug: z.string(),
 })
 
-const sectionSchema = z.object({
+export const sectionSchema = z.object({
   name: z.string(),
   slug: z.string(),
+  color: z.string(),
+  categories: z.array(categorySchema),
 })
 
 const partnerSchema = z.object({
@@ -69,5 +71,5 @@ export const rawPopularPostSchema = z.object({
   title: z.string(),
   slug: z.string(),
   heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
-  sectionsInInputOrder: z.array(sectionSchema),
+  sectionsInInputOrder: z.array(sectionSchema.pick({ name: true })),
 })
