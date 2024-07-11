@@ -102,19 +102,6 @@ class SectionColorManager {
 
 const colorManger = new SectionColorManager()
 
-// TODO: replace with real data
-const getSingleColor = () => {
-  return Math.floor(Math.random() * 256)
-}
-
-// TODO: replace with real data
-const getCategoryColor = () => {
-  const red = getSingleColor()
-  const green = getSingleColor()
-  const blue = getSingleColor()
-  return `rgb(${red},${green},${blue})`
-}
-
 type CategoryConfig = {
   name: string
   color: string
@@ -209,14 +196,16 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   }
 }
 
-const transformRawPopularPost = (
+const transformRawPopularPost = async (
   rawPosts: z.infer<typeof rawPopularPostSchema>
-): LatestPost => {
+): Promise<LatestPost> => {
   const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
+  const color = await colorManger.getColor(sections[0]?.slug)
 
   return {
+    // TODO: switch to category name
     categoryName: sections[0]?.name ?? '',
-    categoryColor: getCategoryColor(),
+    categoryColor: color,
     postName: title,
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
@@ -239,7 +228,14 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
     const rawPostData = await z
       .promise(z.array(rawPopularPostSchema))
       .parse(resp.json())
-    return rawPostData.map(transformRawPopularPost).slice(10)
+
+    const result = await Promise.allSettled(
+      rawPostData.map(transformRawPopularPost)
+    )
+    return result
+      .filter((r) => r.status === 'fulfilled')
+      .map((r) => r.value)
+      .slice(10)
   } catch (e) {
     errorLogger(e)
     return []
