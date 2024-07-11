@@ -9,6 +9,7 @@ import type {
   TopicPost,
 } from '@/types/homepage'
 import {
+  URL_STATIC_EDITOR_CHOICE,
   URL_STATIC_FLASH_NEWS,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
@@ -17,14 +18,12 @@ import {
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
-  EditorChoiceDataFragment,
   GetFlashNewsQuery,
   GetLiveEventForHomepageQuery,
   GetSectionsAndCategoriesQuery,
   GetTopicsQuery,
 } from '@/graphql/__generated__/graphql'
 import {
-  GetEditorChoicesDocument,
   GetLiveEventForHomepageDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
@@ -38,12 +37,14 @@ import { getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
 import type TopicMain from './_components/topic-and-game/topic-main'
+import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import {
   rawLatestPostSchema,
   rawPopularPostSchema,
   sectionSchema,
   rawFlashNewsSchema,
+  editorChoiceSchenma,
 } from '@/utils/data-schema'
 import { MINUTE } from '@/constants/time-unit'
 
@@ -349,7 +350,7 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
 }
 
 const transformEditorChoices = (
-  rawData: EditorChoiceDataFragment[] | null | undefined
+  rawData: z.infer<ZodArray<typeof editorChoiceSchenma>>
 ): EditorChoice[] => {
   if (!rawData) return []
 
@@ -376,17 +377,23 @@ const fetchEditorChoices = async (): Promise<
     getTraceObject()
   )
 
-  const result = await fetchGQLData(errorLogger, GetEditorChoicesDocument)
+  try {
+    const resp = await fetch(URL_STATIC_EDITOR_CHOICE, {
+      next: { revalidate: 0 },
+    })
 
-  if (result) {
-    const { editor } = result
+    const result = await z
+      .promise(z.object({ editorChoices: z.array(editorChoiceSchenma) }))
+      .parse(resp.json())
+    const { editorChoices } = result
 
     return {
-      editor: transformEditorChoices(editor),
+      editor: transformEditorChoices(editorChoices).slice(0, 10),
       // TODO: fetch AI data from JSON file (different to `editor`)
       ai: [],
     }
-  } else {
+  } catch (e) {
+    errorLogger(e)
     return {
       editor: [],
       ai: [],

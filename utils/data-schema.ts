@@ -78,3 +78,11 @@ export const rawFlashNewsSchema = rawLatestPostSchema.pick({
   title: true,
   slug: true,
 })
+
+export const editorChoiceSchenma = z.object({
+  choices: rawLatestPostSchema.pick({
+    title: true,
+    slug: true,
+    heroImage: true,
+  }),
+})
