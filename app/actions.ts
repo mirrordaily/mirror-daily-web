@@ -235,7 +235,7 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
     return result
       .filter((r) => r.status === 'fulfilled')
       .map((r) => r.value)
-      .slice(10)
+      .slice(0, 10)
   } catch (e) {
     errorLogger(e)
     return []
