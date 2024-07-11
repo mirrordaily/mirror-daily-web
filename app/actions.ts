@@ -121,11 +121,15 @@ const transformRawLatestPost = (
   }
 }
 
-// TODO: change source and update related handle
 const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching latest posts',
+    getTraceObject()
+  )
+
   try {
     const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`, {
-      next: { revalidate: 300 },
+      next: { revalidate: 0 },
     })
 
     const rawPostData = await resp.json()
@@ -136,7 +140,7 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
 
     return filteredData.map(transformRawLatestPost)
   } catch (e) {
-    console.error(e)
+    errorLogger(e)
     return []
   }
 }
@@ -157,11 +161,15 @@ const transformRawPopularPost = (
   }
 }
 
-// TODO: change source and update related handle
 const fetchPopularPost = async (): Promise<LatestPost[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching popular posts',
+    getTraceObject()
+  )
+
   try {
     const resp = await fetch(URL_STATIC_POPULAR_NEWS, {
-      next: { revalidate: 300 },
+      next: { revalidate: 0 },
     })
 
     const rawPostData = await z
@@ -169,7 +177,7 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
       .parseAsync(resp.json())
     return rawPostData.map(transformRawPopularPost).slice(10)
   } catch (e) {
-    console.error(e)
+    errorLogger(e)
     return []
   }
 }
