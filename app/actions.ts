@@ -8,7 +8,6 @@ import type {
   EditorChoice,
   TopicPost,
 } from '@/types/homepage'
-import type { HeroImage } from '@/types/common'
 import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
@@ -39,31 +38,8 @@ import { getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
 import type TopicMain from './_components/topic-and-game/topic-main'
-
-type Category = {
-  name: string
-  slug: string
-}
-
-type Section = {
-  slug: string
-  name: string
-}
-
-type Partner = {
-  slug: string
-}
-
-type RawLatestPost = {
-  title: string
-  slug: string
-  heroImage: HeroImage | string | null | undefined
-  sections: Pick<Section, 'slug'>[]
-  categories: Category[]
-  partner: Partner | string
-  redirect: string
-  publishedDate: string
-}
+import { z } from 'zod'
+import { rawLatestPostSchema, rawPopularPostSchema } from '@/utils/data-schema'
 
 // TODO: replace with real data
 const getSingleColor = () => {
@@ -83,7 +59,9 @@ type CategoryConfig = {
   color: string
 }
 
-const getCategoryConfig = (rawPosts: RawLatestPost): CategoryConfig => {
+const getCategoryConfig = (
+  rawPosts: z.infer<typeof rawLatestPostSchema>
+): CategoryConfig => {
   const { partner, categories } = rawPosts
 
   if (typeof partner === 'string') {
@@ -119,12 +97,16 @@ const isValidUrl = (url: string): boolean => {
   }
 }
 
-const hasExternalLink = (rawPost: RawLatestPost): boolean => {
+const hasExternalLink = (
+  rawPost: z.infer<typeof rawLatestPostSchema>
+): boolean => {
   const { redirect } = rawPost
   return isValidUrl(redirect)
 }
 
-const transformRawLatestPost = (rawPosts: RawLatestPost): LatestPost => {
+const transformRawLatestPost = (
+  rawPosts: z.infer<typeof rawLatestPostSchema>
+): LatestPost => {
   const { title, slug, heroImage, publishedDate, partner } = rawPosts
   const { name, color } = getCategoryConfig(rawPosts)
 
@@ -146,8 +128,9 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
       next: { revalidate: 300 },
     })
 
-    const rawPostData: Record<'latest', RawLatestPost[]> = await resp.json()
-    const filteredData = rawPostData.latest.filter(
+    const rawPostData = await resp.json()
+    const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
+    const filteredData = latestPosts.filter(
       (rawPost) => !hasExternalLink(rawPost)
     )
 
@@ -158,14 +141,9 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   }
 }
 
-type RawPopularPost = {
-  title: string
-  slug: string
-  heroImage: Pick<HeroImage, 'resized' | 'resizedWebp'> | string | null
-  sectionsInInputOrder: Section[]
-}
-
-const transformRawPopularPost = (rawPosts: RawPopularPost): LatestPost => {
+const transformRawPopularPost = (
+  rawPosts: z.infer<typeof rawPopularPostSchema>
+): LatestPost => {
   const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
 
   return {
@@ -186,7 +164,9 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
       next: { revalidate: 300 },
     })
 
-    const rawPostData: RawPopularPost[] = await resp.json()
+    const rawPostData = await z
+      .promise(z.array(rawPopularPostSchema))
+      .parseAsync(resp.json())
     return rawPostData.map(transformRawPopularPost).slice(10)
   } catch (e) {
     console.error(e)
