@@ -44,6 +44,63 @@ import {
   rawPopularPostSchema,
   sectionSchema,
 } from '@/utils/data-schema'
+import { MINUTE } from '@/constants/time-unit'
+
+const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching sections and categories',
+    getTraceObject()
+  )
+
+  try {
+    const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY, {
+      next: { revalidate: 0 },
+    })
+
+    const result = await z
+      .promise(z.object({ sections: z.array(sectionSchema) }))
+      .parse(resp.json())
+    const { sections } = result
+    return transformRawSectionsAndCategories(sections)
+  } catch (e) {
+    errorLogger(e)
+    return []
+  }
+}
+class SectionColorManager {
+  private lastTime = 0
+  private cacheTime = MINUTE * 5
+  private defaultColor = '#D0D2D8'
+  private data: Awaited<ReturnType<typeof fetchSectionsAndCategories>>
+
+  constructor() {
+    this.data = []
+    this.updateData()
+  }
+
+  async updateData() {
+    const result = await fetchSectionsAndCategories()
+    this.lastTime = new Date().valueOf()
+    this.data = result
+  }
+
+  async getColor(sectionSlug?: string): Promise<string> {
+    if (!sectionSlug) return this.defaultColor
+
+    const now = new Date().valueOf()
+
+    if (now - this.lastTime > this.cacheTime) {
+      await this.updateData()
+    }
+
+    return (
+      this.data.find((item) => sectionSlug === item.slug)?.color ??
+      this.defaultColor
+    )
+  }
+}
+
+const colorManger = new SectionColorManager()
 
 // TODO: replace with real data
 const getSingleColor = () => {
@@ -63,17 +120,17 @@ type CategoryConfig = {
   color: string
 }
 
-const getCategoryConfig = (
+const getCategoryConfig = async (
   rawPosts: z.infer<typeof rawLatestPostSchema>
-): CategoryConfig => {
-  const { partner, categories } = rawPosts
+): Promise<CategoryConfig> => {
+  const { partner, categories, sections } = rawPosts
 
   if (typeof partner === 'string') {
-    const name = categories[0]?.name || ''
-    const color = getCategoryColor()
+    const categoryName = categories[0]?.name || ''
+    const color = await colorManger.getColor(sections[0]?.slug)
 
     return {
-      name,
+      name: categoryName,
       color,
     }
   } else {
@@ -108,11 +165,11 @@ const hasExternalLink = (
   return isValidUrl(redirect)
 }
 
-const transformRawLatestPost = (
+const transformRawLatestPost = async (
   rawPosts: z.infer<typeof rawLatestPostSchema>
-): LatestPost => {
+): Promise<LatestPost> => {
   const { title, slug, heroImage, publishedDate, partner } = rawPosts
-  const { name, color } = getCategoryConfig(rawPosts)
+  const { name, color } = await getCategoryConfig(rawPosts)
 
   return {
     categoryName: name,
@@ -142,7 +199,10 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
       (rawPost) => !hasExternalLink(rawPost)
     )
 
-    return filteredData.map(transformRawLatestPost)
+    const result = await Promise.allSettled(
+      filteredData.map(transformRawLatestPost)
+    )
+    return result.filter((r) => r.status === 'fulfilled').map((r) => r.value)
   } catch (e) {
     errorLogger(e)
     return []
@@ -248,28 +308,6 @@ const transformRawSectionsAndCategories = (
       categories,
     }
   })
-}
-
-const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching sections and categories',
-    getTraceObject()
-  )
-
-  try {
-    const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY, {
-      next: { revalidate: 0 },
-    })
-
-    const result = await z
-      .promise(z.object({ sections: z.array(sectionSchema) }))
-      .parse(resp.json())
-    const { sections } = result
-    return transformRawSectionsAndCategories(sections)
-  } catch (e) {
-    errorLogger(e)
-    return []
-  }
 }
 
 const transformRawFlashNews = (
