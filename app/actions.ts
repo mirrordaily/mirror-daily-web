@@ -9,6 +9,7 @@ import type {
   TopicPost,
 } from '@/types/homepage'
 import {
+  URL_STATIC_FLASH_NEWS,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_SECTION_AND_CATEGORY,
@@ -24,7 +25,6 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
-  GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
@@ -43,6 +43,7 @@ import {
   rawLatestPostSchema,
   rawPopularPostSchema,
   sectionSchema,
+  rawFlashNewsSchema,
 } from '@/utils/data-schema'
 import { MINUTE } from '@/constants/time-unit'
 
@@ -330,12 +331,19 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
     getTraceObject()
   )
 
-  const result = await fetchGQLData(errorLogger, GetFlashNewsDocument)
+  try {
+    const resp = await fetch(URL_STATIC_FLASH_NEWS, {
+      next: { revalidate: 0 },
+    })
 
-  if (result) {
+    const result = await z
+      .promise(z.object({ posts: z.array(rawFlashNewsSchema) }))
+      .parse(resp.json())
     const { posts } = result
+
     return transformRawFlashNews(posts)
-  } else {
+  } catch (e) {
+    errorLogger(e)
     return []
   }
 }
