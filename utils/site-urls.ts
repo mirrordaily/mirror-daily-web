@@ -8,3 +8,7 @@ export const getStoryPageUrl = (slug: string) => `/story/${slug}`
 export const getSectionPageUrl = (slug: string) => `/section/${slug}`
 
 export const getCategoryPageUrl = (slug: string) => `/category/${slug}`
+
+export const getTopicSectionPage = () => `/topics`
+
+export const getTopicPageUrl = (slug: string) => `/topic/${slug}`

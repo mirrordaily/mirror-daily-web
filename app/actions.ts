@@ -6,6 +6,7 @@ import type {
   SectionAndCategory,
   FlashNews,
   EditorChoice,
+  TopicPost,
 } from '@/types/homepage'
 import type { HeroImage } from '@/types/common'
 import {
@@ -19,18 +20,25 @@ import type {
   GetFlashNewsQuery,
   GetLiveEventForHomepageQuery,
   GetSectionsAndCategoriesQuery,
+  GetTopicsQuery,
 } from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
   GetSectionsAndCategoriesDocument,
+  GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
-import { getPostPageUrl, getStoryPageUrl } from '@/utils/site-urls'
+import {
+  getPostPageUrl,
+  getStoryPageUrl,
+  getTopicPageUrl,
+} from '@/utils/site-urls'
 import { getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
+import type TopicMain from './_components/topic-and-game/topic-main'
 
 type Category = {
   name: string
@@ -349,6 +357,63 @@ const fetchEditorChoices = async (): Promise<
   }
 }
 
+const transformTopics = (
+  rawData: GetTopicsQuery['topics']
+): ParameterOfComponent<typeof TopicMain>['data'] | null => {
+  if (!rawData) return null
+
+  const convertedData = rawData.map((topic) => {
+    const topicName = topic.name || ''
+    const topicSlug = topic.slug || ''
+    const topicLink = getTopicPageUrl(topicSlug)
+    const posts: TopicPost[] =
+      topic.posts?.map((rawPost) => {
+        const postName = rawPost?.title ?? ''
+        const postSlug = rawPost?.slug ?? ''
+        const link = getStoryPageUrl(postSlug)
+        const heroImage = getHeroImage(rawPost?.heroImage)
+        return {
+          postName,
+          postSlug,
+          heroImage,
+          link,
+          topicLink,
+        }
+      }) ?? []
+
+    return [topicName, posts] as const
+  })
+
+  const filteredData = convertedData.filter(
+    (data): data is [string, [TopicPost, ...TopicPost[]]] => {
+      const [, posts] = data
+      return posts.length > 0
+    }
+  )
+
+  if (filteredData.length === 0) return null
+  else return Object.fromEntries(filteredData)
+}
+
+const fetchTopics = async (): Promise<
+  ParameterOfComponent<typeof TopicMain>['data'] | null
+> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching topics',
+    getTraceObject()
+  )
+
+  const result = await fetchGQLData(errorLogger, GetTopicsDocument)
+
+  if (result) {
+    const { topics } = result
+
+    return transformTopics(topics)
+  } else {
+    return null
+  }
+}
+
 export {
   fetchLatestPost,
   fetchPopularPost,
@@ -356,4 +421,5 @@ export {
   fetchSectionsAndCategories,
   fetchFlashNews,
   fetchEditorChoices,
+  fetchTopics,
 }
