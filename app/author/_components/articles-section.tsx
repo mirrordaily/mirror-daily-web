@@ -14,7 +14,7 @@ export default function ArticleSection({ info, initialList, slug }: Props) {
         <hr className="w-full max-w-[343px] border-2 border-[#000928] md:max-w-[680px] md:text-base lg:max-w-[768px]" />
         <p className="text-[13px] font-medium">
           <span className="text-xl font-bold md:text-2xl">{info.name} </span>
-          的搜尋結果
+          的文章
         </p>
       </div>
 
