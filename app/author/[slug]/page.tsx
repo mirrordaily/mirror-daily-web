@@ -1,4 +1,4 @@
-import ArticlesSection from '@/shared-components/search/articles-section'
+import ArticlesSection from '../_components/articles-section'
 import { fetchAuthorPosts, fetchAuthorInformation } from '../actions'
 import { notFound } from 'next/navigation'
 import PopularNewsSection from '@/shared-components/popular-news-section'

@@ -1,5 +1,5 @@
 import ArticlesList from './articles-list'
-import type { AuthorInfo, Post } from '../../types/author-page'
+import type { AuthorInfo, Post } from '@/types/author-page'
 
 type Props = {
   info: AuthorInfo
