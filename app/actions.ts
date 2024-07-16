@@ -374,7 +374,7 @@ const transformEditorChoices = (
 ): EditorChoice[] => {
   if (!rawData) return []
 
-  return rawData.map(({ choices: rawPost }) => {
+  return rawData.map(({ choices: rawPost }, index) => {
     const postName = rawPost?.title ?? ''
     const postSlug = rawPost?.slug ?? ''
     const link = getStoryPageUrl(postSlug)
@@ -382,7 +382,7 @@ const transformEditorChoices = (
 
     return {
       postName,
-      postSlug,
+      postSlug: `${index}-${postSlug}`,
       link,
       heroImage,
     }
