@@ -1,5 +1,7 @@
 import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
 import type { HeroImage } from '@/types/common'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 
 const getHeroImage = (
   rawImageObj:
@@ -67,4 +69,10 @@ const getHeroImage = (
   }
 }
 
-export { getHeroImage }
+const dateFormatter = (date: string) => {
+  dayjs.extend(utc)
+  const utcDate = dayjs(date).utc().format('YYYY/MM/DD HH:mm:ss')
+  return utcDate
+}
+
+export { getHeroImage, dateFormatter }
