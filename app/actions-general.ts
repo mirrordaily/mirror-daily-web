@@ -1,6 +1,6 @@
 'use server'
 
-import type { SectionAndCategory } from '@/types/homepage'
+import type { SectionAndCategory } from '@/types/common'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
