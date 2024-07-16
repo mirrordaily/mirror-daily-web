@@ -45,6 +45,7 @@ const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/latest_posts`
 const URL_STATIC_SECTION_AND_CATEGORY = `${JSON_FILE_PATH}/sections-and-categories.json`
 const URL_STATIC_FLASH_NEWS = `${JSON_FILE_PATH}/flash-news.json`
 const URL_STATIC_EDITOR_CHOICE = `${JSON_FILE_PATH}/editor-choice.json`
+const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json`
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
@@ -56,5 +57,6 @@ export {
   URL_STATIC_SECTION_AND_CATEGORY,
   URL_STATIC_FLASH_NEWS,
   URL_STATIC_EDITOR_CHOICE,
+  URL_STATIC_TOPIC,
   GCP_PROJECT_ID,
 }

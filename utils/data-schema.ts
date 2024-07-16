@@ -86,3 +86,15 @@ export const editorChoiceSchenma = z.object({
     heroImage: true,
   }),
 })
+
+export const topicsSchema = z.object({
+  name: z.string(),
+  slug: z.string(),
+  posts: z.array(
+    rawLatestPostSchema.pick({
+      title: true,
+      slug: true,
+      heroImage: true,
+    })
+  ),
+})

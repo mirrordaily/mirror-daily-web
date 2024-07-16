@@ -1,5 +1,7 @@
 'use server'
 
+/* eslint-disable max-lines */
+
 import type {
   LatestPost,
   PickupItemInTopNewsSection,
@@ -14,15 +16,11 @@ import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_SECTION_AND_CATEGORY,
+  URL_STATIC_TOPIC,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
-import type {
-  GetFlashNewsQuery,
-  GetLiveEventForHomepageQuery,
-  GetSectionsAndCategoriesQuery,
-  GetTopicsQuery,
-} from '@/graphql/__generated__/graphql'
+import type { GetLiveEventForHomepageQuery } from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
@@ -48,6 +46,7 @@ import {
   sectionSchema,
   rawFlashNewsSchema,
   editorChoiceSchenma,
+  topicsSchema,
 } from '@/utils/data-schema'
 import { MINUTE } from '@/constants/time-unit'
 
@@ -292,7 +291,7 @@ const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
 }
 
 const transformRawSectionsAndCategories = (
-  rawData: GetSectionsAndCategoriesQuery['sections']
+  rawData: z.infer<ZodArray<typeof sectionSchema>>
 ): SectionAndCategory[] => {
   if (!rawData) return []
 
@@ -321,7 +320,7 @@ const transformRawSectionsAndCategories = (
 }
 
 const transformRawFlashNews = (
-  rawData: GetFlashNewsQuery['posts']
+  rawData: z.infer<ZodArray<typeof rawFlashNewsSchema>>
 ): FlashNews[] => {
   if (!rawData) return []
 
@@ -429,7 +428,7 @@ const fetchEditorChoices = async (): Promise<
 }
 
 const transformTopics = (
-  rawData: GetTopicsQuery['topics']
+  rawData: z.infer<ZodArray<typeof topicsSchema>>
 ): ParameterOfComponent<typeof TopicMain>['data'] | null => {
   if (!rawData) return null
 
@@ -473,16 +472,30 @@ const fetchTopics = async (): Promise<
     'Error occurs while fetching topics',
     getTraceObject()
   )
+  const schema = z.promise(z.object({ topics: z.array(topicsSchema) }))
 
-  const result = await fetchGQLData(errorLogger, GetTopicsDocument)
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof topicsSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_TOPIC, {
+        next: { revalidate: 0 },
+      })
 
-  if (result) {
-    const { topics } = result
+      const result = await schema.parse(resp.json())
+      return result.topics
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetTopicsDocument)
+      )
+      return result.topics
+    }
+  )
 
-    return transformTopics(topics)
-  } else {
-    return null
-  }
+  return transformTopics(data)
 }
 
 export {
