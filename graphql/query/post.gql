@@ -43,6 +43,10 @@ query GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {
       ]
     }
   ) {
+    sections {
+      name
+      color
+    }
     ...PostDetails
   }
 }
