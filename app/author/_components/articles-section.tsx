@@ -1,4 +1,4 @@
-import ArticlesList from './articles-list'
+import ArticlesList from '../../../shared-components/search/articles-list'
 import type { AuthorInfo, Post } from '@/types/author-page'
 
 type Props = {
