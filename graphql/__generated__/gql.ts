@@ -21,7 +21,7 @@ const documents = {
     types.PostDetailsFragmentDoc,
   'query GetCategoryInformation($slug: String) {\n  category(where: {slug: $slug}) {\n    slug\n    name\n    state\n    sections {\n      slug\n      color\n    }\n  }\n}':
     types.GetCategoryInformationDocument,
-  'query GetEditorChoices {\n  editor: editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}':
+  'query GetEditorChoices {\n  editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}':
     types.GetEditorChoicesDocument,
   'query GetLiveEventForHomepage($startDate: DateTime!) {\n  events(\n    orderBy: {publishedDate: desc}\n    take: 1\n    where: {eventType: {equals: "livestreaming"}, state: {equals: "published"}, startDate: {lte: $startDate}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}':
     types.GetLiveEventForHomepageDocument,
@@ -75,8 +75,8 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: 'query GetEditorChoices {\n  editor: editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}'
-): (typeof documents)['query GetEditorChoices {\n  editor: editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}']
+  source: 'query GetEditorChoices {\n  editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}'
+): (typeof documents)['query GetEditorChoices {\n  editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

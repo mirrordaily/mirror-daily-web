@@ -24,7 +24,10 @@ import type {
   GetTopicsQuery,
 } from '@/graphql/__generated__/graphql'
 import {
+  GetEditorChoicesDocument,
+  GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
+  GetSectionsAndCategoriesDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
@@ -33,7 +36,7 @@ import {
   getStoryPageUrl,
   getTopicPageUrl,
 } from '@/utils/site-urls'
-import { getHeroImage } from '@/utils/data-process'
+import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
 import type TopicMain from './_components/topic-and-game/topic-main'
@@ -53,21 +56,30 @@ const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
     'Error occurs while fetching sections and categories',
     getTraceObject()
   )
+  const schema = z.promise(z.object({ sections: z.array(sectionSchema) }))
 
-  try {
-    const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY, {
-      next: { revalidate: 0 },
-    })
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof sectionSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY, {
+        next: { revalidate: 0 },
+      })
 
-    const result = await z
-      .promise(z.object({ sections: z.array(sectionSchema) }))
-      .parse(resp.json())
-    const { sections } = result
-    return transformRawSectionsAndCategories(sections)
-  } catch (e) {
-    errorLogger(e)
-    return []
-  }
+      const result = await schema.parse(resp.json())
+      return result.sections
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetSectionsAndCategoriesDocument)
+      )
+      return result.sections
+    }
+  )
+
+  return transformRawSectionsAndCategories(data)
 }
 class SectionColorManager {
   private lastTime = 0
@@ -331,22 +343,30 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
     'Error occurs while fetching flash news',
     getTraceObject()
   )
+  const schema = z.promise(z.object({ posts: z.array(rawFlashNewsSchema) }))
 
-  try {
-    const resp = await fetch(URL_STATIC_FLASH_NEWS, {
-      next: { revalidate: 0 },
-    })
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof rawFlashNewsSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_FLASH_NEWS, {
+        next: { revalidate: 0 },
+      })
 
-    const result = await z
-      .promise(z.object({ posts: z.array(rawFlashNewsSchema) }))
-      .parse(resp.json())
-    const { posts } = result
+      const result = await schema.parse(resp.json())
+      return result.posts
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetFlashNewsDocument)
+      )
+      return result.posts
+    }
+  )
 
-    return transformRawFlashNews(posts)
-  } catch (e) {
-    errorLogger(e)
-    return []
-  }
+  return transformRawFlashNews(data)
 }
 
 const transformEditorChoices = (
@@ -376,28 +396,35 @@ const fetchEditorChoices = async (): Promise<
     'Error occurs while fetching editor choices',
     getTraceObject()
   )
+  const schema = z.promise(
+    z.object({ editorChoices: z.array(editorChoiceSchenma) })
+  )
 
-  try {
-    const resp = await fetch(URL_STATIC_EDITOR_CHOICE, {
-      next: { revalidate: 0 },
-    })
+  const editorData = await createDataFetchingChain<
+    z.infer<ZodArray<typeof editorChoiceSchenma>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_EDITOR_CHOICE, {
+        next: { revalidate: 0 },
+      })
 
-    const result = await z
-      .promise(z.object({ editorChoices: z.array(editorChoiceSchenma) }))
-      .parse(resp.json())
-    const { editorChoices } = result
-
-    return {
-      editor: transformEditorChoices(editorChoices).slice(0, 10),
-      // TODO: fetch AI data from JSON file (different to `editor`)
-      ai: [],
+      const result = await schema.parse(resp.json())
+      return result.editorChoices
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetEditorChoicesDocument)
+      )
+      return result.editorChoices
     }
-  } catch (e) {
-    errorLogger(e)
-    return {
-      editor: [],
-      ai: [],
-    }
+  )
+
+  return {
+    editor: transformEditorChoices(editorData).slice(0, 10),
+    // TODO: fetch AI data from JSON file (different to `editor`)
+    ai: [],
   }
 }
 
