@@ -1,11 +1,8 @@
 'use server'
 
-/* eslint-disable max-lines */
-
 import type {
   LatestPost,
   PickupItemInTopNewsSection,
-  SectionAndCategory,
   FlashNews,
   EditorChoice,
   TopicPost,
@@ -15,7 +12,6 @@ import {
   URL_STATIC_FLASH_NEWS,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
-  URL_STATIC_SECTION_AND_CATEGORY,
   URL_STATIC_TOPIC,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
@@ -25,7 +21,6 @@ import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
-  GetSectionsAndCategoriesDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
@@ -43,75 +38,11 @@ import { z } from 'zod'
 import {
   rawLatestPostSchema,
   rawPopularPostSchema,
-  sectionSchema,
   rawFlashNewsSchema,
   editorChoiceSchenma,
   topicsSchema,
 } from '@/utils/data-schema'
-import { MINUTE } from '@/constants/time-unit'
-
-const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching sections and categories',
-    getTraceObject()
-  )
-  const schema = z.promise(z.object({ sections: z.array(sectionSchema) }))
-
-  const data = await createDataFetchingChain<
-    z.infer<ZodArray<typeof sectionSchema>>
-  >(
-    errorLogger,
-    [],
-    async () => {
-      const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY, {
-        next: { revalidate: 0 },
-      })
-
-      const result = await schema.parse(resp.json())
-      return result.sections
-    },
-    async () => {
-      const result = await schema.parse(
-        fetchGQLData(errorLogger, GetSectionsAndCategoriesDocument)
-      )
-      return result.sections
-    }
-  )
-
-  return transformRawSectionsAndCategories(data)
-}
-class SectionColorManager {
-  private lastTime = 0
-  private cacheTime = MINUTE * 5
-  private defaultColor = '#D0D2D8'
-  private data: Awaited<ReturnType<typeof fetchSectionsAndCategories>>
-
-  constructor() {
-    this.data = []
-    this.updateData()
-  }
-
-  async updateData() {
-    const result = await fetchSectionsAndCategories()
-    this.lastTime = new Date().valueOf()
-    this.data = result
-  }
-
-  async getColor(sectionSlug?: string): Promise<string> {
-    if (!sectionSlug) return this.defaultColor
-
-    const now = new Date().valueOf()
-
-    if (now - this.lastTime > this.cacheTime) {
-      await this.updateData()
-    }
-
-    return (
-      this.data.find((item) => sectionSlug === item.slug)?.color ??
-      this.defaultColor
-    )
-  }
-}
+import { SectionColorManager } from '@/utils/section-color-manager'
 
 const colorManger = new SectionColorManager()
 
@@ -288,35 +219,6 @@ const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
     return transformRawLiveEvents(events)
   }
   return null
-}
-
-const transformRawSectionsAndCategories = (
-  rawData: z.infer<ZodArray<typeof sectionSchema>>
-): SectionAndCategory[] => {
-  if (!rawData) return []
-
-  return rawData.map((rawSection) => {
-    const name = rawSection.name ?? ''
-    const slug = rawSection.slug ?? ''
-    const color = rawSection.color ?? ''
-    const categories = (rawSection.categories ?? []).map((rawCategory) => {
-      const name = rawCategory.name ?? ''
-      const slug = rawCategory.slug ?? ''
-
-      return {
-        name,
-        slug,
-        color,
-      }
-    })
-
-    return {
-      name,
-      slug,
-      color,
-      categories,
-    }
-  })
 }
 
 const transformRawFlashNews = (
@@ -502,7 +404,6 @@ export {
   fetchLatestPost,
   fetchPopularPost,
   fetchLiveEvent,
-  fetchSectionsAndCategories,
   fetchFlashNews,
   fetchEditorChoices,
   fetchTopics,
