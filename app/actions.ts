@@ -47,6 +47,7 @@ import {
   gameSchema,
 } from '@/utils/data-schema'
 import { SectionColorManager } from '@/utils/section-color-manager'
+import { faker } from '@faker-js/faker/locale/ja'
 
 const colorManger = new SectionColorManager()
 
@@ -412,7 +413,8 @@ const transformGames = (
       name: game.name ?? '',
       link: game.link ?? '',
       heroImage: getHeroImage(game.heroImage),
-      description: '',
+      // TODO: replace mock data with real data
+      description: faker.lorem.sentence({ min: 5, max: 50 }),
     }
   })
 }
