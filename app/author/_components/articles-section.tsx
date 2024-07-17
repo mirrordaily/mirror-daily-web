@@ -11,7 +11,7 @@ export default function ArticleSection({ info, initialList, slug }: Props) {
   return (
     <section className="flex flex-col items-center">
       <div className="mb-3 flex w-full flex-col items-center gap-y-6 md:mb-6 md:gap-y-9 lg:mb-5 lg:items-start lg:gap-y-10">
-        <hr className="w-full max-w-[343px] border-2 border-[#000928] md:max-w-[680px] md:text-base lg:max-w-[768px]" />
+        <hr className="w-full max-w-[343px] border-2 border-[#000928] md:w-[680px] md:max-w-none md:text-base lg:w-[768px]" />
         <p className="text-[13px] font-medium">
           <span className="text-xl font-bold md:text-2xl">{info.name} </span>
           的文章
