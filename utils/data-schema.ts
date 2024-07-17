@@ -98,3 +98,10 @@ export const topicsSchema = z.object({
     })
   ),
 })
+
+// TODO: add description field
+export const gameSchema = z.object({
+  name: z.string(),
+  link: z.string(),
+  heroImage: heroImageSchema,
+})

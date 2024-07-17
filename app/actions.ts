@@ -6,10 +6,12 @@ import type {
   FlashNews,
   EditorChoice,
   TopicPost,
+  Game,
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
   URL_STATIC_FLASH_NEWS,
+  URL_STATIC_GAME,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_TOPIC,
@@ -20,6 +22,7 @@ import type { GetLiveEventForHomepageQuery } from '@/graphql/__generated__/graph
 import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
+  GetGamesDocument,
   GetLiveEventForHomepageDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
@@ -41,6 +44,7 @@ import {
   rawFlashNewsSchema,
   editorChoiceSchenma,
   topicsSchema,
+  gameSchema,
 } from '@/utils/data-schema'
 import { SectionColorManager } from '@/utils/section-color-manager'
 
@@ -400,6 +404,50 @@ const fetchTopics = async (): Promise<
   return transformTopics(data)
 }
 
+const transformGames = (
+  rawData: z.infer<ZodArray<typeof gameSchema>>
+): Game[] => {
+  return rawData.map((game) => {
+    return {
+      name: game.name ?? '',
+      link: game.link ?? '',
+      heroImage: getHeroImage(game.heroImage),
+      description: '',
+    }
+  })
+}
+
+const fetchGames = async (): Promise<Game[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching games',
+    getTraceObject()
+  )
+  const schema = z.promise(z.object({ games: z.array(gameSchema) }))
+
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof gameSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_GAME, {
+        next: { revalidate: 0 },
+      })
+
+      const result = await schema.parse(resp.json())
+      return result.games
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetGamesDocument)
+      )
+      return result.games
+    }
+  )
+
+  return transformGames(data)
+}
+
 export {
   fetchLatestPost,
   fetchPopularPost,
@@ -407,4 +455,5 @@ export {
   fetchFlashNews,
   fetchEditorChoices,
   fetchTopics,
+  fetchGames,
 }
