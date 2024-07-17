@@ -2,4 +2,12 @@ function isServer(): boolean {
   return typeof window === 'undefined'
 }
 
-export { isServer }
+const isValidUrl = (url: string): boolean => {
+  try {
+    return Boolean(new URL(url))
+  } catch (e) {
+    return false
+  }
+}
+
+export { isServer, isValidUrl }

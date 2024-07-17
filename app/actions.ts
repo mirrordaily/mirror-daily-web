@@ -48,6 +48,7 @@ import {
 } from '@/utils/data-schema'
 import { SectionColorManager } from '@/utils/section-color-manager'
 import { faker } from '@faker-js/faker/locale/ja'
+import { isValidUrl } from '@/utils/common'
 
 const colorManger = new SectionColorManager()
 
@@ -83,14 +84,6 @@ const getCategoryConfig = async (
         color: '#D0D2D8',
       }
     }
-  }
-}
-
-const isValidUrl = (url: string): boolean => {
-  try {
-    return Boolean(new URL(url))
-  } catch (e) {
-    return false
   }
 }
 
@@ -232,14 +225,12 @@ const transformRawFlashNews = (
   if (!rawData) return []
 
   return rawData.map((rawPost) => {
-    const postName = rawPost.title ?? ''
     const postSlug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(postSlug)
 
     return {
-      postName,
+      postName: rawPost.title ?? '',
       postSlug,
-      link,
+      link: getStoryPageUrl(postSlug),
     }
   })
 }
@@ -281,16 +272,13 @@ const transformEditorChoices = (
   if (!rawData) return []
 
   return rawData.map(({ choices: rawPost }, index) => {
-    const postName = rawPost?.title ?? ''
     const postSlug = rawPost?.slug ?? ''
-    const link = getStoryPageUrl(postSlug)
-    const heroImage = getHeroImage(rawPost?.heroImage)
 
     return {
-      postName,
+      postName: rawPost?.title ?? '',
       postSlug: `${index}-${postSlug}`,
-      link,
-      heroImage,
+      link: getStoryPageUrl(postSlug),
+      heroImage: getHeroImage(rawPost?.heroImage),
     }
   })
 }
@@ -345,15 +333,12 @@ const transformTopics = (
     const topicLink = getTopicPageUrl(topicSlug)
     const posts: TopicPost[] =
       topic.posts?.map((rawPost) => {
-        const postName = rawPost?.title ?? ''
         const postSlug = rawPost?.slug ?? ''
-        const link = getStoryPageUrl(postSlug)
-        const heroImage = getHeroImage(rawPost?.heroImage)
         return {
-          postName,
+          postName: rawPost?.title ?? '',
           postSlug,
-          heroImage,
-          link,
+          heroImage: getHeroImage(rawPost?.heroImage),
+          link: getStoryPageUrl(postSlug),
           topicLink,
         }
       }) ?? []
