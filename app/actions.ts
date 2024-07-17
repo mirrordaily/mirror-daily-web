@@ -447,7 +447,7 @@ const fetchGames = async (): Promise<Game[]> => {
     }
   )
 
-  return transformGames(data)
+  return transformGames(data).slice(0, 5)
 }
 
 export {
