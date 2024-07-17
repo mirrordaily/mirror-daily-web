@@ -11,7 +11,7 @@ export type Post = {
   sectionName: string
 }
 
-export type authorInfo = {
+export type AuthorInfo = {
   authorId: string
   name: string
 }
