@@ -14,6 +14,7 @@ import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
 import type { Shorts } from '@/types/homepage'
+import { useIntersectionObserver } from 'usehooks-ts'
 
 type Props = {
   items: Shorts[]
@@ -31,10 +32,11 @@ export default function ShortsList({
   const slidePrevRef = useRef<HTMLButtonElement>(null)
   const [swiperIsBegining, setSwiperIsBegining] = useState(true)
   const [swiperIsEnd, setSwiperIsEnd] = useState(false)
-  const [swiperActiveIndex, setSwiperActiveIndex] = useState(0)
+  const { isIntersecting, ref } = useIntersectionObserver()
 
   return (
     <div
+      ref={ref}
       className={twMerge(
         'relative w-screen max-w-[1440px] overflow-x-scroll sm:translate-x-[calc(theme(screens.sm)/2-50%)] md:translate-x-[calc(theme(screens.md)/2-50%)] lg:translate-x-[calc(theme(screens.lg)/2-50%)]',
         customClass
@@ -66,23 +68,24 @@ export default function ShortsList({
           swiper.params.navigation.prevEl = slidePrevRef.current!
           swiper.navigation.init()
           swiper.navigation.update()
-          setSwiperActiveIndex(swiper.realIndex)
         }}
         onSlideChange={(swiper) => {
           setSwiperIsBegining(swiper.isBeginning)
           setSwiperIsEnd(swiper.isEnd)
-          setSwiperActiveIndex(swiper.realIndex)
         }}
         className="shorts-swiper-in-homepage"
       >
         {items.map((item, index) => (
           <>
             <SwiperSlide key={index}>
-              <ShortsItem
-                {...item}
-                isActive={swiperActiveIndex === index}
-                customColor={customColor}
-              />
+              {({ isActive }) => (
+                <ShortsItem
+                  {...item}
+                  key={index}
+                  isActive={isActive && isIntersecting}
+                  customColor={customColor}
+                />
+              )}
             </SwiperSlide>
           </>
         ))}
