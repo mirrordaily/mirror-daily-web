@@ -131,7 +131,11 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
     const result = await Promise.allSettled(
       filteredData.map(transformRawLatestPost)
     )
-    return result.filter((r) => r.status === 'fulfilled').map((r) => r.value)
+    return result
+      .filter(
+        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
+      )
+      .map((r) => r.value)
   } catch (e) {
     errorLogger(e)
     return []
@@ -173,7 +177,9 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
       rawPostData.map(transformRawPopularPost)
     )
     return result
-      .filter((r) => r.status === 'fulfilled')
+      .filter(
+        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
+      )
       .map((r) => r.value)
       .slice(0, 10)
   } catch (e) {
