@@ -2,22 +2,19 @@
 
 import ArticleCard from './article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import { fetchAuthorPosts } from '@/app/author/actions'
 import type { Post } from '@/types/author-page'
 
-type Props = {
-  initialList: Post[]
-  id: string
+type Props<T> = {
+  initialList: T[]
+  fetchMorePosts: (page: number) => Promise<T[]>
 }
 
 const PAGE_SIZE = 12
 
-export default function ArticlesList({ initialList, id }: Props) {
-  const fetchMorePosts = async (page: number) => {
-    const posts = await fetchAuthorPosts(page, id)
-    return posts
-  }
-
+export default function ArticlesList<T extends Post>({
+  initialList,
+  fetchMorePosts,
+}: Props<T>) {
   return (
     <InfiniteScrollList
       initialList={initialList}
