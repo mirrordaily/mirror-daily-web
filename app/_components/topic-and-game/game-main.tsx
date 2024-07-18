@@ -13,7 +13,7 @@ export default async function GameMain() {
         elements.push(horizontalDivider, horizontalDivider)
       }
 
-      elements.push(<GameItem {...game} />)
+      elements.push(<GameItem {...game} key={game.name} />)
     })
 
     /**
