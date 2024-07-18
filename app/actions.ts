@@ -120,9 +120,7 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   )
 
   try {
-    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`, {
-      next: { revalidate: 0 },
-    })
+    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`)
 
     const rawPostData = await resp.json()
     const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
@@ -165,9 +163,7 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
   )
 
   try {
-    const resp = await fetch(URL_STATIC_POPULAR_NEWS, {
-      next: { revalidate: 0 },
-    })
+    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
 
     const rawPostData = await z
       .promise(z.array(rawPopularPostSchema))
@@ -252,9 +248,7 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_FLASH_NEWS, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_FLASH_NEWS)
 
       const result = await schema.parse(resp.json())
       return result.posts
@@ -307,9 +301,7 @@ const fetchEditorChoices = async (): Promise<
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_EDITOR_CHOICE, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_EDITOR_CHOICE)
 
       const result = await schema.parse(resp.json())
       return result.editorChoices
@@ -382,9 +374,7 @@ const fetchTopics = async (): Promise<
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_TOPIC, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_TOPIC)
 
       const result = await schema.parse(resp.json())
       return result.topics
