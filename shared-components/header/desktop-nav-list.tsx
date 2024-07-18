@@ -1,5 +1,5 @@
 'use client'
-import type { SectionAndCategory } from '@/types/homepage'
+import type { SectionAndCategory } from '@/types/common'
 import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'

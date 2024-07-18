@@ -25,20 +25,16 @@ export type PickupItemInTopNewsSection = Pick<
   'postName' | 'heroImage' | 'link'
 >
 
-export type SectionAndCategory = {
-  name: string
-  slug: string
-  color: string
-  categories: {
-    name: string
-    slug: string
-    color: string
-  }[]
-}
-
 export type FlashNews = Pick<LatestPost, 'postSlug' | 'postName' | 'link'>
 
 export type EditorChoice = Pick<
   LatestPost,
   'postName' | 'postSlug' | 'link' | 'heroImage'
 >
+
+export type TopicPost = Pick<
+  LatestPost,
+  'postName' | 'postSlug' | 'link' | 'heroImage'
+> & {
+  topicLink: string
+}

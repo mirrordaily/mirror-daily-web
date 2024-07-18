@@ -3,87 +3,65 @@
 import type {
   LatestPost,
   PickupItemInTopNewsSection,
-  SectionAndCategory,
   FlashNews,
   EditorChoice,
+  TopicPost,
 } from '@/types/homepage'
-import type { HeroImage } from '@/types/common'
 import {
+  URL_STATIC_EDITOR_CHOICE,
+  URL_STATIC_FLASH_NEWS,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
+  URL_STATIC_TOPIC,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
-import type {
-  EditorChoiceDataFragment,
-  GetFlashNewsQuery,
-  GetLiveEventForHomepageQuery,
-  GetSectionsAndCategoriesQuery,
-} from '@/graphql/__generated__/graphql'
+import type { GetLiveEventForHomepageQuery } from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
   GetLiveEventForHomepageDocument,
-  GetSectionsAndCategoriesDocument,
+  GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
-import { getPostPageUrl, getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage } from '@/utils/data-process'
+import {
+  getPostPageUrl,
+  getStoryPageUrl,
+  getTopicPageUrl,
+} from '@/utils/site-urls'
+import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
+import type TopicMain from './_components/topic-and-game/topic-main'
+import type { ZodArray } from 'zod'
+import { z } from 'zod'
+import {
+  rawLatestPostSchema,
+  rawPopularPostSchema,
+  rawFlashNewsSchema,
+  editorChoiceSchenma,
+  topicsSchema,
+} from '@/utils/data-schema'
+import { SectionColorManager } from '@/utils/section-color-manager'
 
-type Category = {
-  name: string
-  slug: string
-}
-
-type Section = {
-  slug: string
-  name: string
-}
-
-type Partner = {
-  slug: string
-}
-
-type RawLatestPost = {
-  title: string
-  slug: string
-  heroImage: HeroImage | string | null | undefined
-  sections: Pick<Section, 'slug'>[]
-  categories: Category[]
-  partner: Partner | string
-  redirect: string
-  publishedDate: string
-}
-
-// TODO: replace with real data
-const getSingleColor = () => {
-  return Math.floor(Math.random() * 256)
-}
-
-// TODO: replace with real data
-const getCategoryColor = () => {
-  const red = getSingleColor()
-  const green = getSingleColor()
-  const blue = getSingleColor()
-  return `rgb(${red},${green},${blue})`
-}
+const colorManger = new SectionColorManager()
 
 type CategoryConfig = {
   name: string
   color: string
 }
 
-const getCategoryConfig = (rawPosts: RawLatestPost): CategoryConfig => {
-  const { partner, categories } = rawPosts
+const getCategoryConfig = async (
+  rawPosts: z.infer<typeof rawLatestPostSchema>
+): Promise<CategoryConfig> => {
+  const { partner, categories, sections } = rawPosts
 
   if (typeof partner === 'string') {
-    const name = categories[0]?.name || ''
-    const color = getCategoryColor()
+    const categoryName = categories[0]?.name || ''
+    const color = await colorManger.getColor(sections[0]?.slug)
 
     return {
-      name,
+      name: categoryName,
       color,
     }
   } else {
@@ -111,14 +89,18 @@ const isValidUrl = (url: string): boolean => {
   }
 }
 
-const hasExternalLink = (rawPost: RawLatestPost): boolean => {
+const hasExternalLink = (
+  rawPost: z.infer<typeof rawLatestPostSchema>
+): boolean => {
   const { redirect } = rawPost
   return isValidUrl(redirect)
 }
 
-const transformRawLatestPost = (rawPosts: RawLatestPost): LatestPost => {
+const transformRawLatestPost = async (
+  rawPosts: z.infer<typeof rawLatestPostSchema>
+): Promise<LatestPost> => {
   const { title, slug, heroImage, publishedDate, partner } = rawPosts
-  const { name, color } = getCategoryConfig(rawPosts)
+  const { name, color } = await getCategoryConfig(rawPosts)
 
   return {
     categoryName: name,
@@ -131,38 +113,45 @@ const transformRawLatestPost = (rawPosts: RawLatestPost): LatestPost => {
   }
 }
 
-// TODO: change source and update related handle
 const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
-  try {
-    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`, {
-      next: { revalidate: 300 },
-    })
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching latest posts',
+    getTraceObject()
+  )
 
-    const rawPostData: Record<'latest', RawLatestPost[]> = await resp.json()
-    const filteredData = rawPostData.latest.filter(
+  try {
+    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`)
+
+    const rawPostData = await resp.json()
+    const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
+    const filteredData = latestPosts.filter(
       (rawPost) => !hasExternalLink(rawPost)
     )
 
-    return filteredData.map(transformRawLatestPost)
+    const result = await Promise.allSettled(
+      filteredData.map(transformRawLatestPost)
+    )
+    return result
+      .filter(
+        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
+      )
+      .map((r) => r.value)
   } catch (e) {
-    console.error(e)
+    errorLogger(e)
     return []
   }
 }
 
-type RawPopularPost = {
-  title: string
-  slug: string
-  heroImage: Pick<HeroImage, 'resized' | 'resizedWebp'> | string | null
-  sectionsInInputOrder: Section[]
-}
-
-const transformRawPopularPost = (rawPosts: RawPopularPost): LatestPost => {
+const transformRawPopularPost = async (
+  rawPosts: z.infer<typeof rawPopularPostSchema>
+): Promise<LatestPost> => {
   const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
+  const color = await colorManger.getColor(sections[0]?.slug)
 
   return {
+    // TODO: switch to category name
     categoryName: sections[0]?.name ?? '',
-    categoryColor: getCategoryColor(),
+    categoryColor: color,
     postName: title,
     postSlug: slug,
     heroImage: getHeroImage(heroImage),
@@ -171,17 +160,30 @@ const transformRawPopularPost = (rawPosts: RawPopularPost): LatestPost => {
   }
 }
 
-// TODO: change source and update related handle
 const fetchPopularPost = async (): Promise<LatestPost[]> => {
-  try {
-    const resp = await fetch(URL_STATIC_POPULAR_NEWS, {
-      next: { revalidate: 300 },
-    })
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching popular posts',
+    getTraceObject()
+  )
 
-    const rawPostData: RawPopularPost[] = await resp.json()
-    return rawPostData.map(transformRawPopularPost).slice(10)
+  try {
+    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
+
+    const rawPostData = await z
+      .promise(z.array(rawPopularPostSchema))
+      .parse(resp.json())
+
+    const result = await Promise.allSettled(
+      rawPostData.map(transformRawPopularPost)
+    )
+    return result
+      .filter(
+        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
+      )
+      .map((r) => r.value)
+      .slice(0, 10)
   } catch (e) {
-    console.error(e)
+    errorLogger(e)
     return []
   }
 }
@@ -221,56 +223,8 @@ const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
   return null
 }
 
-const transformRawSectionsAndCategories = (
-  rawData: GetSectionsAndCategoriesQuery['sections']
-): SectionAndCategory[] => {
-  if (!rawData) return []
-
-  return rawData.map((rawSection) => {
-    const name = rawSection.name ?? ''
-    const slug = rawSection.slug ?? ''
-    const color = rawSection.color ?? ''
-    const categories = (rawSection.categories ?? []).map((rawCategory) => {
-      const name = rawCategory.name ?? ''
-      const slug = rawCategory.slug ?? ''
-
-      return {
-        name,
-        slug,
-        color,
-      }
-    })
-
-    return {
-      name,
-      slug,
-      color,
-      categories,
-    }
-  })
-}
-
-const fetchSectionsAndCategories = async (): Promise<SectionAndCategory[]> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching sections and categories',
-    getTraceObject()
-  )
-
-  const result = await fetchGQLData(
-    errorLogger,
-    GetSectionsAndCategoriesDocument
-  )
-
-  if (result) {
-    const { sections } = result
-    return transformRawSectionsAndCategories(sections)
-  } else {
-    return []
-  }
-}
-
 const transformRawFlashNews = (
-  rawData: GetFlashNewsQuery['posts']
+  rawData: z.infer<ZodArray<typeof rawFlashNewsSchema>>
 ): FlashNews[] => {
   if (!rawData) return []
 
@@ -292,23 +246,36 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
     'Error occurs while fetching flash news',
     getTraceObject()
   )
+  const schema = z.promise(z.object({ posts: z.array(rawFlashNewsSchema) }))
 
-  const result = await fetchGQLData(errorLogger, GetFlashNewsDocument)
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof rawFlashNewsSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_FLASH_NEWS)
 
-  if (result) {
-    const { posts } = result
-    return transformRawFlashNews(posts)
-  } else {
-    return []
-  }
+      const result = await schema.parse(resp.json())
+      return result.posts
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetFlashNewsDocument)
+      )
+      return result.posts
+    }
+  )
+
+  return transformRawFlashNews(data)
 }
 
 const transformEditorChoices = (
-  rawData: EditorChoiceDataFragment[] | null | undefined
+  rawData: z.infer<ZodArray<typeof editorChoiceSchenma>>
 ): EditorChoice[] => {
   if (!rawData) return []
 
-  return rawData.map(({ choices: rawPost }) => {
+  return rawData.map(({ choices: rawPost }, index) => {
     const postName = rawPost?.title ?? ''
     const postSlug = rawPost?.slug ?? ''
     const link = getStoryPageUrl(postSlug)
@@ -316,7 +283,7 @@ const transformEditorChoices = (
 
     return {
       postName,
-      postSlug,
+      postSlug: `${index}-${postSlug}`,
       link,
       heroImage,
     }
@@ -330,30 +297,110 @@ const fetchEditorChoices = async (): Promise<
     'Error occurs while fetching editor choices',
     getTraceObject()
   )
+  const schema = z.promise(
+    z.object({ editorChoices: z.array(editorChoiceSchenma) })
+  )
 
-  const result = await fetchGQLData(errorLogger, GetEditorChoicesDocument)
+  const editorData = await createDataFetchingChain<
+    z.infer<ZodArray<typeof editorChoiceSchenma>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_EDITOR_CHOICE)
 
-  if (result) {
-    const { editor } = result
-
-    return {
-      editor: transformEditorChoices(editor),
-      // TODO: fetch AI data from JSON file (different to `editor`)
-      ai: [],
+      const result = await schema.parse(resp.json())
+      return result.editorChoices
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetEditorChoicesDocument)
+      )
+      return result.editorChoices
     }
-  } else {
-    return {
-      editor: [],
-      ai: [],
-    }
+  )
+
+  return {
+    editor: transformEditorChoices(editorData).slice(0, 10),
+    // TODO: fetch AI data from JSON file (different to `editor`)
+    ai: [],
   }
+}
+
+const transformTopics = (
+  rawData: z.infer<ZodArray<typeof topicsSchema>>
+): ParameterOfComponent<typeof TopicMain>['data'] | null => {
+  if (!rawData) return null
+
+  const convertedData = rawData.map((topic) => {
+    const topicName = topic.name || ''
+    const topicSlug = topic.slug || ''
+    const topicLink = getTopicPageUrl(topicSlug)
+    const posts: TopicPost[] =
+      topic.posts?.map((rawPost) => {
+        const postName = rawPost?.title ?? ''
+        const postSlug = rawPost?.slug ?? ''
+        const link = getStoryPageUrl(postSlug)
+        const heroImage = getHeroImage(rawPost?.heroImage)
+        return {
+          postName,
+          postSlug,
+          heroImage,
+          link,
+          topicLink,
+        }
+      }) ?? []
+
+    return [topicName, posts] as const
+  })
+
+  const filteredData = convertedData.filter(
+    (data): data is [string, [TopicPost, ...TopicPost[]]] => {
+      const [, posts] = data
+      return posts.length > 0
+    }
+  )
+
+  if (filteredData.length === 0) return null
+  else return Object.fromEntries(filteredData)
+}
+
+const fetchTopics = async (): Promise<
+  ParameterOfComponent<typeof TopicMain>['data'] | null
+> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching topics',
+    getTraceObject()
+  )
+  const schema = z.promise(z.object({ topics: z.array(topicsSchema) }))
+
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof topicsSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_TOPIC)
+
+      const result = await schema.parse(resp.json())
+      return result.topics
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetTopicsDocument)
+      )
+      return result.topics
+    }
+  )
+
+  return transformTopics(data)
 }
 
 export {
   fetchLatestPost,
   fetchPopularPost,
   fetchLiveEvent,
-  fetchSectionsAndCategories,
   fetchFlashNews,
   fetchEditorChoices,
+  fetchTopics,
 }

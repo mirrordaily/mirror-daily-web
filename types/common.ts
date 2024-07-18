@@ -48,3 +48,14 @@ export type ParameterOfComponent<T> = T extends (
 ) => any // eslint-disable-line @typescript-eslint/no-explicit-any
   ? P
   : never
+
+export type SectionAndCategory = {
+  name: string
+  slug: string
+  color: string
+  categories: {
+    name: string
+    slug: string
+    color: string
+  }[]
+}

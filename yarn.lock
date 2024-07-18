@@ -1283,10 +1283,10 @@
   resolved "https://registry.yarnpkg.com/@readr-media/react-image/-/react-image-2.2.3.tgz#859e04d7c91d1d8a71aafbbd52e58b032cafbe52"
   integrity sha512-cB0o4wtbngppLDnMRYyX7ZRGsNwneVbqFHJ9q4nw9p8ZFEhUuInaZpJLfdvZq4L74YvNk9iWCnY+nwwP406saA==
 
-"@readr-media/react-infinite-scroll-list@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-infinite-scroll-list/-/react-infinite-scroll-list-1.1.2.tgz#b501be22cd4fb95b20b55c47a111803f8bebb38d"
-  integrity sha512-fabL+6Cy+sXYIqV1tSW1/h1eb8rEH/jeuHBSaWZMqFGG6kH6y+h3LCK1JYLeb058j/uTdwXhRFPU9Jsjvh00BQ==
+"@readr-media/react-infinite-scroll-list@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-infinite-scroll-list/-/react-infinite-scroll-list-1.2.0.tgz#d2a82ac1695bce5146c0f0dd7dbbca25d9d4622f"
+  integrity sha512-PSTjUQFinUOYdlKYAc88Bl2ELpD/sPaWjqTVdaT1YmBfsrhA5tzlXRqr+WJm6IayhvnLbg2rLyEHwjXBaMyOhA==
   dependencies:
     ts-xor "^1.3.0"
 
@@ -6159,3 +6159,8 @@ zen-observable@0.8.15:
   version "0.8.15"
   resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.15.tgz#96415c512d8e3ffd920afd3889604e30b9eaac15"
   integrity sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
+
+zod@^3.23.8:
+  version "3.23.8"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.8.tgz#e37b957b5d52079769fb8097099b592f0ef4067d"
+  integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==
