@@ -1,6 +1,6 @@
 'use client'
 
-import type { SectionAndCategory } from '@/types/homepage'
+import type { SectionAndCategory } from '@/types/common'
 import NextImage from 'next/image'
 import { useState } from 'react'
 import { SOCIAL_LINKS } from '@/constants/misc'

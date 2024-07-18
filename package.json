@@ -15,7 +15,7 @@
   "dependencies": {
     "@apollo/client": "^3.10.4",
     "@readr-media/react-image": "^2.2.3",
-    "@readr-media/react-infinite-scroll-list": "^1.1.2",
+    "@readr-media/react-infinite-scroll-list": "^1.2.0",
     "@twreporter/errors": "^1.1.2",
     "dayjs": "^1.11.11",
     "graphql": "^16.8.1",
@@ -25,7 +25,8 @@
     "react-dom": "^18",
     "server-only": "^0.0.1",
     "swiper": "^11.1.4",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",

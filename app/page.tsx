@@ -58,7 +58,7 @@ export default async function Home() {
           heroImage: first.heroImage,
           link: first.link,
         },
-        ...popularPosts.slice(1, 9),
+        ...popularPosts.slice(1, 10),
       ]
     }
   }

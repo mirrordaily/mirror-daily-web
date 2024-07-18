@@ -12,9 +12,9 @@ import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local', override: true })
 import { ENVIRONMENT } from './misc'
 
+const JSON_ROOT = '/json'
 let STATIC_FILE_DOMAIN: string
-let URL_STATIC_POPULAR_NEWS: string
-let URL_STATIC_LATEST_NEWS: string
+let JSON_FILE_PATH: string
 
 const ENV = (function () {
   const env = process.env.NEXT_PUBLIC_ENV
@@ -30,16 +30,22 @@ const GCP_PROJECT_ID = 'mirrordaily'
 
 switch (ENV) {
   case ENVIRONMENT.DEVELOPMENT:
-    STATIC_FILE_DOMAIN = 'v3-statics-dev.mirrormedia.mg'
-    URL_STATIC_POPULAR_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/popular.json`
-    URL_STATIC_LATEST_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/post_external`
+    STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     break
 
   default:
-    STATIC_FILE_DOMAIN = 'v3-statics-dev.mirrormedia.mg'
-    URL_STATIC_POPULAR_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/popular.json`
-    URL_STATIC_LATEST_NEWS = `https://${STATIC_FILE_DOMAIN}/files/json/post_external`
+    STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
+    break
 }
+
+const URL_STATIC_POPULAR_NEWS = `${JSON_FILE_PATH}/popular.json`
+const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/latest_posts`
+const URL_STATIC_SECTION_AND_CATEGORY = `${JSON_FILE_PATH}/sections-and-categories.json`
+const URL_STATIC_FLASH_NEWS = `${JSON_FILE_PATH}/flash-news.json`
+const URL_STATIC_EDITOR_CHOICE = `${JSON_FILE_PATH}/editor-choice.json`
+const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json`
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
@@ -48,5 +54,9 @@ export {
   API_ENDPOINT,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
+  URL_STATIC_SECTION_AND_CATEGORY,
+  URL_STATIC_FLASH_NEWS,
+  URL_STATIC_EDITOR_CHOICE,
+  URL_STATIC_TOPIC,
   GCP_PROJECT_ID,
 }

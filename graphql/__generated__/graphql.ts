@@ -3742,7 +3742,7 @@ export type GetEditorChoicesQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetEditorChoicesQuery = {
   __typename?: 'Query'
-  editor?: Array<{
+  editorChoices?: Array<{
     __typename?: 'EditorChoice'
     choices?: {
       __typename?: 'Post'
@@ -4357,7 +4357,6 @@ export const GetEditorChoicesDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'editor' },
             name: { kind: 'Name', value: 'editorChoices' },
             arguments: [
               {

@@ -12,6 +12,7 @@ import {
 import useWindowSize from '@/hooks/use-window-size'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { getTopicSectionPage } from '@/utils/site-urls'
+import { isServer } from '@/utils/common'
 
 function getWidthOfText(text: string, styles: unknown): number {
   const isObjectJSON = function (obj: unknown): obj is CSSStyleDeclaration {
@@ -80,12 +81,14 @@ export default function TopicSelector({
 
   const displayTopics = useMemo(
     () =>
-      getMaxmimumDisplayTopics(
-        topics,
-        areaWidth,
-        itemGap.current,
-        customStyle.current
-      ),
+      isServer()
+        ? []
+        : getMaxmimumDisplayTopics(
+            topics,
+            areaWidth,
+            itemGap.current,
+            customStyle.current
+          ),
     [topics, areaWidth]
   )
 
