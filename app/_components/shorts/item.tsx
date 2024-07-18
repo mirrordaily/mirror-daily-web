@@ -7,6 +7,8 @@ import ReactPlayer from 'react-player/lazy'
 type Props = Shorts & {
   isActive: boolean
   customColor: string
+  onPlay: () => void
+  onPause: () => void
 }
 
 export default function ShortsItem({
@@ -15,13 +17,10 @@ export default function ShortsItem({
   title,
   isActive,
   customColor,
+  onPlay,
+  onPause,
 }: Props) {
-  const [playing, setPlaying] = useState(isActive)
   const [isClientSide, setIsClientSide] = useState(false)
-
-  useEffect(() => {
-    setPlaying(isActive)
-  }, [isActive])
 
   useEffect(() => {
     setIsClientSide(true)
@@ -37,7 +36,7 @@ export default function ShortsItem({
             height="100%"
             controls={true}
             muted={true}
-            playing={playing}
+            playing={isActive}
             config={{
               file: {
                 attributes: {
@@ -45,12 +44,13 @@ export default function ShortsItem({
                 },
               },
             }}
-            onPause={() => setPlaying(false)}
+            onPause={() => onPause()}
+            onEnded={() => onPause()}
           />
         )}
         <div
-          className={`absolute inset-0 ${playing ? 'hidden' : ''}`}
-          onClick={() => setPlaying(!playing)}
+          className={`absolute inset-0 ${isActive ? 'hidden' : ''}`}
+          onClick={() => onPlay()}
         />
       </div>
       <p className="mt-2 line-clamp-2 text-base font-medium leading-normal lg:text-xl lg:font-bold">

@@ -32,6 +32,7 @@ export default function ShortsList({
   const slidePrevRef = useRef<HTMLButtonElement>(null)
   const [swiperIsBegining, setSwiperIsBegining] = useState(true)
   const [swiperIsEnd, setSwiperIsEnd] = useState(false)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { isIntersecting, ref } = useIntersectionObserver()
 
   return (
@@ -68,24 +69,31 @@ export default function ShortsList({
           swiper.params.navigation.prevEl = slidePrevRef.current!
           swiper.navigation.init()
           swiper.navigation.update()
+          setActiveIndex(swiper.realIndex)
         }}
         onSlideChange={(swiper) => {
           setSwiperIsBegining(swiper.isBeginning)
           setSwiperIsEnd(swiper.isEnd)
+          setActiveIndex(swiper.realIndex)
         }}
         className="shorts-swiper-in-homepage"
       >
         {items.map((item, index) => (
           <>
             <SwiperSlide key={index}>
-              {({ isActive }) => (
-                <ShortsItem
-                  {...item}
-                  key={index}
-                  isActive={isActive && isIntersecting}
-                  customColor={customColor}
-                />
-              )}
+              <ShortsItem
+                {...item}
+                key={index}
+                isActive={isIntersecting && activeIndex === index}
+                customColor={customColor}
+                onPlay={() => {
+                  swiperRef.current?.swiper.slideTo(index)
+                  setActiveIndex(index)
+                }}
+                onPause={() => {
+                  if (activeIndex === index) setActiveIndex(null)
+                }}
+              />
             </SwiperSlide>
           </>
         ))}
