@@ -54,9 +54,7 @@ export const fetchSectionsAndCategories = async (): Promise<
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY)
 
       const result = await schema.parse(resp.json())
       return result.sections
