@@ -10,7 +10,7 @@ import type {
   GetSectionInformationQuery,
 } from '@/graphql/__generated__/graphql'
 import { getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage } from '@/utils/data-process'
+import { getHeroImage, dateFormatter } from '@/utils/data-process'
 import type { SectionPost } from '@/types/section-page'
 
 function transformSectionPost(
@@ -22,7 +22,7 @@ function transformSectionPost(
     const title = rawPost.title ?? ''
     const slug = rawPost.slug ?? ''
     const link = getStoryPageUrl(slug)
-    const createdTime = rawPost.createdAt
+    const createdTime = dateFormatter(rawPost.createdAt)
     const heroImage = getHeroImage(rawPost.heroImage)
     const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
 
