@@ -7,14 +7,14 @@ import type { Post } from '@/types/author-page'
 
 type Props = {
   initialList: Post[]
-  slug: string
+  id: string
 }
 
 const PAGE_SIZE = 12
 
-export default function ArticlesList({ initialList, slug }: Props) {
+export default function ArticlesList({ initialList, id }: Props) {
   const fetchMorePosts = async (page: number) => {
-    const posts = await fetchAuthorPosts(page, slug)
+    const posts = await fetchAuthorPosts(page, id)
     return posts
   }
 

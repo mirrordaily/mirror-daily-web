@@ -42,7 +42,7 @@ function transformAuthorPost(
   })
 }
 
-async function fetchAuthorPosts(page: number, slug: string): Promise<Post[]> {
+async function fetchAuthorPosts(page: number, id: string): Promise<Post[]> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching author posts in author page',
     getTraceObject()
@@ -54,7 +54,7 @@ async function fetchAuthorPosts(page: number, slug: string): Promise<Post[]> {
   const result = await fetchGQLData(errorLogger, GetPostsByAuthorIdDocument, {
     skip: (page - 1) * pageSize,
     take: take,
-    id: slug,
+    id: id,
   })
 
   if (result) {
@@ -79,16 +79,14 @@ function transformAuthorInformation(
   }
 }
 
-async function fetchAuthorInformation(
-  slug: string
-): Promise<AuthorInfo | null> {
+async function fetchAuthorInformation(id: string): Promise<AuthorInfo | null> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching author information in author page',
     getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetAuthorInformationDocument, {
-    id: slug,
+    id: id,
   })
 
   if (result) {
