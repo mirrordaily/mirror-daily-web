@@ -8,6 +8,7 @@ import type { ParameterOfComponent } from '@/types/common'
 import SectionDivider from './_components/divider'
 import EditorChoiceSection from './_components/editor-choice/section'
 import TopNewsSection from './_components/top-news/section'
+import ShortsNewsSection from './_components/shorts/news-section'
 import TopicAndGameSection from './_components/topic-and-game/section'
 import LatestNewsSection from './_components/latest-news/section'
 
@@ -72,13 +73,16 @@ export default async function Home() {
   return (
     <main className="flex w-full grow flex-col items-center justify-center">
       <SectionDivider customClasses="hidden md:block" />
+      {/* 編輯精選 */}
       <EditorChoiceSection />
       <SectionDivider />
       {/* 即時新聞/熱門新聞（10則） */}
       <TopNewsSection postsOfTab={postsOfTab} />
       <SectionDivider />
       {/* 短影音新聞 */}
-      <SectionDivider customClasses="hidden" />
+      <ShortsNewsSection />
+      <SectionDivider />
+      {/* Topic（4則）＋遊戲區 */}
       <TopicAndGameSection />
       <SectionDivider customClasses="hidden" />
       {/* 短影音．二創 */}

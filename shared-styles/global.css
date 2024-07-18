@@ -27,6 +27,13 @@
     @apply md:!w-auto md:absolute md:bottom-3 md:right-3 md:justify-end md:space-x-1;
     @apply lg:space-x-[6px];
   }
+
+  .shorts-swiper-in-homepage .swiper-slide {
+    @apply w-[270px] lg:w-[318px];
+  }
+  .shorts-swiper-button {
+    @apply hidden absolute top-[calc(480px/2)] lg:top-[calc(566px/2)] -translate-y-1/2 lg:inline-block z-[100];
+  }
 }
 
 @layer utilities {
