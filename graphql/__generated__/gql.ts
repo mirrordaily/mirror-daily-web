@@ -77,12 +77,6 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: 'query GetAuthorInformation($id: ID!) {\n  contact(where: {id: $id}) {\n    id\n    name\n  }\n}'
-): (typeof documents)['query GetAuthorInformation($id: ID!) {\n  contact(where: {id: $id}) {\n    id\n    name\n  }\n}']
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(
   source: 'query GetEditorChoices {\n  editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}'
 ): (typeof documents)['query GetEditorChoices {\n  editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}']
 /**
