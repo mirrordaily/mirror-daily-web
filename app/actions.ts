@@ -407,9 +407,7 @@ const fetchGames = async (): Promise<Game[]> => {
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_GAME, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_GAME)
 
       const result = await schema.parse(resp.json())
       return result.games
