@@ -10,6 +10,7 @@ import EditorChoiceSection from './_components/editor-choice/section'
 import TopNewsSection from './_components/top-news/section'
 import ShortsNewsSection from './_components/shorts/news-section'
 import TopicAndGameSection from './_components/topic-and-game/section'
+import ShortsDerivativeSection from './_components/shorts/derivative-section'
 import LatestNewsSection from './_components/latest-news/section'
 
 export default async function Home() {
@@ -84,8 +85,9 @@ export default async function Home() {
       <SectionDivider />
       {/* Topic（4則）＋遊戲區 */}
       <TopicAndGameSection />
-      <SectionDivider customClasses="hidden" />
+      <SectionDivider />
       {/* 短影音．二創 */}
+      <ShortsDerivativeSection />
       <SectionDivider />
       {/* 最新新聞 */}
       <LatestNewsSection
