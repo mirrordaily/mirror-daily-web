@@ -91,7 +91,8 @@ export default function ShortsList({
                   setActiveIndex(index)
                 }}
                 onPause={() => {
-                  if (activeIndex === index) setActiveIndex(null)
+                  if (activeIndex === index && isIntersecting)
+                    setActiveIndex(null)
                 }}
               />
             </SwiperSlide>
