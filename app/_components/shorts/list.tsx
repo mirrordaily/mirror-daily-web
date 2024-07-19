@@ -33,7 +33,7 @@ export default function ShortsList({
   const [swiperIsBegining, setSwiperIsBegining] = useState(true)
   const [swiperIsEnd, setSwiperIsEnd] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const { isIntersecting, ref } = useIntersectionObserver()
+  const { isIntersecting, ref } = useIntersectionObserver({ threshold: 0.75 })
 
   return (
     <div
