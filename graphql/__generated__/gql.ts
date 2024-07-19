@@ -19,6 +19,8 @@ const documents = {
     types.HeroImageFragmentDoc,
   'fragment PostDetails on Post {\n  title\n  createdAt\n  brief\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}':
     types.PostDetailsFragmentDoc,
+  'fragment LatestShorts on Video {\n  id\n  name\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}':
+    types.LatestShortsFragmentDoc,
   'query GetCategoryInformation($slug: String) {\n  category(where: {slug: $slug}) {\n    slug\n    name\n    state\n    sections {\n      slug\n      color\n    }\n  }\n}':
     types.GetCategoryInformationDocument,
   'query GetEditorChoices {\n  editorChoices(\n    orderBy: [{order: asc}]\n    take: 10\n    where: {state: {equals: "published"}}\n  ) {\n    ...EditorChoiceData\n  }\n}':
@@ -33,6 +35,8 @@ const documents = {
     types.GetSectionsAndCategoriesDocument,
   'query GetTopics {\n  topics(orderBy: {sortOrder: asc}, where: {state: {equals: "published"}}) {\n    name\n    slug\n    posts(\n      take: 4\n      orderBy: {publishedDate: desc}\n      where: {state: {equals: "published"}}\n    ) {\n      ...PostItem\n    }\n  }\n}':
     types.GetTopicsDocument,
+  'query GetLatestShorts($amount: Int!) {\n  news: videos(\n    take: $amount\n    orderBy: {createdAt: desc}\n    where: {state: {equals: "published"}, videoSection: {equals: "news"}}\n  ) {\n    ...LatestShorts\n  }\n  creativity: videos(\n    take: $amount\n    orderBy: {createdAt: desc}\n    where: {state: {equals: "published"}, videoSection: {equals: "creativity"}}\n  ) {\n    ...LatestShorts\n  }\n}':
+    types.GetLatestShortsDocument,
 }
 
 /**
@@ -67,6 +71,12 @@ export function gql(
 export function gql(
   source: 'fragment PostDetails on Post {\n  title\n  createdAt\n  brief\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}'
 ): (typeof documents)['fragment PostDetails on Post {\n  title\n  createdAt\n  brief\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: 'fragment LatestShorts on Video {\n  id\n  name\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}'
+): (typeof documents)['fragment LatestShorts on Video {\n  id\n  name\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -109,6 +119,12 @@ export function gql(
 export function gql(
   source: 'query GetTopics {\n  topics(orderBy: {sortOrder: asc}, where: {state: {equals: "published"}}) {\n    name\n    slug\n    posts(\n      take: 4\n      orderBy: {publishedDate: desc}\n      where: {state: {equals: "published"}}\n    ) {\n      ...PostItem\n    }\n  }\n}'
 ): (typeof documents)['query GetTopics {\n  topics(orderBy: {sortOrder: asc}, where: {state: {equals: "published"}}) {\n    name\n    slug\n    posts(\n      take: 4\n      orderBy: {publishedDate: desc}\n      where: {state: {equals: "published"}}\n    ) {\n      ...PostItem\n    }\n  }\n}']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: 'query GetLatestShorts($amount: Int!) {\n  news: videos(\n    take: $amount\n    orderBy: {createdAt: desc}\n    where: {state: {equals: "published"}, videoSection: {equals: "news"}}\n  ) {\n    ...LatestShorts\n  }\n  creativity: videos(\n    take: $amount\n    orderBy: {createdAt: desc}\n    where: {state: {equals: "published"}, videoSection: {equals: "creativity"}}\n  ) {\n    ...LatestShorts\n  }\n}'
+): (typeof documents)['query GetLatestShorts($amount: Int!) {\n  news: videos(\n    take: $amount\n    orderBy: {createdAt: desc}\n    where: {state: {equals: "published"}, videoSection: {equals: "news"}}\n  ) {\n    ...LatestShorts\n  }\n  creativity: videos(\n    take: $amount\n    orderBy: {createdAt: desc}\n    where: {state: {equals: "published"}, videoSection: {equals: "creativity"}}\n  ) {\n    ...LatestShorts\n  }\n}']
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {}

@@ -105,3 +105,10 @@ export const gameSchema = z.object({
   link: z.string(),
   heroImage: heroImageSchema,
 })
+
+export const latestShortsSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  videoSrc: z.string(),
+  heroImage: z.union([heroImageSchema, z.null()]),
+})

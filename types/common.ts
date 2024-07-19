@@ -59,3 +59,8 @@ export type SectionAndCategory = {
     color: string
   }[]
 }
+
+export enum SHORTS_TYPE {
+  NEWS = 'news',
+  DERIVATIVE = 'creativity',
+}
