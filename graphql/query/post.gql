@@ -50,3 +50,21 @@ query GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {
     ...PostDetails
   }
 }
+
+query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
+  posts(
+    skip: $skip
+    take: $take
+    where: {
+      state: { equals: "published" }
+      tags: { some: { slug: { equals: $slug } } }
+    }
+    orderBy: { publishedDate: desc }
+  ) {
+    sections {
+      name
+      color
+    }
+    ...PostDetails
+  }
+}
