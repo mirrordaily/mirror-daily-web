@@ -1,0 +1,6 @@
+query GetTagInformation($slug: String!) {
+  tag(where: { slug: $slug }) {
+    name
+    slug
+  }
+}
