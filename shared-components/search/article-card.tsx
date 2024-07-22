@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CustomImage from '../custom-image'
-import type { Post } from '@/types/author-page'
+import type { AuthorPost } from '@/types/author-page'
+import type { TagPost } from '@/types/tag-page'
 
 export default function ArticleCard({
   title,
@@ -10,7 +11,7 @@ export default function ArticleCard({
   brief,
   sectionName,
   sectionColor,
-}: Post) {
+}: AuthorPost | TagPost) {
   return (
     <Link
       href={link}

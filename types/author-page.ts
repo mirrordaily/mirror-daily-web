@@ -1,8 +1,7 @@
 import type { HeroImage } from './common'
 
-export type Post = {
+export type AuthorPost = {
   title: string
-  slug: string
   createdTime: string
   brief: string
   heroImage: HeroImage

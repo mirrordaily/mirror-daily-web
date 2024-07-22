@@ -12,11 +12,11 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { getStoryPageUrl } from '@/utils/site-urls'
 import { getHeroImage, dateFormatter } from '@/utils/data-process'
-import type { Post, AuthorInfo } from '@/types/author-page'
+import type { AuthorPost, AuthorInfo } from '@/types/author-page'
 
 function transformAuthorPost(
   rawData: GetPostsByAuthorIdQuery['posts']
-): Post[] {
+): AuthorPost[] {
   if (!rawData) return []
 
   return rawData.map((rawPost) => {
@@ -31,7 +31,6 @@ function transformAuthorPost(
 
     return {
       title,
-      slug,
       link,
       createdTime,
       heroImage,
@@ -42,7 +41,10 @@ function transformAuthorPost(
   })
 }
 
-async function fetchAuthorPosts(page: number, id: string): Promise<Post[]> {
+async function fetchAuthorPosts(
+  page: number,
+  id: string
+): Promise<AuthorPost[]> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching author posts in author page',
     getTraceObject()
