@@ -41,7 +41,7 @@ export default function ArticleCard({
       <figcaption className="mb-[6px] line-clamp-2 text-lg font-bold leading-normal text-[#4A4A4A]">
         {title}
       </figcaption>
-      <p className="line-clamp-2 text-sm font-normal leading-normal text-[#4A4A4A]">
+      <p className="line-clamp-2 min-h-[40px] text-sm font-normal leading-normal text-[#4A4A4A]">
         {brief}
       </p>
     </Link>
