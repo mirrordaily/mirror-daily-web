@@ -127,9 +127,7 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   )
 
   try {
-    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`, {
-      next: { revalidate: 0 },
-    })
+    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`)
 
     const rawPostData = await resp.json()
     const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
@@ -140,7 +138,11 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
     const result = await Promise.allSettled(
       filteredData.map(transformRawLatestPost)
     )
-    return result.filter((r) => r.status === 'fulfilled').map((r) => r.value)
+    return result
+      .filter(
+        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
+      )
+      .map((r) => r.value)
   } catch (e) {
     errorLogger(e)
     return []
@@ -172,9 +174,7 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
   )
 
   try {
-    const resp = await fetch(URL_STATIC_POPULAR_NEWS, {
-      next: { revalidate: 0 },
-    })
+    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
 
     const rawPostData = await z
       .promise(z.array(rawPopularPostSchema))
@@ -184,7 +184,9 @@ const fetchPopularPost = async (): Promise<LatestPost[]> => {
       rawPostData.map(transformRawPopularPost)
     )
     return result
-      .filter((r) => r.status === 'fulfilled')
+      .filter(
+        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
+      )
       .map((r) => r.value)
       .slice(0, 10)
   } catch (e) {
@@ -257,9 +259,7 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_FLASH_NEWS, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_FLASH_NEWS)
 
       const result = await schema.parse(resp.json())
       return result.posts
@@ -309,9 +309,7 @@ const fetchEditorChoices = async (): Promise<
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_EDITOR_CHOICE, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_EDITOR_CHOICE)
 
       const result = await schema.parse(resp.json())
       return result.editorChoices
@@ -381,9 +379,7 @@ const fetchTopics = async (): Promise<
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_TOPIC, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_TOPIC)
 
       const result = await schema.parse(resp.json())
       return result.topics
@@ -426,9 +422,7 @@ const fetchGames = async (): Promise<Game[]> => {
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_GAME, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_GAME)
 
       const result = await schema.parse(resp.json())
       return result.games

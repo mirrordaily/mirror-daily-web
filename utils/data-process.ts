@@ -1,5 +1,7 @@
 import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
 import type { HeroImage } from '@/types/common'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import type { createErrorLogger } from './log/common'
 
 const getHeroImage = (
@@ -68,6 +70,12 @@ const getHeroImage = (
   }
 }
 
+const dateFormatter = (date: string) => {
+  dayjs.extend(utc)
+  const utcDate = dayjs(date).utc().format('YYYY/MM/DD HH:mm:ss')
+  return utcDate
+}
+
 type DataFetchFunction<T> = () => Promise<T>
 
 const createDataFetchingChain = async <T>(
@@ -96,4 +104,4 @@ const createDataFetchingChain = async <T>(
   return chain
 }
 
-export { getHeroImage, createDataFetchingChain }
+export { getHeroImage, dateFormatter, createDataFetchingChain }

@@ -1,19 +1,11 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
 import type { CategoryPost } from '@/types/category-page'
 import type { SectionPost } from '@/types/section-page'
 
 type Props = {
   postItem: CategoryPost | SectionPost
   color: string
-}
-
-const dateFormatter = (date: string) => {
-  dayjs.extend(utc)
-  const utcDate = dayjs(date).utc().format('YYYY/MM/DD HH:mm:ss')
-  return utcDate
 }
 
 export default function SecondaryArticleCard({ postItem, color }: Props) {
@@ -36,7 +28,7 @@ export default function SecondaryArticleCard({ postItem, color }: Props) {
           style={{ color: color }}
           className={`$md:mb-[17px] mb-[5px] text-sm font-normal`}
         >
-          {dateFormatter(postItem.createdTime)}
+          {postItem.createdTime}
         </p>
         <figcaption className="line-clamp-3 text-sm font-bold text-[#4A4A4A] md:mb-[6px] md:line-clamp-2 md:text-lg">
           {postItem.title}
