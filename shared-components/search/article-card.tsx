@@ -17,7 +17,7 @@ export default function ArticleCard({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex max-w-[340px] flex-col md:w-[280px] md:max-w-none lg:w-[240px]"
+      className="flex max-w-[340px] flex-col md:min-h-[291px] md:w-[280px] md:max-w-none lg:w-[240px]"
     >
       <figure className="relative mb-1 aspect-[340/188] overflow-hidden rounded md:h-[155px] lg:h-[133px]">
         <CustomImage
@@ -41,7 +41,7 @@ export default function ArticleCard({
       <figcaption className="mb-[6px] line-clamp-2 text-lg font-bold leading-normal text-[#4A4A4A]">
         {title}
       </figcaption>
-      <p className="line-clamp-2 min-h-[40px] text-sm font-normal leading-normal text-[#4A4A4A]">
+      <p className="line-clamp-2 text-sm font-normal leading-normal text-[#4A4A4A]">
         {brief}
       </p>
     </Link>
