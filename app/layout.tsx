@@ -11,6 +11,7 @@ const notoSans = Noto_Sans_TC({
   display: 'swap',
 })
 
+// TODO: update metadata
 export const metadata: Metadata = {
   title: '鏡報',
 }

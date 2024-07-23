@@ -49,6 +49,7 @@ export default function Footer(): ReactElement {
       text: '(02)7752-5678',
     },
     {
+      // TODO: update email
       name: '客服信箱',
       href: 'mailto:movieservice@nexttv.com.tw',
       text: 'movieservice@nexttv.com.tw',

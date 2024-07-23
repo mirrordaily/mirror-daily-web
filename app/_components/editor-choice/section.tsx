@@ -1,6 +1,7 @@
 import { fetchEditorChoices } from '@/app/actions'
 import EditorChoiceMain from './main'
 
+// TODO: handle item with external link
 export default async function EditorChoiceSection() {
   const data = await fetchEditorChoices()
 
