@@ -38,3 +38,10 @@ export type TopicPost = Pick<
 > & {
   topicLink: string
 }
+
+export type Game = {
+  name: string
+  description: string
+  link: string
+  heroImage: HeroImage
+}

@@ -6,10 +6,12 @@ import type {
   FlashNews,
   EditorChoice,
   TopicPost,
+  Game,
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
   URL_STATIC_FLASH_NEWS,
+  URL_STATIC_GAME,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_TOPIC,
@@ -20,6 +22,7 @@ import type { GetLiveEventForHomepageQuery } from '@/graphql/__generated__/graph
 import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
+  GetGamesDocument,
   GetLiveEventForHomepageDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
@@ -41,8 +44,11 @@ import {
   rawFlashNewsSchema,
   editorChoiceSchenma,
   topicsSchema,
+  gameSchema,
 } from '@/utils/data-schema'
 import { SectionColorManager } from '@/utils/section-color-manager'
+import { faker } from '@faker-js/faker/locale/ja'
+import { isValidUrl } from '@/utils/common'
 
 const colorManger = new SectionColorManager()
 
@@ -78,14 +84,6 @@ const getCategoryConfig = async (
         color: '#D0D2D8',
       }
     }
-  }
-}
-
-const isValidUrl = (url: string): boolean => {
-  try {
-    return Boolean(new URL(url))
-  } catch (e) {
-    return false
   }
 }
 
@@ -229,14 +227,12 @@ const transformRawFlashNews = (
   if (!rawData) return []
 
   return rawData.map((rawPost) => {
-    const postName = rawPost.title ?? ''
     const postSlug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(postSlug)
 
     return {
-      postName,
+      postName: rawPost.title ?? '',
       postSlug,
-      link,
+      link: getStoryPageUrl(postSlug),
     }
   })
 }
@@ -276,16 +272,13 @@ const transformEditorChoices = (
   if (!rawData) return []
 
   return rawData.map(({ choices: rawPost }, index) => {
-    const postName = rawPost?.title ?? ''
     const postSlug = rawPost?.slug ?? ''
-    const link = getStoryPageUrl(postSlug)
-    const heroImage = getHeroImage(rawPost?.heroImage)
 
     return {
-      postName,
+      postName: rawPost?.title ?? '',
       postSlug: `${index}-${postSlug}`,
-      link,
-      heroImage,
+      link: getStoryPageUrl(postSlug),
+      heroImage: getHeroImage(rawPost?.heroImage),
     }
   })
 }
@@ -338,15 +331,12 @@ const transformTopics = (
     const topicLink = getTopicPageUrl(topicSlug)
     const posts: TopicPost[] =
       topic.posts?.map((rawPost) => {
-        const postName = rawPost?.title ?? ''
         const postSlug = rawPost?.slug ?? ''
-        const link = getStoryPageUrl(postSlug)
-        const heroImage = getHeroImage(rawPost?.heroImage)
         return {
-          postName,
+          postName: rawPost?.title ?? '',
           postSlug,
-          heroImage,
-          link,
+          heroImage: getHeroImage(rawPost?.heroImage),
+          link: getStoryPageUrl(postSlug),
           topicLink,
         }
       }) ?? []
@@ -396,6 +386,49 @@ const fetchTopics = async (): Promise<
   return transformTopics(data)
 }
 
+const transformGames = (
+  rawData: z.infer<ZodArray<typeof gameSchema>>
+): Game[] => {
+  return rawData.map((game) => {
+    return {
+      name: game.name ?? '',
+      link: game.link ?? '',
+      heroImage: getHeroImage(game.heroImage),
+      // TODO: replace mock data with real data
+      description: faker.lorem.sentence({ min: 5, max: 50 }),
+    }
+  })
+}
+
+const fetchGames = async (): Promise<Game[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching games',
+    getTraceObject()
+  )
+  const schema = z.promise(z.object({ games: z.array(gameSchema) }))
+
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof gameSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_GAME)
+
+      const result = await schema.parse(resp.json())
+      return result.games
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetGamesDocument)
+      )
+      return result.games
+    }
+  )
+
+  return transformGames(data).slice(0, 5)
+}
+
 export {
   fetchLatestPost,
   fetchPopularPost,
@@ -403,4 +436,5 @@ export {
   fetchFlashNews,
   fetchEditorChoices,
   fetchTopics,
+  fetchGames,
 }

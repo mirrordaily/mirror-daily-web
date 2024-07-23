@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",
+    "@faker-js/faker": "^8.4.1",
     "@readr-media/react-image": "^2.2.3",
     "@readr-media/react-infinite-scroll-list": "^1.2.0",
     "@twreporter/errors": "^1.1.2",
