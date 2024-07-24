@@ -1,10 +1,10 @@
 import ArticlesList from '../../../shared-components/search/articles-list'
-import type { AuthorInfo, Post } from '@/types/author-page'
+import type { AuthorInfo, AuthorPost } from '@/types/author-page'
 import { fetchAuthorPosts } from '@/app/author/actions'
 
 type Props = {
   info: AuthorInfo
-  initialList: Post[]
+  initialList: AuthorPost[]
   id: string
 }
 
