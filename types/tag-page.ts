@@ -1,6 +1,6 @@
 import type { HeroImage } from './common'
 
-export type AuthorPost = {
+export type TagPost = {
   title: string
   createdTime: string
   brief: string
@@ -10,7 +10,6 @@ export type AuthorPost = {
   sectionName: string
 }
 
-export type AuthorInfo = {
-  authorId: string
+export type TagInfo = {
   name: string
 }

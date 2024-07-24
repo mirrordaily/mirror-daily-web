@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CustomImage from '../custom-image'
-import type { Post } from '@/types/author-page'
+import type { AuthorPost } from '@/types/author-page'
+import type { TagPost } from '@/types/tag-page'
 
 export default function ArticleCard({
   title,
@@ -10,13 +11,13 @@ export default function ArticleCard({
   brief,
   sectionName,
   sectionColor,
-}: Post) {
+}: AuthorPost | TagPost) {
   return (
     <Link
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex max-w-[340px] flex-col md:w-[280px] md:max-w-none lg:w-[240px]"
+      className="flex max-w-[340px] flex-col md:min-h-[291px] md:w-[280px] md:max-w-none lg:w-[240px]"
     >
       <figure className="relative mb-1 aspect-[340/188] overflow-hidden rounded md:h-[155px] lg:h-[133px]">
         <CustomImage
@@ -31,7 +32,10 @@ export default function ArticleCard({
           {sectionName}
         </p>
       </figure>
-      <p className="mb-[11px] text-sm font-normal leading-normal">
+      <p
+        style={{ color: sectionColor }}
+        className="mb-[11px] text-sm font-normal leading-normal"
+      >
         {createdTime}
       </p>
       <figcaption className="mb-[6px] line-clamp-2 text-lg font-bold leading-normal text-[#4A4A4A]">
