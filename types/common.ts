@@ -24,22 +24,14 @@ export type HeroImage = {
   resizedWebp?: ResizedWebPImage
 }
 
-type Section = {
-  id: string
-  state: 'active' | 'inactive'
-  name: string
-  slug: string
-}
-
 export type PopularNews = {
-  id: string
-  slug: string
-  sections: Section[]
-  sectionsInInputOrder: Section[]
-  title: string
-  style: string
-  state: string
-  heroImage: HeroImage | null
+  categoryName: string
+  categoryColor: string
+  postName: string
+  postSlug: string
+  heroImage: HeroImage
+  publishedDate: string
+  link: string
 }
 
 export type ParameterOfComponent<T> = T extends (
