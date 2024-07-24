@@ -30,7 +30,7 @@ export default function ShortsList({
   const swiperRef = useRef<SwiperRef>(null)
   const slideNextRef = useRef<HTMLButtonElement>(null)
   const slidePrevRef = useRef<HTMLButtonElement>(null)
-  const [swiperIsBegining, setSwiperIsBegining] = useState(true)
+  const [swiperIsBeginning, setSwiperIsBeginning] = useState(true)
   const [swiperIsEnd, setSwiperIsEnd] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { isIntersecting, ref } = useIntersectionObserver({ threshold: 0.75 })
@@ -61,19 +61,15 @@ export default function ShortsList({
             spaceBetween: 36,
           },
         }}
-        onInit={(
-          swiper: any /* eslint-disable-line @typescript-eslint/no-explicit-any */
-        ) => {
-          /** @see https://stackoverflow.com/a/78325429 */
-
-          swiper.params.navigation.nextEl = slideNextRef.current!
-          swiper.params.navigation.prevEl = slidePrevRef.current!
-          swiper.navigation.init()
-          swiper.navigation.update()
+        navigation={{
+          nextEl: slideNextRef.current,
+          prevEl: slidePrevRef.current,
+        }}
+        onInit={(swiper) => {
           setActiveIndex(swiper.realIndex)
         }}
         onSlideChange={(swiper) => {
-          setSwiperIsBegining(swiper.isBeginning)
+          setSwiperIsBeginning(swiper.isBeginning)
           setSwiperIsEnd(swiper.isEnd)
           setActiveIndex(swiper.realIndex)
         }}
@@ -107,7 +103,7 @@ export default function ShortsList({
         <NextImage src={IconNext} width={40} height={40} alt="下一筆" />
       </button>
       <button
-        className={`shorts-swiper-button left-4 ${swiperIsBegining ? 'hidden' : ''}`}
+        className={`shorts-swiper-button left-4 ${swiperIsBeginning ? 'hidden' : ''}`}
         ref={slidePrevRef}
       >
         <NextImage src={IconPrev} width={40} height={40} alt="上一筆" />
