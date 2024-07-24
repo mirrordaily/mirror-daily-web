@@ -39,7 +39,7 @@ export default function SwiperComponent({ list }: Props) {
         return (
           <SwiperSlide
             key={postSlug}
-            className="relative w-full max-w-[375px] md:max-w-none"
+            className="relative w-full max-w-screen-sm md:max-w-none"
           >
             <NextLink
               href={link}
