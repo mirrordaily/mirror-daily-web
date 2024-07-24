@@ -2,7 +2,7 @@ import 'server-only'
 import { MINUTE } from '@/constants/time-unit'
 import { fetchSectionsAndCategories } from '@/app/actions-general'
 
-export class SectionColorManager {
+class SectionColorManager {
   private lastTime = 0
   private cacheTime = MINUTE * 5
   private defaultColor = '#D0D2D8'
@@ -34,3 +34,5 @@ export class SectionColorManager {
     )
   }
 }
+
+export const colorManger = new SectionColorManager()

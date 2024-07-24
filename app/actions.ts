@@ -1,4 +1,3 @@
-/* eslint max-lines: ["error", 600] */
 'use server'
 
 import type {
@@ -16,7 +15,6 @@ import {
   URL_STATIC_GAME,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_LATEST_SHORTS,
-  URL_STATIC_POPULAR_NEWS,
   URL_STATIC_TOPIC,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
@@ -48,18 +46,15 @@ import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import {
   rawLatestPostSchema,
-  rawPopularPostSchema,
   rawFlashNewsSchema,
   editorChoiceSchenma,
   topicsSchema,
   gameSchema,
   latestShortsSchema,
 } from '@/utils/data-schema'
-import { SectionColorManager } from '@/utils/section-color-manager'
+import { colorManger } from '@/utils/section-color-manager'
 import { faker } from '@faker-js/faker/locale/ja'
 import { isValidUrl } from '@/utils/common'
-
-const colorManger = new SectionColorManager()
 
 type CategoryConfig = {
   name: string
@@ -120,7 +115,9 @@ const transformRawLatestPost = async (
   }
 }
 
-const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
+export const fetchLatestPost = async (
+  page: number = 0
+): Promise<LatestPost[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest posts',
     getTraceObject()
@@ -149,52 +146,6 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   }
 }
 
-const transformRawPopularPost = async (
-  rawPosts: z.infer<typeof rawPopularPostSchema>
-): Promise<LatestPost> => {
-  const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
-  const color = await colorManger.getColor(sections[0]?.slug)
-
-  return {
-    // TODO: switch to category name
-    categoryName: sections[0]?.name ?? '',
-    categoryColor: color,
-    postName: title,
-    postSlug: slug,
-    heroImage: getHeroImage(heroImage),
-    publishedDate: new Date().toISOString(),
-    link: getPostPageUrl(slug),
-  }
-}
-
-const fetchPopularPost = async (): Promise<LatestPost[]> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching popular posts',
-    getTraceObject()
-  )
-
-  try {
-    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
-
-    const rawPostData = await z
-      .promise(z.array(rawPopularPostSchema))
-      .parse(resp.json())
-
-    const result = await Promise.allSettled(
-      rawPostData.map(transformRawPopularPost)
-    )
-    return result
-      .filter(
-        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
-      )
-      .map((r) => r.value)
-      .slice(0, 10)
-  } catch (e) {
-    errorLogger(e)
-    return []
-  }
-}
-
 const transformRawLiveEvents = (
   rawLiveEvents: GetLiveEventForHomepageQuery['events']
 ): PickupItemInTopNewsSection | null => {
@@ -209,26 +160,27 @@ const transformRawLiveEvents = (
   }
 }
 
-const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching live event data in homepage',
-    getTraceObject()
-  )
+export const fetchLiveEvent =
+  async (): Promise<PickupItemInTopNewsSection | null> => {
+    const errorLogger = createErrorLogger(
+      'Error occurs while fetching live event data in homepage',
+      getTraceObject()
+    )
 
-  const result = await fetchGQLData(
-    errorLogger,
-    GetLiveEventForHomepageDocument,
-    {
-      startDate: dayjs().add(5, 'minutes').toISOString(),
+    const result = await fetchGQLData(
+      errorLogger,
+      GetLiveEventForHomepageDocument,
+      {
+        startDate: dayjs().add(5, 'minutes').toISOString(),
+      }
+    )
+
+    if (result) {
+      const { events } = result
+      return transformRawLiveEvents(events)
     }
-  )
-
-  if (result) {
-    const { events } = result
-    return transformRawLiveEvents(events)
+    return null
   }
-  return null
-}
 
 const transformRawFlashNews = (
   rawData: z.infer<ZodArray<typeof rawFlashNewsSchema>>
@@ -246,7 +198,7 @@ const transformRawFlashNews = (
   })
 }
 
-const fetchFlashNews = async (): Promise<FlashNews[]> => {
+export const fetchFlashNews = async (): Promise<FlashNews[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching flash news',
     getTraceObject()
@@ -293,7 +245,7 @@ const transformEditorChoices = (
   })
 }
 
-const fetchEditorChoices = async (): Promise<
+export const fetchEditorChoices = async (): Promise<
   ParameterOfComponent<typeof EditorChoiceMain>
 > => {
   const errorLogger = createErrorLogger(
@@ -365,7 +317,7 @@ const transformTopics = (
   else return Object.fromEntries(filteredData)
 }
 
-const fetchTopics = async (): Promise<
+export const fetchTopics = async (): Promise<
   ParameterOfComponent<typeof TopicMain>['data'] | null
 > => {
   const errorLogger = createErrorLogger(
@@ -410,7 +362,7 @@ const transformGames = (
   })
 }
 
-const fetchGames = async (): Promise<Game[]> => {
+export const fetchGames = async (): Promise<Game[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching games',
     getTraceObject()
@@ -481,7 +433,7 @@ const transformLatestShorts = (
   }
 }
 
-const fetchLatestShorts = async (
+export const fetchLatestShorts = async (
   type: SHORTS_TYPE,
   amount: number = 10
 ): Promise<Shorts[]> => {
@@ -520,15 +472,4 @@ const fetchLatestShorts = async (
 
   const matchedData = data[type].slice(0, 10)
   return matchedData.map(transformLatestShorts)
-}
-
-export {
-  fetchLatestPost,
-  fetchPopularPost,
-  fetchLiveEvent,
-  fetchFlashNews,
-  fetchEditorChoices,
-  fetchTopics,
-  fetchGames,
-  fetchLatestShorts,
 }
