@@ -455,9 +455,7 @@ export const fetchLatestShorts = async (
       [SHORTS_TYPE.DERIVATIVE]: [],
     },
     async () => {
-      const resp = await fetch(URL_STATIC_LATEST_SHORTS, {
-        next: { revalidate: 0 },
-      })
+      const resp = await fetch(URL_STATIC_LATEST_SHORTS)
 
       const result = await schema.parse(resp.json())
       return result
