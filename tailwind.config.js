@@ -9,6 +9,7 @@ module.exports = {
   ],
   theme: {
     screens: {
+      sm: '375px',
       md: '720px',
       lg: '1200px',
     },
@@ -20,6 +21,7 @@ module.exports = {
       },
       zIndex: {
         'over-editor-choice': 10,
+        'over-shorts': 10,
         'mobile-nav': 1000000000,
       },
     },

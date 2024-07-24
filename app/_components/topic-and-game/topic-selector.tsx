@@ -9,7 +9,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react'
-import useWindowSize from '@/hooks/use-window-size'
+import { useWindowSize } from 'usehooks-ts'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { getTopicSectionPage } from '@/utils/site-urls'
 import { isServer } from '@/utils/common'

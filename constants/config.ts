@@ -47,6 +47,7 @@ const URL_STATIC_FLASH_NEWS = `${JSON_FILE_PATH}/flash-news.json`
 const URL_STATIC_EDITOR_CHOICE = `${JSON_FILE_PATH}/editor-choice.json`
 const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json`
 const URL_STATIC_GAME = `${JSON_FILE_PATH}/games.json`
+const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/latest-shorts.json`
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
@@ -60,5 +61,6 @@ export {
   URL_STATIC_EDITOR_CHOICE,
   URL_STATIC_TOPIC,
   URL_STATIC_GAME,
+  URL_STATIC_LATEST_SHORTS,
   GCP_PROJECT_ID,
 }

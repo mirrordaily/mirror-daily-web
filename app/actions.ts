@@ -7,22 +7,27 @@ import type {
   EditorChoice,
   TopicPost,
   Game,
+  Shorts,
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
   URL_STATIC_FLASH_NEWS,
   URL_STATIC_GAME,
   URL_STATIC_LATEST_NEWS,
-  URL_STATIC_POPULAR_NEWS,
+  URL_STATIC_LATEST_SHORTS,
   URL_STATIC_TOPIC,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
-import type { GetLiveEventForHomepageQuery } from '@/graphql/__generated__/graphql'
+import type {
+  GetLiveEventForHomepageQuery,
+  HeroImageFragment,
+} from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
   GetFlashNewsDocument,
   GetGamesDocument,
+  GetLatestShortsDocument,
   GetLiveEventForHomepageDocument,
   GetTopicsDocument,
 } from '@/graphql/__generated__/graphql'
@@ -34,23 +39,22 @@ import {
 } from '@/utils/site-urls'
 import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
+import { SHORTS_TYPE } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
 import type TopicMain from './_components/topic-and-game/topic-main'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import {
   rawLatestPostSchema,
-  rawPopularPostSchema,
   rawFlashNewsSchema,
   editorChoiceSchenma,
   topicsSchema,
   gameSchema,
+  latestShortsSchema,
 } from '@/utils/data-schema'
-import { SectionColorManager } from '@/utils/section-color-manager'
+import { colorManger } from '@/utils/section-color-manager'
 import { faker } from '@faker-js/faker/locale/ja'
 import { isValidUrl } from '@/utils/common'
-
-const colorManger = new SectionColorManager()
 
 type CategoryConfig = {
   name: string
@@ -111,7 +115,9 @@ const transformRawLatestPost = async (
   }
 }
 
-const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
+export const fetchLatestPost = async (
+  page: number = 0
+): Promise<LatestPost[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest posts',
     getTraceObject()
@@ -140,52 +146,6 @@ const fetchLatestPost = async (page: number = 0): Promise<LatestPost[]> => {
   }
 }
 
-const transformRawPopularPost = async (
-  rawPosts: z.infer<typeof rawPopularPostSchema>
-): Promise<LatestPost> => {
-  const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
-  const color = await colorManger.getColor(sections[0]?.slug)
-
-  return {
-    // TODO: switch to category name
-    categoryName: sections[0]?.name ?? '',
-    categoryColor: color,
-    postName: title,
-    postSlug: slug,
-    heroImage: getHeroImage(heroImage),
-    publishedDate: new Date().toISOString(),
-    link: getPostPageUrl(slug),
-  }
-}
-
-const fetchPopularPost = async (): Promise<LatestPost[]> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching popular posts',
-    getTraceObject()
-  )
-
-  try {
-    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
-
-    const rawPostData = await z
-      .promise(z.array(rawPopularPostSchema))
-      .parse(resp.json())
-
-    const result = await Promise.allSettled(
-      rawPostData.map(transformRawPopularPost)
-    )
-    return result
-      .filter(
-        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
-      )
-      .map((r) => r.value)
-      .slice(0, 10)
-  } catch (e) {
-    errorLogger(e)
-    return []
-  }
-}
-
 const transformRawLiveEvents = (
   rawLiveEvents: GetLiveEventForHomepageQuery['events']
 ): PickupItemInTopNewsSection | null => {
@@ -200,26 +160,27 @@ const transformRawLiveEvents = (
   }
 }
 
-const fetchLiveEvent = async (): Promise<PickupItemInTopNewsSection | null> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching live event data in homepage',
-    getTraceObject()
-  )
+export const fetchLiveEvent =
+  async (): Promise<PickupItemInTopNewsSection | null> => {
+    const errorLogger = createErrorLogger(
+      'Error occurs while fetching live event data in homepage',
+      getTraceObject()
+    )
 
-  const result = await fetchGQLData(
-    errorLogger,
-    GetLiveEventForHomepageDocument,
-    {
-      startDate: dayjs().add(5, 'minutes').toISOString(),
+    const result = await fetchGQLData(
+      errorLogger,
+      GetLiveEventForHomepageDocument,
+      {
+        startDate: dayjs().add(5, 'minutes').toISOString(),
+      }
+    )
+
+    if (result) {
+      const { events } = result
+      return transformRawLiveEvents(events)
     }
-  )
-
-  if (result) {
-    const { events } = result
-    return transformRawLiveEvents(events)
+    return null
   }
-  return null
-}
 
 const transformRawFlashNews = (
   rawData: z.infer<ZodArray<typeof rawFlashNewsSchema>>
@@ -237,7 +198,7 @@ const transformRawFlashNews = (
   })
 }
 
-const fetchFlashNews = async (): Promise<FlashNews[]> => {
+export const fetchFlashNews = async (): Promise<FlashNews[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching flash news',
     getTraceObject()
@@ -263,6 +224,7 @@ const fetchFlashNews = async (): Promise<FlashNews[]> => {
     }
   )
 
+  // TODO: limit to 8 items
   return transformRawFlashNews(data)
 }
 
@@ -283,7 +245,7 @@ const transformEditorChoices = (
   })
 }
 
-const fetchEditorChoices = async (): Promise<
+export const fetchEditorChoices = async (): Promise<
   ParameterOfComponent<typeof EditorChoiceMain>
 > => {
   const errorLogger = createErrorLogger(
@@ -355,7 +317,7 @@ const transformTopics = (
   else return Object.fromEntries(filteredData)
 }
 
-const fetchTopics = async (): Promise<
+export const fetchTopics = async (): Promise<
   ParameterOfComponent<typeof TopicMain>['data'] | null
 > => {
   const errorLogger = createErrorLogger(
@@ -400,7 +362,7 @@ const transformGames = (
   })
 }
 
-const fetchGames = async (): Promise<Game[]> => {
+export const fetchGames = async (): Promise<Game[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching games',
     getTraceObject()
@@ -429,12 +391,83 @@ const fetchGames = async (): Promise<Game[]> => {
   return transformGames(data).slice(0, 5)
 }
 
-export {
-  fetchLatestPost,
-  fetchPopularPost,
-  fetchLiveEvent,
-  fetchFlashNews,
-  fetchEditorChoices,
-  fetchTopics,
-  fetchGames,
+type ImageKeys = keyof Omit<
+  NonNullable<HeroImageFragment['resized']>,
+  '__typename'
+>
+
+const getPosterFromShorts = (
+  heroImage: z.infer<typeof latestShortsSchema>['heroImage']
+): string => {
+  const pickedSize: ImageKeys[] = ['w800', 'w480', 'original']
+  if (!heroImage) return ''
+
+  const getImageSrc = (
+    imageObj: typeof heroImage.resized
+  ): string | undefined => {
+    if (imageObj) {
+      return pickedSize.reduce((src, size) => {
+        const newSrc = imageObj![size]
+        if (!src && newSrc) return newSrc
+        else return src
+      }, undefined)
+    }
+    return undefined
+  }
+
+  const resized = getImageSrc(heroImage.resized)
+  const resizedWebp = getImageSrc(heroImage.resizedWebp)
+
+  return resizedWebp || resized || ''
+}
+
+const transformLatestShorts = (
+  rawData: z.infer<typeof latestShortsSchema>
+): Shorts => {
+  return {
+    title: rawData.name ?? '',
+    fileUrl: rawData.videoSrc ?? '',
+    poster: getPosterFromShorts(rawData.heroImage),
+    // TODO: add link to shorts page
+    link: '',
+  }
+}
+
+export const fetchLatestShorts = async (
+  type: SHORTS_TYPE,
+  amount: number = 10
+): Promise<Shorts[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching latest shorts',
+    getTraceObject()
+  )
+
+  const orignal = z.object({
+    [SHORTS_TYPE.NEWS]: z.array(latestShortsSchema),
+    [SHORTS_TYPE.DERIVATIVE]: z.array(latestShortsSchema),
+  })
+  const schema = z.promise(orignal)
+
+  const data = await createDataFetchingChain<z.infer<typeof orignal>>(
+    errorLogger,
+    {
+      [SHORTS_TYPE.NEWS]: [],
+      [SHORTS_TYPE.DERIVATIVE]: [],
+    },
+    async () => {
+      const resp = await fetch(URL_STATIC_LATEST_SHORTS)
+
+      const result = await schema.parse(resp.json())
+      return result
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetLatestShortsDocument, { amount })
+      )
+      return result
+    }
+  )
+
+  const matchedData = data[type].slice(0, 10)
+  return matchedData.map(transformLatestShorts)
 }

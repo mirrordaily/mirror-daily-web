@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import NextImage from 'next/image'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
-import useWindowSize from '@/hooks/use-window-size'
+import { useWindowSize } from 'usehooks-ts'
 import IconTogggle from '@/public/icons/sidebar-toggle.svg'
 import { getTailwindConfig } from '@/utils/tailwind'
 

@@ -1,0 +1,8 @@
+fragment LatestShorts on Video {
+  id
+  name
+  videoSrc
+  heroImage {
+    ...HeroImage
+  }
+}

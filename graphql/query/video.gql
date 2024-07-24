@@ -1,0 +1,28 @@
+query GetLatestShorts($amount: Int!) {
+  news: videos(
+    take: $amount,
+    orderBy: { createdAt: desc },
+    where: {
+      state: {
+          equals: "published",
+      },
+      videoSection: {
+          equals: "news"
+      }
+    }) {
+      ...LatestShorts
+    }
+  creativity: videos(
+    take: $amount,
+    orderBy: { createdAt: desc },
+    where: {
+      state: {
+          equals: "published",
+      },
+      videoSection: {
+          equals: "creativity"
+      }
+    }) {
+      ...LatestShorts
+    }
+}
