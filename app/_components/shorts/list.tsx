@@ -52,7 +52,6 @@ export default function ShortsList({
           sticky: true,
         }}
         grabCursor={true}
-        centeredSlides={true}
         breakpoints={{
           320: {
             spaceBetween: 16,
