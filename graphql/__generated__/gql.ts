@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'fragment EditorChoiceData on EditorChoice {\n  choices {\n    ...PostItem\n  }\n}':
+  'fragment EditorChoiceData on EditorChoice {\n  outlink\n  heroImage {\n    ...HeroImage\n  }\n  choices {\n    ...PostItem\n  }\n}':
     types.EditorChoiceDataFragmentDoc,
   'fragment HeroImage on Photo {\n  id\n  resized {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n  resizedWebp {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n}':
     types.HeroImageFragmentDoc,
@@ -61,8 +61,8 @@ export function gql(source: string): unknown
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: 'fragment EditorChoiceData on EditorChoice {\n  choices {\n    ...PostItem\n  }\n}'
-): (typeof documents)['fragment EditorChoiceData on EditorChoice {\n  choices {\n    ...PostItem\n  }\n}']
+  source: 'fragment EditorChoiceData on EditorChoice {\n  outlink\n  heroImage {\n    ...HeroImage\n  }\n  choices {\n    ...PostItem\n  }\n}'
+): (typeof documents)['fragment EditorChoiceData on EditorChoice {\n  outlink\n  heroImage {\n    ...HeroImage\n  }\n  choices {\n    ...PostItem\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

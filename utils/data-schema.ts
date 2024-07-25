@@ -81,11 +81,15 @@ export const rawFlashNewsSchema = rawLatestPostSchema.pick({
 })
 
 export const editorChoiceSchenma = z.object({
-  choices: rawLatestPostSchema.pick({
-    title: true,
-    slug: true,
-    heroImage: true,
-  }),
+  outlink: z.string().nullish(),
+  heroImage: heroImageSchema.nullable(),
+  choices: rawLatestPostSchema
+    .pick({
+      title: true,
+      slug: true,
+      heroImage: true,
+    })
+    .nullish(),
 })
 
 export const topicsSchema = z.object({

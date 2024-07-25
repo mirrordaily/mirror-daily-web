@@ -1,4 +1,8 @@
 fragment EditorChoiceData on EditorChoice {
+  outlink
+  heroImage {
+    ...HeroImage
+  }
   choices {
     ...PostItem
   }

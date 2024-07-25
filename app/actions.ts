@@ -233,8 +233,17 @@ const transformEditorChoices = (
 ): EditorChoice[] => {
   if (!rawData) return []
 
-  return rawData.map(({ choices: rawPost }, index) => {
+  return rawData.map(({ outlink, heroImage, choices: rawPost }, index) => {
     const postSlug = rawPost?.slug ?? ''
+
+    if (outlink) {
+      return {
+        postName: rawPost?.title ?? '',
+        postSlug: `${index}-${postSlug}`,
+        link: outlink,
+        heroImage: getHeroImage(heroImage),
+      }
+    }
 
     return {
       postName: rawPost?.title ?? '',
