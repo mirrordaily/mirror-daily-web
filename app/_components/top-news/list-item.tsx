@@ -27,7 +27,7 @@ export default function ListItem({
       <div className={`flex items-center`}>
         <span
           style={{ backgroundColor: categoryColor || '#FF5A36' }}
-          className="inline-block h-5 rounded-xl px-2 py-1 text-[10px] font-bold leading-[12px] tracking-[0.5px] text-[#F6F6FB]"
+          className="inline-block h-5 rounded-xl px-2 py-1 text-xs font-bold leading-[12px] tracking-[0.5px] text-[#F6F6FB]"
         >
           {categoryName || 'Video'}
         </span>
