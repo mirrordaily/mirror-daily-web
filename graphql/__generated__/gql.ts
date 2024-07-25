@@ -29,7 +29,7 @@ const documents = {
     types.GetEditorChoicesDocument,
   'query GetLiveEventForHomepage($startDate: DateTime!) {\n  events(\n    orderBy: {publishedDate: desc}\n    take: 1\n    where: {eventType: {equals: "livestreaming"}, state: {equals: "published"}, startDate: {lte: $startDate}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}':
     types.GetLiveEventForHomepageDocument,
-  'query GetGames {\n  games(\n    take: 5\n    orderBy: {publishedDate: desc}\n    where: {state: {equals: "published"}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}':
+  'query GetGames {\n  games(take: 5, orderBy: {sortOrder: asc}, where: {state: {equals: "published"}}) {\n    name\n    descriptions\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}':
     types.GetGamesDocument,
   'query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {sections: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    ...PostDetails\n  }\n}\n\nquery GetFlashNews {\n  posts(\n    take: 8\n    orderBy: {publishedDate: desc}\n    where: {state: {equals: "published"}}\n  ) {\n    title\n    slug\n  }\n}\n\nquery GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {categories: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    ...PostDetails\n  }\n}\n\nquery GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {state: {equals: "published"}, OR: [{writers: {some: {id: {equals: $id}}}}, {photographers: {some: {id: {equals: $id}}}}]}\n  ) {\n    sections {\n      name\n      color\n    }\n    ...PostDetails\n  }\n}\n\nquery GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {\n  posts(\n    skip: $skip\n    take: $take\n    where: {state: {equals: "published"}, tags: {some: {slug: {equals: $slug}}}}\n    orderBy: {publishedDate: desc}\n  ) {\n    sections {\n      name\n      color\n    }\n    ...PostDetails\n  }\n}':
     types.GetPostsBySectionSlugDocument,
@@ -109,8 +109,8 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: 'query GetGames {\n  games(\n    take: 5\n    orderBy: {publishedDate: desc}\n    where: {state: {equals: "published"}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}'
-): (typeof documents)['query GetGames {\n  games(\n    take: 5\n    orderBy: {publishedDate: desc}\n    where: {state: {equals: "published"}}\n  ) {\n    name\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}']
+  source: 'query GetGames {\n  games(take: 5, orderBy: {sortOrder: asc}, where: {state: {equals: "published"}}) {\n    name\n    descriptions\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}'
+): (typeof documents)['query GetGames {\n  games(take: 5, orderBy: {sortOrder: asc}, where: {state: {equals: "published"}}) {\n    name\n    descriptions\n    link\n    heroImage {\n      ...HeroImage\n    }\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

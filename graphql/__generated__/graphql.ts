@@ -3908,6 +3908,7 @@ export type GetGamesQuery = {
   games?: Array<{
     __typename?: 'Game'
     name?: string | null
+    descriptions?: string | null
     link?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -5193,8 +5194,8 @@ export const GetGamesDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'publishedDate' },
-                      value: { kind: 'EnumValue', value: 'desc' },
+                      name: { kind: 'Name', value: 'sortOrder' },
+                      value: { kind: 'EnumValue', value: 'asc' },
                     },
                   ],
                 },
@@ -5231,6 +5232,10 @@ export const GetGamesDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'descriptions' },
+                },
                 { kind: 'Field', name: { kind: 'Name', value: 'link' } },
                 {
                   kind: 'Field',

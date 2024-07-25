@@ -1,10 +1,11 @@
 query GetGames {
     games(
         take: 5
-        orderBy: { publishedDate: desc }
+        orderBy: { sortOrder:  asc }
         where: { state: { equals: "published" } }
     ) {
         name
+        descriptions
         link
         heroImage {
             ...HeroImage
