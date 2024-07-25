@@ -28,6 +28,7 @@ function transformAuthorPost(
     const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
     const sectionName = rawPost.sections?.[0]?.name ?? ''
     const sectionColor = rawPost.sections?.[0]?.color ?? '#FF5A36'
+    const content = rawPost.content?.blocks?.[0]?.text ?? ''
 
     return {
       title,
@@ -37,6 +38,7 @@ function transformAuthorPost(
       brief,
       sectionColor,
       sectionName,
+      content,
     }
   })
 }

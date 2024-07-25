@@ -7,4 +7,5 @@ export type CategoryPost = {
   brief: string
   heroImage: HeroImage
   link: string
+  content: string
 }

@@ -11,6 +11,7 @@ export default function ArticleCard({
   brief,
   sectionName,
   sectionColor,
+  content,
 }: AuthorPost | TagPost) {
   return (
     <Link
@@ -42,7 +43,7 @@ export default function ArticleCard({
         {title}
       </figcaption>
       <p className="line-clamp-2 text-sm font-normal leading-normal text-[#4A4A4A]">
-        {brief}
+        {brief || content}
       </p>
     </Link>
   )

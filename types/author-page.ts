@@ -8,6 +8,7 @@ export type AuthorPost = {
   link: string
   sectionColor: string
   sectionName: string
+  content: string
 }
 
 export type AuthorInfo = {

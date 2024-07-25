@@ -8,6 +8,7 @@ export type TagPost = {
   link: string
   sectionColor: string
   sectionName: string
+  content: string
 }
 
 export type TagInfo = {

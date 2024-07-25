@@ -7,4 +7,5 @@ export type SectionPost = {
   brief: string
   heroImage: HeroImage
   link: string
+  content: string
 }

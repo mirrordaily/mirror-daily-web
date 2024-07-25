@@ -25,6 +25,7 @@ function transformCategoryPost(
     const createdTime = dateFormatter(rawPost.createdAt)
     const heroImage = getHeroImage(rawPost.heroImage)
     const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
+    const content = rawPost.content?.blocks?.[0]?.text ?? ''
 
     return {
       title,
@@ -33,6 +34,7 @@ function transformCategoryPost(
       createdTime,
       heroImage,
       brief,
+      content,
     }
   })
 }

@@ -54,6 +54,7 @@ function transformTagPost(rawData: GetPostsByTagSlugQuery['posts']): TagPost[] {
     const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
     const sectionName = rawPost.sections?.[0]?.name ?? ''
     const sectionColor = rawPost.sections?.[0]?.color ?? '#FF5A36'
+    const content = rawPost.content?.blocks?.[0]?.text ?? ''
 
     return {
       title,
@@ -63,6 +64,7 @@ function transformTagPost(rawData: GetPostsByTagSlugQuery['posts']): TagPost[] {
       brief,
       sectionColor,
       sectionName,
+      content,
     }
   })
 }

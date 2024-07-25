@@ -3,6 +3,7 @@ fragment PostDetails on Post {
   createdAt
   brief
   slug
+  content
   heroImage {
     ...HeroImage
   }
