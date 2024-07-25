@@ -42,6 +42,7 @@ query GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {
         { photographers: { some: { id: { equals: $id } } } }
       ]
     }
+    orderBy: { publishedDate: desc }
   ) {
     sections {
       name
