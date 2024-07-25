@@ -81,11 +81,15 @@ export const rawFlashNewsSchema = rawLatestPostSchema.pick({
 })
 
 export const editorChoiceSchenma = z.object({
-  choices: rawLatestPostSchema.pick({
-    title: true,
-    slug: true,
-    heroImage: true,
-  }),
+  outlink: z.string().nullish(),
+  heroImage: heroImageSchema.nullable(),
+  choices: rawLatestPostSchema
+    .pick({
+      title: true,
+      slug: true,
+      heroImage: true,
+    })
+    .nullish(),
 })
 
 export const topicsSchema = z.object({
@@ -100,9 +104,9 @@ export const topicsSchema = z.object({
   ),
 })
 
-// TODO: add description field
 export const gameSchema = z.object({
   name: z.string(),
+  descriptions: z.string(),
   link: z.string(),
   heroImage: heroImageSchema,
 })

@@ -414,10 +414,10 @@ export type EditorChoice = {
   choices?: Maybe<Post>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   createdBy?: Maybe<User>
+  heroImage?: Maybe<Photo>
   id: Scalars['ID']['output']
   order?: Maybe<Scalars['Int']['output']>
   outlink?: Maybe<Scalars['String']['output']>
-  publishedDate?: Maybe<Scalars['DateTime']['output']>
   state?: Maybe<Scalars['String']['output']>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
   updatedBy?: Maybe<User>
@@ -427,9 +427,9 @@ export type EditorChoiceCreateInput = {
   choices?: InputMaybe<PostRelateToOneForCreateInput>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
+  heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
   order?: InputMaybe<Scalars['Int']['input']>
   outlink?: InputMaybe<Scalars['String']['input']>
-  publishedDate?: InputMaybe<Scalars['DateTime']['input']>
   state?: InputMaybe<Scalars['String']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
@@ -440,7 +440,6 @@ export type EditorChoiceOrderByInput = {
   id?: InputMaybe<OrderDirection>
   order?: InputMaybe<OrderDirection>
   outlink?: InputMaybe<OrderDirection>
-  publishedDate?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
 }
@@ -454,9 +453,9 @@ export type EditorChoiceUpdateInput = {
   choices?: InputMaybe<PostRelateToOneForUpdateInput>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
+  heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
   order?: InputMaybe<Scalars['Int']['input']>
   outlink?: InputMaybe<Scalars['String']['input']>
-  publishedDate?: InputMaybe<Scalars['DateTime']['input']>
   state?: InputMaybe<Scalars['String']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
@@ -469,10 +468,10 @@ export type EditorChoiceWhereInput = {
   choices?: InputMaybe<PostWhereInput>
   createdAt?: InputMaybe<DateTimeNullableFilter>
   createdBy?: InputMaybe<UserWhereInput>
+  heroImage?: InputMaybe<PhotoWhereInput>
   id?: InputMaybe<IdFilter>
   order?: InputMaybe<IntNullableFilter>
   outlink?: InputMaybe<StringFilter>
-  publishedDate?: InputMaybe<DateTimeNullableFilter>
   state?: InputMaybe<StringNullableFilter>
   updatedAt?: InputMaybe<DateTimeNullableFilter>
   updatedBy?: InputMaybe<UserWhereInput>
@@ -787,12 +786,14 @@ export type Game = {
   __typename?: 'Game'
   createdAt?: Maybe<Scalars['DateTime']['output']>
   createdBy?: Maybe<User>
+  descriptions?: Maybe<Scalars['String']['output']>
   heroImage?: Maybe<Photo>
   id: Scalars['ID']['output']
   isFeatured?: Maybe<Scalars['Boolean']['output']>
   link?: Maybe<Scalars['String']['output']>
   name?: Maybe<Scalars['String']['output']>
   publishedDate?: Maybe<Scalars['DateTime']['output']>
+  sortOrder?: Maybe<Scalars['Int']['output']>
   state?: Maybe<Scalars['String']['output']>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
   updatedBy?: Maybe<User>
@@ -801,11 +802,13 @@ export type Game = {
 export type GameCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
+  descriptions?: InputMaybe<Scalars['String']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
   isFeatured?: InputMaybe<Scalars['Boolean']['input']>
   link?: InputMaybe<Scalars['String']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  sortOrder?: InputMaybe<Scalars['Int']['input']>
   state?: InputMaybe<Scalars['String']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
@@ -813,11 +816,13 @@ export type GameCreateInput = {
 
 export type GameOrderByInput = {
   createdAt?: InputMaybe<OrderDirection>
+  descriptions?: InputMaybe<OrderDirection>
   id?: InputMaybe<OrderDirection>
   isFeatured?: InputMaybe<OrderDirection>
   link?: InputMaybe<OrderDirection>
   name?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
+  sortOrder?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
 }
@@ -830,11 +835,13 @@ export type GameUpdateArgs = {
 export type GameUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
+  descriptions?: InputMaybe<Scalars['String']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
   isFeatured?: InputMaybe<Scalars['Boolean']['input']>
   link?: InputMaybe<Scalars['String']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  sortOrder?: InputMaybe<Scalars['Int']['input']>
   state?: InputMaybe<Scalars['String']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
@@ -852,6 +859,7 @@ export type GameWhereInput = {
   link?: InputMaybe<StringFilter>
   name?: InputMaybe<StringFilter>
   publishedDate?: InputMaybe<DateTimeNullableFilter>
+  sortOrder?: InputMaybe<IntNullableFilter>
   state?: InputMaybe<StringNullableFilter>
   updatedAt?: InputMaybe<DateTimeNullableFilter>
   updatedBy?: InputMaybe<UserWhereInput>
@@ -3609,6 +3617,29 @@ export type VideoWhereUniqueInput = {
 
 export type EditorChoiceDataFragment = {
   __typename?: 'EditorChoice'
+  outlink?: string | null
+  heroImage?: {
+    __typename?: 'Photo'
+    id: string
+    resized?: {
+      __typename?: 'ResizedImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+    resizedWebp?: {
+      __typename?: 'ResizedWebPImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+  } | null
   choices?: {
     __typename?: 'Post'
     title?: string | null
@@ -3782,6 +3813,29 @@ export type GetEditorChoicesQuery = {
   __typename?: 'Query'
   editorChoices?: Array<{
     __typename?: 'EditorChoice'
+    outlink?: string | null
+    heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
     choices?: {
       __typename?: 'Post'
       title?: string | null
@@ -3854,6 +3908,7 @@ export type GetGamesQuery = {
   games?: Array<{
     __typename?: 'Game'
     name?: string | null
+    descriptions?: string | null
     link?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4345,6 +4400,20 @@ export const EditorChoiceDataFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'outlink' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'HeroImage' },
+                },
+              ],
+            },
+          },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'choices' },
@@ -4878,6 +4947,20 @@ export const GetEditorChoicesDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'outlink' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'HeroImage' },
+                },
+              ],
+            },
+          },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'choices' },
@@ -5111,8 +5194,8 @@ export const GetGamesDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'publishedDate' },
-                      value: { kind: 'EnumValue', value: 'desc' },
+                      name: { kind: 'Name', value: 'sortOrder' },
+                      value: { kind: 'EnumValue', value: 'asc' },
                     },
                   ],
                 },
@@ -5149,6 +5232,10 @@ export const GetGamesDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'descriptions' },
+                },
                 { kind: 'Field', name: { kind: 'Name', value: 'link' } },
                 {
                   kind: 'Field',

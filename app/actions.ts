@@ -53,7 +53,6 @@ import {
   latestShortsSchema,
 } from '@/utils/data-schema'
 import { colorManger } from '@/utils/section-color-manager'
-import { faker } from '@faker-js/faker/locale/ja'
 import { isValidUrl } from '@/utils/common'
 
 type CategoryConfig = {
@@ -233,8 +232,17 @@ const transformEditorChoices = (
 ): EditorChoice[] => {
   if (!rawData) return []
 
-  return rawData.map(({ choices: rawPost }, index) => {
+  return rawData.map(({ outlink, heroImage, choices: rawPost }, index) => {
     const postSlug = rawPost?.slug ?? ''
+
+    if (outlink) {
+      return {
+        postName: rawPost?.title ?? '',
+        postSlug: `${index}-${postSlug}`,
+        link: outlink,
+        heroImage: getHeroImage(heroImage),
+      }
+    }
 
     return {
       postName: rawPost?.title ?? '',
@@ -356,8 +364,7 @@ const transformGames = (
       name: game.name ?? '',
       link: game.link ?? '',
       heroImage: getHeroImage(game.heroImage),
-      // TODO: replace mock data with real data
-      description: faker.lorem.sentence({ min: 5, max: 50 }),
+      description: game.descriptions,
     }
   })
 }
