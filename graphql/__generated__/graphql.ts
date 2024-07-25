@@ -3698,6 +3698,7 @@ export type PostDetailsFragment = {
   createdAt?: any | null
   brief?: any | null
   slug?: string | null
+  content?: any | null
   heroImage?: {
     __typename?: 'Photo'
     id: string
@@ -3949,6 +3950,7 @@ export type GetPostsBySectionSlugQuery = {
     createdAt?: any | null
     brief?: any | null
     slug?: string | null
+    content?: any | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -3999,6 +4001,7 @@ export type GetPostsByCategorySlugQuery = {
     createdAt?: any | null
     brief?: any | null
     slug?: string | null
+    content?: any | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -4038,6 +4041,7 @@ export type GetPostsByAuthorIdQuery = {
     createdAt?: any | null
     brief?: any | null
     slug?: string | null
+    content?: any | null
     sections?: Array<{
       __typename?: 'Section'
       name?: string | null
@@ -4082,6 +4086,7 @@ export type GetPostsByTagSlugQuery = {
     createdAt?: any | null
     brief?: any | null
     slug?: string | null
+    content?: any | null
     sections?: Array<{
       __typename?: 'Section'
       name?: string | null
@@ -4521,6 +4526,7 @@ export const PostDetailsFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5488,6 +5494,7 @@ export const GetPostsBySectionSlugDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5769,6 +5776,7 @@ export const GetPostsByCategorySlugDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -6057,6 +6065,7 @@ export const GetPostsByAuthorIdDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -6296,6 +6305,7 @@ export const GetPostsByTagSlugDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
