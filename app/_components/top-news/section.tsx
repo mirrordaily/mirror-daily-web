@@ -24,7 +24,7 @@ export default function TopNewsSection({ postsOfTab }: Props) {
   return (
     <section className="section-in-homepage my-9 md:mt-6 lg:mb-[30px] lg:mt-7">
       <Selector selectedTab={tab} setTab={setTab} />
-      <PostList list={posts} />
+      <PostList key={tab} list={posts} />
     </section>
   )
 }

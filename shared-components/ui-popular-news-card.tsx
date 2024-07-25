@@ -3,26 +3,13 @@ import CustomImage from './custom-image'
 import type { PopularNews } from '@/types/common'
 import type { ReactElement } from 'react'
 
-type Props = {
-  news: PopularNews
-  categoryColors: { [key: string]: string }
-  link: string
-}
-
 export default function UiPopularNewsCard({
-  news,
-  categoryColors,
+  categoryName,
+  categoryColor,
+  postName,
   link,
-}: Props): ReactElement {
-  /* TODO: 
-  1. correct news href
-  2. add category tag
-  3. update default and loading images
-  4. confirm the line height
-   */
-  const categoryName = news.sectionsInInputOrder[0]?.name || '未知'
-  const categoryColor = categoryColors[categoryName] || 'bg-[#1C7CED]'
-
+  heroImage,
+}: PopularNews): ReactElement {
   return (
     <Link
       href={link}
@@ -32,18 +19,21 @@ export default function UiPopularNewsCard({
     >
       <figure className="relative md:h-[154px] lg:h-[133px]">
         <CustomImage
-          images={news?.heroImage?.resized}
-          imagesWebP={news?.heroImage?.resizedWebp}
-          alt={news.title}
+          images={heroImage?.resized}
+          imagesWebP={heroImage?.resizedWebp}
+          alt={postName}
         />
         <div
-          className={`absolute bottom-2 left-2 rounded-lg px-1 py-0 text-xs font-bold leading-4 tracking-[0.5px] ${categoryColor} text-[#ffffff]`}
+          className={`absolute bottom-2 left-2 rounded-lg px-1 py-0 text-xs font-bold leading-4 tracking-[0.5px] text-[#ffffff]`}
+          style={{
+            backgroundColor: categoryColor || '#1C7CED',
+          }}
         >
           {categoryName}
         </div>
       </figure>
       <figcaption className="text-lg font-normal text-[#000928] md:line-clamp-2 lg:line-clamp-3">
-        {news.title}
+        {postName}
       </figcaption>
     </Link>
   )

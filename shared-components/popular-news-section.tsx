@@ -1,32 +1,8 @@
 import UiPopularNewsCard from './ui-popular-news-card'
-import { URL_STATIC_POPULAR_NEWS } from '@/constants/config'
-import type { PopularNews } from '@/types/common'
-import { getPostPageUrl } from '@/utils/site-urls'
-
-async function getPopularNews(): Promise<PopularNews[] | undefined> {
-  try {
-    const res = await fetch(URL_STATIC_POPULAR_NEWS, {
-      next: { revalidate: 300 },
-    })
-    const newsItem: PopularNews[] = await res.json()
-    return newsItem.slice(0, 10)
-  } catch (err) {
-    console.error(err)
-    // TODO: send error log
-    return
-  }
-}
+import { fetchPopularPost } from '@/app/actions-general'
 
 export default async function PopularNewsSection(): Promise<JSX.Element> {
-  const categoryColors = {
-    會員專區: 'bg-[#FF800A]',
-    財經理財: 'bg-[#C0CB46]',
-    時事: 'bg-[#FF69BA]',
-    人物: 'bg-[#00C0DA]',
-    汽車鐘錶: 'bg-[#C668F2]',
-  }
-
-  const articles = await getPopularNews()
+  const articles = await fetchPopularPost()
 
   return (
     <section className="hidden md:flex md:w-[588px] md:flex-col md:items-center md:gap-y-[31px] lg:w-[240px] lg:gap-y-[19px]">
@@ -36,12 +12,7 @@ export default async function PopularNewsSection(): Promise<JSX.Element> {
       <div className="grid md:grid-cols-2 md:gap-7 lg:grid-cols-1 lg:gap-y-5">
         {articles &&
           articles.map((item) => (
-            <UiPopularNewsCard
-              news={item}
-              key={item.id}
-              link={getPostPageUrl(item.slug)}
-              categoryColors={categoryColors}
-            />
+            <UiPopularNewsCard {...item} key={item.postSlug} />
           ))}
       </div>
     </section>

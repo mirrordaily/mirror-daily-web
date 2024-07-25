@@ -1,6 +1,6 @@
 'use server'
 
-import type { SectionAndCategory } from '@/types/common'
+import type { PopularNews, SectionAndCategory } from '@/types/common'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
@@ -94,7 +94,9 @@ const transformRawPopularPost = async (
   }
 }
 
-export const fetchPopularPost = async (): Promise<LatestPost[]> => {
+export const fetchPopularPost = async (
+  amount: number = 10
+): Promise<PopularNews[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching popular posts',
     getTraceObject()
@@ -115,7 +117,7 @@ export const fetchPopularPost = async (): Promise<LatestPost[]> => {
         (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
       )
       .map((r) => r.value)
-      .slice(0, 10)
+      .slice(0, amount)
   } catch (e) {
     errorLogger(e)
     return []
