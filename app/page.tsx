@@ -2,6 +2,9 @@ import { fetchLatestPost, fetchLiveEvent } from '@/app/actions'
 import { fetchPopularPost } from './actions-general'
 import type { ParameterOfComponent } from '@/types/common'
 
+import Header from '@/shared-components/header'
+import NewsletterSubscription from '@/shared-components/newsletter-subscription'
+import Footer from '@/shared-components/footer'
 import SectionDivider from './_components/divider'
 import EditorChoiceSection from './_components/editor-choice/section'
 import TopNewsSection from './_components/top-news/section'
@@ -69,27 +72,34 @@ export default async function Home() {
     }
 
   return (
-    <main className="flex w-full grow flex-col items-center justify-center">
-      <SectionDivider customClasses="hidden md:block" />
-      {/* 編輯精選 */}
-      <EditorChoiceSection />
-      <SectionDivider />
-      {/* 即時新聞/熱門新聞（10則） */}
-      <TopNewsSection postsOfTab={postsOfTab} />
-      <SectionDivider />
-      {/* 短影音新聞 */}
-      <ShortsNewsSection />
-      <SectionDivider />
-      {/* Topic（4則）＋遊戲區 */}
-      <TopicAndGameSection />
-      <SectionDivider />
-      {/* 短影音．二創 */}
-      <ShortsDerivativeSection />
-      <SectionDivider />
-      {/* 最新新聞 */}
-      <LatestNewsSection
-        initialList={latestPosts.slice(startIndexOfLatestNewsSection)}
-      />
-    </main>
+    <>
+      <Header />
+      <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
+        <main className="flex w-full grow flex-col items-center justify-center">
+          <SectionDivider customClasses="hidden md:block" />
+          {/* 編輯精選 */}
+          <EditorChoiceSection />
+          <SectionDivider />
+          {/* 即時新聞/熱門新聞（10則） */}
+          <TopNewsSection postsOfTab={postsOfTab} />
+          <SectionDivider />
+          {/* 短影音新聞 */}
+          <ShortsNewsSection />
+          <SectionDivider />
+          {/* Topic（4則）＋遊戲區 */}
+          <TopicAndGameSection />
+          <SectionDivider />
+          {/* 短影音．二創 */}
+          <ShortsDerivativeSection />
+          <SectionDivider />
+          {/* 最新新聞 */}
+          <LatestNewsSection
+            initialList={latestPosts.slice(startIndexOfLatestNewsSection)}
+          />
+        </main>
+      </div>
+      <NewsletterSubscription />
+      <Footer />
+    </>
   )
 }
