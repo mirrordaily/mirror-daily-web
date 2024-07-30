@@ -7,6 +7,9 @@ fragment PostDetails on Post {
   heroImage {
     ...HeroImage
   }
+  og_image {
+    ...OgImage
+  }
 }
 
 fragment PostItem on Post {
