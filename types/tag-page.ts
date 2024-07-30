@@ -9,6 +9,7 @@ export type TagPost = {
   sectionColor: string
   sectionName: string
   content: string
+  ogImage: HeroImage
 }
 
 export type TagInfo = {

@@ -9,6 +9,7 @@ export type AuthorPost = {
   sectionColor: string
   sectionName: string
   content: string
+  ogImage: HeroImage
 }
 
 export type AuthorInfo = {

@@ -8,4 +8,5 @@ export type SectionPost = {
   heroImage: HeroImage
   link: string
   content: string
+  ogImage: HeroImage
 }

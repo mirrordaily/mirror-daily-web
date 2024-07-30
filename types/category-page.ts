@@ -8,4 +8,5 @@ export type CategoryPost = {
   heroImage: HeroImage
   link: string
   content: string
+  ogImage: HeroImage
 }

@@ -26,6 +26,7 @@ function transformCategoryPost(
     const heroImage = getHeroImage(rawPost.heroImage)
     const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
     const content = rawPost.content?.blocks?.[0]?.text ?? ''
+    const ogImage = getHeroImage(rawPost.og_image)
 
     return {
       title,
@@ -35,6 +36,7 @@ function transformCategoryPost(
       heroImage,
       brief,
       content,
+      ogImage,
     }
   })
 }
