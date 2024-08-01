@@ -17,7 +17,7 @@ export default function UiPopularNewsCard({
       rel="noopener noreferrer"
       className="flex flex-col md:gap-y-2 lg:gap-y-3"
     >
-      <figure className="relative md:h-[154px] lg:h-[133px]">
+      <figure className="relative overflow-hidden rounded md:h-[154px] lg:h-[133px]">
         <CustomImage
           images={heroImage?.resized}
           imagesWebP={heroImage?.resizedWebp}
