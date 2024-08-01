@@ -22,7 +22,6 @@ import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
 import { useState, useEffect } from 'react'
 import type { SectionAndCategory } from '@/types/common'
 import type { FlashNews } from '@/types/homepage'
-import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 
 export default function Header() {
   const ExtendedSocialLinks = [
@@ -57,10 +56,7 @@ export default function Header() {
         const result = await fetchSectionsAndCategories()
         setData(result)
       } catch (err) {
-        createErrorLogger(
-          'Failed to load sections and categories',
-          getTraceObject()
-        )
+        console.error(err)
       }
     }
 
@@ -69,7 +65,7 @@ export default function Header() {
         const posts = await fetchFlashNews()
         setFlashNews(posts)
       } catch (err) {
-        createErrorLogger('Failed to load flash news', getTraceObject())
+        console.error(err)
       }
     }
 
