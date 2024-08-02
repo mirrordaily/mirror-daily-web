@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 
 export default function GlobalError({ error }: { error: Error }) {
   useEffect(() => {
-    console.error(error)
+    // TODO: send error log to GCP Logging
   }, [error])
 
   return (
