@@ -1,7 +1,7 @@
 /* eslint-disable filename-rules/match */
 import { fetchPopularPost } from '@/app/actions-general'
 import PopularNewsCard from './popular-news-card'
-import image404 from '../../public/images-next/404.svg'
+import Image404 from '../../public/images-next/404.svg'
 import Image from 'next/image'
 
 export default async function Custom404() {
@@ -12,7 +12,7 @@ export default async function Custom404() {
       <hr className="mt-4 hidden w-[1128px] border border-[#000928] lg:block" />
       <div className="mt-20 flex flex-col items-center gap-y-[72px] md:mt-[92px] md:gap-y-[88px] lg:mt-[104px]">
         <div className="flex flex-col items-center gap-y-6">
-          <Image alt="404圖片" src={image404} width={204} height={92} />
+          <Image alt="404圖片" src={Image404} width={204} height={92} />
           <p className="text-xl font-bold text-[#000928]">
             抱歉！找不到這個網址
           </p>
