@@ -1,25 +1,15 @@
-import Image from 'next/image'
+import type { ReactElement } from 'react'
 
 type Props = {
-  alt: string
-  src: string
-  width: number
-  height: number
   text: string
   color: string
+  children: ReactElement
 }
 
-export default function ErrorMessage({
-  alt,
-  src,
-  width,
-  height,
-  text,
-  color,
-}: Props) {
+export default function ErrorMessage({ text, color, children }: Props) {
   return (
     <div className="flex flex-col items-center gap-y-6">
-      <Image alt={alt} src={src} width={width} height={height} />
+      {children}
       <p className="text-xl font-bold" style={{ color: color }}>
         {text}
       </p>
