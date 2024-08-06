@@ -19,7 +19,7 @@ export default function GlobalError({ error }: { error: Error }) {
 
   return (
     <html lang="zh-Hant" className={notoSans.className}>
-      <body className="flex min-h-screen w-screen flex-col items-center overflow-x-hidden bg-white has-[#mobile-menu-toggle:checked]:h-screen has-[#mobile-menu-toggle:checked]:overflow-hidden has-[#mobile-menu-toggle:checked]:lg:h-auto has-[#mobile-menu-toggle:checked]:lg:overflow-auto">
+      <body className={`app-layout`}>
         <Header />
         <Custom500 />
         <Footer />

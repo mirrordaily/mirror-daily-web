@@ -34,6 +34,11 @@
   .shorts-swiper-button {
     @apply hidden absolute top-[calc(480px/2)] lg:top-[calc(566px/2)] -translate-y-1/2 lg:inline-block z-over-shorts;
   }
+
+  .app-layout {
+    @apply flex min-h-screen w-screen flex-col items-center overflow-x-hidden bg-white;
+    @apply has-[#mobile-menu-toggle:checked]:h-screen has-[#mobile-menu-toggle:checked]:overflow-hidden has-[#mobile-menu-toggle:checked]:lg:h-auto has-[#mobile-menu-toggle:checked]:lg:overflow-auto;
+  }
 }
 
 @layer utilities {

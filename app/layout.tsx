@@ -20,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hant" className={notoSans.className}>
-      <body className="flex min-h-screen w-screen flex-col items-center overflow-x-hidden bg-white has-[#mobile-menu-toggle:checked]:h-screen has-[#mobile-menu-toggle:checked]:overflow-hidden has-[#mobile-menu-toggle:checked]:lg:h-auto has-[#mobile-menu-toggle:checked]:lg:overflow-auto">
-        {children}
-      </body>
+      <body className={`app-layout`}>{children}</body>
     </html>
   )
 }
