@@ -7,12 +7,11 @@ export default function ArticleCard({
   title,
   link,
   createdTime,
-  heroImage,
   brief,
   sectionName,
   sectionColor,
   content,
-  ogImage,
+  postMainImage,
 }: AuthorPost | TagPost) {
   return (
     <Link
@@ -23,8 +22,8 @@ export default function ArticleCard({
     >
       <figure className="relative mb-1 aspect-[340/188] overflow-hidden rounded md:h-[155px] lg:h-[133px]">
         <CustomImage
-          images={heroImage.resized || ogImage.resized}
-          imagesWebP={heroImage.resizedWebp || ogImage.resizedWebp}
+          images={postMainImage.resized}
+          imagesWebP={postMainImage.resizedWebp}
           alt={title}
         />
         <p

@@ -11,7 +11,11 @@ import type {
   GetAuthorInformationQuery,
 } from '@/graphql/__generated__/graphql'
 import { getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage, dateFormatter } from '@/utils/data-process'
+import {
+  getHeroImage,
+  dateFormatter,
+  selectMainImage,
+} from '@/utils/data-process'
 import type { AuthorPost, AuthorInfo } from '@/types/author-page'
 
 function transformAuthorPost(
@@ -30,17 +34,17 @@ function transformAuthorPost(
     const sectionColor = rawPost.sections?.[0]?.color ?? '#FF5A36'
     const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
+    const postMainImage = selectMainImage(heroImage, ogImage)
 
     return {
       title,
       link,
+      postMainImage,
       createdTime,
-      heroImage,
       brief,
       sectionColor,
       sectionName,
       content,
-      ogImage,
     }
   })
 }

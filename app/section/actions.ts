@@ -10,7 +10,11 @@ import type {
   GetSectionInformationQuery,
 } from '@/graphql/__generated__/graphql'
 import { getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage, dateFormatter } from '@/utils/data-process'
+import {
+  getHeroImage,
+  dateFormatter,
+  selectMainImage,
+} from '@/utils/data-process'
 import type { SectionPost } from '@/types/section-page'
 
 function transformSectionPost(
@@ -27,16 +31,16 @@ function transformSectionPost(
     const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
     const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
+    const postMainImage = selectMainImage(heroImage, ogImage)
 
     return {
       title,
       slug,
       link,
       createdTime,
-      heroImage,
       brief,
       content,
-      ogImage,
+      postMainImage,
     }
   })
 }

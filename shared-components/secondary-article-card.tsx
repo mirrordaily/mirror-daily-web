@@ -9,6 +9,7 @@ type Props = {
 }
 
 export default function SecondaryArticleCard({ postItem, color }: Props) {
+  console.log(postItem.postMainImage)
   return (
     <Link
       href={postItem.link}
@@ -18,10 +19,8 @@ export default function SecondaryArticleCard({ postItem, color }: Props) {
     >
       <figure className="relative h-[88px] w-40 shrink-0 overflow-hidden rounded md:h-[133px] md:w-60">
         <CustomImage
-          images={postItem.heroImage.resized || postItem.ogImage.resized}
-          imagesWebP={
-            postItem.heroImage.resizedWebp || postItem.ogImage.resizedWebp
-          }
+          images={postItem.postMainImage.resized}
+          imagesWebP={postItem.postMainImage.resizedWebp}
           alt={postItem.title}
         />
       </figure>
