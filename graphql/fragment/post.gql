@@ -1,9 +1,9 @@
 fragment PostDetails on Post {
   title
   createdAt
-  brief
+  apiDataBrief
   slug
-  content
+  apiData
   heroImage {
     ...HeroImage
   }
