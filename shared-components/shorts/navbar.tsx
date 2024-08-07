@@ -1,4 +1,3 @@
-import type { TAB } from '@/types/shorts'
 import { Fragment } from 'react'
 import NextLink from 'next/link'
 import NextImage from 'next/image'
@@ -19,10 +18,11 @@ import IconLine from '@/public/icons/logos/line-gray.svg'
 import IconMirrorMedia from '@/public/icons/logos/mirror-media.svg'
 import IconMirrorFiction from '@/public/icons/logos/mirror-fiction.png'
 import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
+import { SHORTS_TYPE } from '@/types/common'
 
 type Props = {
-  tabs: Record<TAB, string>
-  activeTab: TAB
+  tabs: Record<SHORTS_TYPE, string>
+  activeTab: SHORTS_TYPE
 }
 
 export default function Navbar({ tabs, activeTab }: Props) {
@@ -61,15 +61,19 @@ export default function Navbar({ tabs, activeTab }: Props) {
         </NextLink>
         <hr className="my-4 h-px w-[54px] bg-[#000000]" />
         <NextLink
-          href={tabs.NEWS}
-          className={`flex size-full flex-col items-center justify-center gap-y-1 ${activeTab === 'NEWS' ? 'bg-[#F0F0F1]' : ''}`}
+          href={tabs.news}
+          className={`flex size-full flex-col items-center justify-center gap-y-1 ${
+            activeTab === SHORTS_TYPE.NEWS ? 'bg-[#F0F0F1]' : ''
+          }`}
         >
           <NextImage src={IconNews} alt="新聞" />
           <p>新聞</p>
         </NextLink>
         <NextLink
-          href={tabs.CREATIVITY}
-          className={`flex size-full flex-col items-center justify-center gap-y-1 ${activeTab === 'CREATIVITY' ? 'bg-[#F0F0F1]' : ''}`}
+          href={tabs.creativity}
+          className={`flex size-full flex-col items-center justify-center gap-y-1 ${
+            activeTab === SHORTS_TYPE.DERIVATIVE ? 'bg-[#F0F0F1]' : ''
+          }`}
         >
           <NextImage src={IconCreatity} alt="二創" />
           <p>二創</p>

@@ -1,3 +1,5 @@
+import type { SHORTS_TYPE } from '@/types/common'
+
 export enum ENVIRONMENT {
   LOCAL = 'local',
   DEVELOPMENT = 'dev',
@@ -99,3 +101,8 @@ export const IMAGE_BREAKPOINT = {
   mobile: '719px',
   tablet: '1199px',
 } as const
+
+export const LATEST_SHORT_PAGES = {
+  news: '/shorts/news',
+  creativity: '/shorts/creativity',
+} as const satisfies Record<SHORTS_TYPE, string>
