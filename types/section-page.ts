@@ -5,8 +5,7 @@ export type SectionPost = {
   slug: string
   createdTime: string
   brief: string
-  heroImage: HeroImage
   link: string
   content: string
-  ogImage: HeroImage
+  postMainImage: HeroImage
 }
