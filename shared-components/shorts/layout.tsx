@@ -1,5 +1,13 @@
+import type { TAB } from '@/types/shorts'
 import ShortsHeader from './header'
+import MobileNavbar from './mobile-navbar'
+
 export default function ShortsLayout() {
+  const TAB_LINKS: Record<TAB, string> = {
+    NEWS: '',
+    CREATIVITY: '',
+  }
+
   return (
     <div className="relative flex h-screen max-h-screen w-full max-w-screen-sm flex-col md:max-w-screen-lg">
       <ShortsHeader />
@@ -7,7 +15,7 @@ export default function ShortsLayout() {
         {/* Navbar */}
         {/* Body */}
       </div>
-      {/* Mobile Navbar */}
+      <MobileNavbar tabs={TAB_LINKS} activeTab="NEWS" />
     </div>
   )
 }
