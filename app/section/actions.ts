@@ -24,8 +24,8 @@ function transformSectionPost(
     const link = getStoryPageUrl(slug)
     const createdTime = dateFormatter(rawPost.createdAt)
     const heroImage = getHeroImage(rawPost.heroImage)
-    const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
-    const content = rawPost.content?.blocks?.[0]?.text ?? ''
+    const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
+    const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
 
     return {

@@ -25,10 +25,10 @@ function transformAuthorPost(
     const link = getStoryPageUrl(slug)
     const createdTime = dateFormatter(rawPost.createdAt) ?? ''
     const heroImage = getHeroImage(rawPost.heroImage)
-    const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
+    const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
     const sectionName = rawPost.sections?.[0]?.name ?? ''
     const sectionColor = rawPost.sections?.[0]?.color ?? '#FF5A36'
-    const content = rawPost.content?.blocks?.[0]?.text ?? ''
+    const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
 
     return {
