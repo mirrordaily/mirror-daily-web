@@ -27,6 +27,8 @@ const ENV = (function () {
 })()
 
 const GCP_PROJECT_ID = 'mirrordaily'
+/** section shorts must use specific key for navigation purpose */
+const FIXED_KEY_FOR_SECTION_SHORTS = 'short'
 
 switch (ENV) {
   case ENVIRONMENT.DEVELOPMENT:
@@ -63,4 +65,5 @@ export {
   URL_STATIC_GAME,
   URL_STATIC_LATEST_SHORTS,
   GCP_PROJECT_ID,
+  FIXED_KEY_FOR_SECTION_SHORTS,
 }

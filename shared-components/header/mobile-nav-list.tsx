@@ -8,6 +8,7 @@ import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import { useWindowSize } from 'usehooks-ts'
 import IconTogggle from '@/public/icons/sidebar-toggle.svg'
 import { getTailwindConfig } from '@/utils/tailwind'
+import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
 
 type Props = {
   data: SectionAndCategory[]
@@ -42,7 +43,8 @@ export default function MobileNavList({ data }: Props) {
         {data.map((section) => {
           const { name, slug, color, categories } = section
 
-          const hasCategories = categories.length > 0
+          const hasCategories =
+            categories.length > 0 && slug !== FIXED_KEY_FOR_SECTION_SHORTS
           const shouldShowCategories = slug === activeItem
 
           return (
