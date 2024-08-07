@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import CustomImage from './custom-image'
+import CustomImage from '../custom-image'
 import type { PopularNews } from '@/types/common'
 import type { ReactElement } from 'react'
 
-export default function UiPopularNewsCard({
+export default function PopularNewsCard({
   categoryName,
   categoryColor,
   postName,
@@ -17,10 +17,10 @@ export default function UiPopularNewsCard({
       rel="noopener noreferrer"
       className="flex flex-col md:gap-y-2 lg:gap-y-3"
     >
-      <figure className="relative overflow-hidden rounded md:h-[154px] lg:h-[133px]">
+      <figure className="relative h-[133px] overflow-hidden rounded md:h-[154px]">
         <CustomImage
-          images={heroImage?.resized}
-          imagesWebP={heroImage?.resizedWebp}
+          images={heroImage.resized}
+          imagesWebP={heroImage.resizedWebp}
           alt={postName}
         />
         <div
@@ -32,7 +32,7 @@ export default function UiPopularNewsCard({
           {categoryName}
         </div>
       </figure>
-      <figcaption className="text-lg font-normal text-[#000928] md:line-clamp-2 lg:line-clamp-3">
+      <figcaption className="line-clamp-3 text-lg font-normal text-[#000928] md:line-clamp-2">
         {postName}
       </figcaption>
     </Link>

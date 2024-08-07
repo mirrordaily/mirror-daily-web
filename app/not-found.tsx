@@ -1,12 +1,13 @@
-import Link from 'next/link'
+import Custom404 from '@/shared-components/error/ui-404'
+import Header from '@/shared-components/header'
+import Footer from '@/shared-components/footer'
 
 export default function NotFound() {
-  //TODO: 404 page ui
   return (
-    <div>
-      <h2>Not Found</h2>
-      <p>Could not find requested resource</p>
-      <Link href="/">Return Home</Link>
-    </div>
+    <>
+      <Header />
+      <Custom404 />
+      <Footer />
+    </>
   )
 }
