@@ -2,6 +2,7 @@
 
 import type { Shorts } from '@/types/homepage'
 import { useState } from 'react'
+import ShortsItem from './item'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Keyboard } from 'swiper/modules'
 
@@ -12,8 +13,8 @@ type Props = {
 }
 
 export default function VideoBlock({ items }: Props) {
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [volume, setVolume] = useState(0)
 
   return (
     <>
@@ -38,8 +39,14 @@ export default function VideoBlock({ items }: Props) {
       >
         {items.map((item, index) => (
           <SwiperSlide key={index}>
-            {/* Item */}
-            {JSON.stringify(item)}
+            <ShortsItem
+              {...item}
+              isActive={activeIndex === index}
+              volume={volume}
+              onPause={() => setActiveIndex(null)}
+              onPlay={() => setActiveIndex(index)}
+              setVolume={setVolume}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

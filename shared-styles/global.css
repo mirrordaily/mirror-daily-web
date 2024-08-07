@@ -4,7 +4,21 @@
 
 :root {
   --shorts-header-height: 80px;
+  --shorts-body-padding: 0px;
+  --shorts-item-gap: 0px;
+  --shorts-next-item-preview-height: 0px;
 
+  /* @see https://github.com/tailwindlabs/tailwindcss/discussions/10779#discussioncomment-5288493 */
+  @media screen(md) {
+    --shorts-header-height: 96px;
+    --shorts-body-padding: 16px;
+    --shorts-item-gap: 60px;
+    --shorts-next-item-preview-height: 20px;
+  }
+
+  @media screen(lg) {
+    --shorts-header-height: 106px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,6 +57,43 @@
       @apply h-auto;
     }
 
+    .shorts-container {
+      @apply relative mx-auto;
+      @apply h-[calc(100vh-var(--shorts-header-height)-var(--shorts-body-padding)-var(--shorts-item-gap)-var(--shorts-next-item-preview-height))];
+      @apply max-h-full w-[calc((100vh-var(--shorts-header-height)-var(--shorts-body-padding)-var(--shorts-item-gap)-var(--shorts-next-item-preview-height))*9/16)];
+      @apply md:ml-0 md:max-w-full;
+
+      & > div {
+        @apply overflow-hidden md:rounded-[7px];
+      }
+
+      button.control {
+        @apply flex size-5 items-center justify-center rounded-xl bg-white shadow-[0px_5.365px_5.365px_0px_rgba(0,0,0,0.15)] hover-or-active:bg-[#E5E6E9];
+      }
+
+      input.volume-slider {
+        @apply h-2 w-[120px] cursor-pointer appearance-none rounded-lg;
+  
+        /* webkit */
+        &::-webkit-slider-runnable-track {
+          @apply h-full rounded-lg;
+          background: linear-gradient(to right, #FF5A36 var(--shorts-volume), #FFF 0);
+          
+        }
+        &::-webkit-slider-thumb {
+          @apply invisible;
+        }
+  
+        /* firefox */
+        &::-moz-range-track {
+          @apply h-full rounded-lg;
+          background: linear-gradient(to right, #FF5A36 var(--shorts-volume), #FFF 0);
+        }
+        &::-moz-range-thumb {
+          @apply invisible;
+        }
+      }
+    }
   }
 }
 

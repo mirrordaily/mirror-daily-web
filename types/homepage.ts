@@ -51,4 +51,5 @@ export type Shorts = {
   link: string
   fileUrl: string
   poster?: string
+  contributor?: string
 }
