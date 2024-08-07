@@ -35,6 +35,15 @@
   .shorts-swiper-button {
     @apply hidden absolute top-[calc(480px/2)] lg:top-[calc(566px/2)] -translate-y-1/2 lg:inline-block z-over-shorts;
   }
+
+  .shorts-swiper-in-shorts-page {
+    @apply w-full h-full;
+
+    .swiper-wrapper {
+      @apply h-auto;
+    }
+
+  }
 }
 
 @layer utilities {
