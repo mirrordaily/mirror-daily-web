@@ -17,7 +17,7 @@ const documents = {
     types.EditorChoiceDataFragmentDoc,
   'fragment HeroImage on Photo {\n  id\n  resized {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n  resizedWebp {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n}\n\nfragment OgImage on Photo {\n  id\n  resized {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n  resizedWebp {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n}':
     types.HeroImageFragmentDoc,
-  'fragment PostDetails on Post {\n  title\n  createdAt\n  brief\n  slug\n  content\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}':
+  'fragment PostDetails on Post {\n  title\n  createdAt\n  apiDataBrief\n  slug\n  apiData\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}':
     types.PostDetailsFragmentDoc,
   'fragment LatestShorts on Video {\n  id\n  name\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}':
     types.LatestShortsFragmentDoc,
@@ -73,8 +73,8 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: 'fragment PostDetails on Post {\n  title\n  createdAt\n  brief\n  slug\n  content\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}'
-): (typeof documents)['fragment PostDetails on Post {\n  title\n  createdAt\n  brief\n  slug\n  content\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}']
+  source: 'fragment PostDetails on Post {\n  title\n  createdAt\n  apiDataBrief\n  slug\n  apiData\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}'
+): (typeof documents)['fragment PostDetails on Post {\n  title\n  createdAt\n  apiDataBrief\n  slug\n  apiData\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
