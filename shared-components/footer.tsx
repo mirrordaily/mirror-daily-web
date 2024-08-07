@@ -1,6 +1,6 @@
 import NextImage from 'next/image'
 import NextLink from 'next/link'
-import { SOCIAL_LINKS, type SocialLinks } from '@/constants/misc'
+import { SOCIAL_LINKS, PAGE_LINKS, CONTACT_LINKS } from '@/constants/misc'
 import IconMirrorDaily from '@/public/icons/logos/mirror-daily-greyscale.svg'
 import IconFacebook from '@/public/icons/logos/facebook-white.svg'
 import IconInstagram from '@/public/icons/logos/instagram-white.svg'
@@ -9,53 +9,7 @@ import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
 import { Fragment, type ReactElement } from 'react'
 
-type PageLink = SocialLinks & {
-  isExternal?: boolean
-}
-
-type ContactLink = SocialLinks & {
-  text: string
-}
-
 export default function Footer(): ReactElement {
-  // TODO: update url values
-  const PAGE_LINKS: PageLink[] = [
-    {
-      name: '廣告業務',
-      href: '/',
-      isExternal: true,
-    },
-    {
-      name: '內容授權',
-      href: '/',
-      isExternal: true,
-    },
-    {
-      name: '下載APP',
-      href: '/',
-      isExternal: true,
-    },
-    {
-      name: '新聞自律',
-      href: '/',
-      isExternal: true,
-    },
-  ]
-
-  const CONTACT_LINKS: ContactLink[] = [
-    {
-      name: '鏡報客服',
-      href: 'tel:+886(02)7752-5678',
-      text: '(02)7752-5678',
-    },
-    {
-      // TODO: update email
-      name: '客服信箱',
-      href: 'mailto:movieservice@nexttv.com.tw',
-      text: 'movieservice@nexttv.com.tw',
-    },
-  ]
-
   const ExtendedSocialLinks = [
     {
       ...SOCIAL_LINKS[0],

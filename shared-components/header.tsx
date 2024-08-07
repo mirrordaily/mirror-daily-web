@@ -1,6 +1,6 @@
 import NextImage from 'next/image'
 import NextLink from 'next/link'
-import { SOCIAL_LINKS } from '@/constants/misc'
+import { SOCIAL_LINKS, SITE_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './header/mobile-toggle-and-nav'
 import DesktopNavList from './header/desktop-nav-list'
 import FlashNewsList from './header/flash-news-list'
@@ -46,7 +46,7 @@ export default async function Header() {
 
   return (
     <header className="flex h-[150px] w-full shrink-0 flex-col items-center md:h-[134px] md:w-[720px] lg:h-[144px] lg:w-[1200px]">
-      <div className="flex h-[68px] w-full max-w-[375px] pl-[17px] pr-5 md:max-w-none md:pl-6 lg:h-[82px] lg:pl-5">
+      <div className="flex h-[68px] w-full max-w-screen-sm pl-[17px] pr-5 md:max-w-none md:pl-6 lg:h-[82px] lg:pl-5">
         <MobileToggleAndNav data={data} />
         <div className="hidden overflow-hidden lg:order-2 lg:flex lg:grow">
           <DesktopNavList data={data} />
@@ -87,34 +87,43 @@ export default async function Header() {
         </NextLink>
       </div>
       <hr className="h-px w-full bg-[#ccced4] md:hidden" />
-      <div className="flex w-full max-w-[375px] grow items-start px-[23px] pb-1 pt-[18px] text-sm md:max-w-none md:items-end md:px-5 md:pb-[10px] md:pt-0 lg:pb-2 lg:text-base">
+      <div className="flex w-full max-w-screen-sm grow items-start px-[23px] pb-1 pt-[18px] text-sm md:max-w-none md:items-end md:px-5 md:pb-[10px] md:pt-0 lg:pb-2 lg:text-base">
         <p className="ml-[13px] mr-8 shrink-0 font-bold leading-normal text-[#D94141] md:ml-0 md:mr-2 lg:ml-[17px] lg:mr-3">
           快訊
         </p>
         <FlashNewsList items={flashNews} />
         <div className="mb-[2px] ml-[22px] hidden shrink-0 gap-x-3 md:flex lg:mb-[6px]">
-          <a target="_blank" href="https://www.mirrormedia.mg/">
+          <a
+            target="_blank"
+            href={SITE_LINKS[0].href}
+            className="relative inline-block h-4 w-[37.85px] lg:h-7 lg:w-[66px]"
+          >
             <NextImage
               src={IconMirrorMedia}
-              width={37.85}
-              height={16}
-              alt="鏡週刊"
+              fill={true}
+              alt={SITE_LINKS[0].name}
             />
           </a>
-          <a target="_blank" href="https://www.mirrorfiction.com/">
+          <a
+            target="_blank"
+            href={SITE_LINKS[1].href}
+            className="relative inline-block h-4 w-[66px] lg:mt-[9px]"
+          >
             <NextImage
               src={IconMirrorFiction}
-              width={66}
-              height={16}
-              alt="鏡文學"
+              fill={true}
+              alt={SITE_LINKS[1].name}
             />
           </a>
-          <a target="_blank" href="https://www.mnews.tw/">
+          <a
+            target="_blank"
+            href={SITE_LINKS[2].href}
+            className="relative inline-block h-4 w-[52px] lg:mt-[9px]"
+          >
             <NextImage
               src={IconMirrorNews}
-              width={52}
-              height={16}
-              alt="鏡電視"
+              fill={true}
+              alt={SITE_LINKS[2].name}
             />
           </a>
         </div>
