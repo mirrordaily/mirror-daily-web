@@ -1,4 +1,5 @@
 import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
+import { SHORTS_TYPE } from '@/types/common'
 import { z } from 'zod'
 
 type ImageKeys = keyof Omit<
@@ -60,8 +61,7 @@ export const rawLatestPostSchema = z.object({
   title: z.string(),
   slug: z.string(),
   heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
-  sections: z.array(sectionSchema.pick({ slug: true })),
-  categories: z.array(categorySchema),
+  sections: z.array(sectionSchema.pick({ name: true, slug: true })),
   partner: z.union([partnerSchema, z.string()]),
   redirect: z.string(),
   publishedDate: z.string(),
@@ -116,4 +116,15 @@ export const latestShortsSchema = z.object({
   name: z.string(),
   videoSrc: z.string(),
   heroImage: z.union([heroImageSchema, z.null()]),
+})
+
+export const shortsDataSchema = z.object({
+  id: z.string(),
+  videoSection: z.nativeEnum(SHORTS_TYPE),
+  state: z.enum(['draft', 'scheduled', 'published']),
+  tags: z.array(
+    z.object({
+      id: z.string(),
+    })
+  ),
 })

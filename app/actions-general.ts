@@ -5,7 +5,11 @@ import { SHORTS_TYPE } from '@/types/common'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
+import {
+  createDataFetchingChain,
+  getHeroImage,
+  transformLatestShorts,
+} from '@/utils/data-process'
 import { fetchGQLData } from '@/utils/graphql'
 import {
   latestShortsSchema,
@@ -17,7 +21,6 @@ import {
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_SECTION_AND_CATEGORY,
 } from '@/constants/config'
-import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
 import {
   GetLatestShortsDocument,
   GetSectionsAndCategoriesDocument,
@@ -131,49 +134,6 @@ export const fetchPopularPost = async (
   } catch (e) {
     errorLogger(e)
     return []
-  }
-}
-
-type ImageKeys = keyof Omit<
-  NonNullable<HeroImageFragment['resized']>,
-  '__typename'
->
-
-const getPosterFromShorts = (
-  heroImage: z.infer<typeof latestShortsSchema>['heroImage']
-): string => {
-  const pickedSize: ImageKeys[] = ['w800', 'w480', 'original']
-  if (!heroImage) return ''
-
-  const getImageSrc = (
-    imageObj: typeof heroImage.resized
-  ): string | undefined => {
-    if (imageObj) {
-      return pickedSize.reduce((src, size) => {
-        const newSrc = imageObj![size]
-        if (!src && newSrc) return newSrc
-        else return src
-      }, undefined)
-    }
-    return undefined
-  }
-
-  const resized = getImageSrc(heroImage.resized)
-  const resizedWebp = getImageSrc(heroImage.resizedWebp)
-
-  return resizedWebp || resized || ''
-}
-
-const transformLatestShorts = (
-  rawData: z.infer<typeof latestShortsSchema>
-): Shorts => {
-  return {
-    id: rawData.id,
-    title: rawData.name ?? '',
-    fileUrl: rawData.videoSrc ?? '',
-    poster: getPosterFromShorts(rawData.heroImage),
-    // TODO: add link to shorts page
-    link: '',
   }
 }
 

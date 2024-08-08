@@ -6,3 +6,12 @@ fragment LatestShorts on Video {
     ...HeroImage
   }
 }
+
+fragment ShortsData on Video {
+  id
+  state
+  videoSection
+  tags(take: 1) {
+    id
+  }
+}

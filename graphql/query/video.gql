@@ -1,7 +1,7 @@
 query GetLatestShorts($amount: Int!) {
   news: videos(
     take: $amount,
-    orderBy: { createdAt: desc },
+    orderBy: { publishedDate: desc },
     where: {
       state: {
           equals: "published",
@@ -14,7 +14,7 @@ query GetLatestShorts($amount: Int!) {
     }
   creativity: videos(
     take: $amount,
-    orderBy: { createdAt: desc },
+    orderBy: { publishedDate: desc },
     where: {
       state: {
           equals: "published",
@@ -25,4 +25,49 @@ query GetLatestShorts($amount: Int!) {
     }) {
       ...LatestShorts
     }
+}
+
+query GetShortsData($id: ID!) {
+  video(where: {id: $id}) {
+    ...ShortsData
+  }
+}
+
+query GetShortsByTagAndVideoSection($tagId: ID!, $section: String!) {
+  videos(
+    orderBy: { publishedDate: desc },
+    where: {
+      state: {
+          equals: "published",
+      },
+      videoSection:  {
+        equals: $section
+      }
+      tags:  {
+        some:  {
+          id:  {
+            equals: $tagId
+          }
+        }
+      }
+    }
+  ) {
+    ...LatestShorts
+  }
+}
+
+query GetShortsByVideoSection($section: String!) {
+  videos(
+    orderBy: { publishedDate: desc },
+    where: {
+      state: {
+          equals: "published",
+      },
+      videoSection:  {
+        equals: $section
+      }
+    }
+  ) {
+    ...LatestShorts
+  }
 }
