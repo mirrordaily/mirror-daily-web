@@ -18,3 +18,5 @@ export const getCategoryPageUrl = (slug: string) => `/category/${slug}`
 export const getTopicSectionPage = () => `/topics`
 
 export const getTopicPageUrl = (slug: string) => `/topic/${slug}`
+
+export const getShortsPageUrl = (id: string) => `/shorts/${id}`

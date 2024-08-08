@@ -24,6 +24,7 @@ export default async function Page({ params }: PageProps) {
       tabLinks={LATEST_SHORT_PAGES}
       activeTab={shortsData.videoSection}
       items={data}
+      shouldChangePathOnSlideChange={true}
     />
   )
 }

@@ -7,12 +7,17 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Keyboard } from 'swiper/modules'
 
 import 'swiper/css'
+import { getShortsPageUrl } from '@/utils/site-urls'
 
 type Props = {
   items: Shorts[]
+  shouldChangePathOnSlideChange?: boolean
 }
 
-export default function VideoBlock({ items }: Props) {
+export default function VideoBlock({
+  items,
+  shouldChangePathOnSlideChange,
+}: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [volume, setVolume] = useState(0)
 
@@ -29,6 +34,10 @@ export default function VideoBlock({ items }: Props) {
         }}
         onSlideChange={(swiper) => {
           setActiveIndex(swiper.realIndex)
+          if (shouldChangePathOnSlideChange) {
+            const url = getShortsPageUrl(items[swiper.realIndex]!.id!)
+            window.history.replaceState(null, '', url)
+          }
         }}
         className="shorts-swiper-in-shorts-page"
         breakpoints={{
