@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { LATEST_SHORT_PAGES } from '@/constants/misc'
 
 export default async function Page() {
-  const data = await fetchLatestShorts(SHORTS_TYPE.DERIVATIVE, 20)
+  const data = await fetchLatestShorts(SHORTS_TYPE.DERIVATIVE, 50)
 
   if (!data) notFound()
 

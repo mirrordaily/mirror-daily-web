@@ -76,8 +76,8 @@ export const fetchShortsByTagAndVideoSection = async (
   if (orginalVideo) {
     const filteredData = data.filter((video) => video.id !== originalVideoId)
     filteredData.unshift(orginalVideo)
-    return filteredData.map(transformLatestShorts)
+    return filteredData.map(transformLatestShorts).slice(0, 20)
   }
 
-  return data.map(transformLatestShorts)
+  return data.map(transformLatestShorts).slice(0, 20)
 }
