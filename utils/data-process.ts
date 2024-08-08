@@ -107,6 +107,16 @@ const createDataFetchingChain = async <T>(
   return chain
 }
 
+const selectMainImage = (
+  heroImage: HeroImage,
+  ogImage: HeroImage
+): HeroImage => {
+  if (heroImage?.resized?.original === '') {
+    return ogImage
+  }
+  return heroImage
+}
+
 type ImageKeys = keyof Omit<
   NonNullable<HeroImageFragment['resized']>,
   '__typename'
@@ -153,5 +163,6 @@ export {
   getHeroImage,
   dateFormatter,
   createDataFetchingChain,
+  selectMainImage,
   transformLatestShorts,
 }

@@ -1,10 +1,14 @@
 fragment PostDetails on Post {
   title
   createdAt
-  brief
+  apiDataBrief
   slug
+  apiData
   heroImage {
     ...HeroImage
+  }
+  og_image {
+    ...OgImage
   }
 }
 
