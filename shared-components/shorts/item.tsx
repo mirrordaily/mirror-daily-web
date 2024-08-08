@@ -51,13 +51,14 @@ export default function ShortsItem({
 
   const shareHandler = useDebounceCallback(() => {
     const url = window.location.origin + link
-    if (navigator.share) {
+    if ('share' in navigator) {
       navigator.share({
         title,
         text: '',
         url,
       })
-    } else {
+    } else if ('clipboard' in navigator) {
+      /* @ts-expect-error ignorable error */
       navigator.clipboard.writeText(url)
     }
   }, 500)
