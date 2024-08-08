@@ -432,6 +432,7 @@ const transformLatestShorts = (
   rawData: z.infer<typeof latestShortsSchema>
 ): Shorts => {
   return {
+    id: rawData.id,
     title: rawData.name ?? '',
     fileUrl: rawData.videoSrc ?? '',
     poster: getPosterFromShorts(rawData.heroImage),

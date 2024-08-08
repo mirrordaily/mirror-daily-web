@@ -47,6 +47,7 @@ export type Game = {
 }
 
 export type Shorts = {
+  id: string
   title: string
   link: string
   fileUrl: string
