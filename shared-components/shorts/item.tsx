@@ -1,6 +1,6 @@
 'use client'
 
-import type { Shorts } from '@/types/homepage'
+import type { Shorts } from '@/types/common'
 import type { ChangeEvent, CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'

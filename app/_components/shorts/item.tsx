@@ -1,6 +1,6 @@
 'use client'
 
-import type { Shorts } from '@/types/homepage'
+import type { Shorts } from '@/types/common'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
 

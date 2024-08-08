@@ -1,6 +1,6 @@
 'use server'
 
-import type { PopularNews, SectionAndCategory } from '@/types/common'
+import type { PopularNews, SectionAndCategory, Shorts } from '@/types/common'
 import { SHORTS_TYPE } from '@/types/common'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
@@ -22,7 +22,7 @@ import {
   GetLatestShortsDocument,
   GetSectionsAndCategoriesDocument,
 } from '@/graphql/__generated__/graphql'
-import type { LatestPost, Shorts } from '@/types/homepage'
+import type { LatestPost } from '@/types/homepage'
 import { getPostPageUrl } from '@/utils/site-urls'
 import { colorManger } from '@/utils/section-color-manager'
 

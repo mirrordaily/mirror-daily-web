@@ -56,3 +56,12 @@ export enum SHORTS_TYPE {
   NEWS = 'news',
   DERIVATIVE = 'creativity',
 }
+
+export type Shorts = {
+  id: string
+  title: string
+  link: string
+  fileUrl: string
+  poster?: string
+  contributor?: string
+}

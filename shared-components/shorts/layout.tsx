@@ -1,4 +1,4 @@
-import type { Shorts } from '@/types/homepage'
+import type { Shorts } from '@/types/common'
 import ShortsHeader from './header'
 import Navbar from './navbar'
 import VideoBlock from './video-block'

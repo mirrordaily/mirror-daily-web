@@ -1,6 +1,6 @@
 'use client'
 
-import type { Shorts } from '@/types/homepage'
+import type { Shorts } from '@/types/common'
 import { useState } from 'react'
 import ShortsItem from './item'
 import { Swiper, SwiperSlide } from 'swiper/react'
