@@ -52,13 +52,13 @@ type CategoryConfig = {
   color: string
 }
 
-const getCategoryConfig = async (
+const getSectionConfig = async (
   rawPosts: z.infer<typeof rawLatestPostSchema>
 ): Promise<CategoryConfig> => {
-  const { partner, categories, sections } = rawPosts
+  const { partner, sections } = rawPosts
 
   if (typeof partner === 'string') {
-    const categoryName = categories[0]?.name || ''
+    const categoryName = sections[0]?.name || ''
     const color = await colorManger.getColor(sections[0]?.slug)
 
     return {
@@ -93,7 +93,7 @@ const transformRawLatestPost = async (
   rawPosts: z.infer<typeof rawLatestPostSchema>
 ): Promise<LatestPost> => {
   const { title, slug, heroImage, publishedDate, partner } = rawPosts
-  const { name, color } = await getCategoryConfig(rawPosts)
+  const { name, color } = await getSectionConfig(rawPosts)
 
   return {
     categoryName: name,
