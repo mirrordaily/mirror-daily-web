@@ -1,18 +1,28 @@
 'use server'
 
 import type { PopularNews, SectionAndCategory } from '@/types/common'
+import { SHORTS_TYPE } from '@/types/common'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
 import { fetchGQLData } from '@/utils/graphql'
-import { rawPopularPostSchema, sectionSchema } from '@/utils/data-schema'
 import {
+  latestShortsSchema,
+  rawPopularPostSchema,
+  sectionSchema,
+} from '@/utils/data-schema'
+import {
+  URL_STATIC_LATEST_SHORTS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_SECTION_AND_CATEGORY,
 } from '@/constants/config'
-import { GetSectionsAndCategoriesDocument } from '@/graphql/__generated__/graphql'
-import type { LatestPost } from '@/types/homepage'
+import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
+import {
+  GetLatestShortsDocument,
+  GetSectionsAndCategoriesDocument,
+} from '@/graphql/__generated__/graphql'
+import type { LatestPost, Shorts } from '@/types/homepage'
 import { getPostPageUrl } from '@/utils/site-urls'
 import { colorManger } from '@/utils/section-color-manager'
 
@@ -122,4 +132,86 @@ export const fetchPopularPost = async (
     errorLogger(e)
     return []
   }
+}
+
+type ImageKeys = keyof Omit<
+  NonNullable<HeroImageFragment['resized']>,
+  '__typename'
+>
+
+const getPosterFromShorts = (
+  heroImage: z.infer<typeof latestShortsSchema>['heroImage']
+): string => {
+  const pickedSize: ImageKeys[] = ['w800', 'w480', 'original']
+  if (!heroImage) return ''
+
+  const getImageSrc = (
+    imageObj: typeof heroImage.resized
+  ): string | undefined => {
+    if (imageObj) {
+      return pickedSize.reduce((src, size) => {
+        const newSrc = imageObj![size]
+        if (!src && newSrc) return newSrc
+        else return src
+      }, undefined)
+    }
+    return undefined
+  }
+
+  const resized = getImageSrc(heroImage.resized)
+  const resizedWebp = getImageSrc(heroImage.resizedWebp)
+
+  return resizedWebp || resized || ''
+}
+
+const transformLatestShorts = (
+  rawData: z.infer<typeof latestShortsSchema>
+): Shorts => {
+  return {
+    id: rawData.id,
+    title: rawData.name ?? '',
+    fileUrl: rawData.videoSrc ?? '',
+    poster: getPosterFromShorts(rawData.heroImage),
+    // TODO: add link to shorts page
+    link: '',
+  }
+}
+
+export const fetchLatestShorts = async (
+  type: SHORTS_TYPE,
+  amount: number = 10
+): Promise<Shorts[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching latest shorts',
+    getTraceObject()
+  )
+
+  const orignal = z.object({
+    [SHORTS_TYPE.NEWS]: z.array(latestShortsSchema),
+    [SHORTS_TYPE.DERIVATIVE]: z.array(latestShortsSchema),
+  })
+  const schema = z.promise(orignal)
+
+  const data = await createDataFetchingChain<z.infer<typeof orignal>>(
+    errorLogger,
+    {
+      [SHORTS_TYPE.NEWS]: [],
+      [SHORTS_TYPE.DERIVATIVE]: [],
+    },
+    async () => {
+      const resp = await fetch(URL_STATIC_LATEST_SHORTS)
+
+      const result = await schema.parse(resp.json())
+      return result
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetLatestShortsDocument, { amount })
+      )
+      return result
+    }
+  )
+
+  const matchedData = data[type].slice(0, 10)
+  return matchedData.map(transformLatestShorts)
 }

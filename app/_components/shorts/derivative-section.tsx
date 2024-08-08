@@ -1,4 +1,4 @@
-import { fetchLatestShorts } from '@/app/actions'
+import { fetchLatestShorts } from '@/app/actions-general'
 import ShortsList from './list'
 import { SHORTS_TYPE } from '@/types/common'
 
