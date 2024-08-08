@@ -60,7 +60,10 @@
     .shorts-container {
       @apply relative mx-auto;
       @apply h-[calc(100vh-var(--shorts-header-height)-var(--shorts-body-padding)-var(--shorts-item-gap)-var(--shorts-next-item-preview-height))];
-      @apply max-h-full w-[calc((100vh-var(--shorts-header-height)-var(--shorts-body-padding)-var(--shorts-item-gap)-var(--shorts-next-item-preview-height))*9/16)];
+      @apply h-[calc(100dvh-var(--shorts-header-height)-var(--shorts-body-padding)-var(--shorts-item-gap)-var(--shorts-next-item-preview-height))];
+      @apply max-h-full;
+      @apply w-[calc((100vh-var(--shorts-header-height)-var(--shorts-body-padding)-var(--shorts-item-gap)-var(--shorts-next-item-preview-height))*9/16)];
+      @apply w-[calc((100dvh-var(--shorts-header-height)-var(--shorts-body-padding)-var(--shorts-item-gap)-var(--shorts-next-item-preview-height))*9/16)];
       @apply md:ml-0 md:max-w-full;
 
       & > div {
@@ -95,7 +98,7 @@
       }
     }
   }
-  
+
   .app-layout {
     @apply flex min-h-screen w-screen flex-col items-center overflow-x-hidden bg-white;
     @apply has-[#mobile-menu-toggle:checked]:h-screen has-[#mobile-menu-toggle:checked]:overflow-hidden has-[#mobile-menu-toggle:checked]:lg:h-auto has-[#mobile-menu-toggle:checked]:lg:overflow-auto;
