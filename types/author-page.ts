@@ -3,11 +3,11 @@ import type { HeroImage } from './common'
 export type AuthorPost = {
   title: string
   createdTime: string
-  brief: string
-  heroImage: HeroImage
   link: string
   sectionColor: string
   sectionName: string
+  postMainImage: HeroImage
+  textContent: string
 }
 
 export type AuthorInfo = {

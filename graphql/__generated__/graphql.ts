@@ -3692,13 +3692,59 @@ export type HeroImageFragment = {
   } | null
 }
 
+export type OgImageFragment = {
+  __typename?: 'Photo'
+  id: string
+  resized?: {
+    __typename?: 'ResizedImages'
+    original?: string | null
+    w480?: string | null
+    w800?: string | null
+    w1200?: string | null
+    w1600?: string | null
+    w2400?: string | null
+  } | null
+  resizedWebp?: {
+    __typename?: 'ResizedWebPImages'
+    original?: string | null
+    w480?: string | null
+    w800?: string | null
+    w1200?: string | null
+    w1600?: string | null
+    w2400?: string | null
+  } | null
+}
+
 export type PostDetailsFragment = {
   __typename?: 'Post'
   title?: string | null
   createdAt?: any | null
-  brief?: any | null
+  apiDataBrief?: any | null
   slug?: string | null
+  apiData?: any | null
   heroImage?: {
+    __typename?: 'Photo'
+    id: string
+    resized?: {
+      __typename?: 'ResizedImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+    resizedWebp?: {
+      __typename?: 'ResizedWebPImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+  } | null
+  og_image?: {
     __typename?: 'Photo'
     id: string
     resized?: {
@@ -3947,9 +3993,32 @@ export type GetPostsBySectionSlugQuery = {
     __typename?: 'Post'
     title?: string | null
     createdAt?: any | null
-    brief?: any | null
+    apiDataBrief?: any | null
     slug?: string | null
+    apiData?: any | null
     heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    og_image?: {
       __typename?: 'Photo'
       id: string
       resized?: {
@@ -3997,9 +4066,32 @@ export type GetPostsByCategorySlugQuery = {
     __typename?: 'Post'
     title?: string | null
     createdAt?: any | null
-    brief?: any | null
+    apiDataBrief?: any | null
     slug?: string | null
+    apiData?: any | null
     heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    og_image?: {
       __typename?: 'Photo'
       id: string
       resized?: {
@@ -4036,14 +4128,37 @@ export type GetPostsByAuthorIdQuery = {
     __typename?: 'Post'
     title?: string | null
     createdAt?: any | null
-    brief?: any | null
+    apiDataBrief?: any | null
     slug?: string | null
+    apiData?: any | null
     sections?: Array<{
       __typename?: 'Section'
       name?: string | null
       color?: string | null
     }> | null
     heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    og_image?: {
       __typename?: 'Photo'
       id: string
       resized?: {
@@ -4080,14 +4195,37 @@ export type GetPostsByTagSlugQuery = {
     __typename?: 'Post'
     title?: string | null
     createdAt?: any | null
-    brief?: any | null
+    apiDataBrief?: any | null
     slug?: string | null
+    apiData?: any | null
     sections?: Array<{
       __typename?: 'Section'
       name?: string | null
       color?: string | null
     }> | null
     heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    og_image?: {
       __typename?: 'Photo'
       id: string
       resized?: {
@@ -4504,6 +4642,55 @@ export const EditorChoiceDataFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<EditorChoiceDataFragment, unknown>
+export const OgImageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<OgImageFragment, unknown>
 export const PostDetailsFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -4519,8 +4706,9 @@ export const PostDetailsFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -4534,12 +4722,69 @@ export const PostDetailsFragmentDoc = {
               ],
             },
           },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'OgImage' },
+                },
+              ],
+            },
+          },
         ],
       },
     },
     {
       kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'HeroImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
       typeCondition: {
         kind: 'NamedType',
         name: { kind: 'Name', value: 'Photo' },
@@ -5476,6 +5721,50 @@ export const GetPostsBySectionSlugDocument = {
     },
     {
       kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'PostDetails' },
       typeCondition: {
         kind: 'NamedType',
@@ -5486,8 +5775,9 @@ export const GetPostsBySectionSlugDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5497,6 +5787,19 @@ export const GetPostsBySectionSlugDocument = {
                 {
                   kind: 'FragmentSpread',
                   name: { kind: 'Name', value: 'HeroImage' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'OgImage' },
                 },
               ],
             },
@@ -5757,6 +6060,50 @@ export const GetPostsByCategorySlugDocument = {
     },
     {
       kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'PostDetails' },
       typeCondition: {
         kind: 'NamedType',
@@ -5767,8 +6114,9 @@ export const GetPostsByCategorySlugDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5778,6 +6126,19 @@ export const GetPostsByCategorySlugDocument = {
                 {
                   kind: 'FragmentSpread',
                   name: { kind: 'Name', value: 'HeroImage' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'OgImage' },
                 },
               ],
             },
@@ -5974,6 +6335,20 @@ export const GetPostsByAuthorIdDocument = {
                   ],
                 },
               },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'publishedDate' },
+                      value: { kind: 'EnumValue', value: 'desc' },
+                    },
+                  ],
+                },
+              },
             ],
             selectionSet: {
               kind: 'SelectionSet',
@@ -6045,6 +6420,50 @@ export const GetPostsByAuthorIdDocument = {
     },
     {
       kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'PostDetails' },
       typeCondition: {
         kind: 'NamedType',
@@ -6055,8 +6474,9 @@ export const GetPostsByAuthorIdDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -6066,6 +6486,19 @@ export const GetPostsByAuthorIdDocument = {
                 {
                   kind: 'FragmentSpread',
                   name: { kind: 'Name', value: 'HeroImage' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'OgImage' },
                 },
               ],
             },
@@ -6284,6 +6717,50 @@ export const GetPostsByTagSlugDocument = {
     },
     {
       kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
       name: { kind: 'Name', value: 'PostDetails' },
       typeCondition: {
         kind: 'NamedType',
@@ -6294,8 +6771,9 @@ export const GetPostsByTagSlugDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -6305,6 +6783,19 @@ export const GetPostsByTagSlugDocument = {
                 {
                   kind: 'FragmentSpread',
                   name: { kind: 'Name', value: 'HeroImage' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'OgImage' },
                 },
               ],
             },

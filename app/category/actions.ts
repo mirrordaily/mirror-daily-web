@@ -11,7 +11,11 @@ import type {
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { CategoryPost } from '@/types/category-page'
 import { getStoryPageUrl } from '@/utils/site-urls'
-import { getHeroImage, dateFormatter } from '@/utils/data-process'
+import {
+  getHeroImage,
+  dateFormatter,
+  selectMainImage,
+} from '@/utils/data-process'
 
 function transformCategoryPost(
   rawData: GetPostsByCategorySlugQuery['posts']
@@ -24,15 +28,19 @@ function transformCategoryPost(
     const link = getStoryPageUrl(slug)
     const createdTime = dateFormatter(rawPost.createdAt)
     const heroImage = getHeroImage(rawPost.heroImage)
-    const brief = rawPost.brief?.blocks?.[0]?.text ?? ''
+    const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
+    const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
+    const ogImage = getHeroImage(rawPost.og_image)
+    const postMainImage = selectMainImage(heroImage, ogImage)
+    const textContent = brief || content
 
     return {
       title,
       slug,
       link,
       createdTime,
-      heroImage,
-      brief,
+      textContent,
+      postMainImage,
     }
   })
 }

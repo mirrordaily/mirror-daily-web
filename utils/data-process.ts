@@ -104,4 +104,14 @@ const createDataFetchingChain = async <T>(
   return chain
 }
 
-export { getHeroImage, dateFormatter, createDataFetchingChain }
+const selectMainImage = (
+  heroImage: HeroImage,
+  ogImage: HeroImage
+): HeroImage => {
+  if (heroImage?.resized?.original === '') {
+    return ogImage
+  }
+  return heroImage
+}
+
+export { getHeroImage, dateFormatter, createDataFetchingChain, selectMainImage }
