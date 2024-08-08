@@ -41,7 +41,7 @@ export default function ListItem({
       <NextLink
         href={link}
         target="_blank"
-        className="mt-[6px] line-clamp-2 h-[42px] text-base font-medium leading-[21px] text-[#575D71] hover-or-active:text-[color:var(--custom-active-color)] md:h-10 md:text-sm md:font-normal md:leading-[20px] lg:line-clamp-1 lg:h-auto lg:text-base lg:font-medium lg:leading-normal"
+        className="mt-[6px] line-clamp-2 h-[42px] break-all text-base font-medium leading-[21px] text-[#575D71] hover-or-active:text-[color:var(--custom-active-color)] md:h-10 md:text-sm md:font-normal md:leading-[20px] lg:line-clamp-1 lg:h-auto lg:text-base lg:font-medium lg:leading-normal"
         style={
           {
             '--custom-active-color': categoryColor,
