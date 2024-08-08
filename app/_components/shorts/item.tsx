@@ -3,6 +3,8 @@
 import type { Shorts } from '@/types/common'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
+import NextLink from 'next/link'
+import { getShortsPageUrl } from '@/utils/site-urls'
 
 type Props = Shorts & {
   isActive: boolean
@@ -12,6 +14,7 @@ type Props = Shorts & {
 }
 
 export default function ShortsItem({
+  id,
   fileUrl,
   poster,
   title,
@@ -27,16 +30,16 @@ export default function ShortsItem({
   }, [])
 
   return (
-    <div className="w-full select-none">
+    <NextLink className="w-full select-none" href={getShortsPageUrl(id)}>
       <div className="relative h-[480px] w-full lg:h-[566px]">
         {isClientSide && (
           <ReactPlayer
             url={fileUrl}
             width="100%"
             height="100%"
-            controls={true}
             muted={true}
             playing={isActive}
+            playsinline={true}
             config={{
               file: {
                 attributes: {
@@ -49,8 +52,9 @@ export default function ShortsItem({
           />
         )}
         <div
-          className={`absolute inset-0 ${isActive ? 'hidden' : ''}`}
-          onClick={() => onPlay()}
+          className="absolute inset-0"
+          onMouseEnter={() => onPlay()}
+          onMouseLeave={() => onPause()}
         />
       </div>
       <p className="mt-2 line-clamp-2 text-base font-medium leading-normal lg:text-xl lg:font-bold">
@@ -60,6 +64,6 @@ export default function ShortsItem({
         />{' '}
         {title}
       </p>
-    </div>
+    </NextLink>
   )
 }
