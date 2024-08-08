@@ -35,16 +35,16 @@ function transformAuthorPost(
     const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
+    const textContent = brief || content
 
     return {
       title,
       link,
       postMainImage,
       createdTime,
-      brief,
       sectionColor,
       sectionName,
-      content,
+      textContent,
     }
   })
 }

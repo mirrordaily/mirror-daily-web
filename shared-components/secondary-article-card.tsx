@@ -34,7 +34,7 @@ export default function SecondaryArticleCard({ postItem, color }: Props) {
           {postItem.title}
         </figcaption>
         <p className="hidden text-sm font-normal text-[#4A4A4A] md:visible md:line-clamp-2">
-          {postItem.brief || postItem.content}
+          {postItem.textContent}
         </p>
       </div>
     </Link>

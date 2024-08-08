@@ -61,16 +61,16 @@ function transformTagPost(rawData: GetPostsByTagSlugQuery['posts']): TagPost[] {
     const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
+    const textContent = brief || content
 
     return {
       postMainImage,
       title,
+      textContent,
       link,
       createdTime,
-      brief,
       sectionColor,
       sectionName,
-      content,
     }
   })
 }
