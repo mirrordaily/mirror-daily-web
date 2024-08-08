@@ -7,7 +7,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Keyboard } from 'swiper/modules'
 
 import 'swiper/css'
-import { getShortsPageUrl } from '@/utils/site-urls'
 
 type Props = {
   items: Shorts[]
@@ -35,7 +34,7 @@ export default function VideoBlock({
         onSlideChange={(swiper) => {
           setActiveIndex(swiper.realIndex)
           if (shouldChangePathOnSlideChange) {
-            const url = getShortsPageUrl(items[swiper.realIndex]!.id!)
+            const url = items[swiper.realIndex]?.link
             window.history.replaceState(null, '', url)
           }
         }}

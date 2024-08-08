@@ -5,6 +5,7 @@ import utc from 'dayjs/plugin/utc'
 import type { createErrorLogger } from './log/common'
 import type { latestShortsSchema } from './data-schema'
 import type { z } from 'zod'
+import { getShortsPageUrl } from './site-urls'
 
 const getHeroImage = (
   rawImageObj:
@@ -144,8 +145,7 @@ const transformLatestShorts = (
     title: rawData.name ?? '',
     fileUrl: rawData.videoSrc ?? '',
     poster: getPosterFromShorts(rawData.heroImage),
-    // TODO: add link to shorts page
-    link: '',
+    link: getShortsPageUrl(rawData.id),
   }
 }
 

@@ -11,7 +11,6 @@ import IconShareWhite from '@/public/icons/shorts/share-white.svg'
 import IconPlay from '@/public/icons/shorts/play.svg'
 import IconPause from '@/public/icons/shorts/pause.svg'
 import IconVolume from '@/public/icons/shorts/volume.svg'
-import { getShortsPageUrl } from '@/utils/site-urls'
 
 type Props = Shorts & {
   isActive: boolean
@@ -22,11 +21,11 @@ type Props = Shorts & {
 }
 
 export default function ShortsItem({
-  id,
   title,
   fileUrl,
   poster,
   contributor,
+  link,
   isActive,
   volume,
   onPlay,
@@ -51,7 +50,7 @@ export default function ShortsItem({
   }
 
   const shareHandler = useDebounceCallback(() => {
-    const url = window.location.origin + getShortsPageUrl(id)
+    const url = window.location.origin + link
     if (navigator.share) {
       navigator.share({
         title,

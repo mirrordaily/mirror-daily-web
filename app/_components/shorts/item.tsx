@@ -4,7 +4,6 @@ import type { Shorts } from '@/types/common'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
 import NextLink from 'next/link'
-import { getShortsPageUrl } from '@/utils/site-urls'
 
 type Props = Shorts & {
   isActive: boolean
@@ -14,10 +13,10 @@ type Props = Shorts & {
 }
 
 export default function ShortsItem({
-  id,
   fileUrl,
   poster,
   title,
+  link,
   isActive,
   customColor,
   onPlay,
@@ -30,7 +29,7 @@ export default function ShortsItem({
   }, [])
 
   return (
-    <NextLink className="w-full select-none" href={getShortsPageUrl(id)}>
+    <NextLink className="w-full select-none" href={link}>
       <div className="relative h-[480px] w-full lg:h-[566px]">
         {isClientSide && (
           <ReactPlayer
