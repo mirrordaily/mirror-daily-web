@@ -9,7 +9,6 @@ type Props = {
 }
 
 export default function SecondaryArticleCard({ postItem, color }: Props) {
-  console.log(postItem.postMainImage)
   return (
     <Link
       href={postItem.link}
