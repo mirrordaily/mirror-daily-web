@@ -2,7 +2,10 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
   posts(
     skip: $skip
     take: $take
-    where: { sections: { some: { slug: { equals: $slug } } } }
+    where: {
+      state: { equals: "published" }
+      sections: { some: { slug: { equals: $slug } } }
+    }
     orderBy: { publishedDate: desc }
   ) {
     ...PostDetails
@@ -24,7 +27,10 @@ query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {
   posts(
     skip: $skip
     take: $take
-    where: { categories: { some: { slug: { equals: $slug } } } }
+    where: {
+      state: { equals: "published" }
+      categories: { some: { slug: { equals: $slug } } }
+    }
     orderBy: { publishedDate: desc }
   ) {
     ...PostDetails
