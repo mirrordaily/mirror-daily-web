@@ -45,10 +45,3 @@ export type Game = {
   link: string
   heroImage: HeroImage
 }
-
-export type Shorts = {
-  title: string
-  link: string
-  fileUrl: string
-  poster?: string
-}

@@ -13,34 +13,34 @@ import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
 
+const ExtendedSocialLinks = [
+  {
+    ...SOCIAL_LINKS[0],
+    icon: IconFacebook,
+  },
+  {
+    ...SOCIAL_LINKS[1],
+    icon: IconInstagram,
+  },
+  {
+    ...SOCIAL_LINKS[2],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[3],
+    icon: IconYouTube,
+  },
+  {
+    ...SOCIAL_LINKS[4],
+    icon: IconLine,
+  },
+] as const
+
 type Props = {
   data: SectionAndCategory[]
 }
 
 export default function MobileToggleAndNav({ data }: Props) {
-  const ExtendedSocialLinks = [
-    {
-      ...SOCIAL_LINKS[0],
-      icon: IconFacebook,
-    },
-    {
-      ...SOCIAL_LINKS[1],
-      icon: IconInstagram,
-    },
-    {
-      ...SOCIAL_LINKS[2],
-      icon: IconThreads,
-    },
-    {
-      ...SOCIAL_LINKS[3],
-      icon: IconYouTube,
-    },
-    {
-      ...SOCIAL_LINKS[4],
-      icon: IconLine,
-    },
-  ] as const
-
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleOpen = () => {
@@ -48,7 +48,7 @@ export default function MobileToggleAndNav({ data }: Props) {
   }
 
   return (
-    <div className="mt-6 max-w-[375px] shrink-0 lg:hidden">
+    <div className="mt-6 max-w-screen-sm shrink-0 lg:hidden">
       <button
         className="relative flex h-6 w-[26px] md:size-5"
         onClick={toggleOpen}

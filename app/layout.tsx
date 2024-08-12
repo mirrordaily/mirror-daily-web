@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hant" className={notoSans.className}>
-      <body className={`app-layout`}>{children}</body>
+      <body className="app-layout">{children}</body>
     </html>
   )
 }

@@ -24,6 +24,9 @@ module.exports = {
         'over-shorts': 10,
         'mobile-nav': 1000000000,
       },
+      height: {
+        screen: ['100vh', '100dvh'],
+      },
     },
   },
   plugins: [

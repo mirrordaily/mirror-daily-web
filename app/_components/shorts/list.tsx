@@ -13,7 +13,7 @@ import IconNext from '@/public/icons/slide-next.svg'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
-import type { Shorts } from '@/types/homepage'
+import type { Shorts } from '@/types/common'
 import { useIntersectionObserver } from 'usehooks-ts'
 
 type Props = {

@@ -1,6 +1,6 @@
 import NextImage from 'next/image'
 import NextLink from 'next/link'
-import { SOCIAL_LINKS } from '@/constants/misc'
+import { SOCIAL_LINKS, SITE_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
@@ -17,6 +17,29 @@ import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
 import type { SectionAndCategory } from '@/types/common'
 import type { FlashNews } from '@/types/homepage'
 
+const ExtendedSocialLinks = [
+  {
+    ...SOCIAL_LINKS[0],
+    icon: IconFacebook,
+  },
+  {
+    ...SOCIAL_LINKS[1],
+    icon: IconInstagram,
+  },
+  {
+    ...SOCIAL_LINKS[2],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[3],
+    icon: IconYouTube,
+  },
+  {
+    ...SOCIAL_LINKS[4],
+    icon: IconLine,
+  },
+] as const
+
 export default function UiHeader({
   data,
   flashNews,
@@ -24,29 +47,6 @@ export default function UiHeader({
   data: SectionAndCategory[]
   flashNews: FlashNews[]
 }) {
-  const ExtendedSocialLinks = [
-    {
-      ...SOCIAL_LINKS[0],
-      icon: IconFacebook,
-    },
-    {
-      ...SOCIAL_LINKS[1],
-      icon: IconInstagram,
-    },
-    {
-      ...SOCIAL_LINKS[2],
-      icon: IconThreads,
-    },
-    {
-      ...SOCIAL_LINKS[3],
-      icon: IconYouTube,
-    },
-    {
-      ...SOCIAL_LINKS[4],
-      icon: IconLine,
-    },
-  ] as const
-
   return (
     <header className="flex h-[150px] w-full shrink-0 flex-col items-center md:h-[134px] md:w-[720px] lg:h-[144px] lg:w-[1200px]">
       <div className="flex h-[68px] w-full max-w-screen-sm pl-[17px] pr-5 md:max-w-none md:pl-6 lg:h-[82px] lg:pl-5">
@@ -96,28 +96,28 @@ export default function UiHeader({
         </p>
         <FlashNewsList items={flashNews} />
         <div className="mb-[2px] ml-[22px] hidden shrink-0 gap-x-3 md:flex lg:mb-[6px]">
-          <a target="_blank" href="https://www.mirrormedia.mg/">
+          <a target="_blank" href={SITE_LINKS[0].href}>
             <NextImage
               src={IconMirrorMedia}
               width={37.85}
               height={16}
-              alt="鏡週刊"
+              alt={SITE_LINKS[0].name}
             />
           </a>
-          <a target="_blank" href="https://www.mirrorfiction.com/">
+          <a target="_blank" href={SITE_LINKS[1].href}>
             <NextImage
               src={IconMirrorFiction}
               width={66}
               height={16}
-              alt="鏡文學"
+              alt={SITE_LINKS[1].name}
             />
           </a>
-          <a target="_blank" href="https://www.mnews.tw/">
+          <a target="_blank" href={SITE_LINKS[2].href}>
             <NextImage
               src={IconMirrorNews}
               width={52}
               height={16}
-              alt="鏡電視"
+              alt={SITE_LINKS[2].name}
             />
           </a>
         </div>

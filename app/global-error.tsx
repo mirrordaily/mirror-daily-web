@@ -19,7 +19,7 @@ export default function GlobalError({ error }: { error: Error }) {
 
   return (
     <html lang="zh-Hant" className={notoSans.className}>
-      <body className={`app-layout`}>
+      <body className="app-layout">
         <Header />
         <Custom500 />
         <Footer />
