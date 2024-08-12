@@ -1,4 +1,3 @@
-/* eslint-disable filename-rules/match */
 'use client'
 
 import { fetchPopularPost } from '@/app/actions-general'
