@@ -6,14 +6,13 @@
     "plugin:prettier/recommended",
     "plugin:tailwindcss/recommended"
   ],
-  "plugins": ["filename-rules", "@typescript-eslint", "prettier"],
+  "plugins": ["check-file", "@typescript-eslint", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
   "rules": {
     "max-lines": ["error", { "max": 500 }],
-    "filename-rules/match": [2, "kebab-case"],
     "prettier/prettier": "error",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
@@ -25,6 +24,17 @@
     "tailwindcss/no-unnecessary-arbitrary-value": "error",
     "tailwindcss/no-custom-classname": ["error", {
       "whitelist": ["custom-swiper-pagination", "GTM-*"]
-    }]
+    }],
+    "check-file/folder-naming-convention": [
+      "error", {
+        "app/**/*": "NEXT_JS_APP_ROUTER_CASE",
+        "(constants|graphql|public|shared-components|types|utils)/**/*": "KEBAB_CASE"
+      }
+    ],
+    "check-file/filename-naming-convention": [
+      "error", {
+        "*/**/*": "KEBAB_CASE"
+      }
+    ]
   }
 }

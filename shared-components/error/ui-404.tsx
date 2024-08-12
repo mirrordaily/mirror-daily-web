@@ -1,4 +1,3 @@
-/* eslint-disable filename-rules/match */
 import { fetchPopularPost } from '@/app/actions-general'
 import ErrorAndNewsSection from './error-and-news-section'
 import PopularNewsSection from './popular-news-section'
