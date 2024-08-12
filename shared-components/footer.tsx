@@ -9,30 +9,30 @@ import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
 import { Fragment, type ReactElement } from 'react'
 
-export default function Footer(): ReactElement {
-  const ExtendedSocialLinks = [
-    {
-      ...SOCIAL_LINKS[0],
-      icon: IconFacebook,
-    },
-    {
-      ...SOCIAL_LINKS[1],
-      icon: IconInstagram,
-    },
-    {
-      ...SOCIAL_LINKS[2],
-      icon: IconThreads,
-    },
-    {
-      ...SOCIAL_LINKS[3],
-      icon: IconYouTube,
-    },
-    {
-      ...SOCIAL_LINKS[4],
-      icon: IconLine,
-    },
-  ] as const
+const ExtendedSocialLinks = [
+  {
+    ...SOCIAL_LINKS[0],
+    icon: IconFacebook,
+  },
+  {
+    ...SOCIAL_LINKS[1],
+    icon: IconInstagram,
+  },
+  {
+    ...SOCIAL_LINKS[2],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[3],
+    icon: IconYouTube,
+  },
+  {
+    ...SOCIAL_LINKS[4],
+    icon: IconLine,
+  },
+] as const
 
+export default function Footer(): ReactElement {
   return (
     <footer className="flex w-full flex-col bg-[#212944]">
       <div className="flex w-full max-w-screen-lg flex-col items-center gap-y-5 self-center lg:flex-row lg:gap-y-0">

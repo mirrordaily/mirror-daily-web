@@ -20,35 +20,35 @@ import IconMirrorFiction from '@/public/icons/logos/mirror-fiction.png'
 import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
 import { SHORTS_TYPE } from '@/types/common'
 
+const ExtendedSocialLinks = [
+  {
+    ...SOCIAL_LINKS[0],
+    icon: IconFacebook,
+  },
+  {
+    ...SOCIAL_LINKS[1],
+    icon: IconInstagram,
+  },
+  {
+    ...SOCIAL_LINKS[2],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[3],
+    icon: IconYouTube,
+  },
+  {
+    ...SOCIAL_LINKS[4],
+    icon: IconLine,
+  },
+] as const
+
 type Props = {
   tabs: Record<SHORTS_TYPE, string>
   activeTab: SHORTS_TYPE
 }
 
 export default function Navbar({ tabs, activeTab }: Props) {
-  const ExtendedSocialLinks = [
-    {
-      ...SOCIAL_LINKS[0],
-      icon: IconFacebook,
-    },
-    {
-      ...SOCIAL_LINKS[1],
-      icon: IconInstagram,
-    },
-    {
-      ...SOCIAL_LINKS[2],
-      icon: IconThreads,
-    },
-    {
-      ...SOCIAL_LINKS[3],
-      icon: IconYouTube,
-    },
-    {
-      ...SOCIAL_LINKS[4],
-      icon: IconLine,
-    },
-  ] as const
-
   return (
     <div className="hidden shrink-0 flex-col md:mr-[49px] md:flex lg:mr-[200px]">
       <nav className="grid w-[80px] shrink-0 grid-rows-[80px_33px_80px_80px] place-items-center text-sm font-normal leading-normal text-black *:rounded-lg [&>*:active]:bg-[#F0F0F1] [&>*:hover]:bg-[#F6F6FB]">

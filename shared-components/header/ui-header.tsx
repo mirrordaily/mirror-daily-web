@@ -17,6 +17,29 @@ import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
 import type { SectionAndCategory } from '@/types/common'
 import type { FlashNews } from '@/types/homepage'
 
+const ExtendedSocialLinks = [
+  {
+    ...SOCIAL_LINKS[0],
+    icon: IconFacebook,
+  },
+  {
+    ...SOCIAL_LINKS[1],
+    icon: IconInstagram,
+  },
+  {
+    ...SOCIAL_LINKS[2],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[3],
+    icon: IconYouTube,
+  },
+  {
+    ...SOCIAL_LINKS[4],
+    icon: IconLine,
+  },
+] as const
+
 export default function UiHeader({
   data,
   flashNews,
@@ -24,29 +47,6 @@ export default function UiHeader({
   data: SectionAndCategory[]
   flashNews: FlashNews[]
 }) {
-  const ExtendedSocialLinks = [
-    {
-      ...SOCIAL_LINKS[0],
-      icon: IconFacebook,
-    },
-    {
-      ...SOCIAL_LINKS[1],
-      icon: IconInstagram,
-    },
-    {
-      ...SOCIAL_LINKS[2],
-      icon: IconThreads,
-    },
-    {
-      ...SOCIAL_LINKS[3],
-      icon: IconYouTube,
-    },
-    {
-      ...SOCIAL_LINKS[4],
-      icon: IconLine,
-    },
-  ] as const
-
   return (
     <header className="flex h-[150px] w-full shrink-0 flex-col items-center md:h-[134px] md:w-[720px] lg:h-[144px] lg:w-[1200px]">
       <div className="flex h-[68px] w-full max-w-screen-sm pl-[17px] pr-5 md:max-w-none md:pl-6 lg:h-[82px] lg:pl-5">
