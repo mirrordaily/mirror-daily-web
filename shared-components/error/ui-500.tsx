@@ -20,7 +20,7 @@ export default function Custom500() {
   }, [])
 
   return (
-    <main className="mb-[72px]">
+    <main className="main-in-error-page">
       <ErrorAndNewsSection>
         <ErrorMessage text="這個網頁無法正常運作" color="#B2B5BE">
           <Image alt="500圖片" src={Image500} width={204} height={92} />
