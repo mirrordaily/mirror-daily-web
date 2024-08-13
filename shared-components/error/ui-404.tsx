@@ -9,7 +9,7 @@ export default async function Custom404() {
   const popularPosts = await fetchPopularPost(6)
 
   return (
-    <main className="mb-[72px]">
+    <main className="main-in-error-page">
       <ErrorAndNewsSection>
         <ErrorMessage text="抱歉！找不到這個網址" color="#000928">
           <Image alt="404圖片" src={Image404} width={204} height={92} />

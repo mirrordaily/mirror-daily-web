@@ -103,6 +103,10 @@
     @apply flex min-h-screen w-screen flex-col items-center overflow-x-hidden bg-white;
     @apply has-[#mobile-menu-toggle:checked]:h-screen has-[#mobile-menu-toggle:checked]:overflow-hidden has-[#mobile-menu-toggle:checked]:lg:h-auto has-[#mobile-menu-toggle:checked]:lg:overflow-auto;
   }
+
+  .main-in-error-page {
+    @apply mb-[72px] mt-5 flex w-full flex-col items-center px-5 md:mt-9 md:px-0 md:pt-0 lg:mt-4;
+  }
 }
 
 @layer utilities {
