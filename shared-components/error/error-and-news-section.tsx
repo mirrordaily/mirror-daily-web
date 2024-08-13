@@ -7,7 +7,7 @@ export default function ErrorAndNewsSection({
 }) {
   return (
     <>
-      <hr className="mt-4 hidden w-[1128px] border border-[#000928] lg:block" />
+      <hr className="w-full max-w-[335px] border border-[#000928] md:w-[672px] md:max-w-none lg:w-[1128px]" />
       <div className="mt-20 flex flex-col items-center gap-y-[72px] md:mt-[92px] md:gap-y-[88px] lg:mt-[104px]">
         {children}
       </div>
