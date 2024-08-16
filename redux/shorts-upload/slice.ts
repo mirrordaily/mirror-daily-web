@@ -7,6 +7,7 @@ import {
 import { getImageFromFrame, convertBlobToString } from '@/utils/file'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit'
+import { checkShortsTitle, checkEmail } from '@/utils/common'
 
 type CustomFile = File | null | undefined
 
@@ -37,6 +38,11 @@ type ShortsUploadState = {
   title: string
   isTitleValid: boolean
   description: string
+  user: string
+  email: string
+  isEmailValid: boolean
+  isToSChecked: boolean
+  isCopyrightChecked: boolean
 }
 
 const initialState: ShortsUploadState = {
@@ -55,6 +61,11 @@ const initialState: ShortsUploadState = {
   title: '',
   isTitleValid: false,
   description: '',
+  user: '',
+  email: '',
+  isEmailValid: false,
+  isToSChecked: false,
+  isCopyrightChecked: false,
 }
 
 export const changeShortsFile = createAsyncThunk(
@@ -142,6 +153,19 @@ const shortsUploadSlice = createSlice({
     },
     setDescription: (state, action: PayloadAction<string>) => {
       state.description = action.payload
+    },
+    setUser: (state, action: PayloadAction<string>) => {
+      state.user = action.payload
+    },
+    setEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload
+      state.isEmailValid = checkEmail(action.payload)
+    },
+    setIsToSChecked: (state, action: PayloadAction<boolean>) => {
+      state.isToSChecked = action.payload
+    },
+    setIsCopyrightChecked: (state, action: PayloadAction<boolean>) => {
+      state.isCopyrightChecked = action.payload
     },
   },
   extraReducers: (builder) => {

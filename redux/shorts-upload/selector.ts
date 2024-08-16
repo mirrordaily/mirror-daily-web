@@ -1,3 +1,4 @@
+import { IMAGE_TYPE } from './slice'
 import type { AppState } from '../store'
 
 export const selectShorts = (state: AppState) => ({
@@ -26,5 +27,24 @@ export const selectTitle = (state: AppState) => state.shortsUpload.title
 
 export const selectDescription = (state: AppState) =>
   state.shortsUpload.description
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-export const selectIsFormValid = (state: AppState) => true
+
+export const selectUser = (state: AppState) => state.shortsUpload.user
+
+export const selectEmail = (state: AppState) => state.shortsUpload.email
+
+export const selectIsToSChecked = (state: AppState) =>
+  state.shortsUpload.isToSChecked
+
+export const selectIsCopyRightChecked = (state: AppState) =>
+  state.shortsUpload.isCopyrightChecked
+
+export const selectIsFormValid = (state: AppState) =>
+  state.shortsUpload.isToSChecked &&
+  state.shortsUpload.isCopyrightChecked &&
+  state.shortsUpload.isTitleValid &&
+  state.shortsUpload.isEmailValid &&
+  Boolean(state.shortsUpload.shortsFileBlobURL) &&
+  ((state.shortsUpload.selectedImage === IMAGE_TYPE.Auto &&
+    Boolean(state.shortsUpload.autoImageBlobURL)) ||
+    (state.shortsUpload.selectedImage === IMAGE_TYPE.Manual &&
+      Boolean(state.shortsUpload.manualImageBlobURL)))

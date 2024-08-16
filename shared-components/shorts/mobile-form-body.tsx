@@ -7,6 +7,7 @@ import CustomText from './custom-text'
 import { AVAILABLE_VIDEO_MIME_TYPE } from '@/constants/multimedia'
 import BackButton from './back-button'
 import NextButton from './next-button'
+import OtherInformation from './other-informantion'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { selectIsFormValid, selectShorts } from '@/redux/shorts-upload/selector'
 import {
@@ -85,6 +86,7 @@ export default function MobileFormBody({ onClose }: Props) {
         blobURL && (
           <>
             {fileJsx}
+            <OtherInformation />
             <div className="mt-[52px] flex justify-center gap-x-2">
               <BackButton type="button" clickFn={onClose}>
                 離開
