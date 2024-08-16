@@ -28,6 +28,9 @@ module.exports = {
       height: {
         screen: ['100vh', '100dvh'],
       },
+      boxShadow: {
+        input: ['2px 2px 2px 0px rgba(0,0,0,0.05)'],
+      },
     },
   },
   plugins: [

@@ -2,6 +2,7 @@
 
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef } from 'react'
+import FileInformation from './files-information'
 import CustomText from './custom-text'
 import { AVAILABLE_VIDEO_MIME_TYPE } from '@/constants/multimedia'
 import BackButton from './back-button'
@@ -30,6 +31,12 @@ export default function MobileFormBody({ onClose }: Props) {
       inputRef.current?.click()
     }
   }, [blobURL, hasError])
+
+  const fileJsx: JSX.Element[] = []
+  if (blobURL) {
+    fileJsx.push(<FileInformation />)
+  }
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     const file = files instanceof FileList ? files[0] : files
@@ -77,6 +84,7 @@ export default function MobileFormBody({ onClose }: Props) {
       ) : (
         blobURL && (
           <>
+            {fileJsx}
             <div className="mt-[52px] flex justify-center gap-x-2">
               <BackButton type="button" clickFn={onClose}>
                 離開
