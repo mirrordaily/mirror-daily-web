@@ -1,3 +1,4 @@
+import StoreProvider from '@/redux/store-provider'
 import '@/shared-styles/global.css'
 import type { Metadata } from 'next'
 import { Noto_Sans_TC } from 'next/font/google'
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hant" className={notoSans.className}>
-      <body className="app-layout">{children}</body>
+      <body className="app-layout">
+        <StoreProvider>{children}</StoreProvider>
+      </body>
     </html>
   )
 }
