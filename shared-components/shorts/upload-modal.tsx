@@ -1,10 +1,15 @@
+import { useDispatch } from 'react-redux'
+import { shortsUploadActions } from '@/redux/shorts-upload/slice'
+
 type Props = {
   onClose: () => void
 }
 
 export default function UploadModal({ onClose }: Props) {
+  const dispatch = useDispatch()
   const closeHandler = () => {
     onClose()
+    dispatch(shortsUploadActions.resetAllState())
   }
 
   return (

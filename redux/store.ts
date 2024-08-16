@@ -1,6 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
+import shortsUploadReducer from './shorts-upload/slice'
 export const makeStore = () => {
-  return configureStore({})
+  return configureStore({
+    reducer: {
+      shortsUpload: shortsUploadReducer,
+    },
+  })
 }
 
 export type RootStore = ReturnType<typeof makeStore>
