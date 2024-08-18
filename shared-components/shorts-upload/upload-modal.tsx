@@ -33,6 +33,12 @@ export default function UploadModal() {
       } top-0 z-upload-modal flex flex-col items-center bg-[#7F8493]/80 md:bottom-0`}
       onClick={closeHandler}
     >
+      <input
+        id="upload-modal-toggle"
+        type="checkbox"
+        className="hidden"
+        checked={isModalOpened}
+      />
       <ModalBody key={String(isModalOpened)} closeHandler={closeHandler} />
     </div>
   )
