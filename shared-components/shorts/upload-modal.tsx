@@ -44,11 +44,11 @@ export default function UploadModal() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-[var(--shorts-header-height)] top-0 z-upload-modal bg-[#7F8493]/80"
+      className="fixed inset-x-0 bottom-[var(--shorts-header-height)] top-0 z-upload-modal flex flex-col items-center bg-[#7F8493]/80 md:bottom-0"
       onClick={closeHandler}
     >
       <div
-        className="mx-auto flex h-[calc(100%-12px)] w-full max-w-screen-sm flex-col overflow-hidden rounded-[0px_0px_20px_20px] bg-white px-7 pb-9 pt-5 md:max-h-[720px]"
+        className="flex h-[calc(100%-12px)] w-full max-w-screen-sm flex-col overflow-hidden rounded-[0px_0px_20px_20px] bg-white px-7 pb-9 pt-5 md:my-auto md:h-full md:max-h-[720px] md:rounded-[20px] md:py-5 lg:max-h-[640px] lg:max-w-[480px] lg:rounded-xl lg:px-[52px] lg:pb-8"
         onClick={(event) => event.stopPropagation()}
       >
         <p className="shrink-0 text-center text-lg font-bold leading-normal text-black">
