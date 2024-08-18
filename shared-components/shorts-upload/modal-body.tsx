@@ -5,6 +5,7 @@ import { createCreativityShorts } from '@/app/actions-general'
 import { FormState } from '@/types/shorts'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { useWindowSize } from 'usehooks-ts'
+import ProgressContainer from './progress-container'
 import MobileFormBody from './mobile-form-body'
 import NextButton from './next-button'
 
@@ -43,6 +44,7 @@ export default function ModalBody({ closeHandler }: Props) {
         </div>
       ) : (
         <>
+          {isDesktop && <ProgressContainer />}
           <form
             className="mt-9 flex shrink grow flex-col items-center overflow-y-auto lg:mt-0"
             method="POST"
