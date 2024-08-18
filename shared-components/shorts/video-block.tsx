@@ -7,6 +7,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Keyboard } from 'swiper/modules'
 
 import 'swiper/css'
+import { useAppSelector } from '@/redux/hooks'
+import { selectIsModalOpened } from '@/redux/shorts-upload/selector'
 
 type Props = {
   items: Shorts[]
@@ -19,6 +21,7 @@ export default function VideoBlock({
 }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [volume, setVolume] = useState(0)
+  const isModalOpened = useAppSelector(selectIsModalOpened)
 
   return (
     <>
@@ -49,7 +52,7 @@ export default function VideoBlock({
           <SwiperSlide key={index}>
             <ShortsItem
               {...item}
-              isActive={activeIndex === index}
+              isActive={activeIndex === index && !isModalOpened}
               volume={volume}
               onPause={() => setActiveIndex(null)}
               onPlay={() => setActiveIndex(index)}
