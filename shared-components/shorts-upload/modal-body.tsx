@@ -6,6 +6,7 @@ import { FormState } from '@/types/shorts'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { useWindowSize } from 'usehooks-ts'
 import ProgressContainer from './progress-container'
+import FormBody from './form-body'
 import MobileFormBody from './mobile-form-body'
 import NextButton from './next-button'
 
@@ -51,7 +52,11 @@ export default function ModalBody({ closeHandler }: Props) {
             encType="multipart/form-data"
             action={formAction}
           >
-            {isDesktop ? <></> : <MobileFormBody onClose={closeHandler} />}
+            {isDesktop ? (
+              <FormBody />
+            ) : (
+              <MobileFormBody onClose={closeHandler} />
+            )}
           </form>
         </>
       )}
