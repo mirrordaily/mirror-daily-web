@@ -6,13 +6,19 @@ import MobileFormBody from './mobile-form-body'
 import { createCreativityShorts } from '@/app/actions-general'
 import { useWindowSize } from 'usehooks-ts'
 import { getTailwindConfig } from '@/utils/tailwind'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useFormState } from 'react-dom'
 import { FormState } from '@/types/shorts'
 import NextButton from './next-button'
+import { useAppSelector } from '@/redux/hooks'
+import { selectIsModalOpened } from '@/redux/shorts-upload/selector'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 export default function UploadModal() {
   const dispatch = useDispatch()
+  const isModalOpened = useAppSelector(selectIsModalOpened)
+  const pathname = usePathname
+  const searchParams = useSearchParams()
   const config = getTailwindConfig()
   const desktopLowerBound = Number(config.theme.screens.lg.split('px')[0])
   const { width } = useWindowSize()
@@ -28,6 +34,13 @@ export default function UploadModal() {
     dispatch(shortsUploadActions.resetAllState())
     dispatch(shortsUploadActions.setIsModalOpened(false))
   }
+
+  useEffect(() => {
+    closeHandler()
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [pathname, searchParams])
+
+  if (!isModalOpened) return null
 
   return (
     <div

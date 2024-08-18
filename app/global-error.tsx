@@ -6,6 +6,7 @@ import Header from '@/shared-components/header-for-ui-500'
 import { useEffect } from 'react'
 import { Noto_Sans_TC } from 'next/font/google'
 import StoreProvider from '@/redux/store-provider'
+import UploadModal from '@/shared-components/shorts/upload-modal'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
@@ -25,6 +26,7 @@ export default function GlobalError({ error }: { error: Error }) {
           <Header />
           <Custom500 />
           <Footer />
+          <UploadModal />
         </StoreProvider>
       </body>
     </html>

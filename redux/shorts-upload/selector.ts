@@ -48,3 +48,6 @@ export const selectIsFormValid = (state: AppState) =>
     Boolean(state.shortsUpload.autoImageBlobURL)) ||
     (state.shortsUpload.selectedImage === IMAGE_TYPE.Manual &&
       Boolean(state.shortsUpload.manualImageBlobURL)))
+
+export const selectIsModalOpened = (state: AppState) =>
+  state.shortsUpload.isModalOpened

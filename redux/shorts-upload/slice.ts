@@ -23,6 +23,7 @@ export enum IMAGE_STATE {
 }
 
 type ShortsUploadState = {
+  isModalOpened: boolean
   shortsFileName: string
   shortsFileBlobURL: string
   shortsFileType: string
@@ -46,6 +47,7 @@ type ShortsUploadState = {
 }
 
 const initialState: ShortsUploadState = {
+  isModalOpened: false,
   shortsFileName: '',
   shortsFileBlobURL: '',
   shortsFileType: '',
@@ -166,6 +168,9 @@ const shortsUploadSlice = createSlice({
     },
     setIsCopyrightChecked: (state, action: PayloadAction<boolean>) => {
       state.isCopyrightChecked = action.payload
+    },
+    setIsModalOpened: (state, action: PayloadAction<boolean>) => {
+      state.isModalOpened = action.payload
     },
   },
   extraReducers: (builder) => {
