@@ -24,3 +24,9 @@ export type FormActionResponse =
       state: FormState.Fail
       errors: Record<string, string[]>
     }
+
+export enum FormProgress {
+  Initial = 'initial',
+  FileInfo = 'file-info',
+  PersonInfo = 'person-info',
+}

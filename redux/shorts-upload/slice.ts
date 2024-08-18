@@ -8,6 +8,7 @@ import { getImageFromFrame, convertBlobToString } from '@/utils/file'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit'
 import { checkShortsTitle, checkEmail } from '@/utils/common'
+import { FormProgress } from '@/types/shorts'
 
 type CustomFile = File | null | undefined
 
@@ -44,6 +45,7 @@ type ShortsUploadState = {
   isEmailValid: boolean
   isToSChecked: boolean
   isCopyrightChecked: boolean
+  progress: FormProgress
 }
 
 const initialState: ShortsUploadState = {
@@ -68,6 +70,7 @@ const initialState: ShortsUploadState = {
   isEmailValid: false,
   isToSChecked: false,
   isCopyrightChecked: false,
+  progress: FormProgress.Initial,
 }
 
 export const changeShortsFile = createAsyncThunk(
@@ -172,6 +175,9 @@ const shortsUploadSlice = createSlice({
     setIsModalOpened: (state, action: PayloadAction<boolean>) => {
       state.isModalOpened = action.payload
     },
+    setProgress: (state, action: PayloadAction<FormProgress>) => {
+      state.progress = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -195,6 +201,7 @@ const shortsUploadSlice = createSlice({
           state.autoImageFileType = previewFileType
           state.title = name
           state.isTitleValid = checkShortsTitle(name)
+          state.progress = FormProgress.FileInfo
         } else {
           state.shortsFileHasError = true
         }

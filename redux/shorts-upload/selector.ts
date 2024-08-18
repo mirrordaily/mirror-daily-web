@@ -51,3 +51,5 @@ export const selectIsFormValid = (state: AppState) =>
 
 export const selectIsModalOpened = (state: AppState) =>
   state.shortsUpload.isModalOpened
+
+export const selectProgress = (state: AppState) => state.shortsUpload.progress
