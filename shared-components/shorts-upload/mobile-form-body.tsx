@@ -33,11 +33,6 @@ export default function MobileFormBody({ onClose }: Props) {
     }
   }, [blobURL, hasError])
 
-  const fileJsx: JSX.Element[] = []
-  if (blobURL) {
-    fileJsx.push(<FileInformation />)
-  }
-
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     const file = files instanceof FileList ? files[0] : files
@@ -85,7 +80,7 @@ export default function MobileFormBody({ onClose }: Props) {
       ) : (
         blobURL && (
           <>
-            {fileJsx}
+            <FileInformation />
             <OtherInformation />
             <div className="mt-[52px] flex justify-center gap-x-2">
               <BackButton type="button" clickFn={onClose}>
