@@ -1,6 +1,7 @@
 import { fetchLatestShorts } from '@/app/actions-general'
 import ShortsList from './list'
 import { SHORTS_TYPE } from '@/types/common'
+import UploadButton from './upload-button'
 
 export default async function ShortsDerivativeSection() {
   const items = await fetchLatestShorts(SHORTS_TYPE.DERIVATIVE)
@@ -13,10 +14,7 @@ export default async function ShortsDerivativeSection() {
         <p className="inline-block pl-[23px] text-base font-bold leading-normal text-[#FF5A36] md:pl-5 lg:pl-9 lg:text-lg">
           短影音．二創
         </p>
-        <button className="rounded-[29px] bg-[#D94141] px-[10px] py-[2.5px] text-[15px] font-normal leading-[23px] text-white">
-          {/* TODO: add click handler */}
-          我要投稿
-        </button>
+        <UploadButton />
       </div>
       <ShortsList customClass="mt-[17px]" customColor="#FF5A36" items={items} />
     </section>
