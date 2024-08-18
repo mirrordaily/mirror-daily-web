@@ -46,7 +46,7 @@ export default function MobileFormBody({ onClose }: Props) {
   }
 
   return (
-    <div className="mt-9 flex w-full grow flex-col gap-y-6 overflow-y-scroll">
+    <div className="flex w-full grow flex-col gap-y-6">
       <input
         className="hidden"
         name="shorts"

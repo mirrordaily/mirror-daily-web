@@ -10,7 +10,7 @@ import {
   getHeroImage,
   transformLatestShorts,
 } from '@/utils/data-process'
-import { fetchGQLData } from '@/utils/graphql'
+import { fetchGQLData, updateGQLData } from '@/utils/graphql'
 import {
   latestShortsSchema,
   rawPopularPostSchema,
@@ -22,12 +22,22 @@ import {
   URL_STATIC_SECTION_AND_CATEGORY,
 } from '@/constants/config'
 import {
+  CreateCreativityShortsDocument,
+  CreateShortsPreviewDocument,
   GetLatestShortsDocument,
   GetSectionsAndCategoriesDocument,
 } from '@/graphql/__generated__/graphql'
 import type { LatestPost } from '@/types/homepage'
 import { getPostPageUrl } from '@/utils/site-urls'
 import { colorManger } from '@/utils/section-color-manager'
+import {
+  AVAILABLE_IMAGE_MIME_TYPE,
+  AVAILABLE_VIDEO_MIME_TYPE,
+  MAX_IMAGE_SIZE,
+  MAX_VIDEO_SIZE,
+} from '@/constants/multimedia'
+import type { FormActionResponse } from '@/types/shorts'
+import { FormState } from '@/types/shorts'
 
 const transformRawSectionsAndCategories = (
   rawData: z.infer<ZodArray<typeof sectionSchema>>
@@ -174,4 +184,117 @@ export const fetchLatestShorts = async (
 
   const matchedData = data[type].slice(0, 10)
   return matchedData.map(transformLatestShorts)
+}
+
+export const createCreativityShorts = async (
+  previouseState: FormActionResponse,
+  formData: FormData
+): Promise<FormActionResponse> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while creating creativity shorts',
+    getTraceObject()
+  )
+
+  /** File is not available in Node.js 18 environment, so we need to create schema to validate it */
+  const fileSchema = z.custom<File>(
+    (val) =>
+      typeof val === 'object' &&
+      'type' in val &&
+      typeof val['type'] === 'string' &&
+      'size' in val &&
+      typeof val['size'] === 'number'
+  )
+
+  const dataSchema = z.object({
+    shorts: fileSchema
+      .refine((file) => AVAILABLE_VIDEO_MIME_TYPE.includes(file.type), {
+        message: 'shorts is not valid type',
+      })
+      .refine((file) => file.size <= MAX_VIDEO_SIZE, {
+        message: 'shorts is over size limit',
+      }),
+    preview: fileSchema
+      .refine((file) => AVAILABLE_IMAGE_MIME_TYPE.includes(file.type), {
+        message: 'preview image is not valid type',
+      })
+      .refine((file) => file.size <= MAX_IMAGE_SIZE, {
+        message: 'preview image is over size limit',
+      }),
+    title: z.string().min(1),
+    description: z.string().nullish(),
+    user: z.string().nullish(),
+    email: z.string().email(),
+    tos: z
+      .string()
+      .nullish()
+      .transform((val) => Boolean(val === 'on')),
+    copyright: z
+      .string()
+      .nullish()
+      .transform((val) => Boolean(val === 'on')),
+  })
+
+  const formKeys = Object.keys(dataSchema.shape)
+  const rawFormData = formKeys.reduce((data: Record<string, unknown>, key) => {
+    data[key] = formData.get(key)
+    return data
+  }, {})
+
+  const { success, data, error } = dataSchema.safeParse(rawFormData)
+
+  if (!success) {
+    return {
+      state: FormState.Fail,
+      errors: error.flatten().fieldErrors,
+    }
+  }
+
+  let imageId: string = ''
+
+  {
+    const result = await updateGQLData(
+      errorLogger,
+      CreateShortsPreviewDocument,
+      {
+        name: data.preview.name,
+        file: data.preview,
+      }
+    )
+
+    if (result && result.photo) {
+      imageId = result.photo?.id
+    } else {
+      return {
+        state: FormState.Fail,
+        errors: {
+          misc: ['Create preview image failed.'],
+        },
+      }
+    }
+  }
+
+  {
+    const result = await updateGQLData(
+      errorLogger,
+      CreateCreativityShortsDocument,
+      {
+        title: data.title,
+        photoId: imageId,
+        file: data.shorts,
+      }
+    )
+
+    if (!(result && result.shorts)) {
+      return {
+        state: FormState.Fail,
+        errors: {
+          misc: ['Create creativity shorts failed.'],
+        },
+      }
+    } else {
+      return {
+        state: FormState.Success,
+      }
+    }
+  }
 }

@@ -21,6 +21,10 @@ const documents = {
     types.PostDetailsFragmentDoc,
   'fragment LatestShorts on Video {\n  id\n  name\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}':
     types.LatestShortsFragmentDoc,
+  'mutation CreateShortsPreview($name: String!, $file: Upload!) {\n  photo: createPhoto(data: {name: $name, imageFile: {upload: $file}}) {\n    id\n  }\n}':
+    types.CreateShortsPreviewDocument,
+  'mutation CreateCreativityShorts($title: String!, $photoId: ID!, $file: Upload!) {\n  shorts: createVideo(\n    data: {videoSection: "creativity", state: "draft", name: $title, file: {upload: $file}, heroImage: {connect: {id: $photoId}}}\n  ) {\n    id\n  }\n}':
+    types.CreateCreativityShortsDocument,
   'query GetCategoryInformation($slug: String) {\n  category(where: {slug: $slug}) {\n    slug\n    name\n    state\n    sections {\n      slug\n      color\n    }\n  }\n}':
     types.GetCategoryInformationDocument,
   'query GetAuthorInformation($id: ID!) {\n  contact(where: {id: $id}) {\n    id\n    name\n  }\n}':
@@ -81,6 +85,18 @@ export function gql(
 export function gql(
   source: 'fragment LatestShorts on Video {\n  id\n  name\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}'
 ): (typeof documents)['fragment LatestShorts on Video {\n  id\n  name\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: 'mutation CreateShortsPreview($name: String!, $file: Upload!) {\n  photo: createPhoto(data: {name: $name, imageFile: {upload: $file}}) {\n    id\n  }\n}'
+): (typeof documents)['mutation CreateShortsPreview($name: String!, $file: Upload!) {\n  photo: createPhoto(data: {name: $name, imageFile: {upload: $file}}) {\n    id\n  }\n}']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: 'mutation CreateCreativityShorts($title: String!, $photoId: ID!, $file: Upload!) {\n  shorts: createVideo(\n    data: {videoSection: "creativity", state: "draft", name: $title, file: {upload: $file}, heroImage: {connect: {id: $photoId}}}\n  ) {\n    id\n  }\n}'
+): (typeof documents)['mutation CreateCreativityShorts($title: String!, $photoId: ID!, $file: Upload!) {\n  shorts: createVideo(\n    data: {videoSection: "creativity", state: "draft", name: $title, file: {upload: $file}, heroImage: {connect: {id: $photoId}}}\n  ) {\n    id\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
