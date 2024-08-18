@@ -1,5 +1,5 @@
 import StoreProvider from '@/redux/store-provider'
-import UploadModal from '@/shared-components/shorts/upload-modal'
+import UploadModal from '@/shared-components/shorts-upload/upload-modal'
 import '@/shared-styles/global.css'
 import type { Metadata } from 'next'
 import { Noto_Sans_TC } from 'next/font/google'

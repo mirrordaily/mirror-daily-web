@@ -2,12 +2,12 @@
 
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef } from 'react'
-import FileInformation from './files-information'
+import FileInformation from './file-information'
 import CustomText from './custom-text'
 import { AVAILABLE_VIDEO_MIME_TYPE } from '@/constants/multimedia'
 import BackButton from './back-button'
 import NextButton from './next-button'
-import OtherInformation from './other-informantion'
+import OtherInformation from './other-information'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { selectIsFormValid, selectShorts } from '@/redux/shorts-upload/selector'
 import {

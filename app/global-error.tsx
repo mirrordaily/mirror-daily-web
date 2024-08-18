@@ -6,7 +6,7 @@ import Header from '@/shared-components/header-for-ui-500'
 import { useEffect } from 'react'
 import { Noto_Sans_TC } from 'next/font/google'
 import StoreProvider from '@/redux/store-provider'
-import UploadModal from '@/shared-components/shorts/upload-modal'
+import UploadModal from '@/shared-components/shorts-upload/upload-modal'
 
 const notoSans = Noto_Sans_TC({
   preload: true,

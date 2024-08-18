@@ -5,7 +5,7 @@ import type { ChangeEvent } from 'react'
 import { useEffect, useRef } from 'react'
 import InputLabel from './input-label'
 import CustomText from './custom-text'
-import IconUploadImage from '@/public/icons/shorts/upload-image.svg'
+import IconUploadImage from '@/public/icons/shorts-upload/upload-image.svg'
 import { AVAILABLE_IMAGE_MIME_TYPE } from '@/constants/multimedia'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
