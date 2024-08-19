@@ -13,12 +13,9 @@ import CustomText from './custom-text'
 import BackButton from './back-button'
 import { useAppDispatch } from '@/redux/hooks'
 import { shortsUploadActions } from '@/redux/shorts-upload/slice'
+import { useModalClose } from './upload-modal'
 
-type Props = {
-  closeHandler: () => void
-}
-
-export default function ModalBody({ closeHandler }: Props) {
+export default function ModalBody() {
   const dispatch = useAppDispatch()
   const config = getTailwindConfig()
   const desktopLowerBound = Number(config.theme.screens.lg.split('px')[0])
@@ -27,6 +24,7 @@ export default function ModalBody({ closeHandler }: Props) {
   const [response, formAction] = useFormState(createCreativityShorts, {
     state: FormState.Default,
   })
+  const closeHandler = useModalClose()
 
   return (
     <div
@@ -77,11 +75,7 @@ export default function ModalBody({ closeHandler }: Props) {
             className="mt-9 flex shrink grow flex-col items-center overflow-y-auto lg:mt-0"
             action={formAction}
           >
-            {isDesktop ? (
-              <FormBody />
-            ) : (
-              <MobileFormBody onClose={closeHandler} />
-            )}
+            {isDesktop ? <FormBody /> : <MobileFormBody />}
           </form>
         </>
       )}

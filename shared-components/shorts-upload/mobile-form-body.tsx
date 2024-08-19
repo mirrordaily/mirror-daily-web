@@ -14,17 +14,15 @@ import {
   changeShortsFile,
   shortsUploadActions,
 } from '@/redux/shorts-upload/slice'
+import { useModalClose } from './upload-modal'
 
-type Props = {
-  onClose: () => void
-}
-
-export default function MobileFormBody({ onClose }: Props) {
+export default function MobileFormBody() {
   const dispatch = useAppDispatch()
   const { blobURL, hasError } = useAppSelector(selectShorts)
   const isFormDataValid = useAppSelector(selectIsFormValid)
   const isClicked = useRef<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const closeHandler = useModalClose()
 
   useEffect(() => {
     if (!blobURL && !hasError && !isClicked.current) {
@@ -37,13 +35,13 @@ export default function MobileFormBody({ onClose }: Props) {
     const inputItem = inputRef.current
 
     if (inputItem) {
-      inputItem.addEventListener('cancel', onClose)
+      inputItem.addEventListener('cancel', closeHandler)
     }
 
     return () => {
-      if (inputItem) inputItem.removeEventListener('cancel', onClose)
+      if (inputItem) inputItem.removeEventListener('cancel', closeHandler)
     }
-  }, [onClose])
+  }, [closeHandler])
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -69,7 +67,7 @@ export default function MobileFormBody({ onClose }: Props) {
             customClass="text-[#D94141] !text-base"
           />
           <div className="mt-[108px] flex gap-x-2">
-            <BackButton type="button" clickFn={onClose}>
+            <BackButton type="button" clickFn={closeHandler}>
               離開
             </BackButton>
             <NextButton
@@ -89,7 +87,7 @@ export default function MobileFormBody({ onClose }: Props) {
             <FileInformation />
             <OtherInformation />
             <div className="mt-[52px] flex justify-center gap-x-2">
-              <BackButton type="button" clickFn={onClose}>
+              <BackButton type="button" clickFn={closeHandler}>
                 離開
               </BackButton>
               <NextButton

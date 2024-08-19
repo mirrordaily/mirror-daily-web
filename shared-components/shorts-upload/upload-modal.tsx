@@ -11,16 +11,18 @@ import {
 import { usePathname } from 'next/navigation'
 import ModalBody from './modal-body'
 
-export default function UploadModal() {
+export const useModalClose = () => {
   const dispatch = useDispatch()
+  return () => dispatch(shortsUploadActions.resetAllState())
+}
+
+export default function UploadModal() {
   const isModalOpened = useAppSelector(selectIsModalOpened)
   const { blobURL } = useAppSelector(selectShorts)
   const pathname = usePathname()
   const isShortsPage = pathname.startsWith('/shorts')
 
-  const closeHandler = () => {
-    dispatch(shortsUploadActions.resetAllState())
-  }
+  const closeHandler = useModalClose()
 
   useEffect(() => {
     closeHandler()
@@ -43,10 +45,7 @@ export default function UploadModal() {
         checked={isModalOpened}
       />
       {/* use key to reset form state */}
-      <ModalBody
-        key={`${String(isModalOpened)}-${blobURL}`}
-        closeHandler={closeHandler}
-      />
+      <ModalBody key={`${String(isModalOpened)}-${blobURL}`} />
     </div>
   )
 }
