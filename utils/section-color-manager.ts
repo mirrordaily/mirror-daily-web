@@ -73,7 +73,7 @@ export const fetchSectionsAndCategories = async (): Promise<
 class SectionColorManager {
   private lastTime = 0
   private cacheTime = MINUTE * 5
-  private defaultColor = '#D0D2D8'
+  private defaultColor = '#4D8AA4'
   private data: Awaited<ReturnType<typeof fetchSectionsAndCategories>>
 
   constructor() {
