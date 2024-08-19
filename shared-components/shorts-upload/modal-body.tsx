@@ -48,8 +48,6 @@ export default function ModalBody({ closeHandler }: Props) {
           {isDesktop && <ProgressContainer />}
           <form
             className="mt-9 flex shrink grow flex-col items-center overflow-y-auto lg:mt-0"
-            method="POST"
-            encType="multipart/form-data"
             action={formAction}
           >
             {isDesktop ? (
