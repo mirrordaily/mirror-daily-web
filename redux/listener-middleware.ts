@@ -27,7 +27,6 @@ startStoreListening({
   effect: (_, listenApi) => {
     const shorts = selectShorts(listenApi.getOriginalState())
     if (shorts.blobURL) {
-      console.log('revoke shorts blobURL //')
       URL.revokeObjectURL(shorts.blobURL)
     }
   },
@@ -43,7 +42,6 @@ startStoreListening({
   effect: (_, listenApi) => {
     const autoImage = selectAutoImage(listenApi.getOriginalState())
     if (autoImage.blobURL) {
-      console.log('revoke autoImage blobURL //')
       URL.revokeObjectURL(autoImage.blobURL)
     }
   },
@@ -59,7 +57,6 @@ startStoreListening({
   effect: (_, listenApi) => {
     const manualImage = selectManualImage(listenApi.getOriginalState())
     if (manualImage.blobURL) {
-      console.log('revoke manualImage blobURL //')
       URL.revokeObjectURL(manualImage.blobURL)
     }
   },
