@@ -2,6 +2,7 @@
 
 import { useFormState } from 'react-dom'
 import { createCreativityShorts } from '@/app/actions-general'
+import type { FormActionResponse } from '@/types/shorts'
 import { FormState } from '@/types/shorts'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { useWindowSize } from 'usehooks-ts'
@@ -14,6 +15,8 @@ import BackButton from './back-button'
 import { useAppDispatch } from '@/redux/hooks'
 import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 import { useModalClose } from './upload-modal'
+import { useOptimistic } from 'react'
+import StateContainer from './state-container'
 
 export default function ModalBody() {
   const dispatch = useAppDispatch()
@@ -21,9 +24,21 @@ export default function ModalBody() {
   const desktopLowerBound = Number(config.theme.screens.lg.split('px')[0])
   const { width } = useWindowSize()
   const isDesktop = width >= desktopLowerBound
-  const [response, formAction] = useFormState(createCreativityShorts, {
-    state: FormState.Default,
-  })
+  const [isProcessing, setIsProcessing] = useOptimistic<boolean, boolean>(
+    false,
+    (currentState, newValue) => newValue
+  )
+  const [response, formAction] = useFormState(
+    async (prev: FormActionResponse, formData: FormData) => {
+      setIsProcessing(true)
+      const response = await createCreativityShorts(formData)
+      setIsProcessing(false)
+      return response
+    },
+    {
+      state: FormState.Default,
+    }
+  )
   const closeHandler = useModalClose()
 
   return (
@@ -35,44 +50,50 @@ export default function ModalBody() {
         短影音投稿
       </p>
       {response.state === FormState.Success && (
-        <div className="flex shrink grow flex-col items-center justify-center">
-          <div className="flex flex-col items-center">
-            <p className="text-base font-medium leading-normal text-[#000928]">
-              送出成功！
-            </p>
-            <p className="mb-10 mt-1 text-xs font-normal leading-[150%] text-[#7F8493]">
-              影片審核完成後，將會寄送通知
-            </p>
-            <NextButton clickFn={closeHandler}>關閉</NextButton>
-          </div>
-        </div>
+        <StateContainer>
+          <p className="text-base font-medium leading-normal text-[#000928]">
+            送出成功！
+          </p>
+          <p className="mb-10 mt-1 text-xs font-normal leading-[150%] text-[#7F8493]">
+            影片審核完成後，將會寄送通知
+          </p>
+          <NextButton clickFn={closeHandler}>關閉</NextButton>
+        </StateContainer>
       )}
       {response.state === FormState.Fail && (
-        <div className="flex shrink grow flex-col items-center justify-center">
-          <div className="flex flex-col items-center">
-            <CustomText
-              content="上傳失敗！"
-              customClass="!text-base text-[#D94141]"
-            />
-            <div className="mt-[110px] inline-block space-x-3">
-              <BackButton clickFn={closeHandler}>離開</BackButton>
-              <NextButton
-                clickFn={() => {
-                  dispatch(shortsUploadActions.resetAllState())
-                  dispatch(shortsUploadActions.setIsModalOpened(true))
-                }}
-              >
-                重新上傳
-              </NextButton>
-            </div>
+        <StateContainer>
+          <CustomText
+            content="上傳失敗！"
+            customClass="!text-base text-[#D94141]"
+          />
+          <div className="mt-[110px] inline-block space-x-3">
+            <BackButton clickFn={closeHandler}>離開</BackButton>
+            <NextButton
+              clickFn={() => {
+                dispatch(shortsUploadActions.resetAllState())
+                dispatch(shortsUploadActions.setIsModalOpened(true))
+              }}
+            >
+              重新上傳
+            </NextButton>
           </div>
-        </div>
+        </StateContainer>
       )}
       {response.state === FormState.Default && (
         <>
           {isDesktop && <ProgressContainer />}
+          <div className={isProcessing ? 'flex grow flex-col' : 'hidden'}>
+            <StateContainer>
+              <CustomText
+                content="檔案上傳中......"
+                customClass="!text-sm text-[#575D71]"
+              />
+            </StateContainer>
+          </div>
           <form
-            className="mt-9 flex shrink grow flex-col items-center overflow-y-auto lg:mt-0"
+            className={`${
+              isProcessing ? 'hidden' : 'flex'
+            } mt-9 grow flex-col items-center overflow-y-auto lg:mt-0`}
             action={formAction}
           >
             {isDesktop ? <FormBody /> : <MobileFormBody />}

@@ -123,7 +123,6 @@ export const fetchLatestShorts = async (
 }
 
 export const createCreativityShorts = async (
-  previouseState: FormActionResponse,
   formData: FormData
 ): Promise<FormActionResponse> => {
   const errorLogger = createErrorLogger(
