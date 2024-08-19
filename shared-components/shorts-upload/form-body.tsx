@@ -37,6 +37,7 @@ export default function FormBody() {
         <FileInformation />
         <div className="mt-auto flex flex-col items-center">
           <NextButton
+            type="button"
             clickFn={() =>
               dispatch(shortsUploadActions.setProgress(FormProgress.PersonInfo))
             }

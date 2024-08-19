@@ -9,12 +9,17 @@ import ProgressContainer from './progress-container'
 import FormBody from './form-body'
 import MobileFormBody from './mobile-form-body'
 import NextButton from './next-button'
+import CustomText from './custom-text'
+import BackButton from './back-button'
+import { useAppDispatch } from '@/redux/hooks'
+import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 
 type Props = {
   closeHandler: () => void
 }
 
 export default function ModalBody({ closeHandler }: Props) {
+  const dispatch = useAppDispatch()
   const config = getTailwindConfig()
   const desktopLowerBound = Number(config.theme.screens.lg.split('px')[0])
   const { width } = useWindowSize()
@@ -31,7 +36,7 @@ export default function ModalBody({ closeHandler }: Props) {
       <p className="shrink-0 text-center text-lg font-bold leading-normal text-black">
         短影音投稿
       </p>
-      {response.state === FormState.Success ? (
+      {response.state === FormState.Success && (
         <div className="flex shrink grow flex-col items-center justify-center">
           <div className="flex flex-col items-center">
             <p className="text-base font-medium leading-normal text-[#000928]">
@@ -43,7 +48,29 @@ export default function ModalBody({ closeHandler }: Props) {
             <NextButton clickFn={closeHandler}>關閉</NextButton>
           </div>
         </div>
-      ) : (
+      )}
+      {response.state === FormState.Fail && (
+        <div className="flex shrink grow flex-col items-center justify-center">
+          <div className="flex flex-col items-center">
+            <CustomText
+              content="上傳失敗！"
+              customClass="!text-base text-[#D94141]"
+            />
+            <div className="mt-[110px] inline-block space-x-3">
+              <BackButton clickFn={closeHandler}>離開</BackButton>
+              <NextButton
+                clickFn={() => {
+                  dispatch(shortsUploadActions.resetAllState())
+                  dispatch(shortsUploadActions.setIsModalOpened(true))
+                }}
+              >
+                重新上傳
+              </NextButton>
+            </div>
+          </div>
+        </div>
+      )}
+      {response.state === FormState.Default && (
         <>
           {isDesktop && <ProgressContainer />}
           <form

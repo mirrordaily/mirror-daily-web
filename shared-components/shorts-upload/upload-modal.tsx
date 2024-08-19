@@ -4,19 +4,22 @@ import { useDispatch } from 'react-redux'
 import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 import { useEffect } from 'react'
 import { useAppSelector } from '@/redux/hooks'
-import { selectIsModalOpened } from '@/redux/shorts-upload/selector'
+import {
+  selectIsModalOpened,
+  selectShorts,
+} from '@/redux/shorts-upload/selector'
 import { usePathname } from 'next/navigation'
 import ModalBody from './modal-body'
 
 export default function UploadModal() {
   const dispatch = useDispatch()
   const isModalOpened = useAppSelector(selectIsModalOpened)
+  const { blobURL } = useAppSelector(selectShorts)
   const pathname = usePathname()
   const isShortsPage = pathname.startsWith('/shorts')
 
   const closeHandler = () => {
     dispatch(shortsUploadActions.resetAllState())
-    dispatch(shortsUploadActions.setIsModalOpened(false))
   }
 
   useEffect(() => {
@@ -39,7 +42,11 @@ export default function UploadModal() {
         className="hidden"
         checked={isModalOpened}
       />
-      <ModalBody key={String(isModalOpened)} closeHandler={closeHandler} />
+      {/* use key to reset form state */}
+      <ModalBody
+        key={`${String(isModalOpened)}-${blobURL}`}
+        closeHandler={closeHandler}
+      />
     </div>
   )
 }
