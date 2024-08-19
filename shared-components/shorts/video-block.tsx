@@ -4,7 +4,7 @@ import type { Shorts } from '@/types/common'
 import { useState } from 'react'
 import ShortsItem from './item'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Keyboard } from 'swiper/modules'
+import { Keyboard, Mousewheel } from 'swiper/modules'
 
 import 'swiper/css'
 import { useAppSelector } from '@/redux/hooks'
@@ -29,7 +29,8 @@ export default function VideoBlock({
         slidesPerView={'auto'}
         grabCursor={true}
         direction="vertical"
-        modules={[Keyboard]}
+        modules={[Keyboard, Mousewheel]}
+        mousewheel={true}
         keyboard={true}
         onInit={(swiper) => {
           setActiveIndex(swiper.realIndex)
