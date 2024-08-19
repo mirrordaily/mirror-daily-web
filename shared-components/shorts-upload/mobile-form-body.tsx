@@ -33,6 +33,18 @@ export default function MobileFormBody({ onClose }: Props) {
     }
   }, [blobURL, hasError])
 
+  useEffect(() => {
+    const inputItem = inputRef.current
+
+    if (inputItem) {
+      inputItem.addEventListener('cancel', onClose)
+    }
+
+    return () => {
+      if (inputItem) inputItem.removeEventListener('cancel', onClose)
+    }
+  }, [onClose])
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     const file = files instanceof FileList ? files[0] : files
