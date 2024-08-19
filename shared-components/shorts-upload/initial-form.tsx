@@ -33,7 +33,7 @@ export default function InitialForm() {
       </BackButton>
       <CustomText
         content="上傳失敗！"
-        colorClass={hasError ? 'text-[#D94141]' : 'text-transparent'}
+        customClass={`!text-base ${hasError ? 'text-[#D94141]' : 'text-transparent'}`}
       />
     </>
   )

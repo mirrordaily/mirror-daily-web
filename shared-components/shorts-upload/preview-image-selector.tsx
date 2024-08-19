@@ -127,7 +127,7 @@ export default function PreviewImageSelector() {
             height={106}
             unoptimized={true}
           />
-          <CustomText content="自動" colorClass="text-[#000928]" />
+          <CustomText content="自動" customClass="text-[#000928]" />
         </div>
         <div className="inline-block shrink-0">
           <label
@@ -173,7 +173,7 @@ export default function PreviewImageSelector() {
             )}
           </label>
           {imageState === IMAGE_STATE.Success ? (
-            <CustomText content="上傳成功！" colorClass="text-[#119CC7]" />
+            <CustomText content="上傳成功！" customClass="text-[#119CC7]" />
           ) : imageState === IMAGE_STATE.Error ? (
             <CustomText
               content={
@@ -183,10 +183,10 @@ export default function PreviewImageSelector() {
                   圖片大小須為{Math.floor(MAX_IMAGE_SIZE / MEGABYTES)}MB以內
                 </>
               }
-              colorClass="text-[#D94141]"
+              customClass="text-[#D94141]"
             />
           ) : (
-            <CustomText content="上傳圖片" colorClass="text-[#7F8493]" />
+            <CustomText content="上傳圖片" customClass="text-[#7F8493]" />
           )}
         </div>
       </div>

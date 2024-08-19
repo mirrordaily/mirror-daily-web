@@ -63,16 +63,10 @@ export default function MobileFormBody({ onClose }: Props) {
         onChange={inputChangeHandler}
       />
       {hasError ? (
-        <div className="my-auto inline-block self-center">
+        <div className="my-auto flex flex-col items-center self-center">
           <CustomText
-            content={
-              <>
-                上傳失敗！
-                <br />
-                檔案格式無效
-              </>
-            }
-            colorClass="text-[#D94141]"
+            content="上傳失敗！"
+            customClass="text-[#D94141] !text-base"
           />
           <div className="mt-[108px] flex gap-x-2">
             <BackButton type="button" clickFn={onClose}>

@@ -54,7 +54,7 @@ export default function OtherInformation() {
             />
             <CustomText
               content="影片審核完成後，將會寄送通知"
-              colorClass="text-[#7F8493]"
+              customClass="text-[#7F8493]"
             />
           </div>
           <div className="mt-6 space-y-2">

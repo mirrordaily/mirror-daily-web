@@ -10,7 +10,7 @@ export default function ShortsPreview() {
     <div className="flex shrink-0 flex-col">
       <div className="flex w-full items-end justify-between">
         <InputLabel text="影片預覽" />
-        <CustomText content="上傳成功！" colorClass="text-[#119CC7]" />
+        <CustomText content="上傳成功！" customClass="text-[#119CC7]" />
       </div>
       <video
         src={blobURL}

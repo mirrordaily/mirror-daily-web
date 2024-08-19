@@ -1,12 +1,12 @@
 export default function CustomText({
   content,
-  colorClass,
+  customClass,
 }: {
   content: React.ReactNode
-  colorClass: string
+  customClass: string
 }) {
   return (
-    <p className={`text-xs font-normal leading-[150%] ${colorClass}`}>
+    <p className={`text-xs font-normal leading-[150%] ${customClass}`}>
       {content}
     </p>
   )
