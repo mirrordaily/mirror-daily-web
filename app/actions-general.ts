@@ -202,7 +202,10 @@ export const createCreativityShorts = async (
       'type' in val &&
       typeof val['type'] === 'string' &&
       'size' in val &&
-      typeof val['size'] === 'number'
+      typeof val['size'] === 'number',
+    {
+      message: 'input is not a file',
+    }
   )
 
   const dataSchema = z.object({
@@ -224,14 +227,8 @@ export const createCreativityShorts = async (
     description: z.string().nullish(),
     user: z.string().nullish(),
     email: z.string().email(),
-    tos: z
-      .string()
-      .nullish()
-      .transform((val) => Boolean(val === 'on')),
-    copyright: z
-      .string()
-      .nullish()
-      .transform((val) => Boolean(val === 'on')),
+    tos: z.literal('on'),
+    copyright: z.literal('on'),
   })
 
   const formKeys = Object.keys(dataSchema.shape)
@@ -243,9 +240,12 @@ export const createCreativityShorts = async (
   const { success, data, error } = dataSchema.safeParse(rawFormData)
 
   if (!success) {
+    const errors = error.flatten().fieldErrors
+    errorLogger(error)
+
     return {
       state: FormState.Fail,
-      errors: error.flatten().fieldErrors,
+      errors: errors,
     }
   }
 
@@ -274,6 +274,7 @@ export const createCreativityShorts = async (
   }
 
   {
+    // TODO: add description and author
     const result = await updateGQLData(
       errorLogger,
       CreateCreativityShortsDocument,
