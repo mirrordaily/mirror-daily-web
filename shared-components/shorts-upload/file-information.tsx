@@ -12,10 +12,11 @@ import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 import InputLabel from './input-label'
 import ShortsPreview from './shorts-preview'
 import PreviewImageSelector from './preview-image-selector'
+import { isEqual } from 'lodash-es'
 
 export default function FileInformation() {
   const dispatch = useAppDispatch()
-  const { name } = useAppSelector(selectShorts)
+  const { name } = useAppSelector(selectShorts, isEqual)
   const title = useAppSelector(selectTitle)
   const description = useAppSelector(selectDescription)
 

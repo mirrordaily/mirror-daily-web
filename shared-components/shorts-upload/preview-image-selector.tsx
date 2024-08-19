@@ -23,22 +23,23 @@ import CustomText from './custom-text'
 import IconUploadImage from '@/public/icons/shorts-upload/upload-image.svg'
 import { convertStringToFile } from '@/utils/file'
 import { MEGABYTES } from '@/constants/storage-unit'
+import { isEqual } from 'lodash-es'
 
 export default function PreviewImageSelector() {
   const dispatch = useAppDispatch()
   const selected = useAppSelector(selectImage)
-  const { name } = useAppSelector(selectShorts)
+  const { name } = useAppSelector(selectShorts, isEqual)
   const {
     name: autoImageName,
     blobURL: autoImageBlobURL,
     type: autoImageType,
-  } = useAppSelector(selectAutoImage)
+  } = useAppSelector(selectAutoImage, isEqual)
   const {
     name: manualImageName,
     blobURL: manualImageBlobURL,
     type: manualImageType,
     state: imageState,
-  } = useAppSelector(selectManualImage)
+  } = useAppSelector(selectManualImage, isEqual)
 
   const imageInputRef = useRef<HTMLInputElement>(null)
 

@@ -10,10 +10,11 @@ import {
 } from '@/redux/shorts-upload/selector'
 import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 import ShortsPreview from './shorts-preview'
+import { isEqual } from 'lodash-es'
 
 export default function OtherInformation() {
   const dispatch = useAppDispatch()
-  const { name } = useAppSelector(selectShorts)
+  const { name } = useAppSelector(selectShorts, isEqual)
   const user = useAppSelector(selectUser)
   const email = useAppSelector(selectEmail)
   const isToSChecked = useAppSelector(selectIsToSChecked)

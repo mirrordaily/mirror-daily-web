@@ -2,9 +2,10 @@ import { useAppSelector } from '@/redux/hooks'
 import { selectShorts } from '@/redux/shorts-upload/selector'
 import InputLabel from './input-label'
 import CustomText from './custom-text'
+import { isEqual } from 'lodash-es'
 
 export default function ShortsPreview() {
-  const { blobURL } = useAppSelector(selectShorts)
+  const { blobURL } = useAppSelector(selectShorts, isEqual)
 
   return (
     <div className="flex shrink-0 flex-col">

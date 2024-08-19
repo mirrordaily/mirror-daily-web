@@ -10,6 +10,7 @@ import {
 } from '@/redux/shorts-upload/selector'
 import { usePathname } from 'next/navigation'
 import ModalBody from './modal-body'
+import { isEqual } from 'lodash-es'
 
 export const useModalClose = () => {
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ export const useModalClose = () => {
 
 export default function UploadModal() {
   const isModalOpened = useAppSelector(selectIsModalOpened)
-  const { blobURL } = useAppSelector(selectShorts)
+  const { blobURL } = useAppSelector(selectShorts, isEqual)
   const pathname = usePathname()
   const isShortsPage = pathname.startsWith('/shorts')
 
