@@ -2,12 +2,8 @@
 
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef } from 'react'
-import FileInformation from './file-information'
-import CustomText from './custom-text'
+import { isEqual } from 'lodash-es'
 import { AVAILABLE_VIDEO_MIME_TYPE } from '@/constants/multimedia'
-import BackButton from './back-button'
-import NextButton from './next-button'
-import OtherInformation from './other-information'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { selectIsFormValid, selectShorts } from '@/redux/shorts-upload/selector'
 import {
@@ -15,10 +11,19 @@ import {
   shortsUploadActions,
 } from '@/redux/shorts-upload/slice'
 import { useModalClose } from './upload-modal'
+import FileInformation from './file-information'
+import CustomText from './custom-text'
+import BackButton from './back-button'
+import NextButton from './next-button'
+import OtherInformation from './other-information'
+import { convertStringToFile } from '@/utils/file'
 
 export default function MobileFormBody() {
   const dispatch = useAppDispatch()
-  const { blobURL, hasError } = useAppSelector(selectShorts)
+  const { name, blobURL, type, hasError } = useAppSelector(
+    selectShorts,
+    isEqual
+  )
   const isFormDataValid = useAppSelector(selectIsFormValid)
   const isClicked = useRef<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -49,6 +54,17 @@ export default function MobileFormBody() {
 
     dispatch(changeShortsFile(file))
   }
+
+  useEffect(() => {
+    if (inputRef.current && blobURL) {
+      convertStringToFile(blobURL, name, type).then((file) => {
+        if (!inputRef.current) return
+        const container = new DataTransfer()
+        container.items.add(file)
+        inputRef.current.files = container.files
+      })
+    }
+  }, [blobURL, name, type])
 
   return (
     <div className="flex w-full grow flex-col gap-y-6">
