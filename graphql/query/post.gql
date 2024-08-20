@@ -75,3 +75,30 @@ query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
     ...PostOverview
   }
 }
+
+query GetPostBySlug($slug: String!) {
+  post(where: { slug: $slug }) {
+    title
+    subtitle
+    heroCaption
+    createdAt
+    heroImage {
+      ...HeroImage
+    }
+    og_image {
+      ...OgImage
+    }
+    sections {
+      name
+      color
+    }
+    writers {
+      name
+    }
+    photographers {
+      name
+    }
+    apiData
+    apiDataBrief
+  }
+}
