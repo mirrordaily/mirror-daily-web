@@ -3,7 +3,7 @@ import CustomImage from './custom-image'
 import type { PopularNews } from '@/types/common'
 import type { ReactElement } from 'react'
 
-export default function UiPopularNewsCard({
+export default function FeaturedNewsCard({
   categoryName,
   categoryColor,
   postName,
