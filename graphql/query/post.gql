@@ -8,7 +8,7 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
     }
     orderBy: { publishedDate: desc }
   ) {
-    ...PostDetails
+    ...PostOverview
   }
 }
 
@@ -33,7 +33,7 @@ query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {
     }
     orderBy: { publishedDate: desc }
   ) {
-    ...PostDetails
+    ...PostOverview
   }
 }
 
@@ -54,7 +54,7 @@ query GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {
       name
       color
     }
-    ...PostDetails
+    ...PostOverview
   }
 }
 
@@ -72,6 +72,6 @@ query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
       name
       color
     }
-    ...PostDetails
+    ...PostOverview
   }
 }
