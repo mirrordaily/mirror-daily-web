@@ -100,5 +100,12 @@ query GetPostBySlug($slug: String!) {
     }
     apiData
     apiDataBrief
+    relateds {
+      ...PostOverview
+      sections {
+        name
+        color
+      }
+    }
   }
 }
