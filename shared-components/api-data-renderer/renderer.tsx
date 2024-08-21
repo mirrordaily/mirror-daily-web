@@ -25,14 +25,16 @@ export type { ApiData } from './block-renderer/types'
 export default function ApiDataRenderer({
   apiData,
   sourceCustomId,
+  isBrief,
 }: {
   apiData: ApiData
   sourceCustomId: string
+  isBrief: boolean
 }) {
   const organization = getOrganizationFromSourceCustomId(sourceCustomId)
 
   return (
-    <article className="story-renderer">
+    <article className={`${isBrief ? 'brief' : 'content'} story-renderer`}>
       {apiData.map((apiDataBlock) => {
         switch (apiDataBlock.type) {
           case ApiDataBlockType.Unstyled:
