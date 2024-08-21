@@ -88,6 +88,9 @@ query GetPostBySlug($slug: String!) {
     og_image {
       ...OgImage
     }
+    tags {
+      name
+    }
     sections {
       name
       color
@@ -106,7 +109,15 @@ query GetPostBySlug($slug: String!) {
 query GetRelatedPostsBySlug($slug: String!) {
   post(where: { slug: $slug }) {
     relateds {
-      ...PostOverview
+      title
+      createdAt
+      slug
+      heroImage {
+        ...HeroImage
+      }
+      og_image {
+        ...OgImage
+      }
       sections {
         name
         color
