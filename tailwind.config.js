@@ -25,6 +25,10 @@ module.exports = {
         'mobile-nav': 1000000000,
       },
       height: {
+        header: {
+          default: '60px',
+          sm: '68px',
+        },
         screen: ['100vh', '100dvh'],
       },
     },
