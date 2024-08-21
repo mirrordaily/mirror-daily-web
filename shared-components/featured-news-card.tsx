@@ -13,7 +13,7 @@ export default function FeaturedNewsCard({
   return (
     <Link href={link} target="_blank" rel="noopener noreferrer">
       <figure className="flex max-w-[280px] flex-col gap-y-2 lg:w-[240px] lg:gap-y-3">
-        <div className="relative max-h-[154px] overflow-hidden rounded lg:h-[133px]">
+        <div className="relative h-[154px] overflow-hidden rounded lg:h-[133px]">
           <CustomImage
             images={heroImage.resized}
             imagesWebP={heroImage.resizedWebp}
