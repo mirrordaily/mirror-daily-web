@@ -64,7 +64,7 @@ const Video = ({ video }: VideoProps) => {
       {showCover && (
         <div className="cover" onClick={onCoverClicked}>
           <Image
-            src="/icons/icon-video-play.svg"
+            src="/icons/api-data-renderer/icon-video-play.svg"
             width={64}
             height={64}
             alt="click to play video"
