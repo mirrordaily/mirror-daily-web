@@ -44,7 +44,7 @@ export default function Sidebar({
         }}
       >
         <Image
-          src="/icons/icon-slideshow-lightbox-sidebar-up.png"
+          src="/icons/api-data-renderer/icon-slideshow-lightbox-sidebar-up.png"
           alt="slideshow lightbox go up"
           width={64}
           height={64}
@@ -77,7 +77,7 @@ export default function Sidebar({
         }}
       >
         <Image
-          src="/icons/icon-slideshow-lightbox-sidebar-down.png"
+          src="/icons/api-data-renderer/icon-slideshow-lightbox-sidebar-down.png"
           alt="slideshow lightbox go up"
           width={64}
           height={64}

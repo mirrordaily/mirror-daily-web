@@ -63,7 +63,7 @@ export default function Lightbox({
       >
         <Image
           className="icon"
-          src="/icons/icon-slideshow-lightbox-close.png"
+          src="/icons/api-data-renderer/icon-slideshow-lightbox-close.png"
           width={64}
           height={64}
           alt="close lightbox icon"

@@ -17,12 +17,12 @@ import { type ApiDataSideIndex } from '.'
 const sideIndexActionInfos = {
   isFolded: {
     text: '展開',
-    iconSrc: '/icons/icon-side-index-expand.svg',
+    iconSrc: '/icons/api-data-renderer/icon-side-index-expand.svg',
     desc: 'expand side index',
   },
   isExpanded: {
     text: '收合',
-    iconSrc: '/icons/icon-side-index-fold.svg',
+    iconSrc: '/icons/api-data-renderer/icon-side-index-fold.svg',
     desc: 'fold side index',
   },
 } as const

@@ -255,7 +255,7 @@
 
       &::after {
         content: '';
-        background-image: url('/icons/icon-annotation-arrow.png');
+        background-image: url('/icons/api-data-renderer/icon-annotation-arrow.png');
         background-size: contain;
         width: 24px;
         height: 24px;

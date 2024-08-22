@@ -126,7 +126,7 @@ const Slideshow = ({ images }: { images: SlideshowImage[] }) => {
           <div className="text">展開所有圖片</div>
           <div className="icon">
             <Image
-              src="/icons/icon-slideshow-expand-arrow.png"
+              src="/icons/api-data-renderer/icon-slideshow-expand-arrow.png"
               width={13}
               height={13}
               alt="expand slideshow icon"

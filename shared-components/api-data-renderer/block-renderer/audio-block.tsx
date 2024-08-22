@@ -139,8 +139,8 @@ const Audio = ({ audio }: AudioProps) => {
         <Image
           src={
             isPlaying
-              ? '/icons/icon-audio-pause.svg'
-              : '/icons/icon-audio-play.svg'
+              ? '/icons/api-data-renderer/icon-audio-pause.svg'
+              : '/icons/api-data-renderer/icon-audio-play.svg'
           }
           width={64}
           height={64}
