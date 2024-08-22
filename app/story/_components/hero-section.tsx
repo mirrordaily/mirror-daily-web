@@ -1,5 +1,4 @@
 import CustomImage from '@/shared-components/custom-image'
-import ArticleTag from './tag'
 import type { ItemInHeroSection } from '@/types/story-page'
 import type { ReactNode } from 'react'
 
@@ -65,7 +64,12 @@ export default function HeroSection({
 
         <div className="flex flex-wrap gap-x-2 gap-y-4 md:grid-cols-6 md:gap-x-3 lg:mb-4">
           {tags.map((name) => (
-            <ArticleTag name={name} key={name} />
+            <div
+              className="flex justify-center rounded bg-[#CCCED4] py-1 pl-[10px] pr-3 text-sm font-normal leading-[24px]"
+              key={name}
+            >
+              {name}
+            </div>
           ))}
         </div>
       </header>
