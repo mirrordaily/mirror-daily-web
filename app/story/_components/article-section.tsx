@@ -2,9 +2,7 @@ import HeroSection from '../_components/hero-section'
 import FeaturedNewsSection from '../_components/featured-news-section'
 import RelatedNewsSection from '../_components/related-news-section'
 import Article from '../_components/article'
-import { fetchPopularPost } from '@/app/actions-general'
-// TODO:move
-import { fetchLatestPost } from '@/app/actions'
+import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import { fetchRelatedPosts } from '../actions'
 import type { Post } from '@/types/story-page'
 

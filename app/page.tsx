@@ -1,5 +1,5 @@
-import { fetchLatestPost, fetchLiveEvent } from '@/app/actions'
-import { fetchPopularPost } from './actions-general'
+import { fetchLiveEvent } from '@/app/actions'
+import { fetchPopularPost, fetchLatestPost } from './actions-general'
 import type { ParameterOfComponent } from '@/types/common'
 
 import Header from '@/shared-components/header'

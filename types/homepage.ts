@@ -1,14 +1,5 @@
 import type { HeroImage } from './common'
-
-export type LatestPost = {
-  categoryName: string
-  categoryColor: string
-  postName: string
-  postSlug: string
-  heroImage: HeroImage
-  publishedDate: string
-  link: string
-}
+import type { LatestPost } from './common'
 
 export type ItemInTopNewsSection = Pick<
   LatestPost,
