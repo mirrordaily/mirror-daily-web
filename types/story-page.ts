@@ -18,7 +18,6 @@ export type Post = {
 
 export type ItemInHeroSection = Omit<Post, 'apiData' | 'apiDataBrief'>
 
-//TODO: 整合相同 type
 export type RelatedPost = {
   title: string
   createdTime: string
