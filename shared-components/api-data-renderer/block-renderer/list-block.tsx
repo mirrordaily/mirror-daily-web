@@ -17,7 +17,7 @@ export function UnorderListBlock({
 }: {
   apiDataBlock: ApiDataUnorderList
 }) {
-  const list = apiDataBlock.content[0]
+  const list = apiDataBlock.content[0] ?? []
   return (
     <ul>
       {list.map((listItem) => (
@@ -32,7 +32,7 @@ export function OrderListBlock({
 }: {
   apiDataBlock: ApiDataOrderList
 }) {
-  const list = apiDataBlock.content[0]
+  const list = apiDataBlock.content[0] ?? []
   return (
     <ol>
       {list.map((listItem) => (

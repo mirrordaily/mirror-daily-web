@@ -59,7 +59,12 @@ export default function EmbedCodeBlock({
         const scriptEle = document.createElement('script')
         const attrs = s.attributes
         for (let i = 0; i < attrs.length; i++) {
-          scriptEle.setAttribute(attrs[i].name, attrs[i].value)
+          const name = attrs[i]?.name
+          const value = attrs[i]?.value
+
+          if (name && value !== undefined) {
+            scriptEle.setAttribute(name, value)
+          }
         }
         scriptEle.text = s.text || ''
         fragment.appendChild(scriptEle)

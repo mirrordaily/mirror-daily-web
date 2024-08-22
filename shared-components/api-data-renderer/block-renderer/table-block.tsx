@@ -14,7 +14,7 @@ export default function TableBlock({
   apiDataBlock: ApiDataTable
 }) {
   const tableData = apiDataBlock.content
-  const tableHeadRow = tableData[0]
+  const tableHeadRow = tableData[0] ?? []
   const tableBodyRows = tableData.slice(1)
 
   return (
