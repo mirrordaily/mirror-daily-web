@@ -39,22 +39,24 @@ export default function Lightbox({
         focusImageIndex={focusImageIndex}
         setFocusImageIndedx={setFocusImageIndedx}
       />
-      <figure className="image-block">
-        <div className="image">
-          <CustomImage
-            key={focusImage.id}
-            images={focusImage.resized}
-            imagesWebP={focusImage.resizedWebp}
-            alt={focusImage.name}
-          />
-        </div>
-        <div className="meta">
-          <figcaption className="desc">{focusImage.desc}</figcaption>
-          <p className="pagination">{`${focusImageIndex + 1} / ${
-            images.length
-          }`}</p>
-        </div>
-      </figure>
+      {focusImage && (
+        <figure className="image-block">
+          <div className="image">
+            <CustomImage
+              key={focusImage.id}
+              images={focusImage.resized}
+              imagesWebP={focusImage.resizedWebp}
+              alt={focusImage.name}
+            />
+          </div>
+          <div className="meta">
+            <figcaption className="desc">{focusImage.desc}</figcaption>
+            <p className="pagination">{`${focusImageIndex + 1} / ${
+              images.length
+            }`}</p>
+          </div>
+        </figure>
+      )}
       <div
         className="close"
         onClick={() => {
