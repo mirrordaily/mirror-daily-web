@@ -13,7 +13,7 @@ export type Post = {
   photographers: string[]
   apiData: ApiData
   apiDataBrief: ApiData
-  tags: string[]
+  tags: { name: string; slug: string }[]
 }
 
 export type ItemInHeroSection = Omit<Post, 'apiData' | 'apiDataBrief'>

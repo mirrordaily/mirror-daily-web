@@ -37,7 +37,11 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
     []
   const apiData = rawData.apiData
   const apiDataBrief = rawData.apiDataBrief
-  const tags = rawData.tags?.map((tag) => tag.name ?? '') ?? []
+  const tags =
+    rawData.tags?.map((tag) => ({
+      name: tag.name ?? '',
+      slug: tag.slug ?? '',
+    })) ?? []
 
   return {
     title,

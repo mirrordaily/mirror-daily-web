@@ -1,6 +1,7 @@
 import CustomImage from '@/shared-components/custom-image'
 import type { ItemInHeroSection } from '@/types/story-page'
 import type { ReactNode } from 'react'
+import Link from 'next/link'
 
 export default function HeroSection({
   title,
@@ -63,13 +64,12 @@ export default function HeroSection({
         </div>
 
         <div className="flex flex-wrap gap-x-2 gap-y-4 md:grid-cols-6 md:gap-x-3 lg:mb-4">
-          {tags.map((name) => (
-            <div
-              className="flex justify-center rounded bg-[#CCCED4] py-1 pl-[10px] pr-3 text-sm font-normal leading-[24px]"
-              key={name}
-            >
-              {name}
-            </div>
+          {tags.map((item) => (
+            <Link href={`/tag/${item.slug}`} key={item.slug}>
+              <div className="flex justify-center rounded bg-[#CCCED4] py-1 pl-[10px] pr-3 text-sm font-normal leading-[24px]">
+                {item.name}
+              </div>
+            </Link>
           ))}
         </div>
       </header>

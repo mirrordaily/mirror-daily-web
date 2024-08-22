@@ -89,6 +89,7 @@ query GetPostBySlug($slug: String!) {
       ...OgImage
     }
     tags {
+      slug
       name
     }
     sections {
