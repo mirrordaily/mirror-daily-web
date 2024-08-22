@@ -14,6 +14,7 @@ export type Post = {
   apiData: ApiData
   apiDataBrief: ApiData
   tags: { name: string; slug: string }[]
+  link: string
 }
 
 export type ItemInHeroSection = Omit<Post, 'apiData' | 'apiDataBrief'>

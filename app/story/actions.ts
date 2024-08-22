@@ -42,6 +42,8 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
       name: tag.name ?? '',
       slug: tag.slug ?? '',
     })) ?? []
+  const slug = rawData.slug ?? ''
+  const link = getStoryPageUrl(slug)
 
   return {
     title,
@@ -56,6 +58,7 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
     apiData,
     apiDataBrief,
     tags,
+    link,
   }
 }
 

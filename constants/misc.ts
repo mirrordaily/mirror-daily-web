@@ -106,3 +106,7 @@ export const LATEST_SHORT_PAGES = {
   news: '/shorts/news',
   creativity: '/shorts/creativity',
 } as const satisfies Record<SHORTS_TYPE, string>
+
+export const SHARE_URL_FACEBOOK = 'https://www.facebook.com/share.php?u='
+
+export const SHARE_URL_LINE = 'https://social-plugins.line.me/lineit/share?url='

@@ -78,6 +78,7 @@ query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
 
 query GetPostBySlug($slug: String!) {
   post(where: { slug: $slug }) {
+    slug
     title
     subtitle
     heroCaption
