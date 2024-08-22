@@ -31,7 +31,8 @@ export default function ApiDataRenderer({
   sourceCustomId: string
   isBrief: boolean
 }) {
-  const organization = getOrganizationFromSourceCustomId(sourceCustomId)
+  const organization =
+    getOrganizationFromSourceCustomId(sourceCustomId) || 'mirror-media'
 
   return (
     <article className={`${isBrief ? 'brief' : 'content'} story-renderer`}>
