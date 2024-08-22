@@ -3715,7 +3715,7 @@ export type OgImageFragment = {
   } | null
 }
 
-export type PostDetailsFragment = {
+export type PostOverviewFragment = {
   __typename?: 'Post'
   title?: string | null
   createdAt?: any | null
@@ -4258,6 +4258,149 @@ export type GetPostsByTagSlugQuery = {
   }> | null
 }
 
+export type GetPostBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input']
+}>
+
+export type GetPostBySlugQuery = {
+  __typename?: 'Query'
+  post?: {
+    __typename?: 'Post'
+    slug?: string | null
+    title?: string | null
+    subtitle?: string | null
+    heroCaption?: string | null
+    createdAt?: any | null
+    apiData?: any | null
+    apiDataBrief?: any | null
+    heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    og_image?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    tags?: Array<{
+      __typename?: 'Tag'
+      slug?: string | null
+      name?: string | null
+    }> | null
+    sections?: Array<{
+      __typename?: 'Section'
+      name?: string | null
+      color?: string | null
+    }> | null
+    writers?: Array<{ __typename?: 'Contact'; name?: string | null }> | null
+    photographers?: Array<{
+      __typename?: 'Contact'
+      name?: string | null
+    }> | null
+  } | null
+}
+
+export type GetRelatedPostsBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input']
+}>
+
+export type GetRelatedPostsBySlugQuery = {
+  __typename?: 'Query'
+  post?: {
+    __typename?: 'Post'
+    relateds?: Array<{
+      __typename?: 'Post'
+      title?: string | null
+      createdAt?: any | null
+      slug?: string | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      og_image?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      sections?: Array<{
+        __typename?: 'Section'
+        name?: string | null
+        color?: string | null
+      }> | null
+    }> | null
+  } | null
+}
+
 export type GetSectionsAndCategoriesQueryVariables = Exact<{
   [key: string]: never
 }>
@@ -4787,12 +4930,12 @@ export const OgImageFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<OgImageFragment, unknown>
-export const PostDetailsFragmentDoc = {
+export const PostOverviewFragmentDoc = {
   kind: 'Document',
   definitions: [
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'PostDetails' },
+      name: { kind: 'Name', value: 'PostOverview' },
       typeCondition: {
         kind: 'NamedType',
         name: { kind: 'Name', value: 'Post' },
@@ -4923,7 +5066,7 @@ export const PostDetailsFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<PostDetailsFragment, unknown>
+} as unknown as DocumentNode<PostOverviewFragment, unknown>
 export const LatestShortsFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -5745,6 +5888,24 @@ export const GetPostsBySectionSlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
                       name: { kind: 'Name', value: 'sections' },
                       value: {
                         kind: 'ObjectValue',
@@ -5801,7 +5962,7 @@ export const GetPostsBySectionSlugDocument = {
               selections: [
                 {
                   kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'PostDetails' },
+                  name: { kind: 'Name', value: 'PostOverview' },
                 },
               ],
             },
@@ -5899,7 +6060,7 @@ export const GetPostsBySectionSlugDocument = {
     },
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'PostDetails' },
+      name: { kind: 'Name', value: 'PostOverview' },
       typeCondition: {
         kind: 'NamedType',
         name: { kind: 'Name', value: 'Post' },
@@ -6084,6 +6245,24 @@ export const GetPostsByCategorySlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
                       name: { kind: 'Name', value: 'categories' },
                       value: {
                         kind: 'ObjectValue',
@@ -6140,7 +6319,7 @@ export const GetPostsByCategorySlugDocument = {
               selections: [
                 {
                   kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'PostDetails' },
+                  name: { kind: 'Name', value: 'PostOverview' },
                 },
               ],
             },
@@ -6238,7 +6417,7 @@ export const GetPostsByCategorySlugDocument = {
     },
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'PostDetails' },
+      name: { kind: 'Name', value: 'PostOverview' },
       typeCondition: {
         kind: 'NamedType',
         name: { kind: 'Name', value: 'Post' },
@@ -6500,7 +6679,7 @@ export const GetPostsByAuthorIdDocument = {
                 },
                 {
                   kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'PostDetails' },
+                  name: { kind: 'Name', value: 'PostOverview' },
                 },
               ],
             },
@@ -6598,7 +6777,7 @@ export const GetPostsByAuthorIdDocument = {
     },
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'PostDetails' },
+      name: { kind: 'Name', value: 'PostOverview' },
       typeCondition: {
         kind: 'NamedType',
         name: { kind: 'Name', value: 'Post' },
@@ -6797,7 +6976,7 @@ export const GetPostsByTagSlugDocument = {
                 },
                 {
                   kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'PostDetails' },
+                  name: { kind: 'Name', value: 'PostOverview' },
                 },
               ],
             },
@@ -6895,7 +7074,7 @@ export const GetPostsByTagSlugDocument = {
     },
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'PostDetails' },
+      name: { kind: 'Name', value: 'PostOverview' },
       typeCondition: {
         kind: 'NamedType',
         name: { kind: 'Name', value: 'Post' },
@@ -6941,6 +7120,433 @@ export const GetPostsByTagSlugDocument = {
 } as unknown as DocumentNode<
   GetPostsByTagSlugQuery,
   GetPostsByTagSlugQueryVariables
+>
+export const GetPostBySlugDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetPostBySlug' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'post' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'slug' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'subtitle' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'heroCaption' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'heroImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'HeroImage' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'og_image' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'OgImage' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'tags' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'sections' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'writers' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'photographers' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'apiDataBrief' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'HeroImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetPostBySlugQuery, GetPostBySlugQueryVariables>
+export const GetRelatedPostsBySlugDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRelatedPostsBySlug' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'post' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'slug' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'relateds' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'createdAt' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'heroImage' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: { kind: 'Name', value: 'HeroImage' },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'og_image' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: { kind: 'Name', value: 'OgImage' },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'sections' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'color' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'HeroImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'OgImage' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetRelatedPostsBySlugQuery,
+  GetRelatedPostsBySlugQueryVariables
 >
 export const GetSectionsAndCategoriesDocument = {
   kind: 'Document',
