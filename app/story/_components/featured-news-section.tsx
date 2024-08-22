@@ -1,6 +1,6 @@
 import FeaturedNewsCard from '@/shared-components/featured-news-card'
 import type { PopularNews } from '@/types/common'
-import type { LatestPost } from '@/types/homepage'
+import type { LatestPost } from '@/types/common'
 
 type Props<T> = {
   title: string
