@@ -139,6 +139,10 @@
     }
   }
 
+  article.story-renderer:empty {
+    display: none;
+  }
+
   article.story-renderer {
     max-width: 375px;
 

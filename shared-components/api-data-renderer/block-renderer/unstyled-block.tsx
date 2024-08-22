@@ -63,6 +63,10 @@ export default function UnstyledBlock({
     }
   }, [])
 
+  if (!apiDataBlock.content[0]) {
+    return null
+  }
+
   return (
     <div
       ref={blockRef}
