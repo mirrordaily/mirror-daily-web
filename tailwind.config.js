@@ -22,10 +22,14 @@ module.exports = {
       zIndex: {
         'over-editor-choice': 10,
         'over-shorts': 10,
+        'upload-modal': 1000000,
         'mobile-nav': 1000000000,
       },
       height: {
         screen: ['100vh', '100dvh'],
+      },
+      boxShadow: {
+        input: ['2px 2px 2px 0px rgba(0,0,0,0.05)'],
       },
     },
   },

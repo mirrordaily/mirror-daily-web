@@ -25,4 +25,25 @@ async function fetchGQLData<TResult, TVariables extends OperationVariables>(
   }
 }
 
-export { fetchGQLData }
+async function updateGQLData<TResult, TVariables extends OperationVariables>(
+  errorLogger: ReturnType<typeof createErrorLogger>,
+  mutation: TypedDocumentNode<TResult, TVariables>,
+  variables?: TVariables
+): Promise<TResult | null | undefined> {
+  try {
+    const { data, errors: gqlErrors } = await getClient().mutate({
+      mutation,
+      variables,
+    })
+
+    if (gqlErrors && gqlErrors.length > 0) {
+      throw gqlErrors
+    }
+    return data
+  } catch (error) {
+    errorLogger(error)
+    return null
+  }
+}
+
+export { fetchGQLData, updateGQLData }

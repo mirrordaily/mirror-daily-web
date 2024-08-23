@@ -102,6 +102,17 @@
   .app-layout {
     @apply flex min-h-screen w-screen flex-col items-center overflow-x-hidden bg-white;
     @apply has-[#mobile-menu-toggle:checked]:h-screen has-[#mobile-menu-toggle:checked]:overflow-hidden has-[#mobile-menu-toggle:checked]:lg:h-auto has-[#mobile-menu-toggle:checked]:lg:overflow-auto;
+    @apply has-[#upload-modal-toggle:checked]:h-screen has-[#upload-modal-toggle:checked]:overflow-hidden;
+  }
+
+  .custom-checkbox {
+    &[type=checkbox] {
+      @apply size-4 appearance-none bg-[#F6F6FB] shadow-input border-[0.5px] border-solid border-[#B2B5BE] rounded-sm outline-0  cursor-pointer;
+
+      &:checked {
+        @apply bg-[#119CC7];
+      }
+    }
   }
 
   .main-in-error-page {

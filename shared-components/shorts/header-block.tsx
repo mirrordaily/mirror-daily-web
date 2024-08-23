@@ -8,6 +8,9 @@ import IconLogo from '@/public/icons/logos/mirror-daily-full-color.svg'
 import IconSearchGray from '@/public/icons/search-gray.svg'
 import IconSearchWhite from '@/public/icons/search-white.svg'
 import IconClose from '@/public/icons/shorts/close.svg'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { selectIsModalOpened } from '@/redux/shorts-upload/selector'
+import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 
 type Props = {
   inputValue: string
@@ -15,6 +18,8 @@ type Props = {
 }
 
 export default function HeaderBlock({ inputValue, setInputValue }: Props) {
+  const dispatch = useAppDispatch()
+  const isModalOpened = useAppSelector(selectIsModalOpened)
   const [isOpened, setIsOpened] = useState(false)
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -97,8 +102,15 @@ export default function HeaderBlock({ inputValue, setInputValue }: Props) {
           <NextImage src={IconSearchGray} width={28} height={28} alt="搜尋" />
         </button>
       </form>
-      <button className="my-[34px] ml-3 mr-7 h-7 shrink-0 rounded-[29px] bg-[#FF5A36] px-[10px] py-[3px] text-[15px] font-normal leading-[22px] text-white shadow-[2px_2px_4px_0px_rgba(0,0,0,0.25)] hover:bg-[#FF9078] active:bg-[#E54B29]">
-        {/* TODO: click handler */}
+      <button
+        className={`my-[34px] ml-3 mr-7 h-7 shrink-0 rounded-[29px] bg-[#FF5A36] px-[10px] py-[3px] text-[15px] font-normal leading-[22px] text-white shadow-[2px_2px_4px_0px_rgba(0,0,0,0.25)] hover:bg-[#FF9078] active:bg-[#E54B29] ${
+          isModalOpened ? 'bg-[#E54B29]' : ''
+        }`}
+        onClick={() => {
+          if (isModalOpened) return
+          dispatch(shortsUploadActions.setIsModalOpened(true))
+        }}
+      >
         我要投稿
       </button>
     </div>

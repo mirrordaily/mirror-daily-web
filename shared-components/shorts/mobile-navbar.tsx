@@ -3,8 +3,8 @@ import NextImage from 'next/image'
 import IconHomepage from '@/public/icons/homepage.svg'
 import IconNews from '@/public/icons/shorts/news.svg'
 import IconCreatity from '@/public/icons/shorts/creativity.svg'
-import IconSubmission from '@/public/icons/shorts/submission.svg'
 import { SHORTS_TYPE } from '@/types/common'
+import MobileUploadButton from './mobile-upload-button'
 
 type Props = {
   tabs: Record<SHORTS_TYPE, string>
@@ -39,11 +39,7 @@ export default function MobileNavbar({ tabs, activeTab }: Props) {
         <NextImage src={IconCreatity} alt="二創" />
         <p>二創</p>
       </NextLink>
-      <button className="flex flex-col items-center justify-center gap-y-1 text-[#FF5A36]">
-        {/* TODO: show submission modal after clicking */}
-        <NextImage src={IconSubmission} alt="投稿" />
-        <p>我要投稿</p>
-      </button>
+      <MobileUploadButton />
     </nav>
   )
 }

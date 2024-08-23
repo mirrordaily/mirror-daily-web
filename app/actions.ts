@@ -55,10 +55,11 @@ type CategoryConfig = {
 const getSectionConfig = async (
   rawPosts: z.infer<typeof rawLatestPostSchema>
 ): Promise<CategoryConfig> => {
+  const defaultSectionName = '時事'
   const { partner, sections } = rawPosts
 
   if (typeof partner === 'string') {
-    const categoryName = sections[0]?.name || ''
+    const categoryName = sections[0]?.name || defaultSectionName
     const color = await colorManger.getColor(sections[0]?.slug)
 
     return {
@@ -74,9 +75,10 @@ const getSectionConfig = async (
       }
     } else {
       // ebc and others
+      const color = await colorManger.getColor()
       return {
-        name: '時事',
-        color: '#D0D2D8',
+        name: defaultSectionName,
+        color,
       }
     }
   }
