@@ -3,6 +3,7 @@ import type { ItemInHeroSection } from '@/types/story-page'
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import SocialShareBar from './social-share-bar'
+import type { Contact } from '@/types/story-page'
 
 export default function HeroSection({
   title,
@@ -17,14 +18,19 @@ export default function HeroSection({
   tags,
   link,
 }: ItemInHeroSection) {
-  const getAuthorsContent = (authors: string[]) => {
+  const getAuthorsContent = (authors: Contact[]) => {
     const dotSeparator = (
       <span className="mx-1 inline-block size-0.5 bg-[#000928] align-middle opacity-20" />
     )
     const elements: ReactNode[] = []
 
-    authors.forEach((name, index) => {
-      elements.push(name)
+    authors.forEach((author, index) => {
+      const authorLink = (
+        <Link href={author.link} target="_blank">
+          {author.name}
+        </Link>
+      )
+      elements.push(authorLink)
       if (index < authors.length - 1) {
         elements.push(dotSeparator)
       }
@@ -61,8 +67,12 @@ export default function HeroSection({
 
         <div className="mb-4 flex flex-col gap-y-1 font-normal text-[#7F8493] md:mb-3 lg:mb-4">
           <p>發佈時間：{createdTime}</p>
-          <p>記者：{getAuthorsContent(writers)}</p>
-          <p>攝影：{getAuthorsContent(photographers)}</p>
+          <div className="flex flex-wrap items-center">
+            記者：{getAuthorsContent(writers)}
+          </div>
+          <div className="flex flex-wrap items-center">
+            攝影：{getAuthorsContent(photographers)}
+          </div>
         </div>
 
         <div className="mb-4 md:mb-3 lg:mb-4">

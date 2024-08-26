@@ -16,7 +16,7 @@ import {
   selectMainImage,
 } from '@/utils/data-process'
 import type { Post, RelatedPost } from '@/types/story-page'
-import { getStoryPageUrl } from '@/utils/site-urls'
+import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
 
 function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   if (!rawData) return null
@@ -31,10 +31,15 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   const sectionName = rawData.sections?.[0]?.name ?? '時事'
   const sectionColor = rawData.sections?.[0]?.color ?? '#4D8AA4'
   const writers =
-    rawData.writers?.map((person) => person.name ?? '').filter(Boolean) ?? []
+    rawData.writers?.map(({ id, name }) => ({
+      link: getAuthorPageUrl(id),
+      name: name ?? '',
+    })) ?? []
   const photographers =
-    rawData.photographers?.map((person) => person.name ?? '').filter(Boolean) ??
-    []
+    rawData.photographers?.map(({ id, name }) => ({
+      link: getAuthorPageUrl(id),
+      name: name ?? '',
+    })) ?? []
   const apiData = rawData.apiData
   const apiDataBrief = rawData.apiDataBrief
   const tags =

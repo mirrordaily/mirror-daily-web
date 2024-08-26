@@ -1,6 +1,11 @@
 import type { HeroImage } from '@/types/common'
 import type { ApiData } from '@/shared-components/api-data-renderer/renderer'
 
+export type Contact = {
+  link: string
+  name: string
+}
+
 export type Post = {
   title: string
   subTitle: string
@@ -9,8 +14,8 @@ export type Post = {
   postMainImage: HeroImage
   sectionName: string
   sectionColor: string
-  writers: string[]
-  photographers: string[]
+  writers: Contact[]
+  photographers: Contact[]
   apiData: ApiData
   apiDataBrief: ApiData
   tags: { name: string; slug: string }[]

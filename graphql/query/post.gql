@@ -98,9 +98,11 @@ query GetPostBySlug($slug: String!) {
       color
     }
     writers {
+      id
       name
     }
     photographers {
+      id
       name
     }
     apiData
