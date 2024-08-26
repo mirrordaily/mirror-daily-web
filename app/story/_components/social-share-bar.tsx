@@ -5,6 +5,7 @@ import IconLine from '@/public/icons/logos/line-green.svg'
 import IconShare from '@/public/icons/share-gray.svg'
 import NextImage from 'next/image'
 import { useShareHandler } from '@/hooks/use-share-handler'
+import { isServer } from '@/utils/common'
 
 type Props = {
   title: string
@@ -12,7 +13,7 @@ type Props = {
 }
 
 export default function SocialShareBar({ title, storyLink }: Props) {
-  const url = window.location.origin + storyLink
+  const url = isServer() ? window.location.origin + storyLink : ''
   const shareData = { title: title, url: url }
   return (
     <div className="flex flex-row items-start gap-x-2">
