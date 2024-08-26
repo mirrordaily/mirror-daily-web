@@ -217,8 +217,7 @@ export const fetchFlashNews = async (): Promise<FlashNews[]> => {
     }
   )
 
-  // TODO: limit to 8 items
-  return transformRawFlashNews(data)
+  return transformRawFlashNews(data).slice(0, 8)
 }
 
 const transformEditorChoices = (
