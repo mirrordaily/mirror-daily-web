@@ -4,7 +4,7 @@ import IconFacebook from '@/public/icons/logos/facebook-blue.svg'
 import IconLine from '@/public/icons/logos/line-green.svg'
 import IconShare from '@/public/icons/share-gray.svg'
 import NextImage from 'next/image'
-import { useShareHandler } from '@/utils/common'
+import { useShareHandler } from '@/hooks/use-share-handler'
 
 type Props = {
   title: string
