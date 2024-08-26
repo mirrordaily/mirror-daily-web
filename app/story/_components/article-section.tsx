@@ -26,18 +26,16 @@ export default async function ArticleSection({
           <Article content={apiDataBrief} isBrief={true} />
           <Article content={apiData} isBrief={false} />
         </div>
-        {relatedPosts && relatedPosts.length > 0 && (
-          <RelatedNewsSection posts={relatedPosts} />
-        )}
+        {relatedPosts.length > 0 && <RelatedNewsSection posts={relatedPosts} />}
       </div>
 
       <hr className="mb-12 mt-11 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
       <div className="flex flex-col gap-y-20 md:gap-y-12">
-        {latestPosts && latestPosts.length > 0 && (
+        {latestPosts.length > 0 && (
           <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
         )}
-        {popularPosts && popularPosts.length > 0 && (
+        {popularPosts.length > 0 && (
           <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
         )}
       </div>
