@@ -15,7 +15,7 @@ export default function SocialShareBar({ title, storyLink }: Props) {
   const url = window.location.origin + storyLink
 
   return (
-    <div className="flex flex-row gap-x-2">
+    <div className="flex flex-row items-start gap-x-2">
       <a target="_blank" href={`${SHARE_URL_FACEBOOK}${url}`}>
         <button>
           <NextImage src={IconFacebook} width={35} height={35} alt="分享" />
