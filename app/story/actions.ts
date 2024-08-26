@@ -21,50 +21,52 @@ import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
 function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   if (!rawData) return null
 
-  const title = rawData.title ?? ''
-  const subTitle = rawData.subtitle ?? ''
-  const heroCaption = rawData.heroCaption ?? ''
-  const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
-  const heroImage = getHeroImage(rawData.heroImage)
-  const ogImage = getHeroImage(rawData.og_image)
-  const postMainImage = selectMainImage(heroImage, ogImage)
-  const sectionName = rawData.sections?.[0]?.name ?? '時事'
-  const sectionColor = rawData.sections?.[0]?.color ?? '#4D8AA4'
-  const writers =
-    rawData.writers?.map(({ id, name }) => ({
-      link: getAuthorPageUrl(id),
-      name: name ?? '',
-    })) ?? []
-  const photographers =
-    rawData.photographers?.map(({ id, name }) => ({
-      link: getAuthorPageUrl(id),
-      name: name ?? '',
-    })) ?? []
-  const apiData = rawData.apiData
-  const apiDataBrief = rawData.apiDataBrief
-  const tags =
-    rawData.tags?.map((tag) => ({
-      name: tag.name ?? '',
-      slug: tag.slug ?? '',
-    })) ?? []
-  const slug = rawData.slug ?? ''
-  const link = getStoryPageUrl(slug)
+  if (rawData.state === 'published') {
+    const title = rawData.title ?? ''
+    const subTitle = rawData.subtitle ?? ''
+    const heroCaption = rawData.heroCaption ?? ''
+    const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
+    const heroImage = getHeroImage(rawData.heroImage)
+    const ogImage = getHeroImage(rawData.og_image)
+    const postMainImage = selectMainImage(heroImage, ogImage)
+    const sectionName = rawData.sections?.[0]?.name ?? '時事'
+    const sectionColor = rawData.sections?.[0]?.color ?? '#4D8AA4'
+    const writers =
+      rawData.writers?.map(({ id, name }) => ({
+        link: getAuthorPageUrl(id),
+        name: name ?? '',
+      })) ?? []
+    const photographers =
+      rawData.photographers?.map(({ id, name }) => ({
+        link: getAuthorPageUrl(id),
+        name: name ?? '',
+      })) ?? []
+    const apiData = rawData.apiData
+    const apiDataBrief = rawData.apiDataBrief
+    const tags =
+      rawData.tags?.map((tag) => ({
+        name: tag.name ?? '',
+        slug: tag.slug ?? '',
+      })) ?? []
+    const slug = rawData.slug ?? ''
+    const link = getStoryPageUrl(slug)
 
-  return {
-    title,
-    subTitle,
-    heroCaption,
-    publishedTime,
-    postMainImage,
-    sectionName,
-    sectionColor,
-    writers,
-    photographers,
-    apiData,
-    apiDataBrief,
-    tags,
-    link,
-  }
+    return {
+      title,
+      subTitle,
+      heroCaption,
+      publishedTime,
+      postMainImage,
+      sectionName,
+      sectionColor,
+      writers,
+      photographers,
+      apiData,
+      apiDataBrief,
+      tags,
+      link,
+    }
+  } else return null
 }
 
 async function fetchPost(slug: string) {
