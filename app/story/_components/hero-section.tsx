@@ -71,7 +71,7 @@ export default function HeroSection({
 
         <div className="flex flex-wrap gap-x-2 gap-y-4 md:grid-cols-6 md:gap-x-3 lg:mb-4">
           {tags.map((item) => (
-            <Link href={`/tag/${item.slug}`} key={item.slug}>
+            <Link href={`/tag/${item.slug}`} target="_blank" key={item.slug}>
               <div className="flex justify-center rounded bg-[#CCCED4] py-1 pl-[10px] pr-3 text-sm font-normal leading-[24px]">
                 {item.name}
               </div>
