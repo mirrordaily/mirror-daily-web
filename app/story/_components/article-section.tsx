@@ -19,7 +19,7 @@ export default async function ArticleSection({
   const latestPosts = (await fetchLatestPost(0)).slice(0, 6)
 
   return (
-    <main className="mb-[72px] flex flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
+    <section className="mb-[72px] flex flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
       <div>
         <HeroSection {...heroContent} />
         <div className="mb-7 md:mb-9">
@@ -39,6 +39,6 @@ export default async function ArticleSection({
           <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
         )}
       </div>
-    </main>
+    </section>
   )
 }
