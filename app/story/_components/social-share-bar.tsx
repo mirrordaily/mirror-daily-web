@@ -13,7 +13,7 @@ type Props = {
 
 export default function SocialShareBar({ title, storyLink }: Props) {
   const url = window.location.origin + storyLink
-
+  const shareData = { title: title, url: url }
   return (
     <div className="flex flex-row items-start gap-x-2">
       <a target="_blank" href={`${SHARE_URL_FACEBOOK}${url}`}>
@@ -28,7 +28,7 @@ export default function SocialShareBar({ title, storyLink }: Props) {
         </button>
       </a>
 
-      <button onClick={useShareHandler(title, url)}>
+      <button onClick={useShareHandler(shareData)}>
         <NextImage src={IconShare} width={35} height={35} alt="分享" />
       </button>
     </div>
