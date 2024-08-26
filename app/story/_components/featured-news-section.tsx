@@ -11,7 +11,7 @@ export default function FeaturedNewsSection<
   T extends PopularNews[] | LatestPost[],
 >({ title, posts }: Props<T>) {
   return (
-    <section className=":gap-y-5 flex flex-col items-center gap-y-8">
+    <section className="flex flex-col items-center gap-y-8 pl-12 pr-[47px] md:px-0 lg:gap-y-5">
       <h3 className="text-lg font-bold leading-normal text-[#119CC7]">
         {title}
       </h3>

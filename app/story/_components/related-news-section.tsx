@@ -7,7 +7,7 @@ type Props = {
 
 export default function RelatedNewsSection({ posts }: Props) {
   return (
-    <section className="flex flex-col items-center gap-y-8 lg:items-start lg:gap-y-7">
+    <section className="flex flex-col items-center gap-y-8 pl-[23px] pr-[22px] md:px-0 lg:items-start lg:gap-y-7">
       <h3 className="text-lg font-bold leading-normal text-[#119CC7]">
         相關新聞
       </h3>
