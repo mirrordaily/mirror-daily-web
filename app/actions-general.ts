@@ -32,6 +32,7 @@ import {
 import type { FormActionResponse } from '@/types/shorts'
 import { FormState } from '@/types/shorts'
 import { fetchSectionsAndCategories } from '@/utils/section-color-manager'
+import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 export { fetchSectionsAndCategories }
 
@@ -42,8 +43,7 @@ const transformRawPopularPost = async (
   const color = await colorManger.getColor(sections[0]?.slug)
 
   return {
-    // TODO: switch to category name
-    categoryName: sections[0]?.name ?? '',
+    categoryName: sections[0]?.name ?? DEFAULT_SECTION_NAME,
     categoryColor: color,
     postName: title,
     postSlug: slug,

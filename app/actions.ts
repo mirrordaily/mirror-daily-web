@@ -46,6 +46,7 @@ import {
 } from '@/utils/data-schema'
 import { colorManger } from '@/utils/section-color-manager'
 import { isValidUrl } from '@/utils/common'
+import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 type CategoryConfig = {
   name: string
@@ -55,11 +56,10 @@ type CategoryConfig = {
 const getSectionConfig = async (
   rawPosts: z.infer<typeof rawLatestPostSchema>
 ): Promise<CategoryConfig> => {
-  const defaultSectionName = '時事'
   const { partner, sections } = rawPosts
 
   if (typeof partner === 'string') {
-    const categoryName = sections[0]?.name || defaultSectionName
+    const categoryName = sections[0]?.name || DEFAULT_SECTION_NAME
     const color = await colorManger.getColor(sections[0]?.slug)
 
     return {
@@ -77,7 +77,7 @@ const getSectionConfig = async (
       // ebc and others
       const color = await colorManger.getColor()
       return {
-        name: defaultSectionName,
+        name: DEFAULT_SECTION_NAME,
         color,
       }
     }

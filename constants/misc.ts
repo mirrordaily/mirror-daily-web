@@ -106,3 +106,5 @@ export const LATEST_SHORT_PAGES = {
   news: '/shorts/news',
   creativity: '/shorts/creativity',
 } as const satisfies Record<SHORTS_TYPE, string>
+
+export const DEFAULT_SECTION_NAME = '時事'
