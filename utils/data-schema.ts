@@ -113,12 +113,15 @@ export const gameSchema = z.object({
 export const latestShortsSchema = z.object({
   id: z.string(),
   name: z.string(),
+  uploader: z.string(),
   videoSrc: z.string(),
   heroImage: z.union([heroImageSchema, z.null()]),
 })
 
 export const shortsDataSchema = z.object({
   id: z.string(),
+  isShorts: z.boolean(),
+  uploader: z.string(),
   videoSection: z.nativeEnum(SHORTS_TYPE),
   state: z.enum(['draft', 'scheduled', 'published']),
   tags: z.array(

@@ -11,7 +11,7 @@ export default async function Page({ params }: PageProps) {
   const videoId = params.id ?? ''
   const shortsData = await fetchShortsData(videoId)
 
-  if (!shortsData || shortsData.state !== 'published') notFound()
+  if (!shortsData) notFound()
 
   const data = await fetchShortsByTagAndVideoSection(
     videoId,

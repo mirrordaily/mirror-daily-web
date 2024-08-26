@@ -3150,6 +3150,7 @@ export type Topic = {
   dfp?: Maybe<Scalars['String']['output']>
   heroImage?: Maybe<Photo>
   heroUrl?: Maybe<Scalars['String']['output']>
+  heroVideo?: Maybe<Video>
   id: Scalars['ID']['output']
   isFeatured?: Maybe<Scalars['Boolean']['output']>
   javascript?: Maybe<Scalars['String']['output']>
@@ -3234,6 +3235,7 @@ export type TopicCreateInput = {
   dfp?: InputMaybe<Scalars['String']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
   heroUrl?: InputMaybe<Scalars['String']['input']>
+  heroVideo?: InputMaybe<VideoRelateToOneForCreateInput>
   isFeatured?: InputMaybe<Scalars['Boolean']['input']>
   javascript?: InputMaybe<Scalars['String']['input']>
   leading?: InputMaybe<Scalars['String']['input']>
@@ -3319,6 +3321,7 @@ export type TopicUpdateInput = {
   dfp?: InputMaybe<Scalars['String']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
   heroUrl?: InputMaybe<Scalars['String']['input']>
+  heroVideo?: InputMaybe<VideoRelateToOneForUpdateInput>
   isFeatured?: InputMaybe<Scalars['Boolean']['input']>
   javascript?: InputMaybe<Scalars['String']['input']>
   leading?: InputMaybe<Scalars['String']['input']>
@@ -3351,6 +3354,7 @@ export type TopicWhereInput = {
   dfp?: InputMaybe<StringFilter>
   heroImage?: InputMaybe<PhotoWhereInput>
   heroUrl?: InputMaybe<StringNullableFilter>
+  heroVideo?: InputMaybe<VideoWhereInput>
   id?: InputMaybe<IdFilter>
   isFeatured?: InputMaybe<BooleanFilter>
   javascript?: InputMaybe<StringFilter>
@@ -3463,14 +3467,14 @@ export type UserWhereUniqueInput = {
 
 export type Video = {
   __typename?: 'Video'
-  apiData?: Maybe<Scalars['JSON']['output']>
-  content?: Maybe<Scalars['JSON']['output']>
+  content?: Maybe<Scalars['String']['output']>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   createdBy?: Maybe<User>
   file?: Maybe<FileFieldOutput>
   heroImage?: Maybe<Photo>
   id: Scalars['ID']['output']
   isFeed?: Maybe<Scalars['Boolean']['output']>
+  isShorts?: Maybe<Scalars['Boolean']['output']>
   manualOrderOfRelatedPosts?: Maybe<Scalars['JSON']['output']>
   name?: Maybe<Scalars['String']['output']>
   publishedDate?: Maybe<Scalars['DateTime']['output']>
@@ -3482,7 +3486,8 @@ export type Video = {
   tagsCount?: Maybe<Scalars['Int']['output']>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
   updatedBy?: Maybe<User>
-  urlOriginal?: Maybe<Scalars['String']['output']>
+  uploader?: Maybe<Scalars['String']['output']>
+  uploaderEmail?: Maybe<Scalars['String']['output']>
   videoSection?: Maybe<Scalars['String']['output']>
   videoSrc?: Maybe<Scalars['String']['output']>
 }
@@ -3512,13 +3517,13 @@ export type VideoTagsCountArgs = {
 }
 
 export type VideoCreateInput = {
-  apiData?: InputMaybe<Scalars['JSON']['input']>
-  content?: InputMaybe<Scalars['JSON']['input']>
+  content?: InputMaybe<Scalars['String']['input']>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
   file?: InputMaybe<FileFieldInput>
   heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
   isFeed?: InputMaybe<Scalars['Boolean']['input']>
+  isShorts?: InputMaybe<Scalars['Boolean']['input']>
   manualOrderOfRelatedPosts?: InputMaybe<Scalars['JSON']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
@@ -3527,19 +3532,23 @@ export type VideoCreateInput = {
   tags?: InputMaybe<TagRelateToManyForCreateInput>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
-  urlOriginal?: InputMaybe<Scalars['String']['input']>
+  uploader?: InputMaybe<Scalars['String']['input']>
+  uploaderEmail?: InputMaybe<Scalars['String']['input']>
   videoSection?: InputMaybe<Scalars['String']['input']>
 }
 
 export type VideoOrderByInput = {
+  content?: InputMaybe<OrderDirection>
   createdAt?: InputMaybe<OrderDirection>
   id?: InputMaybe<OrderDirection>
   isFeed?: InputMaybe<OrderDirection>
+  isShorts?: InputMaybe<OrderDirection>
   name?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
-  urlOriginal?: InputMaybe<OrderDirection>
+  uploader?: InputMaybe<OrderDirection>
+  uploaderEmail?: InputMaybe<OrderDirection>
   videoSection?: InputMaybe<OrderDirection>
 }
 
@@ -3572,13 +3581,13 @@ export type VideoUpdateArgs = {
 }
 
 export type VideoUpdateInput = {
-  apiData?: InputMaybe<Scalars['JSON']['input']>
-  content?: InputMaybe<Scalars['JSON']['input']>
+  content?: InputMaybe<Scalars['String']['input']>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
   file?: InputMaybe<FileFieldInput>
   heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
   isFeed?: InputMaybe<Scalars['Boolean']['input']>
+  isShorts?: InputMaybe<Scalars['Boolean']['input']>
   manualOrderOfRelatedPosts?: InputMaybe<Scalars['JSON']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
@@ -3587,7 +3596,8 @@ export type VideoUpdateInput = {
   tags?: InputMaybe<TagRelateToManyForUpdateInput>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
-  urlOriginal?: InputMaybe<Scalars['String']['input']>
+  uploader?: InputMaybe<Scalars['String']['input']>
+  uploaderEmail?: InputMaybe<Scalars['String']['input']>
   videoSection?: InputMaybe<Scalars['String']['input']>
 }
 
@@ -3595,11 +3605,13 @@ export type VideoWhereInput = {
   AND?: InputMaybe<Array<VideoWhereInput>>
   NOT?: InputMaybe<Array<VideoWhereInput>>
   OR?: InputMaybe<Array<VideoWhereInput>>
+  content?: InputMaybe<StringFilter>
   createdAt?: InputMaybe<DateTimeNullableFilter>
   createdBy?: InputMaybe<UserWhereInput>
   heroImage?: InputMaybe<PhotoWhereInput>
   id?: InputMaybe<IdFilter>
   isFeed?: InputMaybe<BooleanFilter>
+  isShorts?: InputMaybe<BooleanFilter>
   name?: InputMaybe<StringFilter>
   publishedDate?: InputMaybe<DateTimeNullableFilter>
   related_posts?: InputMaybe<PostManyRelationFilter>
@@ -3607,7 +3619,8 @@ export type VideoWhereInput = {
   tags?: InputMaybe<TagManyRelationFilter>
   updatedAt?: InputMaybe<DateTimeNullableFilter>
   updatedBy?: InputMaybe<UserWhereInput>
-  urlOriginal?: InputMaybe<StringFilter>
+  uploader?: InputMaybe<StringFilter>
+  uploaderEmail?: InputMaybe<StringFilter>
   videoSection?: InputMaybe<StringNullableFilter>
 }
 
@@ -3800,6 +3813,7 @@ export type LatestShortsFragment = {
   __typename?: 'Video'
   id: string
   name?: string | null
+  uploader?: string | null
   videoSrc?: string | null
   heroImage?: {
     __typename?: 'Photo'
@@ -3829,6 +3843,8 @@ export type ShortsDataFragment = {
   __typename?: 'Video'
   id: string
   state?: string | null
+  isShorts?: boolean | null
+  uploader?: string | null
   videoSection?: string | null
   tags?: Array<{ __typename?: 'Tag'; id: string }> | null
 }
@@ -3847,6 +3863,9 @@ export type CreateCreativityShortsMutationVariables = Exact<{
   title: Scalars['String']['input']
   photoId: Scalars['ID']['input']
   file: Scalars['Upload']['input']
+  author?: InputMaybe<Scalars['String']['input']>
+  authorEmail: Scalars['String']['input']
+  description?: InputMaybe<Scalars['String']['input']>
 }>
 
 export type CreateCreativityShortsMutation = {
@@ -4366,6 +4385,7 @@ export type GetTopicsQuery = {
 
 export type GetLatestShortsQueryVariables = Exact<{
   amount: Scalars['Int']['input']
+  start: Scalars['Int']['input']
 }>
 
 export type GetLatestShortsQuery = {
@@ -4374,6 +4394,7 @@ export type GetLatestShortsQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4402,6 +4423,7 @@ export type GetLatestShortsQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4438,6 +4460,8 @@ export type GetShortsDataQuery = {
     __typename?: 'Video'
     id: string
     state?: string | null
+    isShorts?: boolean | null
+    uploader?: string | null
     videoSection?: string | null
     tags?: Array<{ __typename?: 'Tag'; id: string }> | null
   } | null
@@ -4454,6 +4478,7 @@ export type GetShortsByTagAndVideoSectionQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4490,6 +4515,7 @@ export type GetShortsByVideoSectionQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4960,6 +4986,7 @@ export const LatestShortsFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',
@@ -5038,6 +5065,8 @@ export const ShortsDataFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSection' } },
           {
             kind: 'Field',
@@ -5194,6 +5223,36 @@ export const CreateCreativityShortsDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'author' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'authorEmail' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'description' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -5229,6 +5288,11 @@ export const CreateCreativityShortsDocument = {
                     },
                     {
                       kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'isShorts' },
+                      value: { kind: 'BooleanValue', value: true },
+                    },
+                    {
+                      kind: 'ObjectField',
                       name: { kind: 'Name', value: 'name' },
                       value: {
                         kind: 'Variable',
@@ -5250,6 +5314,30 @@ export const CreateCreativityShortsDocument = {
                             },
                           },
                         ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'uploader' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'author' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'uploaderEmail' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'authorEmail' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'content' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'description' },
                       },
                     },
                     {
@@ -7671,6 +7759,17 @@ export const GetLatestShortsDocument = {
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'start' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -7680,6 +7779,14 @@ export const GetLatestShortsDocument = {
             alias: { kind: 'Name', value: 'news' },
             name: { kind: 'Name', value: 'videos' },
             arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'start' },
+                },
+              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'take' },
@@ -7722,6 +7829,20 @@ export const GetLatestShortsDocument = {
                               value: 'published',
                               block: false,
                             },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'isShorts' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: { kind: 'BooleanValue', value: true },
                           },
                         ],
                       },
@@ -7765,6 +7886,14 @@ export const GetLatestShortsDocument = {
             arguments: [
               {
                 kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'start' },
+                },
+              },
+              {
+                kind: 'Argument',
                 name: { kind: 'Name', value: 'take' },
                 value: {
                   kind: 'Variable',
@@ -7805,6 +7934,20 @@ export const GetLatestShortsDocument = {
                               value: 'published',
                               block: false,
                             },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'isShorts' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: { kind: 'BooleanValue', value: true },
                           },
                         ],
                       },
@@ -7900,6 +8043,7 @@ export const GetLatestShortsDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',
@@ -7989,6 +8133,8 @@ export const GetShortsDataDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSection' } },
           {
             kind: 'Field',
@@ -8219,6 +8365,7 @@ export const GetShortsByTagAndVideoSectionDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',
@@ -8399,6 +8546,7 @@ export const GetShortsByVideoSectionDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',

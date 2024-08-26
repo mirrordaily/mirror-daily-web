@@ -1,6 +1,7 @@
 fragment LatestShorts on Video {
   id
   name
+  uploader
   videoSrc
   heroImage {
     ...HeroImage
@@ -10,6 +11,8 @@ fragment LatestShorts on Video {
 fragment ShortsData on Video {
   id
   state
+  isShorts
+  uploader
   videoSection
   tags(take: 1) {
     id

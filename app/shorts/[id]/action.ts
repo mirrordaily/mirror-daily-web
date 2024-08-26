@@ -33,9 +33,13 @@ export const fetchShortsData = async (
   })
 
   if (data !== null) {
+    if (data.state !== 'published') return null
+    if (data.isShorts !== true) return null
+
     return {
       id: data.id,
       state: data.state,
+      contributor: data.uploader,
       videoSection: data.videoSection,
       tagId: data.tags[0]?.id,
     }

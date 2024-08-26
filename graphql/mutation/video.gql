@@ -1,9 +1,13 @@
-mutation CreateCreativityShorts($title: String!, $photoId: ID! $file: Upload!) {
+mutation CreateCreativityShorts($title: String!, $photoId: ID! $file: Upload!, $author: String, $authorEmail: String!, $description: String) {
   shorts: createVideo(data: {
     videoSection: "creativity",
     state: "draft"
+    isShorts: true,
     name: $title,
     file: { upload: $file },
+    uploader: $author,
+    uploaderEmail: $authorEmail,
+    content: $description
     heroImage:  {
        connect:  {
           id: $photoId

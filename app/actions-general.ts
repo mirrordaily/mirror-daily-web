@@ -85,7 +85,8 @@ export const fetchPopularPost = async (
 
 export const fetchLatestShorts = async (
   type: SHORTS_TYPE,
-  amount: number = 10
+  amount: number = 10,
+  start: number = 0
 ): Promise<Shorts[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest shorts',
@@ -112,13 +113,13 @@ export const fetchLatestShorts = async (
     },
     async () => {
       const result = await schema.parse(
-        fetchGQLData(errorLogger, GetLatestShortsDocument, { amount })
+        fetchGQLData(errorLogger, GetLatestShortsDocument, { amount, start })
       )
       return result
     }
   )
 
-  const matchedData = data[type].slice(0, 10)
+  const matchedData = data[type].slice(start, amount)
   return matchedData.map(transformLatestShorts)
 }
 
@@ -209,7 +210,6 @@ export const createCreativityShorts = async (
   }
 
   {
-    // TODO: add description and author
     const result = await updateGQLData(
       errorLogger,
       CreateCreativityShortsDocument,
@@ -217,6 +217,9 @@ export const createCreativityShorts = async (
         title: data.title,
         photoId: imageId,
         file: data.shorts,
+        author: data.user,
+        authorEmail: data.email,
+        description: data.description,
       }
     )
 
