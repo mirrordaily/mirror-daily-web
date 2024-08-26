@@ -57,7 +57,7 @@ export default function HeroSection({
         <p
           style={{ color: sectionColor }}
           className="mb-1"
-        >{`| ${sectionName}`}</p>
+        >{`｜${sectionName}`}</p>
         <h1 className="mb-3 text-2xl font-black leading-[1.3] text-[#212944] md:mb-1 lg:mb-4">
           {title}
         </h1>
