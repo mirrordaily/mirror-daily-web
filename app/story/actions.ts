@@ -28,8 +28,8 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   const heroImage = getHeroImage(rawData.heroImage)
   const ogImage = getHeroImage(rawData.og_image)
   const postMainImage = selectMainImage(heroImage, ogImage)
-  const sectionName = rawData.sections?.[0]?.name ?? ''
-  const sectionColor = rawData.sections?.[0]?.color ?? '#FF5A36'
+  const sectionName = rawData.sections?.[0]?.name ?? '時事'
+  const sectionColor = rawData.sections?.[0]?.color ?? '#4D8AA4'
   const writers =
     rawData.writers?.map((person) => person.name ?? '').filter(Boolean) ?? []
   const photographers =
