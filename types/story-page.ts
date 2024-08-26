@@ -10,7 +10,7 @@ export type Post = {
   title: string
   subTitle: string
   heroCaption: string
-  createdTime: string
+  publishedTime: string
   postMainImage: HeroImage
   sectionName: string
   sectionColor: string

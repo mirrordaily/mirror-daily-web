@@ -9,7 +9,7 @@ export default function HeroSection({
   title,
   subTitle,
   heroCaption,
-  createdTime,
+  publishedTime,
   postMainImage,
   sectionName,
   sectionColor,
@@ -66,7 +66,7 @@ export default function HeroSection({
         </h2>
 
         <div className="mb-4 flex flex-col gap-y-1 font-normal text-[#7F8493] md:mb-3 lg:mb-4">
-          <p>發佈時間：{createdTime}</p>
+          <p>發佈時間：{publishedTime}</p>
           <div className="flex flex-wrap items-center">
             記者：{getAuthorsContent(writers)}
           </div>

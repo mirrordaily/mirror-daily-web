@@ -24,7 +24,7 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   const title = rawData.title ?? ''
   const subTitle = rawData.subtitle ?? ''
   const heroCaption = rawData.heroCaption ?? ''
-  const createdTime = dateFormatter(rawData.createdAt) ?? ''
+  const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
   const heroImage = getHeroImage(rawData.heroImage)
   const ogImage = getHeroImage(rawData.og_image)
   const postMainImage = selectMainImage(heroImage, ogImage)
@@ -54,7 +54,7 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
     title,
     subTitle,
     heroCaption,
-    createdTime,
+    publishedTime,
     postMainImage,
     sectionName,
     sectionColor,

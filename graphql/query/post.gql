@@ -82,7 +82,7 @@ query GetPostBySlug($slug: String!) {
     title
     subtitle
     heroCaption
-    createdAt
+    publishedDate
     heroImage {
       ...HeroImage
     }
