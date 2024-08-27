@@ -152,10 +152,11 @@ const transformLatestShorts = (
 ): Shorts => {
   return {
     id: rawData.id,
-    title: rawData.name ?? '',
-    fileUrl: rawData.videoSrc ?? '',
+    title: rawData.name,
+    fileUrl: rawData.videoSrc,
     poster: getPosterFromShorts(rawData.heroImage),
     link: getShortsPageUrl(rawData.id),
+    contributor: rawData.uploader,
   }
 }
 
