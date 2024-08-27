@@ -144,15 +144,6 @@
   }
 
   article.story-renderer {
-    max-width: 375px;
-
-    @media (min-width: 720px) {
-      max-width: 600px;
-    }
-
-    @media (min-width: 1200px) {
-      max-width: 720px;
-    }
 
     &>* {
       margin-top: 32px;
@@ -315,11 +306,6 @@
       background: #f2f2f4;
       padding: 24px 0;
 
-      @media (max-width: 767px) {
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
-      }
-
       &>.title {
         padding: 0 32px;
         position: relative;
@@ -348,9 +334,6 @@
       width: 100%;
       table-layout: fixed;
 
-      /* @media (max-width: 767px) {
-        width: calc(100vw - 40px);
-      } */
       border-collapse: collapse;
       text-align: center;
 
@@ -373,16 +356,17 @@
     }
 
     & div.audio-block {
-      margin: 0 auto;
+      margin: 32px auto 0;
       border: 1px solid rgba(0, 9, 40, 0.1);
       padding: 16px 24px 16px 16px;
-      width: 335px;
+      max-width: 335px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       gap: 16px;
 
-      @media (min-width: 768px) {
+      @media (min-width: 720px) {
+        max-width: none;
         width: 480px;
       }
 
@@ -448,18 +432,19 @@
     & figure.image-block {
       width: 100%;
 
-      @media (max-width: 767px) {
-        position: relative;
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
-      }
-
       & .image-wrapper {
+        margin: auto;
         position: relative;
-        height: 375px;
+        aspect-ratio: 1;
 
-        @media (min-width: 768px) {
-          height: 400px;
+        @media (min-width: 720px) {
+          width: 576px;
+          height: 346.67px;
+        }
+
+
+        @media (min-width: 1200px) {
+          width: 526px;
         }
       }
 
@@ -471,7 +456,7 @@
         line-height: 1.5;
         padding: 0 20px;
 
-        @media (min-width: 768px) {
+        @media (min-width: 720px) {
           padding: 0;
         }
       }
@@ -484,9 +469,8 @@
       justify-content: center;
       position: relative;
 
-      @media (max-width: 767px) {
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
+      @media (max-width: 720px) {
+        width: 100%;
       }
 
       & video {
@@ -505,18 +489,24 @@
     }
 
     & div.slideshow-block {
-      width: 100%;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 12px;
-      flex-wrap: wrap;
       position: relative;
 
-      @media (max-width: 767px) {
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
+      @media (min-width: 720px) {
+        width: 600px;
+        grid-template-columns: repeat(2, auto);
       }
 
-      @media (min-width: 768px) {
+      @media (min-width: 1200px) {
+        width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+
+      @media (min-width: 720px) {
         &.fold {
           max-height: 906px;
           overflow: hidden;
@@ -524,14 +514,10 @@
       }
 
       &>figure {
-        width: 100%;
+        max-height: 335px;
 
         & .image {
           aspect-ratio: 1;
-        }
-
-        @media (min-width: 768px) {
-          width: 294px;
         }
 
         @media (hover: hover) {
@@ -551,7 +537,7 @@
           line-height: 1.5;
           color: #7f8493;
 
-          @media (min-width: 768px) {
+          @media (min-width: 720px) {
             display: none;
           }
         }
@@ -560,7 +546,7 @@
       & .lightbox {
         display: none;
 
-        @media (min-width: 768px) {
+        @media (min-width: 720px) {
           background: #000928;
           position: fixed;
           inset: 0;
@@ -948,11 +934,6 @@
     &>section.embed-code-block {
       position: relative;
 
-      @media (max-width: 767px) {
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
-      }
-
       &>div.embed {
         position: relative;
         white-space: normal;
@@ -961,6 +942,8 @@
           /* FIXME: apply z-index following project setup */
           z-index: 1000;
         }
+
+
 
         /* styles for image link */
         img.img-responsive {
