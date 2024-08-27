@@ -17,8 +17,8 @@ const documents = {
     types.EditorChoiceDataFragmentDoc,
   'fragment HeroImage on Photo {\n  id\n  resized {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n  resizedWebp {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n}\n\nfragment OgImage on Photo {\n  id\n  resized {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n  resizedWebp {\n    original\n    w480\n    w800\n    w1200\n    w1600\n    w2400\n  }\n}':
     types.HeroImageFragmentDoc,
-  'fragment PostDetails on Post {\n  title\n  createdAt\n  apiDataBrief\n  slug\n  apiData\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}':
-    types.PostDetailsFragmentDoc,
+  'fragment PostOverview on Post {\n  title\n  createdAt\n  apiDataBrief\n  slug\n  apiData\n  heroImage {\n    ...HeroImage\n  }\n  og_image {\n    ...OgImage\n  }\n}\n\nfragment PostItem on Post {\n  title\n  slug\n  heroImage {\n    ...HeroImage\n  }\n}':
+    types.PostOverviewFragmentDoc,
   'fragment LatestShorts on Video {\n  id\n  name\n  uploader\n  videoSrc\n  heroImage {\n    ...HeroImage\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  isShorts\n  uploader\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}':
     types.LatestShortsFragmentDoc,
   'mutation CreateShortsPreview($name: String!, $file: Upload!) {\n  photo: createPhoto(data: {name: $name, imageFile: {upload: $file}}) {\n    id\n  }\n}':
