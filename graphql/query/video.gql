@@ -1,10 +1,14 @@
-query GetLatestShorts($amount: Int!) {
+query GetLatestShorts($amount: Int!, $start: Int!) {
   news: videos(
+    skip: $start,
     take: $amount,
     orderBy: { publishedDate: desc },
     where: {
       state: {
           equals: "published",
+      },
+      isShorts:  {
+         equals: true
       },
       videoSection: {
           equals: "news"
@@ -13,11 +17,15 @@ query GetLatestShorts($amount: Int!) {
       ...LatestShorts
     }
   creativity: videos(
+    skip: $start,
     take: $amount,
     orderBy: { publishedDate: desc },
     where: {
       state: {
           equals: "published",
+      },
+      isShorts:  {
+         equals: true
       },
       videoSection: {
           equals: "creativity"

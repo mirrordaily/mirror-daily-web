@@ -1,0 +1,5 @@
+mutation CreateShortsPreview($name: String!, $file: Upload!) {
+  photo: createPhoto(data: { name: $name, imageFile: { upload: $file }}) {
+    id
+  }
+}

@@ -3810,6 +3810,7 @@ export type LatestShortsFragment = {
   __typename?: 'Video'
   id: string
   name?: string | null
+  uploader?: string | null
   videoSrc?: string | null
   heroImage?: {
     __typename?: 'Photo'
@@ -3839,8 +3840,34 @@ export type ShortsDataFragment = {
   __typename?: 'Video'
   id: string
   state?: string | null
+  isShorts?: boolean | null
+  uploader?: string | null
   videoSection?: string | null
   tags?: Array<{ __typename?: 'Tag'; id: string }> | null
+}
+
+export type CreateShortsPreviewMutationVariables = Exact<{
+  name: Scalars['String']['input']
+  file: Scalars['Upload']['input']
+}>
+
+export type CreateShortsPreviewMutation = {
+  __typename?: 'Mutation'
+  photo?: { __typename?: 'Photo'; id: string } | null
+}
+
+export type CreateCreativityShortsMutationVariables = Exact<{
+  title: Scalars['String']['input']
+  photoId: Scalars['ID']['input']
+  file: Scalars['Upload']['input']
+  author?: InputMaybe<Scalars['String']['input']>
+  authorEmail: Scalars['String']['input']
+  description?: InputMaybe<Scalars['String']['input']>
+}>
+
+export type CreateCreativityShortsMutation = {
+  __typename?: 'Mutation'
+  shorts?: { __typename?: 'Video'; id: string } | null
 }
 
 export type GetCategoryInformationQueryVariables = Exact<{
@@ -4504,6 +4531,7 @@ export type GetTopicsQuery = {
 
 export type GetLatestShortsQueryVariables = Exact<{
   amount: Scalars['Int']['input']
+  start: Scalars['Int']['input']
 }>
 
 export type GetLatestShortsQuery = {
@@ -4512,6 +4540,7 @@ export type GetLatestShortsQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4540,6 +4569,7 @@ export type GetLatestShortsQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4576,6 +4606,8 @@ export type GetShortsDataQuery = {
     __typename?: 'Video'
     id: string
     state?: string | null
+    isShorts?: boolean | null
+    uploader?: string | null
     videoSection?: string | null
     tags?: Array<{ __typename?: 'Tag'; id: string }> | null
   } | null
@@ -4592,6 +4624,7 @@ export type GetShortsByTagAndVideoSectionQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4628,6 +4661,7 @@ export type GetShortsByVideoSectionQuery = {
     __typename?: 'Video'
     id: string
     name?: string | null
+    uploader?: string | null
     videoSrc?: string | null
     heroImage?: {
       __typename?: 'Photo'
@@ -5098,6 +5132,7 @@ export const LatestShortsFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',
@@ -5176,6 +5211,8 @@ export const ShortsDataFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSection' } },
           {
             kind: 'Field',
@@ -5199,6 +5236,301 @@ export const ShortsDataFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ShortsDataFragment, unknown>
+export const CreateShortsPreviewDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateShortsPreview' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Upload' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'photo' },
+            name: { kind: 'Name', value: 'createPhoto' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'name' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'imageFile' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'upload' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'file' },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateShortsPreviewMutation,
+  CreateShortsPreviewMutationVariables
+>
+export const CreateCreativityShortsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateCreativityShorts' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'title' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'photoId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Upload' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'author' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'authorEmail' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'description' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'shorts' },
+            name: { kind: 'Name', value: 'createVideo' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'videoSection' },
+                      value: {
+                        kind: 'StringValue',
+                        value: 'creativity',
+                        block: false,
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'StringValue',
+                        value: 'draft',
+                        block: false,
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'isShorts' },
+                      value: { kind: 'BooleanValue', value: true },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'title' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'file' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'upload' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'file' },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'uploader' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'author' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'uploaderEmail' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'authorEmail' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'content' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'description' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'heroImage' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'connect' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'id' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'photoId' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateCreativityShortsMutation,
+  CreateCreativityShortsMutationVariables
+>
 export const GetCategoryInformationDocument = {
   kind: 'Document',
   definitions: [
@@ -8042,6 +8374,17 @@ export const GetLatestShortsDocument = {
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'start' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -8051,6 +8394,14 @@ export const GetLatestShortsDocument = {
             alias: { kind: 'Name', value: 'news' },
             name: { kind: 'Name', value: 'videos' },
             arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'start' },
+                },
+              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'take' },
@@ -8093,6 +8444,20 @@ export const GetLatestShortsDocument = {
                               value: 'published',
                               block: false,
                             },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'isShorts' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: { kind: 'BooleanValue', value: true },
                           },
                         ],
                       },
@@ -8136,6 +8501,14 @@ export const GetLatestShortsDocument = {
             arguments: [
               {
                 kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'start' },
+                },
+              },
+              {
+                kind: 'Argument',
                 name: { kind: 'Name', value: 'take' },
                 value: {
                   kind: 'Variable',
@@ -8176,6 +8549,20 @@ export const GetLatestShortsDocument = {
                               value: 'published',
                               block: false,
                             },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'isShorts' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: { kind: 'BooleanValue', value: true },
                           },
                         ],
                       },
@@ -8271,6 +8658,7 @@ export const GetLatestShortsDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',
@@ -8360,6 +8748,8 @@ export const GetShortsDataDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSection' } },
           {
             kind: 'Field',
@@ -8590,6 +8980,7 @@ export const GetShortsByTagAndVideoSectionDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',
@@ -8770,6 +9161,7 @@ export const GetShortsByVideoSectionDocument = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           {
             kind: 'Field',
