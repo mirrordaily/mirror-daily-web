@@ -17,6 +17,7 @@ import {
 } from '@/utils/data-process'
 import type { Post, RelatedPost } from '@/types/story-page'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
+import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   if (!rawData) return null
@@ -29,7 +30,7 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
     const heroImage = getHeroImage(rawData.heroImage)
     const ogImage = getHeroImage(rawData.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
-    const sectionName = rawData.sections?.[0]?.name ?? '時事'
+    const sectionName = rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
     const sectionColor = rawData.sections?.[0]?.color ?? '#4D8AA4'
     const writers =
       rawData.writers?.map(({ id, name }) => ({
@@ -100,7 +101,7 @@ function transformRelatedPosts(
     const heroImage = getHeroImage(rawPost.heroImage)
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
-    const sectionName = rawPost.sections?.[0]?.name ?? '時事'
+    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
     const sectionColor = rawPost.sections?.[0]?.color ?? '#4D8AA4'
 
     return {

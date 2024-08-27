@@ -15,6 +15,7 @@ import {
   GetPostsByTagSlugDocument,
 } from '@/graphql/__generated__/graphql'
 import type { TagPost, TagInfo } from '@/types/tag-page'
+import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 function transformTagInformation(
   rawData: GetTagInformationQuery['tag']
@@ -56,8 +57,8 @@ function transformTagPost(rawData: GetPostsByTagSlugQuery['posts']): TagPost[] {
     const createdTime = dateFormatter(rawPost.createdAt) ?? ''
     const heroImage = getHeroImage(rawPost.heroImage)
     const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
-    const sectionName = rawPost.sections?.[0]?.name ?? ''
-    const sectionColor = rawPost.sections?.[0]?.color ?? '#FF5A36'
+    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
+    const sectionColor = rawPost.sections?.[0]?.color ?? '#4D8AA4'
     const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
