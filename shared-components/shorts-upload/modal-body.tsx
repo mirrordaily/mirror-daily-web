@@ -17,6 +17,8 @@ import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 import { useModalClose } from './upload-modal'
 import { useOptimistic } from 'react'
 import StateContainer from './state-container'
+import NextImage from 'next/image'
+import IconClose from '@/public/icons/shorts-upload/close.svg'
 
 export default function ModalBody() {
   const dispatch = useAppDispatch()
@@ -43,9 +45,15 @@ export default function ModalBody() {
 
   return (
     <div
-      className="flex h-[calc(100%-12px)] w-full max-w-screen-sm flex-col overflow-hidden rounded-[0px_0px_20px_20px] bg-white px-7 pb-9 pt-5 md:my-auto md:h-full md:max-h-[720px] md:rounded-[20px] md:py-5 lg:max-h-[640px] lg:max-w-[480px] lg:rounded-xl lg:px-[52px] lg:pb-8"
+      className="relative flex h-[calc(100%-12px)] w-full max-w-screen-sm flex-col overflow-hidden rounded-[0px_0px_20px_20px] bg-white px-7 pb-9 pt-5 md:my-auto md:h-full md:max-h-[720px] md:rounded-[20px] md:py-5 lg:max-h-[640px] lg:max-w-[480px] lg:rounded-xl lg:px-[52px] lg:pb-8"
       onClick={(event) => event.stopPropagation()}
     >
+      <button
+        className="absolute right-5 top-5 inline-block lg:right-4 lg:top-4"
+        onClick={closeHandler}
+      >
+        <NextImage src={IconClose} alt="關閉" width={24} height={24} />
+      </button>
       <p className="shrink-0 text-center text-lg font-bold leading-normal text-black">
         短影音投稿
       </p>

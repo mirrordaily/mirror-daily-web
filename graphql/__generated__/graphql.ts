@@ -1872,7 +1872,6 @@ export type Photo = {
   copyRight?: Maybe<Scalars['Boolean']['output']>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   createdBy?: Maybe<User>
-  file?: Maybe<FileFieldOutput>
   id: Scalars['ID']['output']
   imageFile?: Maybe<ImageFieldOutput>
   name?: Maybe<Scalars['String']['output']>
@@ -1888,7 +1887,6 @@ export type PhotoCreateInput = {
   copyRight?: InputMaybe<Scalars['Boolean']['input']>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
-  file?: InputMaybe<FileFieldInput>
   imageFile?: InputMaybe<ImageFieldInput>
   name?: InputMaybe<Scalars['String']['input']>
   topicKeywords?: InputMaybe<Scalars['String']['input']>
@@ -1945,7 +1943,6 @@ export type PhotoUpdateInput = {
   copyRight?: InputMaybe<Scalars['Boolean']['input']>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
-  file?: InputMaybe<FileFieldInput>
   imageFile?: InputMaybe<ImageFieldInput>
   name?: InputMaybe<Scalars['String']['input']>
   topicKeywords?: InputMaybe<Scalars['String']['input']>
