@@ -3,15 +3,13 @@
 import type { Shorts } from '@/types/common'
 import type { ChangeEvent, CSSProperties } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { useDebounceCallback } from 'usehooks-ts'
 import NextImage from 'next/image'
 import ReactPlayer from 'react-player/lazy'
-import IconShare from '@/public/icons/shorts/share.svg'
-import IconShareWhite from '@/public/icons/shorts/share-white.svg'
 import IconPlay from '@/public/icons/shorts/play.svg'
 import IconPause from '@/public/icons/shorts/pause.svg'
 import IconVolume from '@/public/icons/shorts/volume.svg'
 import IconMute from '@/public/icons/shorts/mute.svg'
+import SocialShareBar from '../social-share-bar'
 
 type Props = Shorts & {
   isActive: boolean
@@ -44,20 +42,6 @@ export default function ShortsItem({
     const newVolume = parseInt(event.target.value, 10) / 100
     setVolume(newVolume)
   }
-
-  const shareHandler = useDebounceCallback(() => {
-    const url = window.location.origin + link
-    if ('share' in navigator) {
-      navigator.share({
-        title,
-        text: '',
-        url,
-      })
-    } else if ('clipboard' in navigator) {
-      /* @ts-expect-error ignorable error */
-      navigator.clipboard.writeText(url)
-    }
-  }, 500)
 
   return (
     <div className="relative h-full">
@@ -155,20 +139,14 @@ export default function ShortsItem({
             </p>
           </div>
         </div>
-        <button
-          className="absolute -right-4 bottom-0 hidden translate-x-full rounded-full bg-[#E5E6E9] p-[7px] hover:bg-[#CCCED4] md:inline-block"
-          onClick={shareHandler}
-        >
-          <NextImage src={IconShare} width={20} height={20} alt="分享" />
-        </button>
+        <div className="absolute -right-4 bottom-0 hidden translate-x-full rounded-full md:inline-block">
+          <SocialShareBar title={title} link={link} direction="vertical" />
+        </div>
       </div>
 
-      <button
-        className="absolute bottom-[19px] right-[19px] inline-block rounded-full bg-[#7F8493] p-[7px] hover-or-active:bg-[#B2B5BE] md:hidden"
-        onClick={shareHandler}
-      >
-        <NextImage src={IconShareWhite} width={20} height={20} alt="分享" />
-      </button>
+      <div className="absolute bottom-6 right-[17px] inline-block rounded-full md:hidden">
+        <SocialShareBar title={title} link={link} direction="vertical" />
+      </div>
     </div>
   )
 }
