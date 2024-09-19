@@ -71,7 +71,7 @@
       }
 
       button.control {
-        @apply flex size-5 items-center justify-center rounded-xl bg-white shadow-[0px_5.365px_5.365px_0px_rgba(0,0,0,0.15)] hover-or-active:bg-[#E5E6E9];
+        @apply flex size-[25px] items-center justify-center rounded-xl bg-white shadow-[0px_5.365px_5.365px_0px_rgba(0,0,0,0.15)] hover-or-active:bg-[#E5E6E9];
       }
 
       input.volume-slider {

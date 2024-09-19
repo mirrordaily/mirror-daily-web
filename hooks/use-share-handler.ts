@@ -2,8 +2,8 @@ import { useDebounceCallback } from 'usehooks-ts'
 
 type ShareData = Parameters<typeof navigator.share>[0]
 
-export const useShareHandler = (data: ShareData) => {
-  return useDebounceCallback(() => {
+export const useShareHandler = () => {
+  return useDebounceCallback((data: ShareData) => {
     if ('share' in navigator) {
       navigator.share(data)
     } else if ('clipboard' in navigator) {
