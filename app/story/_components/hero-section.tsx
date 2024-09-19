@@ -53,7 +53,7 @@ export default function HeroSection({
         </figcaption>
       </figure>
 
-      <header className="order-2 px-5 md:px-0 lg:order-1">
+      <div className="order-2 px-5 md:px-0 lg:order-1">
         <p
           style={{ color: sectionColor }}
           className="mb-1"
@@ -88,7 +88,7 @@ export default function HeroSection({
             </Link>
           ))}
         </div>
-      </header>
+      </div>
     </section>
   )
 }
