@@ -7,7 +7,7 @@ import type { Contact } from '@/types/story-page'
 
 export default function HeroSection({
   title,
-  subTitle,
+  subtitle,
   heroCaption,
   publishedTime,
   postMainImage,
@@ -62,7 +62,7 @@ export default function HeroSection({
           {title}
         </h1>
         <h2 className="mb-3 text-xl font-bold leading-[1.4] text-[#212944] lg:mb-4">
-          {subTitle}
+          {subtitle}
         </h2>
 
         <div className="mb-4 flex flex-col gap-y-1 font-normal text-[#7F8493] md:mb-3 lg:mb-4">
