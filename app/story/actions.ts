@@ -23,7 +23,7 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   if (!rawData) return null
 
   const title = rawData.title ?? ''
-  const subTitle = rawData.subtitle ?? ''
+  const subtitle = rawData.subtitle ?? ''
   const heroCaption = rawData.heroCaption ?? ''
   const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
   const heroImage = getHeroImage(rawData.heroImage)
@@ -53,7 +53,7 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
 
   return {
     title,
-    subTitle,
+    subtitle,
     heroCaption,
     publishedTime,
     postMainImage,
