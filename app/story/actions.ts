@@ -115,7 +115,7 @@ function transformRelatedPosts(
 
 async function fetchRelatedPosts(slug: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
-    'Error occurs while fetching related post in story page',
+    `Error occurs while fetching related posts using post slug ${slug} on story page`,
     getTraceObject()
   )
 
