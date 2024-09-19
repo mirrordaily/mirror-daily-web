@@ -8,7 +8,7 @@ export type Contact = {
 
 export type Post = {
   title: string
-  subTitle: string
+  subtitle: string
   heroCaption: string
   publishedTime: string
   postMainImage: HeroImage
