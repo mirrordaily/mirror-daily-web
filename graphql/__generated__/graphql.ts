@@ -4308,7 +4308,6 @@ export type GetPostBySlugQuery = {
     subtitle?: string | null
     heroCaption?: string | null
     publishedDate?: any | null
-    state?: string | null
     apiData?: any | null
     apiDataBrief?: any | null
     heroImage?: {
@@ -7525,7 +7524,6 @@ export const GetPostBySlugDocument = {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'publishedDate' },
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'state' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'heroImage' },
