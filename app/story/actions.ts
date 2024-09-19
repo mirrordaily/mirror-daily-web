@@ -72,7 +72,7 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
 
 async function fetchPost(slug: string) {
   const errorLogger = createErrorLogger(
-    'Error occurs while fetching post in story page',
+    `Error occurs while fetching post with slug: ${slug} on story page`,
     getTraceObject()
   )
 
