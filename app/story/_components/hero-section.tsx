@@ -2,7 +2,7 @@ import CustomImage from '@/shared-components/custom-image'
 import type { ItemInHeroSection } from '@/types/story-page'
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import SocialShareBar from './social-share-bar'
+import SocialShareBar from '@/shared-components/social-share-bar'
 import type { Contact } from '@/types/story-page'
 
 export default function HeroSection({
@@ -76,7 +76,7 @@ export default function HeroSection({
         </div>
 
         <div className="mb-4 md:mb-3 lg:mb-4">
-          <SocialShareBar title={title} storyLink={link} />
+          <SocialShareBar title={title} link={link} />
         </div>
 
         <div className="flex flex-wrap gap-x-2 gap-y-4 md:grid-cols-6 md:gap-x-3 lg:mb-4">
