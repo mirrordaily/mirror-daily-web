@@ -116,19 +116,11 @@
       margin-top: 0;
     }
 
-    /* @media (min-width: 720px) {
-      padding: 20px 24px;
-    } */
-
     @apply md:py-6;
   }
 
   article.content {
     padding: 0 20px;
-
-    /* @media (min-width: 720px) {
-      padding: 0;
-    } */
 
     &>* {
       font-weight: 400;
