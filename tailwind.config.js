@@ -18,6 +18,8 @@ module.exports = {
       backgroundImage: {
         'image-mask':
           'linear-gradient(180deg, rgba(0, 0, 0, 0) 40.54%, #000 100%)',
+        'slideshow-mask':
+          'linear-gradient(to bottom, rgba(255, 255, 255, 0) 648px, rgba(255, 255, 255, 1) 906px)',
       },
       zIndex: {
         'over-editor-choice': 10,
