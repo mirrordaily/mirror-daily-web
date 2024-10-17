@@ -4388,7 +4388,7 @@ export type GetRelatedPostsBySlugQuery = {
     relateds?: Array<{
       __typename?: 'Post'
       title?: string | null
-      createdAt?: any | null
+      publishedDate?: any | null
       slug?: string | null
       heroImage?: {
         __typename?: 'Photo'
@@ -7752,7 +7752,7 @@ export const GetRelatedPostsBySlugDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'createdAt' },
+                        name: { kind: 'Name', value: 'publishedDate' },
                       },
                       { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                       {
