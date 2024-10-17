@@ -114,7 +114,7 @@ query GetRelatedPostsBySlug($slug: String!) {
   post(where: { slug: $slug }) {
     relateds {
       title
-      createdAt
+      publishedDate
       slug
       heroImage {
         ...HeroImage
