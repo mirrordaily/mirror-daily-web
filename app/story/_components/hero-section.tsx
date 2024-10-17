@@ -69,13 +69,13 @@ export default function HeroSection({
           <p>發佈時間：{publishedTime}</p>
           <div className="flex">
             <p className="shrink-0">記者：</p>
-            <p className="flex flex-wrap items-center">
+            <p className="flex flex-wrap items-center break-all">
               {getAuthorsContent(writers)}
             </p>
           </div>
           <div className="flex">
             <p className="shrink-0">攝影：</p>
-            <p className="flex flex-wrap items-center">
+            <p className="flex flex-wrap items-center break-all">
               {getAuthorsContent(photographers)}
             </p>
           </div>
