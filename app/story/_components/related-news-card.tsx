@@ -6,7 +6,7 @@ export default function RelatedNewsCard({
   title,
   link,
   postMainImage,
-  createdTime,
+  publishedTime,
   sectionColor,
   sectionName,
 }: RelatedPost) {
@@ -34,7 +34,7 @@ export default function RelatedNewsCard({
             style={{ color: sectionColor }}
             className="mb-[5px] inline-block font-normal md:hidden"
           >
-            {createdTime}
+            {publishedTime}
           </time>
           <p className="line-clamp-3 text-sm font-bold text-[#4A4A4A] md:line-clamp-2 md:text-lg md:font-normal lg:line-clamp-3">
             {title}
