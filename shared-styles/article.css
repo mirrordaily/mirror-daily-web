@@ -116,19 +116,19 @@
       margin-top: 0;
     }
 
-    @apply md:py-6;
+    @apply md:px-6;
   }
 
   article.content {
     padding: 0 20px;
+
+    @apply md:p-0;
 
     &>* {
       font-weight: 400;
       font-size: 18px;
       line-height: 2;
     }
-
-    @apply md:p-0;
   }
 
   article.story-renderer:empty {
@@ -355,6 +355,8 @@
       align-items: center;
       gap: 16px;
 
+      @apply md:max-w-none md:w-[480px];
+
       & audio {
         display: none;
       }
@@ -412,8 +414,6 @@
           }
         }
       }
-
-      @apply md:max-w-none md:w-[480px];
     }
 
     & figure.image-block {
@@ -507,7 +507,7 @@
       & .lightbox {
         display: none;
 
-        @apply md:bg-[#000928] md:fixed md:inset-0 md:text-white md:px-[72px] md:pl-12 md:flex md:items-center md:justify-between z-10;
+        @apply md:bg-[#000928] md:fixed md:inset-0 md:text-white md:py-0 md:pr-[72px] md:pl-12 md:flex md:items-center md:justify-between z-light-box;
 
         & .sidebar {
           width: 64px;
@@ -616,7 +616,7 @@
       & .mask {
         display: none;
 
-        @apply md:cursor-pointer md:block md:absolute md:w-full md:h-[906px] md:bottom-0 md:left-0 md:bg-slideshow-mask
+        @apply md:cursor-pointer md:block md:absolute md:w-full md:h-[906px] md:bottom-0 md:left-0 md:bg-slideshow-mask;
       }
 
       &+.slideshow-unfold-hint {
@@ -630,8 +630,8 @@
 
         @media (hover: hover) {
           &:hover .icon {
-            @apply md:transition-all md:duration-200 md:ease-in;
-            @apply md:transform md:translate-y-[30%];
+            @apply md:transition-all md:duration-200;
+            @apply md:translate-y-[30%];
           }
         }
       }
@@ -768,7 +768,7 @@
 
               @apply md:px-10 md:pb-[335px];
 
-              @apply lg:px-20 lg:pb-[169px];
+              @apply lg:pl-20 lg:pr-[calc(100%-480px)] lg:pb-[169px];
             }
 
             &.right {
@@ -776,7 +776,7 @@
 
               @apply md:px-10 pb-[335px];
 
-              @apply md:pr-20 md:pl-[calc(100%-480px-80px)];
+              @apply lg:pr-20 lg:pl-[calc(100%-480px)];
             }
 
             &.bottom {
