@@ -65,3 +65,13 @@ export type Shorts = {
   poster?: string
   contributor?: string
 }
+
+export type LatestPost = {
+  categoryName: string
+  categoryColor: string
+  postName: string
+  postSlug: string
+  heroImage: HeroImage
+  publishedDate: string
+  link: string
+}

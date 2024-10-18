@@ -1,4 +1,4 @@
-import UiPopularNewsCard from './ui-popular-news-card'
+import FeaturedNewsCard from './featured-news-card'
 import { fetchPopularPost } from '@/app/actions-general'
 
 export default async function PopularNewsSection(): Promise<JSX.Element> {
@@ -12,7 +12,7 @@ export default async function PopularNewsSection(): Promise<JSX.Element> {
       <div className="grid md:grid-cols-2 md:gap-7 lg:grid-cols-1 lg:gap-y-5">
         {articles &&
           articles.map((item) => (
-            <UiPopularNewsCard {...item} key={item.postSlug} />
+            <FeaturedNewsCard {...item} key={item.postSlug} />
           ))}
       </div>
     </section>

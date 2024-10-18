@@ -2,10 +2,13 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
   posts(
     skip: $skip
     take: $take
-    where: { sections: { some: { slug: { equals: $slug } } } }
+    where: {
+      state: { equals: "published" }
+      sections: { some: { slug: { equals: $slug } } }
+    }
     orderBy: { publishedDate: desc }
   ) {
-    ...PostDetails
+    ...PostOverview
   }
 }
 
@@ -24,10 +27,13 @@ query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {
   posts(
     skip: $skip
     take: $take
-    where: { categories: { some: { slug: { equals: $slug } } } }
+    where: {
+      state: { equals: "published" }
+      categories: { some: { slug: { equals: $slug } } }
+    }
     orderBy: { publishedDate: desc }
   ) {
-    ...PostDetails
+    ...PostOverview
   }
 }
 
@@ -48,7 +54,7 @@ query GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {
       name
       color
     }
-    ...PostDetails
+    ...PostOverview
   }
 }
 
@@ -66,6 +72,60 @@ query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
       name
       color
     }
-    ...PostDetails
+    ...PostOverview
+  }
+}
+
+query GetPostBySlug($slug: String!) {
+  post(where: { slug: $slug }) {
+    slug
+    title
+    subtitle
+    heroCaption
+    publishedDate
+    heroImage {
+      ...HeroImage
+    }
+    og_image {
+      ...OgImage
+    }
+    tags {
+      slug
+      name
+    }
+    sections {
+      name
+      color
+    }
+    writers {
+      id
+      name
+    }
+    photographers {
+      id
+      name
+    }
+    apiData
+    apiDataBrief
+  }
+}
+
+query GetRelatedPostsBySlug($slug: String!) {
+  post(where: { slug: $slug }) {
+    relateds {
+      title
+      publishedDate
+      slug
+      heroImage {
+        ...HeroImage
+      }
+      og_image {
+        ...OgImage
+      }
+      sections {
+        name
+        color
+      }
+    }
   }
 }

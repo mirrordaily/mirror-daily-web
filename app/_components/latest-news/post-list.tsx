@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
 /** the amount of articles each time load-more is clicked  */
 const RENDER_PAGE_SIZE = 20
 
-import type { LatestPost } from '@/types/homepage'
+import type { LatestPost } from '@/types/common'
 
 type PostListProps = {
   initialList: LatestPost[]

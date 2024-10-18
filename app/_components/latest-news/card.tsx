@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react'
 import CustomImage from '@/shared-components/custom-image'
 import NextLink from 'next/link'
-import type { LatestPost } from '@/types/homepage'
+import type { LatestPost } from '@/types/common'
 
 type Props = Pick<
   LatestPost,

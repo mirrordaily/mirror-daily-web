@@ -10,17 +10,22 @@ import {
   transformLatestShorts,
 } from '@/utils/data-process'
 import { fetchGQLData, updateGQLData } from '@/utils/graphql'
-import { latestShortsSchema, rawPopularPostSchema } from '@/utils/data-schema'
+import {
+  latestShortsSchema,
+  rawPopularPostSchema,
+  rawLatestPostSchema,
+} from '@/utils/data-schema'
 import {
   URL_STATIC_LATEST_SHORTS,
   URL_STATIC_POPULAR_NEWS,
+  URL_STATIC_LATEST_NEWS,
 } from '@/constants/config'
 import {
   CreateCreativityShortsDocument,
   CreateShortsPreviewDocument,
   GetLatestShortsDocument,
 } from '@/graphql/__generated__/graphql'
-import type { LatestPost } from '@/types/homepage'
+import type { LatestPost } from '@/types/common'
 import { getPostPageUrl } from '@/utils/site-urls'
 import { colorManger } from '@/utils/section-color-manager'
 import {
@@ -33,8 +38,100 @@ import type { FormActionResponse } from '@/types/shorts'
 import { FormState } from '@/types/shorts'
 import { fetchSectionsAndCategories } from '@/utils/section-color-manager'
 import { DEFAULT_SECTION_NAME } from '@/constants/misc'
+import { isValidUrl } from '@/utils/common'
 
 export { fetchSectionsAndCategories }
+
+type CategoryConfig = {
+  name: string
+  color: string
+}
+
+const hasExternalLink = (
+  rawPost: z.infer<typeof rawLatestPostSchema>
+): boolean => {
+  const { redirect } = rawPost
+  return isValidUrl(redirect)
+}
+
+const getSectionConfig = async (
+  rawPosts: z.infer<typeof rawLatestPostSchema>
+): Promise<CategoryConfig> => {
+  const { partner, sections } = rawPosts
+
+  if (typeof partner === 'string') {
+    const categoryName = sections[0]?.name || DEFAULT_SECTION_NAME
+    const color = await colorManger.getColor(sections[0]?.slug)
+
+    return {
+      name: categoryName,
+      color,
+    }
+  } else {
+    const { slug } = partner
+    if (slug === 'healthnews') {
+      return {
+        name: '生活',
+        color: '#03C121',
+      }
+    } else {
+      // ebc and others
+      const color = await colorManger.getColor()
+      return {
+        name: DEFAULT_SECTION_NAME,
+        color,
+      }
+    }
+  }
+}
+
+const transformRawLatestPost = async (
+  rawPosts: z.infer<typeof rawLatestPostSchema>
+): Promise<LatestPost> => {
+  const { title, slug, heroImage, publishedDate, partner } = rawPosts
+  const { name, color } = await getSectionConfig(rawPosts)
+
+  return {
+    categoryName: name,
+    categoryColor: color,
+    postName: title,
+    postSlug: slug,
+    heroImage: getHeroImage(heroImage),
+    publishedDate,
+    link: getPostPageUrl(slug, !!partner),
+  }
+}
+
+export const fetchLatestPost = async (
+  page: number = 0
+): Promise<LatestPost[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching latest posts',
+    getTraceObject()
+  )
+
+  try {
+    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`)
+
+    const rawPostData = await resp.json()
+    const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
+    const filteredData = latestPosts.filter(
+      (rawPost) => !hasExternalLink(rawPost)
+    )
+
+    const result = await Promise.allSettled(
+      filteredData.map(transformRawLatestPost)
+    )
+    return result
+      .filter(
+        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
+      )
+      .map((r) => r.value)
+  } catch (e) {
+    errorLogger(e)
+    return []
+  }
+}
 
 const transformRawPopularPost = async (
   rawPosts: z.infer<typeof rawPopularPostSchema>

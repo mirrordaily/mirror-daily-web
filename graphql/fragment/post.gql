@@ -1,4 +1,4 @@
-fragment PostDetails on Post {
+fragment PostOverview on Post {
   title
   createdAt
   apiDataBrief

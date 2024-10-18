@@ -17,6 +17,7 @@ import {
   selectMainImage,
 } from '@/utils/data-process'
 import type { AuthorPost, AuthorInfo } from '@/types/author-page'
+import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 function transformAuthorPost(
   rawData: GetPostsByAuthorIdQuery['posts']
@@ -30,8 +31,8 @@ function transformAuthorPost(
     const createdTime = dateFormatter(rawPost.createdAt) ?? ''
     const heroImage = getHeroImage(rawPost.heroImage)
     const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
-    const sectionName = rawPost.sections?.[0]?.name ?? ''
-    const sectionColor = rawPost.sections?.[0]?.color ?? '#FF5A36'
+    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
+    const sectionColor = rawPost.sections?.[0]?.color ?? '#4D8AA4'
     const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
