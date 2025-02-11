@@ -1,4 +1,4 @@
-import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
+import type { ImageDataFragment } from '@/graphql/__generated__/graphql'
 import type { HeroImage, Shorts } from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -9,7 +9,7 @@ import { getShortsPageUrl } from './site-urls'
 
 const getHeroImage = (
   rawImageObj:
-    | Pick<HeroImageFragment, 'resized' | 'resizedWebp'>
+    | Pick<ImageDataFragment, 'resized' | 'resizedWebp'>
     | string
     | null
     | undefined
@@ -21,10 +21,10 @@ const getHeroImage = (
           obj: HeroImage,
           [typeKey, valueObj]: [
             string,
-            HeroImageFragment[keyof HeroImageFragment],
+            ImageDataFragment[keyof ImageDataFragment],
           ]
         ) => {
-          type RawResziedImages = NonNullable<HeroImageFragment['resized']>
+          type RawResziedImages = NonNullable<ImageDataFragment['resized']>
           type ResizedImages = NonNullable<HeroImage['resized']>
 
           if (['resized', 'resizedWebp'].includes(typeKey) && valueObj) {
@@ -118,7 +118,7 @@ const selectMainImage = (
 }
 
 type ImageKeys = keyof Omit<
-  NonNullable<HeroImageFragment['resized']>,
+  NonNullable<ImageDataFragment['resized']>,
   '__typename'
 >
 

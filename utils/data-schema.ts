@@ -1,9 +1,9 @@
-import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
+import type { ImageDataFragment } from '@/graphql/__generated__/graphql'
 import { SHORTS_TYPE } from '@/types/common'
 import { z } from 'zod'
 
 type ImageKeys = keyof Omit<
-  NonNullable<HeroImageFragment['resized']>,
+  NonNullable<ImageDataFragment['resized']>,
   '__typename'
 >
 

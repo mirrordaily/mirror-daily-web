@@ -13,7 +13,7 @@ query GetLiveEventForHomepage($startDate: DateTime!) {
     name
     link
     heroImage {
-      ...HeroImage
+      ...ImageData
     }
   }
 }
