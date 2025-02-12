@@ -1,10 +1,5 @@
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { getStoryPageUrl } from '@/utils/site-urls'
-import {
-  getHeroImage,
-  dateFormatter,
-  selectMainImage,
-} from '@/utils/data-process'
+import { transfromRawPostWithSection } from '@/utils/data-process'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
   GetTagInformationQuery,
@@ -15,7 +10,6 @@ import {
   GetPostsByTagSlugDocument,
 } from '@/graphql/__generated__/graphql'
 import type { TagPost, TagInfo } from '@/types/tag-page'
-import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 function transformTagInformation(
   rawData: GetTagInformationQuery['tag']
@@ -50,30 +44,7 @@ async function fetchTagInformation(slug: string): Promise<TagInfo | null> {
 function transformTagPost(rawData: GetPostsByTagSlugQuery['posts']): TagPost[] {
   if (!rawData) return []
 
-  return rawData.map((rawPost) => {
-    const title = rawPost.title ?? ''
-    const slug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(slug)
-    const createdTime = dateFormatter(rawPost.createdAt) ?? ''
-    const heroImage = getHeroImage(rawPost.heroImage)
-    const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
-    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
-    const sectionColor = rawPost.sections?.[0]?.color ?? '#4D8AA4'
-    const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
-    const ogImage = getHeroImage(rawPost.og_image)
-    const postMainImage = selectMainImage(heroImage, ogImage)
-    const textContent = brief || content
-
-    return {
-      postMainImage,
-      title,
-      textContent,
-      link,
-      createdTime,
-      sectionColor,
-      sectionName,
-    }
-  })
+  return rawData.map(transfromRawPostWithSection)
 }
 
 async function fetchTagPosts(page: number, slug: string): Promise<TagPost[]> {

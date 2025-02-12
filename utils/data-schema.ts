@@ -115,7 +115,7 @@ export const latestShortsSchema = z.object({
   name: z.string(),
   uploader: z.string(),
   videoSrc: z.string(),
-  heroImage: z.union([heroImageSchema, z.null()]),
+  heroImage: heroImageSchema.nullable(),
 })
 
 export const shortsDataSchema = z.object({

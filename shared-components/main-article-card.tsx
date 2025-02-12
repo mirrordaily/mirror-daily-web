@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import type { CategoryPost } from '@/types/category-page'
-import type { SectionPost } from '@/types/section-page'
+import type { PostData } from '@/utils/data-process'
 
 type Props = {
-  postItem: CategoryPost | SectionPost
+  postItem: PostData
   color: string
 }
 

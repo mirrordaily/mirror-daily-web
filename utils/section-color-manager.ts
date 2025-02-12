@@ -9,6 +9,7 @@ import { createDataFetchingChain } from './data-process'
 import { URL_STATIC_SECTION_AND_CATEGORY } from '@/constants/config'
 import { fetchGQLData } from './graphql'
 import { GetSectionsAndCategoriesDocument } from '@/graphql/__generated__/graphql'
+import { DEFAULT_SECTION_COLOR } from '@/constants/misc'
 
 const transformRawSectionsAndCategories = (
   rawData: z.infer<ZodArray<typeof sectionSchema>>
@@ -73,7 +74,7 @@ export const fetchSectionsAndCategories = async (): Promise<
 class SectionColorManager {
   private lastTime = 0
   private cacheTime = MINUTE * 5
-  private defaultColor = '#4D8AA4'
+  private defaultColor = DEFAULT_SECTION_COLOR
   private data: Awaited<ReturnType<typeof fetchSectionsAndCategories>>
 
   constructor() {

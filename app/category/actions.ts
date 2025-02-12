@@ -10,39 +10,14 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { CategoryPost } from '@/types/category-page'
-import { getStoryPageUrl } from '@/utils/site-urls'
-import {
-  getHeroImage,
-  dateFormatter,
-  selectMainImage,
-} from '@/utils/data-process'
+import { transfromRawPost } from '@/utils/data-process'
 
 function transformCategoryPost(
   rawData: GetPostsByCategorySlugQuery['posts']
 ): CategoryPost[] {
   if (!rawData) return []
 
-  return rawData.map((rawPost) => {
-    const title = rawPost.title ?? ''
-    const slug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(slug)
-    const createdTime = dateFormatter(rawPost.createdAt)
-    const heroImage = getHeroImage(rawPost.heroImage)
-    const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
-    const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
-    const ogImage = getHeroImage(rawPost.og_image)
-    const postMainImage = selectMainImage(heroImage, ogImage)
-    const textContent = brief || content
-
-    return {
-      title,
-      slug,
-      link,
-      createdTime,
-      textContent,
-      postMainImage,
-    }
-  })
+  return rawData.map(transfromRawPost)
 }
 
 async function fetchCategoryPosts(page: number, slug: string) {

@@ -10,44 +10,15 @@ import type {
   GetPostsByAuthorIdQuery,
   GetAuthorInformationQuery,
 } from '@/graphql/__generated__/graphql'
-import { getStoryPageUrl } from '@/utils/site-urls'
-import {
-  getHeroImage,
-  dateFormatter,
-  selectMainImage,
-} from '@/utils/data-process'
+import { transfromRawPostWithSection } from '@/utils/data-process'
 import type { AuthorPost, AuthorInfo } from '@/types/author-page'
-import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 function transformAuthorPost(
   rawData: GetPostsByAuthorIdQuery['posts']
 ): AuthorPost[] {
   if (!rawData) return []
 
-  return rawData.map((rawPost) => {
-    const title = rawPost.title ?? ''
-    const slug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(slug)
-    const createdTime = dateFormatter(rawPost.createdAt) ?? ''
-    const heroImage = getHeroImage(rawPost.heroImage)
-    const brief = rawPost.apiDataBrief?.[0]?.content?.[0] ?? ''
-    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
-    const sectionColor = rawPost.sections?.[0]?.color ?? '#4D8AA4'
-    const content = rawPost.apiData?.[0]?.content?.[0] ?? ''
-    const ogImage = getHeroImage(rawPost.og_image)
-    const postMainImage = selectMainImage(heroImage, ogImage)
-    const textContent = brief || content
-
-    return {
-      title,
-      link,
-      postMainImage,
-      createdTime,
-      sectionColor,
-      sectionName,
-      textContent,
-    }
-  })
+  return rawData.map(transfromRawPostWithSection)
 }
 
 async function fetchAuthorPosts(
