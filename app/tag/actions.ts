@@ -1,3 +1,5 @@
+'use server'
+
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { transfromRawPostWithSection } from '@/utils/data-process'
 import { fetchGQLData } from '@/utils/graphql'
