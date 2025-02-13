@@ -78,24 +78,22 @@ export default function ShortsList({
         className="shorts-swiper-in-homepage"
       >
         {items.map((item, index) => (
-          <>
-            <SwiperSlide key={index}>
-              <ShortsItem
-                {...item}
-                key={index}
-                isActive={isIntersecting && activeIndex === index}
-                customColor={customColor}
-                onPlay={() => {
-                  swiperRef.current?.swiper.slideTo(index)
-                  setActiveIndex(index)
-                }}
-                onPause={() => {
-                  if (activeIndex === index && isIntersecting)
-                    setActiveIndex(null)
-                }}
-              />
-            </SwiperSlide>
-          </>
+          <SwiperSlide key={index}>
+            <ShortsItem
+              {...item}
+              key={index}
+              isActive={isIntersecting && activeIndex === index}
+              customColor={customColor}
+              onPlay={() => {
+                swiperRef.current?.swiper.slideTo(index)
+                setActiveIndex(index)
+              }}
+              onPause={() => {
+                if (activeIndex === index && isIntersecting)
+                  setActiveIndex(null)
+              }}
+            />
+          </SwiperSlide>
         ))}
       </Swiper>
       <button
