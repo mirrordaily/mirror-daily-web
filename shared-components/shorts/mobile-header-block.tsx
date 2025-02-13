@@ -8,7 +8,7 @@ import IconClose from '@/public/icons/shorts/close.svg'
 
 type Props = {
   inputValue: string
-  setInputValue: (value: string) => void
+  setInputValue(value: string): void
 }
 
 export default function MobileHeaderBlock({

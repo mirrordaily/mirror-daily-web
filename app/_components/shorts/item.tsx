@@ -8,8 +8,8 @@ import NextLink from 'next/link'
 type Props = Shorts & {
   isActive: boolean
   customColor: string
-  onPlay: () => void
-  onPause: () => void
+  onPlay(): void
+  onPause(): void
 }
 
 export default function ShortsItem({
