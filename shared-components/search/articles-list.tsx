@@ -2,8 +2,7 @@
 
 import ArticleCard from './article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import type { AuthorPost } from '@/types/author-page'
-import type { TagPost } from '@/types/tag-page'
+import type { PostDataWithSection } from '@/utils/data-process'
 
 type Props<T> = {
   initialList: T[]
@@ -12,7 +11,7 @@ type Props<T> = {
 
 const PAGE_SIZE = 12
 
-export default function ArticlesList<T extends AuthorPost | TagPost>({
+export default function ArticlesList<T extends PostDataWithSection>({
   initialList,
   fetchMorePosts,
 }: Props<T>) {

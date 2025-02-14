@@ -1,9 +1,9 @@
-import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
+import type { ImageDataFragment } from '@/graphql/__generated__/graphql'
 
 type ResizedImage = { original: string } & Partial<
   Record<
     keyof Omit<
-      NonNullable<HeroImageFragment['resized']>,
+      NonNullable<ImageDataFragment['resized']>,
       'original' | '__typename'
     >,
     string
@@ -12,7 +12,7 @@ type ResizedImage = { original: string } & Partial<
 type ResizedWebPImage = { original: string } & Partial<
   Record<
     keyof Omit<
-      NonNullable<HeroImageFragment['resizedWebp']>,
+      NonNullable<ImageDataFragment['resizedWebp']>,
       'original' | '__typename'
     >,
     string

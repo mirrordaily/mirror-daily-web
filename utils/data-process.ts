@@ -1,15 +1,26 @@
-import type { HeroImageFragment } from '@/graphql/__generated__/graphql'
+import type {
+  GetPostsByAuthorIdQuery,
+  GetPostsByCategorySlugQuery,
+  GetPostsBySectionSlugQuery,
+  GetPostsByTagSlugQuery,
+  ImageDataFragment,
+} from '@/graphql/__generated__/graphql'
 import type { HeroImage, Shorts } from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { createErrorLogger } from './log/common'
 import type { latestShortsSchema } from './data-schema'
 import type { z } from 'zod'
-import { getShortsPageUrl } from './site-urls'
+import { getShortsPageUrl, getStoryPageUrl } from './site-urls'
+import type { SectionPost } from '@/types/section-page'
+import type { CategoryPost } from '@/types/category-page'
+import type { AuthorPost } from '@/types/author-page'
+import type { TagPost } from '@/types/tag-page'
+import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 const getHeroImage = (
   rawImageObj:
-    | Pick<HeroImageFragment, 'resized' | 'resizedWebp'>
+    | Pick<ImageDataFragment, 'resized' | 'resizedWebp'>
     | string
     | null
     | undefined
@@ -21,10 +32,10 @@ const getHeroImage = (
           obj: HeroImage,
           [typeKey, valueObj]: [
             string,
-            HeroImageFragment[keyof HeroImageFragment],
+            ImageDataFragment[keyof ImageDataFragment],
           ]
         ) => {
-          type RawResziedImages = NonNullable<HeroImageFragment['resized']>
+          type RawResziedImages = NonNullable<ImageDataFragment['resized']>
           type ResizedImages = NonNullable<HeroImage['resized']>
 
           if (['resized', 'resizedWebp'].includes(typeKey) && valueObj) {
@@ -118,7 +129,7 @@ const selectMainImage = (
 }
 
 type ImageKeys = keyof Omit<
-  NonNullable<HeroImageFragment['resized']>,
+  NonNullable<ImageDataFragment['resized']>,
   '__typename'
 >
 
@@ -160,10 +171,79 @@ const transformLatestShorts = (
   }
 }
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+const getFirstParagraphFromApiData = (apiData: any): string | undefined => {
+  return apiData?.[0]?.content?.[0]
+}
+
+type RawPost = NonNullable<
+  GetPostsByCategorySlugQuery['posts'] | GetPostsBySectionSlugQuery['posts']
+>[0]
+
+export type PostData = CategoryPost | SectionPost
+
+const transfromRawPost = (rawPost: RawPost): PostData => {
+  const title = rawPost.title ?? ''
+  const slug = rawPost.slug ?? ''
+  const link = getStoryPageUrl(slug)
+  const createdTime = dateFormatter(rawPost.createdAt)
+  const heroImage = getHeroImage(rawPost.heroImage)
+  const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
+  const content = getFirstParagraphFromApiData(rawPost.apiData) ?? ''
+  const ogImage = getHeroImage(rawPost.og_image)
+  const postMainImage = selectMainImage(heroImage, ogImage)
+  const textContent = brief || content
+
+  return {
+    title,
+    slug,
+    link,
+    createdTime,
+    textContent,
+    postMainImage,
+  }
+}
+
+type RawPostWithSection = NonNullable<
+  GetPostsByAuthorIdQuery['posts'] | GetPostsByTagSlugQuery['posts']
+>[0]
+
+export type PostDataWithSection = AuthorPost | TagPost
+
+const transfromRawPostWithSection = (
+  rawPost: RawPostWithSection
+): PostDataWithSection => {
+  const title = rawPost.title ?? ''
+  const slug = rawPost.slug ?? ''
+  const link = getStoryPageUrl(slug)
+  const createdTime = dateFormatter(rawPost.createdAt) ?? ''
+  const heroImage = getHeroImage(rawPost.heroImage)
+  const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
+  const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
+  const sectionColor = rawPost.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
+  const content = getFirstParagraphFromApiData(rawPost.apiData) ?? ''
+  const ogImage = getHeroImage(rawPost.og_image)
+  const postMainImage = selectMainImage(heroImage, ogImage)
+  const textContent = brief || content
+
+  return {
+    postMainImage,
+    title,
+    textContent,
+    link,
+    createdTime,
+    sectionColor,
+    sectionName,
+  }
+}
+
 export {
   getHeroImage,
   dateFormatter,
   createDataFetchingChain,
   selectMainImage,
   transformLatestShorts,
+  getFirstParagraphFromApiData,
+  transfromRawPost,
+  transfromRawPostWithSection,
 }

@@ -4,8 +4,7 @@ import MainArticleCard from './main-article-card'
 import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { notFound } from 'next/navigation'
-import type { CategoryPost } from '@/types/category-page'
-import type { SectionPost } from '@/types/section-page'
+import type { PostData } from '@/utils/data-process'
 
 type Props<T> = {
   initialPosts: T[]
@@ -15,7 +14,7 @@ type Props<T> = {
   fetchPosts: (page: number, slug: string) => Promise<T[]>
 }
 
-export default function ArticlesList<T extends CategoryPost | SectionPost>({
+export default function ArticlesList<T extends PostData>({
   initialPosts,
   slug,
   color,

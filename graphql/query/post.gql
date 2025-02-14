@@ -84,10 +84,10 @@ query GetPostBySlug($slug: String!) {
     heroCaption
     publishedDate
     heroImage {
-      ...HeroImage
+      ...ImageData
     }
     og_image {
-      ...OgImage
+      ...ImageData
     }
     tags {
       slug
@@ -117,10 +117,10 @@ query GetRelatedPostsBySlug($slug: String!) {
       publishedDate
       slug
       heroImage {
-        ...HeroImage
+        ...ImageData
       }
       og_image {
-        ...OgImage
+        ...ImageData
       }
       sections {
         name

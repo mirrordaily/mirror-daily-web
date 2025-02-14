@@ -8,7 +8,7 @@ fragment PostOverview on Post {
     ...HeroImage
   }
   og_image {
-    ...OgImage
+    ...ImageData
   }
 }
 
@@ -16,6 +16,6 @@ fragment PostItem on Post {
   title
   slug
   heroImage {
-    ...HeroImage
+    ...ImageData
   }
 }

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import CustomImage from '../custom-image'
-import type { AuthorPost } from '@/types/author-page'
-import type { TagPost } from '@/types/tag-page'
+import type { PostDataWithSection } from '@/utils/data-process'
 
 export default function ArticleCard({
   title,
@@ -11,7 +10,7 @@ export default function ArticleCard({
   sectionColor,
   textContent,
   postMainImage,
-}: AuthorPost | TagPost) {
+}: PostDataWithSection) {
   return (
     <Link
       href={link}
