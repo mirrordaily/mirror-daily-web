@@ -1,5 +1,5 @@
 query GetTopics {
-  topics(orderBy: { sortOrder: asc }, where: { state: { equals: "published" } }) {
+  topics(orderBy: { sortOrder: asc, id: desc }, where: { state: { equals: "published" } }) {
     name
     slug
     posts(
@@ -8,6 +8,85 @@ query GetTopics {
         where: { state: { equals: "published" } }
     ) {
       ...PostItem
+    }
+  }
+}
+
+query GetTopicBasicInfo($slug: String!) {
+  topic(where: { slug: $slug }) {
+    slug
+    name
+    og_title # used by metatag
+    apiDataBrief # used by metatag
+    og_description # used by metatag
+    state
+    leading
+    type
+    style
+    heroUrl
+    heroVideo {
+      state
+      videoSrc
+      heroImage {
+        ...ImageData
+      }
+    }
+    og_image { # used by metatag
+      ...ImageData
+    }
+    heroImage {
+      ...ImageData
+    }
+    slideshow_images {
+      id
+      name
+      topicKeywords
+      ...ImageData
+    }
+    manualOrderOfSlideshowImages
+    tags { # used by `group` type
+      id
+      name
+      slug
+    }
+  }
+}
+
+query GetListTypeTopcPosts($slug: String!, $take: Int!, $skip: Int = 0) {
+  topic(where: { slug: $slug }) {
+    posts(
+      where: {
+          state: { equals: "published" }
+      },
+      orderBy:  {
+          isFeatured: desc,
+          publishedDate: desc,
+          id: desc,
+      },
+      take: $take,
+      skip: $skip
+    ) {
+      ...TopicPost
+    }
+  }
+}
+
+query GetGroupTypeTopicPosts($slug: String!) {
+  topic(where: { slug: $slug }) {
+    posts(
+      where: {
+          state: { equals: "published" }
+      },
+      orderBy:  {
+          isFeatured: desc,
+          publishedDate: desc,
+          id: desc,
+      }
+    ) {
+      ...TopicPost
+      tags {
+        id
+      }
     }
   }
 }

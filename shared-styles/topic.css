@@ -1,0 +1,53 @@
+/* topic pages have special css customization, so we create dedicated file for them */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .topic {
+    @apply flex flex-col items-center bg-[#e5e6e9];
+  }
+
+  /* leading */
+  .leading-wrapper {
+    @apply relative aspect-[5/2] w-full bg-black md:max-h-[288px] lg:max-h-[480px];
+  }
+
+  .leading-image {
+    /* create entry to prevent warning */
+  }
+
+  .leading-video {
+    @apply h-full;
+  }
+
+  .leading-slideshow {
+    @apply relative size-full;
+  }
+
+  .leading-slideshow .slide {
+    @apply relative w-full max-w-screen-sm md:max-w-none;
+  }
+
+  .leading-slideshow .navigation-button {
+    @apply absolute top-1/2 -translate-y-1/2 lg:inline-block z-over-slides;
+  }
+
+  .leading-slideshow .pagination-container {
+    /* create entry to prevent warning */
+  }
+
+  .leading-slideshow .swiper-pagination-horizontal {
+    @apply hidden z-over-slides  mt-3 md:flex w-full justify-center space-x-3;
+  }
+
+  .leading-slideshow .swiper-pagination-bullet {
+    @apply size-3 rounded-full border border-[#b2b5be] bg-[#ccced4] opacity-100 drop-shadow-[0px_2px_2px_rgba(0,0,0,0.05)];
+  }
+
+  .leading-slideshow .swiper-pagination-bullet-active {
+    @apply bg-[#b04ee9];
+  }
+
+  /* listing */
+}
