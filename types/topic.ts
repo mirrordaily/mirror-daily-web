@@ -1,3 +1,6 @@
+import type { PostData } from '@/utils/data-process'
+import type { HeroImage } from './common'
+
 export enum TOPIC_LEADING {
   VIDEO = 'video',
   SLIDESHOW = 'slideshow',
@@ -7,4 +10,18 @@ export enum TOPIC_LEADING {
 export enum TOPIC_LIST_TYPE {
   LIST = 'list',
   GROUP = 'group',
+}
+
+export type TopicPostData = Pick<
+  PostData,
+  'title' | 'slug' | 'link' | 'textContent' | 'postMainImage'
+>
+
+export type PostDataWithTags = {
+  title: string
+  slug: string
+  link: string
+  postMainImage: HeroImage
+  textContent: string
+  tags: { id: string }[]
 }

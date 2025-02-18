@@ -59,8 +59,8 @@ query GetListTypeTopcPosts($slug: String!, $take: Int!, $skip: Int = 0, $withAmo
         state: { equals: "published" }
       },
       orderBy:  [
-        { isFeatured: desc }
-        { publishedDate: desc }
+        { isFeatured: desc },
+        { publishedDate: desc },
         { id: desc }
       ],
       take: $take,
@@ -82,11 +82,11 @@ query GetGroupTypeTopicPosts($slug: String!) {
       where: {
         state: { equals: "published" }
       },
-      orderBy:  {
-        isFeatured: desc,
-        publishedDate: desc,
-        id: desc,
-      }
+      orderBy: [
+        { isFeatured: desc },
+        { publishedDate: desc },
+        { id: desc }
+      ]
     ) {
       ...TopicPost
       tags {

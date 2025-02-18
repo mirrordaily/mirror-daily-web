@@ -8896,22 +8896,37 @@ export const GetGroupTypeTopicPostsDocument = {
                       kind: 'Argument',
                       name: { kind: 'Name', value: 'orderBy' },
                       value: {
-                        kind: 'ObjectValue',
-                        fields: [
+                        kind: 'ListValue',
+                        values: [
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'isFeatured' },
-                            value: { kind: 'EnumValue', value: 'desc' },
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'isFeatured' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
                           },
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'publishedDate' },
-                            value: { kind: 'EnumValue', value: 'desc' },
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'publishedDate' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
                           },
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id' },
-                            value: { kind: 'EnumValue', value: 'desc' },
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'id' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
                           },
                         ],
                       },

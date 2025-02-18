@@ -2,14 +2,14 @@
 
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import type { PostData } from '@/utils/data-process'
+import type { TopicPostData } from '@/types/topic'
 
 export default function ArticleCard({
   title,
   link,
   textContent,
   postMainImage,
-}: PostData) {
+}: TopicPostData) {
   return (
     <Link
       href={link}

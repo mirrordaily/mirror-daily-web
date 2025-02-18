@@ -17,6 +17,7 @@ import LeadingVideo from './_components/leading-video'
 import CustomImage from '@/shared-components/custom-image'
 import LeadingSlideshow from './_components/leading-slideshow'
 import ListTypeListing from './_components/list-type'
+import GroupTypeListing from './_components/group-type'
 
 type PageProps = {
   params: { slug: string }
@@ -74,6 +75,7 @@ export default async function Page({
     slideshow_images,
     manualOrderOfSlideshowImages,
     type,
+    tags,
   } = topic
 
   let leadingJsx: React.ReactNode
@@ -171,6 +173,7 @@ export default async function Page({
 
   switch (type) {
     case TOPIC_LIST_TYPE.GROUP: {
+      listingJsx = <GroupTypeListing slug={slug} tags={tags || []} />
       break
     }
     case TOPIC_LIST_TYPE.LIST:

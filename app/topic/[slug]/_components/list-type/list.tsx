@@ -1,14 +1,14 @@
 'use client'
 
-import type { PostData } from '@/utils/data-process'
+import type { TopicPostData } from '@/types/topic'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import ArticleCard from '../article-card'
 
 type Props = {
   pageSize: number
   totalAmount: number
-  initialList: PostData[]
-  fetchMoreItem(page: number): Promise<PostData[]>
+  initialList: TopicPostData[]
+  fetchMoreItem(page: number): Promise<TopicPostData[]>
 }
 
 export default function List({
