@@ -11,11 +11,12 @@ import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { SITE_URL } from '@/constants/config'
 import { notFound } from 'next/navigation'
-import { TOPIC_LEADING } from '@/types/topic'
+import { TOPIC_LEADING, TOPIC_LIST_TYPE } from '@/types/topic'
 import type { ImageKeys } from '@/utils/data-schema'
 import LeadingVideo from './_components/leading-video'
 import CustomImage from '@/shared-components/custom-image'
 import LeadingSlideshow from './_components/leading-slideshow'
+import ListTypeListing from './_components/list-type'
 
 type PageProps = {
   params: { slug: string }
@@ -72,6 +73,7 @@ export default async function Page({
     style,
     slideshow_images,
     manualOrderOfSlideshowImages,
+    type,
   } = topic
 
   let leadingJsx: React.ReactNode
@@ -165,11 +167,27 @@ export default async function Page({
     }
   }
 
+  let listingJsx: React.ReactNode
+
+  switch (type) {
+    case TOPIC_LIST_TYPE.GROUP: {
+      break
+    }
+    case TOPIC_LIST_TYPE.LIST:
+    default: {
+      listingJsx = <ListTypeListing slug={slug} />
+      break
+    }
+  }
+
   return (
     <>
       {/* custom styles */}
       {style && <style>{style}</style>}
-      <main className="topic">{leadingJsx}</main>
+      <div className="topic">
+        {leadingJsx}
+        <main className="topic-list">{listingJsx}</main>
+      </div>
     </>
   )
 }

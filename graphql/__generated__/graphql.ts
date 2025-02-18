@@ -4665,12 +4665,14 @@ export type GetListTypeTopcPostsQueryVariables = Exact<{
   slug: Scalars['String']['input']
   take: Scalars['Int']['input']
   skip?: InputMaybe<Scalars['Int']['input']>
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetListTypeTopcPostsQuery = {
   __typename?: 'Query'
   topic?: {
     __typename?: 'Topic'
+    postsCount?: number | null
     posts?: Array<{
       __typename?: 'Post'
       title?: string | null
@@ -8536,6 +8538,21 @@ export const GetListTypeTopcPostsDocument = {
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
           defaultValue: { kind: 'IntValue', value: '0' },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -8600,22 +8617,37 @@ export const GetListTypeTopcPostsDocument = {
                       kind: 'Argument',
                       name: { kind: 'Name', value: 'orderBy' },
                       value: {
-                        kind: 'ObjectValue',
-                        fields: [
+                        kind: 'ListValue',
+                        values: [
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'isFeatured' },
-                            value: { kind: 'EnumValue', value: 'desc' },
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'isFeatured' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
                           },
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'publishedDate' },
-                            value: { kind: 'EnumValue', value: 'desc' },
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'publishedDate' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
                           },
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id' },
-                            value: { kind: 'EnumValue', value: 'desc' },
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'id' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
                           },
                         ],
                       },
@@ -8646,6 +8678,55 @@ export const GetListTypeTopcPostsDocument = {
                       },
                     ],
                   },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'postsCount' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'state' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'equals' },
+                                  value: {
+                                    kind: 'StringValue',
+                                    value: 'published',
+                                    block: false,
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  directives: [
+                    {
+                      kind: 'Directive',
+                      name: { kind: 'Name', value: 'include' },
+                      arguments: [
+                        {
+                          kind: 'Argument',
+                          name: { kind: 'Name', value: 'if' },
+                          value: {
+                            kind: 'Variable',
+                            name: { kind: 'Name', value: 'withAmount' },
+                          },
+                        },
+                      ],
+                    },
+                  ],
                 },
               ],
             },

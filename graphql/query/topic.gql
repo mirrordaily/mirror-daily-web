@@ -3,9 +3,9 @@ query GetTopics {
     name
     slug
     posts(
-        take: 4
-        orderBy: { publishedDate: desc }
-        where: { state: { equals: "published" } }
+      take: 4
+      orderBy: { publishedDate: desc }
+      where: { state: { equals: "published" } }
     ) {
       ...PostItem
     }
@@ -52,22 +52,27 @@ query GetTopicBasicInfo($slug: String!) {
   }
 }
 
-query GetListTypeTopcPosts($slug: String!, $take: Int!, $skip: Int = 0) {
+query GetListTypeTopcPosts($slug: String!, $take: Int!, $skip: Int = 0, $withAmount: Boolean! = false) {
   topic(where: { slug: $slug }) {
     posts(
       where: {
-          state: { equals: "published" }
+        state: { equals: "published" }
       },
-      orderBy:  {
-          isFeatured: desc,
-          publishedDate: desc,
-          id: desc,
-      },
+      orderBy:  [
+        { isFeatured: desc }
+        { publishedDate: desc }
+        { id: desc }
+      ],
       take: $take,
       skip: $skip
     ) {
       ...TopicPost
     }
+    postsCount(
+      where: {
+        state: { equals: "published" }
+      }
+    ) @include (if: $withAmount)
   }
 }
 
@@ -75,12 +80,12 @@ query GetGroupTypeTopicPosts($slug: String!) {
   topic(where: { slug: $slug }) {
     posts(
       where: {
-          state: { equals: "published" }
+        state: { equals: "published" }
       },
       orderBy:  {
-          isFeatured: desc,
-          publishedDate: desc,
-          id: desc,
+        isFeatured: desc,
+        publishedDate: desc,
+        id: desc,
       }
     ) {
       ...TopicPost
