@@ -1,7 +1,8 @@
 'use server'
 
-import type { PopularNews, Shorts } from '@/types/common'
+import type { PopularNews, SectionAndCategory, Shorts } from '@/types/common'
 import { SHORTS_TYPE } from '@/types/common'
+import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import {
@@ -14,16 +15,19 @@ import {
   latestShortsSchema,
   rawPopularPostSchema,
   rawLatestPostSchema,
+  sectionSchema,
 } from '@/utils/data-schema'
 import {
   URL_STATIC_LATEST_SHORTS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
+  URL_STATIC_SECTION_AND_CATEGORY,
 } from '@/constants/config'
 import {
   CreateCreativityShortsDocument,
   CreateShortsPreviewDocument,
   GetLatestShortsDocument,
+  GetSectionsAndCategoriesDocument,
 } from '@/graphql/__generated__/graphql'
 import type { LatestPost } from '@/types/common'
 import { getPostPageUrl } from '@/utils/site-urls'
@@ -36,11 +40,8 @@ import {
 } from '@/constants/multimedia'
 import type { FormActionResponse } from '@/types/shorts'
 import { FormState } from '@/types/shorts'
-import { fetchSectionsAndCategories } from '@/utils/section-color-manager'
 import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 import { isValidUrl } from '@/utils/common'
-
-export { fetchSectionsAndCategories }
 
 type CategoryConfig = {
   name: string
@@ -333,4 +334,64 @@ export const createCreativityShorts = async (
       }
     }
   }
+}
+
+const transformRawSectionsAndCategories = (
+  rawData: z.infer<ZodArray<typeof sectionSchema>>
+): SectionAndCategory[] => {
+  if (!rawData) return []
+
+  return rawData.map((rawSection) => {
+    const name = rawSection.name ?? ''
+    const slug = rawSection.slug ?? ''
+    const color = rawSection.color ?? ''
+    const categories = (rawSection.categories ?? []).map((rawCategory) => {
+      const name = rawCategory.name ?? ''
+      const slug = rawCategory.slug ?? ''
+
+      return {
+        name,
+        slug,
+        color,
+      }
+    })
+
+    return {
+      name,
+      slug,
+      color,
+      categories,
+    }
+  })
+}
+
+export const fetchSectionsAndCategories = async (): Promise<
+  SectionAndCategory[]
+> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching sections and categories',
+    getTraceObject()
+  )
+  const schema = z.promise(z.object({ sections: z.array(sectionSchema) }))
+
+  const data = await createDataFetchingChain<
+    z.infer<ZodArray<typeof sectionSchema>>
+  >(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY)
+
+      const result = await schema.parse(resp.json())
+      return result.sections
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetSectionsAndCategoriesDocument)
+      )
+      return result.sections
+    }
+  )
+
+  return transformRawSectionsAndCategories(data)
 }

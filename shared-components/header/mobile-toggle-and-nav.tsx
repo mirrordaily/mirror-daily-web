@@ -61,6 +61,9 @@ export default function MobileToggleAndNav({ data }: Props) {
         type="checkbox"
         className="peer hidden"
         checked={isOpen}
+        onChange={() => {
+          /* prevent warning */
+        }}
       />
       {isOpen && (
         <div className="fixed left-0 top-0 z-mobile-nav hidden h-screen w-screen flex-col bg-[#000928] peer-checked:flex md:bg-[rgba(12,12,12,0.7)] peer-checked:lg:hidden">

@@ -85,14 +85,18 @@ const createErrorLogger = (
 }
 
 const getTraceObject = () => {
-  const traceHeader = headers().get('x-cloud-trace-context')
   const globalLogFields: Record<string, string> = {}
-  if (traceHeader) {
-    const [trace] = traceHeader.split('/')
-    globalLogFields['logging.googleapis.com/trace'] =
-      `projects/${GCP_PROJECT_ID}/traces/${trace}`
+  try {
+    const traceHeader = headers().get('x-cloud-trace-context')
+    if (traceHeader) {
+      const [trace] = traceHeader.split('/')
+      globalLogFields['logging.googleapis.com/trace'] =
+        `projects/${GCP_PROJECT_ID}/traces/${trace}`
+    }
+    return globalLogFields
+  } catch (e) {
+    return globalLogFields
   }
-  return globalLogFields
 }
 
 export { createErrorLogger, getTraceObject }
