@@ -1,4 +1,5 @@
 import type { GetTopicBasicInfoQuery } from '@/graphql/__generated__/graphql'
+import { notFound } from 'next/navigation'
 import { fetchGorupTypeTopicPostBySlug } from '../../../action'
 import List from './list'
 
@@ -12,20 +13,23 @@ type Props = {
 export default async function GroupTypeListing({ slug, tags }: Props) {
   const posts = await fetchGorupTypeTopicPostBySlug(slug)
 
-  return (
-    <div className="group-list">
-      {tags.map((tag) => (
-        <>
-          <List
-            key={tag.id}
-            groupName={tag.name || ''}
-            posts={posts.filter((post) =>
-              post.tags.some((postTag) => postTag.id === tag.id)
-            )}
-          />
-          <div className="divider" />
-        </>
-      ))}
-    </div>
+  if (posts.length === 0) notFound()
+
+  const groupElements = tags.map((tag) => (
+    <List
+      key={tag.id}
+      groupName={tag.name || ''}
+      posts={posts.filter((post) =>
+        post.tags.some((postTag) => postTag.id === tag.id)
+      )}
+    />
+  ))
+
+  const isEveryGroupEmpty = groupElements.every(
+    (element) => element.props?.posts?.length === 0
   )
+
+  if (isEveryGroupEmpty) notFound()
+
+  return <div className="group-list">{groupElements}</div>
 }

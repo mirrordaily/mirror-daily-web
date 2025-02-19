@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import { fetchListTypeTopicPostBySlug } from '../../../action'
 import List from './list'
 
@@ -14,6 +15,8 @@ export default async function ListTypeListing({ slug }: Props) {
     skip: 0,
     withAmount: true,
   })
+
+  if (totalAmount === 0) notFound()
 
   const fetchMorePosts = async (page: number) => {
     'use server'
