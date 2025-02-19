@@ -185,8 +185,8 @@ export default async function Page({
 
   return (
     <>
-      {/* custom styles */}
-      {style && <style>{style}</style>}
+      {/* custom styles, use dangerouslySetInnerHTML to prevent hydration error */}
+      {style && <style dangerouslySetInnerHTML={{ __html: style }} />}
       <div className="topic">
         {leadingJsx}
         <main className="topic-list">{listingJsx}</main>
