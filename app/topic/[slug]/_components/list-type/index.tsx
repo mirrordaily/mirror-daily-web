@@ -23,7 +23,7 @@ export default async function ListTypeListing({ slug }: Props) {
     const { items } = await fetchListTypeTopicPostBySlug({
       slug,
       take: PAGE_SIZE,
-      skip: PAGE_SIZE * page - 1,
+      skip: PAGE_SIZE * (page - 1),
     })
     return items
   }
