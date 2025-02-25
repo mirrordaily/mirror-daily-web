@@ -9,7 +9,11 @@ import type { HeroImage, Shorts } from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { createErrorLogger } from './log/common'
-import type { latestShortsSchema } from './data-schema'
+import type {
+  latestShortsSchema,
+  ImageKeys,
+  resizedImageSchema,
+} from './data-schema'
 import type { z } from 'zod'
 import { getShortsPageUrl, getStoryPageUrl } from './site-urls'
 import type { SectionPost } from '@/types/section-page'
@@ -128,10 +132,19 @@ const selectMainImage = (
   return heroImage
 }
 
-type ImageKeys = keyof Omit<
-  NonNullable<ImageDataFragment['resized']>,
-  '__typename'
->
+const getImageSrc = (
+  imageObj: z.infer<typeof resizedImageSchema> | null | undefined,
+  pickedSize: ImageKeys[]
+): string | undefined => {
+  if (imageObj) {
+    return pickedSize.reduce((src: string | undefined, size) => {
+      const newSrc = imageObj[size]
+      if (!src && newSrc) return newSrc
+      else return src
+    }, undefined)
+  }
+  return undefined
+}
 
 const getPosterFromShorts = (
   heroImage: z.infer<typeof latestShortsSchema>['heroImage']
@@ -139,21 +152,8 @@ const getPosterFromShorts = (
   const pickedSize: ImageKeys[] = ['w800', 'w480', 'original']
   if (!heroImage) return ''
 
-  const getImageSrc = (
-    imageObj: typeof heroImage.resized
-  ): string | undefined => {
-    if (imageObj) {
-      return pickedSize.reduce((src, size) => {
-        const newSrc = imageObj![size]
-        if (!src && newSrc) return newSrc
-        else return src
-      }, undefined)
-    }
-    return undefined
-  }
-
-  const resized = getImageSrc(heroImage.resized)
-  const resizedWebp = getImageSrc(heroImage.resizedWebp)
+  const resized = getImageSrc(heroImage.resized, pickedSize)
+  const resizedWebp = getImageSrc(heroImage.resizedWebp, pickedSize)
 
   return resizedWebp || resized || ''
 }
@@ -246,4 +246,5 @@ export {
   getFirstParagraphFromApiData,
   transfromRawPost,
   transfromRawPostWithSection,
+  getImageSrc,
 }

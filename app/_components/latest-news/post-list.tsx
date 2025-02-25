@@ -10,7 +10,7 @@ import type { LatestPost } from '@/types/common'
 
 type PostListProps = {
   initialList: LatestPost[]
-  fetchLatestPost: (page: number) => Promise<LatestPost[]>
+  fetchLatestPost(page: number): Promise<LatestPost[]>
 }
 
 export default function PostList({

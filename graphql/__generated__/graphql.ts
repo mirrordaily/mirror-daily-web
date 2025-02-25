@@ -3141,6 +3141,7 @@ export type TagWhereUniqueInput = {
 
 export type Topic = {
   __typename?: 'Topic'
+  apiDataBrief?: Maybe<Scalars['JSON']['output']>
   brief?: Maybe<Scalars['JSON']['output']>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   createdBy?: Maybe<User>
@@ -3226,6 +3227,7 @@ export type TopicTagsCountArgs = {
 }
 
 export type TopicCreateInput = {
+  apiDataBrief?: InputMaybe<Scalars['JSON']['input']>
   brief?: InputMaybe<Scalars['JSON']['input']>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
@@ -3312,6 +3314,7 @@ export type TopicUpdateArgs = {
 }
 
 export type TopicUpdateInput = {
+  apiDataBrief?: InputMaybe<Scalars['JSON']['input']>
   brief?: InputMaybe<Scalars['JSON']['input']>
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
@@ -3759,6 +3762,36 @@ export type PostItemFragment = {
   __typename?: 'Post'
   title?: string | null
   slug?: string | null
+  heroImage?: {
+    __typename?: 'Photo'
+    id: string
+    resized?: {
+      __typename?: 'ResizedImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+    resizedWebp?: {
+      __typename?: 'ResizedWebPImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+  } | null
+}
+
+export type TopicPostFragment = {
+  __typename?: 'Post'
+  title?: string | null
+  slug?: string | null
+  apiDataBrief?: any | null
+  apiData?: any | null
   heroImage?: {
     __typename?: 'Photo'
     id: string
@@ -4505,6 +4538,214 @@ export type GetTopicsQuery = {
   }> | null
 }
 
+export type GetTopicBasicInfoQueryVariables = Exact<{
+  slug: Scalars['String']['input']
+}>
+
+export type GetTopicBasicInfoQuery = {
+  __typename?: 'Query'
+  topic?: {
+    __typename?: 'Topic'
+    slug?: string | null
+    name?: string | null
+    og_title?: string | null
+    apiDataBrief?: any | null
+    og_description?: string | null
+    state?: string | null
+    leading?: string | null
+    type?: string | null
+    style?: string | null
+    heroUrl?: string | null
+    manualOrderOfSlideshowImages?: any | null
+    heroVideo?: {
+      __typename?: 'Video'
+      state?: string | null
+      videoSrc?: string | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+    } | null
+    og_image?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+    slideshow_images?: Array<{
+      __typename?: 'Photo'
+      id: string
+      name?: string | null
+      topicKeywords?: string | null
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    }> | null
+    tags?: Array<{
+      __typename?: 'Tag'
+      id: string
+      name?: string | null
+      slug?: string | null
+    }> | null
+  } | null
+}
+
+export type GetListTypeTopcPostsQueryVariables = Exact<{
+  slug: Scalars['String']['input']
+  take: Scalars['Int']['input']
+  skip?: InputMaybe<Scalars['Int']['input']>
+  withAmount?: Scalars['Boolean']['input']
+}>
+
+export type GetListTypeTopcPostsQuery = {
+  __typename?: 'Query'
+  topic?: {
+    __typename?: 'Topic'
+    postsCount?: number | null
+    posts?: Array<{
+      __typename?: 'Post'
+      title?: string | null
+      slug?: string | null
+      apiDataBrief?: any | null
+      apiData?: any | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+    }> | null
+  } | null
+}
+
+export type GetGroupTypeTopicPostsQueryVariables = Exact<{
+  slug: Scalars['String']['input']
+}>
+
+export type GetGroupTypeTopicPostsQuery = {
+  __typename?: 'Query'
+  topic?: {
+    __typename?: 'Topic'
+    posts?: Array<{
+      __typename?: 'Post'
+      title?: string | null
+      slug?: string | null
+      apiDataBrief?: any | null
+      apiData?: any | null
+      tags?: Array<{ __typename?: 'Tag'; id: string }> | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+    }> | null
+  } | null
+}
+
 export type GetLatestShortsQueryVariables = Exact<{
   amount: Scalars['Int']['input']
   start: Scalars['Int']['input']
@@ -5000,6 +5241,85 @@ export const PostOverviewFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<PostOverviewFragment, unknown>
+export const TopicPostFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TopicPost' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Post' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ImageData' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TopicPostFragment, unknown>
 export const LatestShortsFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -7796,6 +8116,11 @@ export const GetTopicsDocument = {
                       name: { kind: 'Name', value: 'sortOrder' },
                       value: { kind: 'EnumValue', value: 'asc' },
                     },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'EnumValue', value: 'desc' },
+                    },
                   ],
                 },
               },
@@ -7973,6 +8298,748 @@ export const GetTopicsDocument = {
     },
   ],
 } as unknown as DocumentNode<GetTopicsQuery, GetTopicsQueryVariables>
+export const GetTopicBasicInfoDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetTopicBasicInfo' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'topic' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'slug' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'og_title' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'apiDataBrief' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'og_description' },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'state' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'leading' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'style' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'heroUrl' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'heroVideo' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'state' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'videoSrc' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'heroImage' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'FragmentSpread',
+                              name: { kind: 'Name', value: 'ImageData' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'og_image' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'ImageData' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'heroImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'ImageData' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'slideshow_images' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'topicKeywords' },
+                      },
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'ImageData' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'manualOrderOfSlideshowImages' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'tags' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ImageData' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetTopicBasicInfoQuery,
+  GetTopicBasicInfoQueryVariables
+>
+export const GetListTypeTopcPostsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetListTypeTopcPosts' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'topic' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'slug' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'posts' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'state' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'equals' },
+                                  value: {
+                                    kind: 'StringValue',
+                                    value: 'published',
+                                    block: false,
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderBy' },
+                      value: {
+                        kind: 'ListValue',
+                        values: [
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'isFeatured' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'publishedDate' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'id' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'take' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'take' },
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'skip' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'skip' },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'TopicPost' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'postsCount' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'state' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'equals' },
+                                  value: {
+                                    kind: 'StringValue',
+                                    value: 'published',
+                                    block: false,
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  directives: [
+                    {
+                      kind: 'Directive',
+                      name: { kind: 'Name', value: 'include' },
+                      arguments: [
+                        {
+                          kind: 'Argument',
+                          name: { kind: 'Name', value: 'if' },
+                          value: {
+                            kind: 'Variable',
+                            name: { kind: 'Name', value: 'withAmount' },
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ImageData' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TopicPost' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Post' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetListTypeTopcPostsQuery,
+  GetListTypeTopcPostsQueryVariables
+>
+export const GetGroupTypeTopicPostsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetGroupTypeTopicPosts' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'topic' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'slug' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'slug' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'posts' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'state' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'equals' },
+                                  value: {
+                                    kind: 'StringValue',
+                                    value: 'published',
+                                    block: false,
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderBy' },
+                      value: {
+                        kind: 'ListValue',
+                        values: [
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'isFeatured' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'publishedDate' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'id' },
+                                value: { kind: 'EnumValue', value: 'desc' },
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'TopicPost' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tags' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ImageData' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TopicPost' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Post' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetGroupTypeTopicPostsQuery,
+  GetGroupTypeTopicPostsQueryVariables
+>
 export const GetLatestShortsDocument = {
   kind: 'Document',
   definitions: [

@@ -1,14 +1,7 @@
 'use client'
 
 import NextLink from 'next/link'
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useWindowSize } from 'usehooks-ts'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { getTopicSectionPage } from '@/utils/site-urls'
@@ -61,7 +54,7 @@ function getMaxmimumDisplayTopics(
 type Props = {
   topics: string[]
   activeTopic: string
-  setTopic: Dispatch<SetStateAction<string>>
+  setTopic(value: string): void
 }
 
 export default function TopicSelector({

@@ -1,5 +1,7 @@
 import type { SHORTS_TYPE } from '@/types/common'
 
+export const SITE_NAME = '鏡報'
+
 export enum ENVIRONMENT {
   LOCAL = 'local',
   DEVELOPMENT = 'dev',

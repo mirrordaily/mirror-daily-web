@@ -1,3 +1,5 @@
+'use server'
+
 import { z } from 'zod'
 import type { ShortsData } from '@/types/shorts'
 import { latestShortsSchema, shortsDataSchema } from '@/utils/data-schema'

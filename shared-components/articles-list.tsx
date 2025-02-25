@@ -11,7 +11,7 @@ type Props<T> = {
   slug: string
   color: string
   name: string
-  fetchPosts: (page: number, slug: string) => Promise<T[]>
+  fetchPosts(page: number, slug: string): Promise<T[]>
 }
 
 export default function ArticlesList<T extends PostData>({

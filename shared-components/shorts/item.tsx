@@ -14,9 +14,9 @@ import SocialShareBar from '../social-share-bar'
 type Props = Shorts & {
   isActive: boolean
   volume: number
-  onPlay: () => void
-  onPause: () => void
-  setVolume: (volume: number) => void
+  onPlay(): void
+  onPause(): void
+  setVolume(volume: number): void
 }
 
 export default function ShortsItem({

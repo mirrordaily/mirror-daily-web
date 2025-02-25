@@ -5,7 +5,7 @@ fragment PostOverview on Post {
   slug
   apiData
   heroImage {
-    ...HeroImage
+    ...ImageData
   }
   og_image {
     ...ImageData
@@ -15,6 +15,16 @@ fragment PostOverview on Post {
 fragment PostItem on Post {
   title
   slug
+  heroImage {
+    ...ImageData
+  }
+}
+
+fragment TopicPost on Post {
+  title
+  slug
+  apiDataBrief
+  apiData
   heroImage {
     ...ImageData
   }

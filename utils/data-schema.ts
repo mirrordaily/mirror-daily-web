@@ -2,7 +2,7 @@ import type { ImageDataFragment } from '@/graphql/__generated__/graphql'
 import { SHORTS_TYPE } from '@/types/common'
 import { z } from 'zod'
 
-type ImageKeys = keyof Omit<
+export type ImageKeys = keyof Omit<
   NonNullable<ImageDataFragment['resized']>,
   '__typename'
 >
@@ -18,7 +18,7 @@ const imageKeys = [
 
 const requiredImageKey = 'original'
 
-const resizedImageSchema = z
+export const resizedImageSchema = z
   .object(
     imageKeys.reduce(
       (shape, key) => {

@@ -10,17 +10,15 @@ export default function MobileUploadButton() {
   const isModalOpened = useAppSelector(selectIsModalOpened)
 
   return (
-    <>
-      <button
-        className={`flex flex-col items-center justify-center gap-y-1 text-[#FF5A36] ${isModalOpened ? 'bg-[#F0F0F1]' : ''}`}
-        onClick={() => {
-          if (isModalOpened) return
-          dispatch(shortsUploadActions.setIsModalOpened(true))
-        }}
-      >
-        <NextImage src={IconSubmission} alt="投稿" />
-        <p>我要投稿</p>
-      </button>
-    </>
+    <button
+      className={`flex flex-col items-center justify-center gap-y-1 text-[#FF5A36] ${isModalOpened ? 'bg-[#F0F0F1]' : ''}`}
+      onClick={() => {
+        if (isModalOpened) return
+        dispatch(shortsUploadActions.setIsModalOpened(true))
+      }}
+    >
+      <NextImage src={IconSubmission} alt="投稿" />
+      <p>我要投稿</p>
+    </button>
   )
 }

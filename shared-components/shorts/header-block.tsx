@@ -14,7 +14,7 @@ import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 
 type Props = {
   inputValue: string
-  setInputValue: (value: string) => void
+  setInputValue(value: string): void
 }
 
 export default function HeaderBlock({ inputValue, setInputValue }: Props) {

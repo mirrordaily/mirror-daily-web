@@ -15,6 +15,7 @@ import { ENVIRONMENT } from './misc'
 const JSON_ROOT = '/json'
 let STATIC_FILE_DOMAIN: string
 let JSON_FILE_PATH: string
+let SITE_URL: `https://${string}`
 
 const ENV = (function () {
   const env = process.env.NEXT_PUBLIC_ENV
@@ -34,11 +35,13 @@ switch (ENV) {
   case ENVIRONMENT.DEVELOPMENT:
     STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
+    SITE_URL = 'https://dev.mirrordaily.news'
     break
 
   default:
     STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
+    SITE_URL = 'https://dev.mirrordaily.news'
     break
 }
 
@@ -66,4 +69,5 @@ export {
   URL_STATIC_LATEST_SHORTS,
   GCP_PROJECT_ID,
   FIXED_KEY_FOR_SECTION_SHORTS,
+  SITE_URL,
 }

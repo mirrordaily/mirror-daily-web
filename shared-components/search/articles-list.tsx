@@ -6,7 +6,7 @@ import type { PostDataWithSection } from '@/utils/data-process'
 
 type Props<T> = {
   initialList: T[]
-  fetchMorePosts: (page: number) => Promise<T[]>
+  fetchMorePosts(page: number): Promise<T[]>
 }
 
 const PAGE_SIZE = 12

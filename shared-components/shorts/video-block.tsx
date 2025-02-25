@@ -24,44 +24,42 @@ export default function VideoBlock({
   const isModalOpened = useAppSelector(selectIsModalOpened)
 
   return (
-    <>
-      <Swiper
-        slidesPerView={'auto'}
-        grabCursor={true}
-        direction="vertical"
-        modules={[Keyboard, Mousewheel]}
-        mousewheel={true}
-        keyboard={true}
-        onInit={(swiper) => {
-          setActiveIndex(swiper.realIndex)
-        }}
-        onSlideChange={(swiper) => {
-          setActiveIndex(swiper.realIndex)
-          if (shouldChangePathOnSlideChange) {
-            const url = items[swiper.realIndex]?.link
-            window.history.replaceState(null, '', url)
-          }
-        }}
-        className="shorts-swiper-in-shorts-page"
-        breakpoints={{
-          720: {
-            spaceBetween: 60,
-          },
-        }}
-      >
-        {items.map((item, index) => (
-          <SwiperSlide key={index}>
-            <ShortsItem
-              {...item}
-              isActive={activeIndex === index && !isModalOpened}
-              volume={volume}
-              onPause={() => setActiveIndex(null)}
-              onPlay={() => setActiveIndex(index)}
-              setVolume={setVolume}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </>
+    <Swiper
+      slidesPerView={'auto'}
+      grabCursor={true}
+      direction="vertical"
+      modules={[Keyboard, Mousewheel]}
+      mousewheel={true}
+      keyboard={true}
+      onInit={(swiper) => {
+        setActiveIndex(swiper.realIndex)
+      }}
+      onSlideChange={(swiper) => {
+        setActiveIndex(swiper.realIndex)
+        if (shouldChangePathOnSlideChange) {
+          const url = items[swiper.realIndex]?.link
+          window.history.replaceState(null, '', url)
+        }
+      }}
+      className="shorts-swiper-in-shorts-page"
+      breakpoints={{
+        720: {
+          spaceBetween: 60,
+        },
+      }}
+    >
+      {items.map((item, index) => (
+        <SwiperSlide key={index}>
+          <ShortsItem
+            {...item}
+            isActive={activeIndex === index && !isModalOpened}
+            volume={volume}
+            onPause={() => setActiveIndex(null)}
+            onPlay={() => setActiveIndex(index)}
+            setVolume={setVolume}
+          />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   )
 }
