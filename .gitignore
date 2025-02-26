@@ -41,3 +41,6 @@ next-env.d.ts
 # graphql-codegen
 introspection.json
 certificates
+
+# ts-import
+.cache
