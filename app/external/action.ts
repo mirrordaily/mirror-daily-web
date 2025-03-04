@@ -6,18 +6,10 @@ import {
   GetExternalBySlugDocument,
   GetRelatedPostsByExternalSlugDocument,
 } from '@/graphql/__generated__/graphql'
-import type {
-  GetExternalBySlugQuery,
-  GetRelatedPostsByExternalSlugQuery,
-} from '@/graphql/__generated__/graphql'
+import type { GetExternalBySlugQuery } from '@/graphql/__generated__/graphql'
 import type { ExternalPost } from '@/types/external'
-import {
-  dateFormatter,
-  getHeroImage,
-  selectMainImage,
-} from '@/utils/data-process'
-import { getExternalPageUrl, getStoryPageUrl } from '@/utils/site-urls'
-import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
+import { dateFormatter, transfromRawRelatedPosts } from '@/utils/data-process'
+import { getExternalPageUrl } from '@/utils/site-urls'
 import type { RelatedPost } from '@/types/common'
 
 function transformExternal(
@@ -66,31 +58,6 @@ async function fetchExternal(slug: string): Promise<ExternalPost | null> {
   }
 }
 
-function transformRelatedPosts(
-  rawData: GetRelatedPostsByExternalSlugQuery['external']
-) {
-  if (!rawData || !rawData.relateds) return []
-
-  return rawData.relateds.map((rawPost) => {
-    const title = rawPost.title ?? ''
-    const slug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(slug)
-    const heroImage = getHeroImage(rawPost.heroImage)
-    const ogImage = getHeroImage(rawPost.og_image)
-    const postMainImage = selectMainImage(heroImage, ogImage)
-    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
-    const sectionColor = rawPost.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
-
-    return {
-      title,
-      link,
-      postMainImage,
-      sectionColor,
-      sectionName,
-    }
-  })
-}
-
 async function fetchRelatedPosts(slug: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching related posts using external slug:${slug} on external page`,
@@ -105,7 +72,7 @@ async function fetchRelatedPosts(slug: string): Promise<RelatedPost[]> {
   )
   if (result) {
     const { external } = result
-    return transformRelatedPosts(external)
+    return transfromRawRelatedPosts(external)
   } else {
     return []
   }

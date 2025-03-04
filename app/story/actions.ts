@@ -6,14 +6,12 @@ import {
   GetPostBySlugDocument,
   GetRelatedPostsBySlugDocument,
 } from '@/graphql/__generated__/graphql'
-import type {
-  GetPostBySlugQuery,
-  GetRelatedPostsBySlugQuery,
-} from '@/graphql/__generated__/graphql'
+import type { GetPostBySlugQuery } from '@/graphql/__generated__/graphql'
 import {
   dateFormatter,
   getHeroImage,
   selectMainImage,
+  transfromRawRelatedPosts,
 } from '@/utils/data-process'
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
@@ -87,31 +85,6 @@ async function fetchPost(slug: string) {
   }
 }
 
-function transformRelatedPosts(
-  rawData: GetRelatedPostsBySlugQuery['post']
-): RelatedPost[] {
-  if (!rawData || !rawData.relateds) return []
-
-  return rawData.relateds.map((rawPost) => {
-    const title = rawPost.title ?? ''
-    const slug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(slug)
-    const heroImage = getHeroImage(rawPost.heroImage)
-    const ogImage = getHeroImage(rawPost.og_image)
-    const postMainImage = selectMainImage(heroImage, ogImage)
-    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
-    const sectionColor = rawPost.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
-
-    return {
-      title,
-      link,
-      postMainImage,
-      sectionColor,
-      sectionName,
-    }
-  })
-}
-
 async function fetchRelatedPosts(slug: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching related posts using post slug ${slug} on story page`,
@@ -126,7 +99,7 @@ async function fetchRelatedPosts(slug: string): Promise<RelatedPost[]> {
 
   if (result) {
     const { post } = result
-    return transformRelatedPosts(post)
+    return transfromRawRelatedPosts(post)
   } else return []
 }
 
