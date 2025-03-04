@@ -9,6 +9,14 @@ const nextConfig = {
       bodySizeLimit: '31MB',
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'v3-statics.mirrormedia.mg',
+      },
+    ],
+  },
 }
 
 export default nextConfig

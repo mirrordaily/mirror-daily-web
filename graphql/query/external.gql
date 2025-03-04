@@ -1,0 +1,34 @@
+query GetExternalBySlug($slug: String!) {
+  external(where: { slug: $slug }) {
+    slug
+    title
+    thumb
+    extend_byline
+    publishedDate
+    brief
+    content
+    tags {
+      name
+      slug
+    }
+  }
+}
+
+query GetRelatedPostsByExternalSlug($slug: String!) {
+  external(where: { slug: $slug }) {
+    relateds {
+      title
+      slug
+      heroImage {
+        ...ImageData
+      }
+      og_image {
+        ...ImageData
+      }
+      sections {
+        name
+        color
+      }
+    }
+  }
+}

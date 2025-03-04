@@ -95,7 +95,6 @@ function transformRelatedPosts(
     const title = rawPost.title ?? ''
     const slug = rawPost.slug ?? ''
     const link = getStoryPageUrl(slug)
-    const publishedTime = dateFormatter(rawPost.publishedDate) ?? ''
     const heroImage = getHeroImage(rawPost.heroImage)
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
@@ -106,7 +105,6 @@ function transformRelatedPosts(
       title,
       link,
       postMainImage,
-      publishedTime,
       sectionColor,
       sectionName,
     }
