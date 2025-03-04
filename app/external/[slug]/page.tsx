@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const { brief, content, ...intro } = externalPost
 
   return (
-    <main className="mt-5 flex flex-col items-center md:mt-9 lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
+    <main className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
       <div>
         <ArticleIntro {...intro} />
         <Article brief={brief} content={content} />
