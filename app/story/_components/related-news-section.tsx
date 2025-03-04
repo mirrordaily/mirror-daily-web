@@ -1,5 +1,5 @@
 import RelatedNewsCard from './related-news-card'
-import type { RelatedPost } from '@/types/story'
+import type { RelatedPost } from '@/types/common'
 
 type Props = {
   posts: RelatedPost[]
