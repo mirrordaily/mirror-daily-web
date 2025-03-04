@@ -10,7 +10,7 @@ import type {
   GetSectionInformationQuery,
 } from '@/graphql/__generated__/graphql'
 import { transfromRawPost } from '@/utils/data-process'
-import type { SectionPost } from '@/types/section-page'
+import type { SectionPost } from '@/types/section'
 
 function transformSectionPost(
   rawData: GetPostsBySectionSlugQuery['posts']

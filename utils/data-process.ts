@@ -16,10 +16,10 @@ import type {
 } from './data-schema'
 import type { z } from 'zod'
 import { getShortsPageUrl, getStoryPageUrl } from './site-urls'
-import type { SectionPost } from '@/types/section-page'
-import type { CategoryPost } from '@/types/category-page'
-import type { AuthorPost } from '@/types/author-page'
-import type { TagPost } from '@/types/tag-page'
+import type { SectionPost } from '@/types/section'
+import type { CategoryPost } from '@/types/category'
+import type { AuthorPost } from '@/types/author'
+import type { TagPost } from '@/types/tag'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 const getHeroImage = (

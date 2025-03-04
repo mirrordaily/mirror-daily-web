@@ -1,9 +1,9 @@
 import CustomImage from '@/shared-components/custom-image'
-import type { ItemInHeroSection } from '@/types/story-page'
+import type { ItemInHeroSection } from '@/types/story'
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import SocialShareBar from '@/shared-components/social-share-bar'
-import type { Contact } from '@/types/story-page'
+import type { Contact } from '@/types/story'
 
 export default function HeroSection({
   title,

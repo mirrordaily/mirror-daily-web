@@ -1,5 +1,5 @@
 import ArticlesList from '../../../shared-components/search/articles-list'
-import type { AuthorInfo, AuthorPost } from '@/types/author-page'
+import type { AuthorInfo, AuthorPost } from '@/types/author'
 import { fetchAuthorPosts } from '@/app/author/actions'
 
 type Props = {

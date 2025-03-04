@@ -18,7 +18,7 @@ import {
 } from '@/utils/data-process'
 import { getExternalPageUrl, getStoryPageUrl } from '@/utils/site-urls'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
-import type { RelatedPost } from '@/types/story-page'
+import type { RelatedPost } from '@/types/story'
 
 function transformExternal(
   rawData: GetExternalBySlugQuery['external']

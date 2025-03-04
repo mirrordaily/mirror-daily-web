@@ -1,5 +1,5 @@
 import RelatedNewsCard from '@/app/story/_components/related-news-card'
-import type { RelatedPost } from '@/types/story-page'
+import type { RelatedPost } from '@/types/story'
 
 type Props = {
   posts: RelatedPost[]

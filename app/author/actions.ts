@@ -11,7 +11,7 @@ import type {
   GetAuthorInformationQuery,
 } from '@/graphql/__generated__/graphql'
 import { transfromRawPostWithSection } from '@/utils/data-process'
-import type { AuthorPost, AuthorInfo } from '@/types/author-page'
+import type { AuthorPost, AuthorInfo } from '@/types/author'
 
 function transformAuthorPost(
   rawData: GetPostsByAuthorIdQuery['posts']

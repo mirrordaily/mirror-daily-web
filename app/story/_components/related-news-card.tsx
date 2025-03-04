@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import type { RelatedPost } from '@/types/story-page'
+import type { RelatedPost } from '@/types/story'
 
 export default function RelatedNewsCard({
   title,

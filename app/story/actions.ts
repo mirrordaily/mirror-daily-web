@@ -15,7 +15,7 @@ import {
   getHeroImage,
   selectMainImage,
 } from '@/utils/data-process'
-import type { Post, RelatedPost } from '@/types/story-page'
+import type { Post, RelatedPost } from '@/types/story'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
