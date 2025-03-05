@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'v3-statics.mirrormedia.mg',
       },
+      {
+        protocol: 'https',
+        hostname: 'statics.mnews.tw',
+      },
     ],
   },
 }
