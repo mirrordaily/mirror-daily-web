@@ -6,6 +6,8 @@ type Props = {
 }
 
 export default function RelatedNewsList({ posts }: Props) {
+  if (posts.length === 0) return null
+
   return (
     <section className="flex flex-col items-center gap-y-8 px-[22.5px] pb-[92px] pt-7 md:px-0 md:pb-0 md:pt-9 lg:gap-y-7">
       <h3 className="text-lg font-bold leading-normal text-[#674AB1]">

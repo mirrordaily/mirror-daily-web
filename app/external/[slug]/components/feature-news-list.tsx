@@ -10,6 +10,8 @@ type Props<T> = {
 export default function FeatureNewsList<
   T extends PopularNews[] | LatestPost[],
 >({ title, posts }: Props<T>) {
+  if (posts.length === 0) return null
+
   return (
     <section className="flex flex-col items-center gap-y-8 lg:gap-y-5">
       <h3 className="text-lg font-bold leading-normal text-[#674AB1]">
