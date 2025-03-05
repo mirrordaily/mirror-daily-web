@@ -2,8 +2,7 @@ import type { PostIntro } from '@/types/external'
 import Image from 'next/image'
 import SocialShareBar from '@/shared-components/social-share-bar'
 import Link from 'next/link'
-
-const sectionName = '時事'
+import { EXTERNAL_SECTION_NAME } from '@/constants/misc'
 
 export default function ArticleIntro({
   title,
@@ -19,7 +18,7 @@ export default function ArticleIntro({
         <Image src={thumb} alt={title} fill style={{ objectFit: 'cover' }} />
       </figure>
       <div className="order-2 mb-4 w-full px-5 md:mb-6 md:px-0 lg:order-1 lg:mb-4">
-        <p className="mb-1 text-[#ff800A] lg:mb-4">{`｜${sectionName}`}</p>
+        <p className="mb-1 text-[#ff800A] lg:mb-4">{`｜${EXTERNAL_SECTION_NAME}`}</p>
         <h1 className="mb-3 text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
           {title}
         </h1>
