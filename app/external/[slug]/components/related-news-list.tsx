@@ -9,7 +9,7 @@ export default function RelatedNewsList({ posts }: Props) {
   if (posts.length === 0) return null
 
   return (
-    <section className="flex flex-col items-center gap-y-8 px-[22.5px] pb-[92px] pt-7 md:px-0 md:pb-0 md:pt-9 lg:gap-y-7">
+    <section className="mb-[92px] mt-7 flex flex-col items-center gap-y-8 px-[22.5px] md:mb-0 md:mt-9 md:px-0 lg:gap-y-7">
       <h3 className="text-lg font-bold leading-normal text-[#674AB1]">
         相關新聞
       </h3>
