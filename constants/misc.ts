@@ -116,3 +116,5 @@ export const SHARE_URL_LINE = 'https://social-plugins.line.me/lineit/share?url='
 export const DEFAULT_SECTION_NAME = '時事'
 
 export const DEFAULT_SECTION_COLOR = '#4D8AA4'
+
+export const EXTERNAL_SECTION_NAME = '時事'
