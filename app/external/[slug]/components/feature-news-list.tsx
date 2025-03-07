@@ -1,15 +1,11 @@
 import FeaturedNewsCard from '@/shared-components/featured-news-card'
-import type { PopularNews } from '@/types/common'
-import type { LatestPost } from '@/types/common'
 
-type Props<T> = {
+type Props = {
   title: string
-  posts: T
+  posts: Parameters<typeof FeaturedNewsCard>[0][]
 }
 
-export default function FeatureNewsList<
-  T extends PopularNews[] | LatestPost[],
->({ title, posts }: Props<T>) {
+export default function FeatureNewsList({ title, posts }: Props) {
   if (posts.length === 0) return null
 
   return (
