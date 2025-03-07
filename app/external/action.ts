@@ -29,6 +29,7 @@ function transformExternal(
     })) ?? []
   const slug = rawData.slug ?? ''
   const link = getExternalPageUrl(slug)
+  const sectionName = '時事'
 
   return {
     title,
@@ -39,6 +40,7 @@ function transformExternal(
     content,
     tags,
     link,
+    sectionName,
   }
 }
 

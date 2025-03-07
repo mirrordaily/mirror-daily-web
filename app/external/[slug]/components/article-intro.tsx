@@ -2,7 +2,6 @@ import type { PostIntro } from '@/types/external'
 import Image from 'next/image'
 import SocialShareBar from '@/shared-components/social-share-bar'
 import Link from 'next/link'
-import { EXTERNAL_SECTION_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
 
 export default function ArticleIntro({
@@ -12,6 +11,7 @@ export default function ArticleIntro({
   publishedTime,
   tags,
   link,
+  sectionName,
 }: PostIntro) {
   return (
     <section className="flex max-w-screen-sm flex-col items-center md:w-[600px] md:max-w-none lg:w-[720px]">
@@ -24,7 +24,7 @@ export default function ArticleIntro({
         />
       </figure>
       <div className="order-2 w-full px-5 md:px-0 lg:order-1">
-        <p className="mb-1 text-[#ff800A] lg:mb-4">{`｜${EXTERNAL_SECTION_NAME}`}</p>
+        <p className="mb-1 text-[#ff800A] lg:mb-4">{`｜${sectionName}`}</p>
         <h1 className="mb-3 text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
           {title}
         </h1>
