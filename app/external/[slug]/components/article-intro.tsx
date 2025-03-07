@@ -21,6 +21,7 @@ export default function ArticleIntro({
           alt={title}
           fill
           style={{ objectFit: 'cover' }}
+          unoptimized
         />
       </figure>
       <div className="order-2 w-full px-5 md:px-0 lg:order-1">
