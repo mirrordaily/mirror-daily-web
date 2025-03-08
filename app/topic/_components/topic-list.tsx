@@ -1,11 +1,10 @@
 'use client'
 
-import CustomImage from '@/shared-components/custom-image'
 import type { Topic } from '@/types/topic'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import Link from 'next/link'
 import { fetchTopicListingByPage } from '../action'
 import { PAGE_SIZE } from '@/constants/topic-list'
+import TopicCard from './topic-card'
 
 export default function TopicList({ topics }: { topics: Topic[] }) {
   const fetchMoreTopics = async (page: number) => {
@@ -36,31 +35,5 @@ export default function TopicList({ topics }: { topics: Topic[] }) {
         </div>
       )}
     </InfiniteScrollList>
-  )
-}
-
-const TopicCard = ({ topic }: { topic: Topic }) => {
-  return (
-    <Link
-      href={`/topic/${topic.slug}`}
-      target="_blank"
-      className="mx-auto w-[319px] md:w-[280px] lg:w-[466px]"
-    >
-      <figure className="relative h-[126px] w-[319px] md:h-[111px] md:w-[280px] lg:h-[186px] lg:w-[466px]">
-        <CustomImage
-          images={topic.heroImage.resized}
-          imagesWebP={topic.heroImage.resizedWebp}
-          alt={topic.name}
-        />
-      </figure>
-      <div>
-        <p className="mt-3 text-[20px] font-bold leading-[100%] text-[rgb(74,74,74)] md:mt-4">
-          {topic.name}
-        </p>
-        <p className="mt-3 line-clamp-2 md:line-clamp-3 lg:mt-[17px]">
-          {topic.brief}
-        </p>
-      </div>
-    </Link>
   )
 }
