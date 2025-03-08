@@ -5,18 +5,20 @@ import { fetchGQLData } from '@/utils/graphql'
 import type {
   GetGroupTypeTopicPostsQuery,
   GetTopicBasicInfoQuery,
+  GetTopicListQuery,
 } from '@/graphql/__generated__/graphql'
 import {
   GetGroupTypeTopicPostsDocument,
   GetListTypeTopcPostsDocument,
   GetTopicBasicInfoDocument,
+  GetTopicListDocument,
 } from '@/graphql/__generated__/graphql'
 import {
   getFirstParagraphFromApiData,
   getHeroImage,
   transfromRawPost,
 } from '@/utils/data-process'
-import type { PostDataWithTags, TopicPostData } from '@/types/topic'
+import type { PostDataWithTags, Topic, TopicPostData } from '@/types/topic'
 import { getStoryPageUrl } from '@/utils/site-urls'
 
 async function fetchTopicBasicInfo(
@@ -135,8 +137,45 @@ async function fetchGorupTypeTopicPostBySlug(
   }
 }
 
+type RawTopic = NonNullable<GetTopicListQuery['topics']>[number]
+
+const transfromRawTopic = (rawTopic: RawTopic): Topic => {
+  const id = rawTopic.id
+  const name = rawTopic.name ?? ''
+  const slug = rawTopic.slug ?? ''
+  const brief = getFirstParagraphFromApiData(rawTopic.apiDataBrief) ?? ''
+  const heroImage = getHeroImage(rawTopic.heroImage)
+
+  return {
+    id,
+    name,
+    slug,
+    brief,
+    heroImage,
+  }
+}
+
+async function fetchTopicListingByPage(page: number, pageSize: number) {
+  const errorLogger = createErrorLogger(
+    `Error occurs while fetching topic listing`,
+    {}
+  )
+
+  const result = await fetchGQLData(errorLogger, GetTopicListDocument, {
+    skip: (page - 1) * pageSize,
+    take: pageSize * 2,
+  })
+
+  if (result && Array.isArray(result.topics)) {
+    return result.topics.map(transfromRawTopic)
+  } else {
+    return []
+  }
+}
+
 export {
   fetchTopicBasicInfo,
   fetchListTypeTopicPostBySlug,
   fetchGorupTypeTopicPostBySlug,
+  fetchTopicListingByPage,
 }

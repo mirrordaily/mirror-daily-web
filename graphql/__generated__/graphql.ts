@@ -137,7 +137,6 @@ export type Category = {
   createdBy?: Maybe<User>
   heroImage?: Maybe<Photo>
   id: Scalars['ID']['output']
-  isMemberOnly?: Maybe<Scalars['Boolean']['output']>
   name?: Maybe<Scalars['String']['output']>
   order?: Maybe<Scalars['Int']['output']>
   posts?: Maybe<Array<Post>>
@@ -178,7 +177,6 @@ export type CategoryCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
   heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
-  isMemberOnly?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   order?: InputMaybe<Scalars['Int']['input']>
   posts?: InputMaybe<PostRelateToManyForCreateInput>
@@ -198,7 +196,6 @@ export type CategoryManyRelationFilter = {
 export type CategoryOrderByInput = {
   createdAt?: InputMaybe<OrderDirection>
   id?: InputMaybe<OrderDirection>
-  isMemberOnly?: InputMaybe<OrderDirection>
   name?: InputMaybe<OrderDirection>
   order?: InputMaybe<OrderDirection>
   slug?: InputMaybe<OrderDirection>
@@ -238,7 +235,6 @@ export type CategoryUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
   heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
-  isMemberOnly?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   order?: InputMaybe<Scalars['Int']['input']>
   posts?: InputMaybe<PostRelateToManyForUpdateInput>
@@ -257,7 +253,6 @@ export type CategoryWhereInput = {
   createdBy?: InputMaybe<UserWhereInput>
   heroImage?: InputMaybe<PhotoWhereInput>
   id?: InputMaybe<IdFilter>
-  isMemberOnly?: InputMaybe<BooleanFilter>
   name?: InputMaybe<StringFilter>
   order?: InputMaybe<IntNullableFilter>
   posts?: InputMaybe<PostManyRelationFilter>
@@ -4746,6 +4741,44 @@ export type GetGroupTypeTopicPostsQuery = {
   } | null
 }
 
+export type GetTopicListQueryVariables = Exact<{
+  skip?: InputMaybe<Scalars['Int']['input']>
+  take?: InputMaybe<Scalars['Int']['input']>
+}>
+
+export type GetTopicListQuery = {
+  __typename?: 'Query'
+  topics?: Array<{
+    __typename?: 'Topic'
+    id: string
+    name?: string | null
+    slug?: string | null
+    apiDataBrief?: any | null
+    heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
+  }> | null
+}
+
 export type GetLatestShortsQueryVariables = Exact<{
   amount: Scalars['Int']['input']
   start: Scalars['Int']['input']
@@ -9040,6 +9073,180 @@ export const GetGroupTypeTopicPostsDocument = {
   GetGroupTypeTopicPostsQuery,
   GetGroupTypeTopicPostsQueryVariables
 >
+export const GetTopicListDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetTopicList' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'topics' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'ListValue',
+                  values: [
+                    {
+                      kind: 'ObjectValue',
+                      fields: [
+                        {
+                          kind: 'ObjectField',
+                          name: { kind: 'Name', value: 'sortOrder' },
+                          value: { kind: 'EnumValue', value: 'asc' },
+                        },
+                      ],
+                    },
+                    {
+                      kind: 'ObjectValue',
+                      fields: [
+                        {
+                          kind: 'ObjectField',
+                          name: { kind: 'Name', value: 'createdAt' },
+                          value: { kind: 'EnumValue', value: 'desc' },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'take' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'apiDataBrief' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'heroImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'ImageData' },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ImageData' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Photo' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resized' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resizedWebp' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'original' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w480' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w800' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetTopicListQuery, GetTopicListQueryVariables>
 export const GetLatestShortsDocument = {
   kind: 'Document',
   definitions: [

@@ -9,7 +9,6 @@ import {
 } from '@/utils/data-process'
 import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
-import { SITE_URL } from '@/constants/config'
 import { notFound } from 'next/navigation'
 import { TOPIC_LEADING, TOPIC_LIST_TYPE } from '@/types/topic'
 import type { ImageKeys } from '@/utils/data-schema'
@@ -44,7 +43,6 @@ export async function generateMetadata({
   const image = mainImage.resized?.original || IMAGE_PATH
 
   return {
-    metadataBase: new URL(SITE_URL),
     title,
     description,
     openGraph: {
