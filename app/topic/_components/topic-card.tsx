@@ -20,7 +20,7 @@ export default function TopicCard({ topic }: { topic: Topic }) {
         <p className="mt-3 text-[20px] font-bold leading-[100%] text-[rgb(74,74,74)] md:mt-4">
           {topic.name}
         </p>
-        <p className="mt-3 line-clamp-2 md:line-clamp-3 lg:mt-[17px]">
+        <p className="mt-3 line-clamp-2 h-12 md:line-clamp-3 md:h-[72px] lg:mt-[17px]">
           {topic.brief}
         </p>
       </div>
