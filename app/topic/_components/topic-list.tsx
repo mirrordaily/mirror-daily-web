@@ -8,7 +8,6 @@ import TopicCard from './topic-card'
 
 export default function TopicList({ topics }: { topics: Topic[] }) {
   const fetchMoreTopics = async (page: number) => {
-    console.log(page)
     const topics = await fetchTopicListingByPage(page, PAGE_SIZE)
     return topics
   }
