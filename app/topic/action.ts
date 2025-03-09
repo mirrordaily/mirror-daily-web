@@ -1,6 +1,6 @@
 'use server'
 
-import { createErrorLogger } from '@/utils/log/common'
+import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
   GetGroupTypeTopicPostsQuery,
@@ -26,7 +26,7 @@ async function fetchTopicBasicInfo(
 ): Promise<GetTopicBasicInfoQuery['topic']> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching topic basic info (slug: ${slug})`,
-    {}
+    getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetTopicBasicInfoDocument, {
@@ -57,7 +57,7 @@ async function fetchListTypeTopicPostBySlug({
 }> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching list type topic posts (slug: ${slug})`,
-    {}
+    getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetListTypeTopcPostsDocument, {
@@ -119,7 +119,7 @@ async function fetchGorupTypeTopicPostBySlug(
 ): Promise<PostDataWithTags[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching group type topic posts (slug: ${slug})`,
-    {}
+    getTraceObject()
   )
 
   const result = await fetchGQLData(
@@ -158,7 +158,7 @@ const transfromRawTopic = (rawTopic: RawTopic): Topic => {
 async function fetchTopicListingByPage(page: number, pageSize: number) {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching topic listing`,
-    {}
+    getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetTopicListDocument, {
