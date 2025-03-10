@@ -1,3 +1,4 @@
+import { SITE_URL } from '@/constants/config'
 import StoreProvider from '@/redux/store-provider'
 import UploadModal from '@/shared-components/shorts-upload/upload-modal'
 import '@/shared-styles/global.css'
@@ -12,6 +13,7 @@ const notoSans = Noto_Sans_TC({
 
 // TODO: update metadata
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: '鏡報',
 }
 

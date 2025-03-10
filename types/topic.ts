@@ -25,3 +25,11 @@ export type PostDataWithTags = {
   textContent: string
   tags: { id: string }[]
 }
+
+export type Topic = {
+  id: string
+  name: string
+  slug: string
+  brief: string
+  heroImage: HeroImage
+}

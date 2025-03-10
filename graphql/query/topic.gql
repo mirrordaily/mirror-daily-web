@@ -1,5 +1,8 @@
 query GetTopics {
-  topics(orderBy: { sortOrder: asc, id: desc }, where: { state: { equals: "published" } }) {
+  topics(
+    orderBy: { sortOrder: asc, id: desc }
+    where: { state: { equals: "published" } }
+  ) {
     name
     slug
     posts(
@@ -31,7 +34,8 @@ query GetTopicBasicInfo($slug: String!) {
         ...ImageData
       }
     }
-    og_image { # used by metatag
+    og_image {
+      # used by metatag
       ...ImageData
     }
     heroImage {
@@ -44,7 +48,8 @@ query GetTopicBasicInfo($slug: String!) {
       ...ImageData
     }
     manualOrderOfSlideshowImages
-    tags { # used by `group` type
+    tags {
+      # used by `group` type
       id
       name
       slug
@@ -52,46 +57,53 @@ query GetTopicBasicInfo($slug: String!) {
   }
 }
 
-query GetListTypeTopcPosts($slug: String!, $take: Int!, $skip: Int = 0, $withAmount: Boolean! = false) {
+query GetListTypeTopcPosts(
+  $slug: String!
+  $take: Int!
+  $skip: Int = 0
+  $withAmount: Boolean! = false
+) {
   topic(where: { slug: $slug }) {
     posts(
-      where: {
-        state: { equals: "published" }
-      },
-      orderBy:  [
-        { isFeatured: desc },
-        { publishedDate: desc },
-        { id: desc }
-      ],
-      take: $take,
+      where: { state: { equals: "published" } }
+      orderBy: [{ isFeatured: desc }, { publishedDate: desc }, { id: desc }]
+      take: $take
       skip: $skip
     ) {
       ...TopicPost
     }
-    postsCount(
-      where: {
-        state: { equals: "published" }
-      }
-    ) @include (if: $withAmount)
+    postsCount(where: { state: { equals: "published" } })
+      @include(if: $withAmount)
   }
 }
 
 query GetGroupTypeTopicPosts($slug: String!) {
   topic(where: { slug: $slug }) {
     posts(
-      where: {
-        state: { equals: "published" }
-      },
-      orderBy: [
-        { isFeatured: desc },
-        { publishedDate: desc },
-        { id: desc }
-      ]
+      where: { state: { equals: "published" } }
+      orderBy: [{ isFeatured: desc }, { publishedDate: desc }, { id: desc }]
     ) {
       ...TopicPost
       tags {
         id
       }
+    }
+  }
+}
+
+query GetTopicList($skip: Int, $take: Int) {
+  topics(
+    where: { state: { equals: "published" } }
+    orderBy: [{ sortOrder: asc }, { createdAt: desc }]
+    skip: $skip
+    take: $take
+  ) {
+    id
+    name
+    slug
+    apiDataBrief
+    heroImage {
+      ...ImageData
     }
   }
 }
