@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import type { RelatedPost } from '@/types/story-page'
+import type { RelatedPost } from '@/types/common'
 
 export default function RelatedNewsCard({
   title,
   link,
   postMainImage,
-  publishedTime,
   sectionColor,
   sectionName,
 }: RelatedPost) {
@@ -29,16 +28,8 @@ export default function RelatedNewsCard({
           </span>
         </div>
 
-        <figcaption className="leading-normal">
-          <time
-            style={{ color: sectionColor }}
-            className="mb-[5px] inline-block font-normal md:hidden"
-          >
-            {publishedTime}
-          </time>
-          <p className="line-clamp-3 text-sm font-bold text-[#4A4A4A] md:line-clamp-2 md:text-lg md:font-normal lg:line-clamp-3">
-            {title}
-          </p>
+        <figcaption className="line-clamp-3 break-all text-sm font-bold leading-normal text-[#4A4A4A] md:line-clamp-2 md:text-lg md:font-normal lg:line-clamp-3">
+          {title}
         </figcaption>
       </figure>
     </Link>

@@ -4,7 +4,7 @@ import RelatedNewsSection from '../_components/related-news-section'
 import Article from '../_components/article'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import { fetchRelatedPosts } from '../actions'
-import type { Post } from '@/types/story-page'
+import type { Post } from '@/types/story'
 
 type Props = Post & { slug: string }
 

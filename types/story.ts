@@ -23,12 +23,3 @@ export type Post = {
 }
 
 export type ItemInHeroSection = Omit<Post, 'apiData' | 'apiDataBrief'>
-
-export type RelatedPost = {
-  title: string
-  publishedTime: string
-  link: string
-  sectionColor: string
-  sectionName: string
-  postMainImage: HeroImage
-}

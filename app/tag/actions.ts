@@ -11,7 +11,7 @@ import {
   GetTagInformationDocument,
   GetPostsByTagSlugDocument,
 } from '@/graphql/__generated__/graphql'
-import type { TagPost, TagInfo } from '@/types/tag-page'
+import type { TagPost, TagInfo } from '@/types/tag'
 
 function transformTagInformation(
   rawData: GetTagInformationQuery['tag']

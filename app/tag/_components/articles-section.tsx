@@ -1,5 +1,5 @@
 import ArticlesList from '../../../shared-components/search/articles-list'
-import type { TagInfo, TagPost } from '@/types/tag-page'
+import type { TagInfo, TagPost } from '@/types/tag'
 import { fetchTagPosts } from '@/app/tag/actions'
 
 type Props = {

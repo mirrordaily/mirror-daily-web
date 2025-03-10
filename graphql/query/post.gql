@@ -112,20 +112,6 @@ query GetPostBySlug($slug: String!) {
 
 query GetRelatedPostsBySlug($slug: String!) {
   post(where: { slug: $slug }) {
-    relateds {
-      title
-      publishedDate
-      slug
-      heroImage {
-        ...ImageData
-      }
-      og_image {
-        ...ImageData
-      }
-      sections {
-        name
-        color
-      }
-    }
+    ...RelatedPost
   }
 }

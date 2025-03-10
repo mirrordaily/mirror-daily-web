@@ -3,6 +3,8 @@ import type {
   GetPostsByCategorySlugQuery,
   GetPostsBySectionSlugQuery,
   GetPostsByTagSlugQuery,
+  GetRelatedPostsByExternalSlugQuery,
+  GetRelatedPostsBySlugQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
 import type { HeroImage, Shorts } from '@/types/common'
@@ -16,10 +18,11 @@ import type {
 } from './data-schema'
 import type { z } from 'zod'
 import { getShortsPageUrl, getStoryPageUrl } from './site-urls'
-import type { SectionPost } from '@/types/section-page'
-import type { CategoryPost } from '@/types/category-page'
-import type { AuthorPost } from '@/types/author-page'
-import type { TagPost } from '@/types/tag-page'
+import type { SectionPost } from '@/types/section'
+import type { CategoryPost } from '@/types/category'
+import type { AuthorPost } from '@/types/author'
+import type { TagPost } from '@/types/tag'
+import type { RelatedPost } from '@/types/common'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 const getHeroImage = (
@@ -237,6 +240,33 @@ const transfromRawPostWithSection = (
   }
 }
 
+type RawRelatedPosts =
+  | GetRelatedPostsByExternalSlugQuery['external']
+  | GetRelatedPostsBySlugQuery['post']
+
+const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
+  if (!rawData || !rawData.relateds) return []
+
+  return rawData.relateds.map((rawPost) => {
+    const title = rawPost.title ?? ''
+    const slug = rawPost.slug ?? ''
+    const link = getStoryPageUrl(slug)
+    const heroImage = getHeroImage(rawPost.heroImage)
+    const ogImage = getHeroImage(rawPost.og_image)
+    const postMainImage = selectMainImage(heroImage, ogImage)
+    const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
+    const sectionColor = rawPost.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
+
+    return {
+      title,
+      link,
+      postMainImage,
+      sectionColor,
+      sectionName,
+    }
+  })
+}
+
 export {
   getHeroImage,
   dateFormatter,
@@ -247,4 +277,5 @@ export {
   transfromRawPost,
   transfromRawPostWithSection,
   getImageSrc,
+  transfromRawRelatedPosts,
 }

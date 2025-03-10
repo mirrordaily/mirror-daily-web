@@ -75,3 +75,11 @@ export type LatestPost = {
   publishedDate: string
   link: string
 }
+
+export type RelatedPost = {
+  title: string
+  link: string
+  sectionColor: string
+  sectionName: string
+  postMainImage: HeroImage
+}

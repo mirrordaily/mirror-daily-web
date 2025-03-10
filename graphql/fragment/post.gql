@@ -29,3 +29,20 @@ fragment TopicPost on Post {
     ...ImageData
   }
 }
+
+fragment RelatedPost on Post {
+  relateds {
+    title
+    slug
+    heroImage {
+      ...ImageData
+    }
+    og_image {
+      ...ImageData
+    }
+    sections {
+      name
+      color
+    }
+  }
+}

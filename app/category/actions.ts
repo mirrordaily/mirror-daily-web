@@ -9,7 +9,7 @@ import type {
   GetCategoryInformationQuery,
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import type { CategoryPost } from '@/types/category-page'
+import type { CategoryPost } from '@/types/category'
 import { transfromRawPost } from '@/utils/data-process'
 
 function transformCategoryPost(
