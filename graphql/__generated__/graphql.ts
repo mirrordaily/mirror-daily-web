@@ -3813,59 +3813,56 @@ export type TopicPostFragment = {
 
 export type RelatedPostFragment = {
   __typename?: 'Post'
-  relateds?: Array<{
-    __typename?: 'Post'
-    title?: string | null
-    slug?: string | null
-    heroImage?: {
-      __typename?: 'Photo'
-      id: string
-      resized?: {
-        __typename?: 'ResizedImages'
-        original?: string | null
-        w480?: string | null
-        w800?: string | null
-        w1200?: string | null
-        w1600?: string | null
-        w2400?: string | null
-      } | null
-      resizedWebp?: {
-        __typename?: 'ResizedWebPImages'
-        original?: string | null
-        w480?: string | null
-        w800?: string | null
-        w1200?: string | null
-        w1600?: string | null
-        w2400?: string | null
-      } | null
+  title?: string | null
+  slug?: string | null
+  heroImage?: {
+    __typename?: 'Photo'
+    id: string
+    resized?: {
+      __typename?: 'ResizedImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
     } | null
-    og_image?: {
-      __typename?: 'Photo'
-      id: string
-      resized?: {
-        __typename?: 'ResizedImages'
-        original?: string | null
-        w480?: string | null
-        w800?: string | null
-        w1200?: string | null
-        w1600?: string | null
-        w2400?: string | null
-      } | null
-      resizedWebp?: {
-        __typename?: 'ResizedWebPImages'
-        original?: string | null
-        w480?: string | null
-        w800?: string | null
-        w1200?: string | null
-        w1600?: string | null
-        w2400?: string | null
-      } | null
+    resizedWebp?: {
+      __typename?: 'ResizedWebPImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
     } | null
-    sections?: Array<{
-      __typename?: 'Section'
-      name?: string | null
-      color?: string | null
-    }> | null
+  } | null
+  og_image?: {
+    __typename?: 'Photo'
+    id: string
+    resized?: {
+      __typename?: 'ResizedImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+    resizedWebp?: {
+      __typename?: 'ResizedWebPImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+  } | null
+  sections?: Array<{
+    __typename?: 'Section'
+    name?: string | null
+    color?: string | null
   }> | null
 }
 
@@ -5511,51 +5508,42 @@ export const RelatedPostFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'relateds' },
+            name: { kind: 'Name', value: 'heroImage' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                 {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'heroImage' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'FragmentSpread',
-                        name: { kind: 'Name', value: 'ImageData' },
-                      },
-                    ],
-                  },
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
                 },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
                 {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'og_image' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'FragmentSpread',
-                        name: { kind: 'Name', value: 'ImageData' },
-                      },
-                    ],
-                  },
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
                 },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'sections' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
-                    ],
-                  },
-                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'sections' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'color' } },
               ],
             },
           },
@@ -6665,50 +6653,9 @@ export const GetRelatedPostsByExternalSlugDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                       {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'heroImage' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'FragmentSpread',
-                              name: { kind: 'Name', value: 'ImageData' },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'og_image' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'FragmentSpread',
-                              name: { kind: 'Name', value: 'ImageData' },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'sections' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'name' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'color' },
-                            },
-                          ],
-                        },
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'RelatedPost' },
                       },
                     ],
                   },
@@ -6757,6 +6704,58 @@ export const GetRelatedPostsByExternalSlugDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'w1200' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'w1600' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'w2400' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'RelatedPost' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Post' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'sections' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'color' } },
               ],
             },
           },
@@ -8256,8 +8255,17 @@ export const GetRelatedPostsBySlugDocument = {
               kind: 'SelectionSet',
               selections: [
                 {
-                  kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'RelatedPost' },
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'relateds' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'RelatedPost' },
+                      },
+                    ],
+                  },
                 },
               ],
             },
@@ -8319,51 +8327,42 @@ export const GetRelatedPostsBySlugDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'relateds' },
+            name: { kind: 'Name', value: 'heroImage' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                 {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'heroImage' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'FragmentSpread',
-                        name: { kind: 'Name', value: 'ImageData' },
-                      },
-                    ],
-                  },
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
                 },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
                 {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'og_image' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'FragmentSpread',
-                        name: { kind: 'Name', value: 'ImageData' },
-                      },
-                    ],
-                  },
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
                 },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'sections' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
-                    ],
-                  },
-                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'sections' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'color' } },
               ],
             },
           },

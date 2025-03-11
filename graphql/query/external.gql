@@ -16,6 +16,8 @@ query GetExternalBySlug($slug: String!) {
 
 query GetRelatedPostsByExternalSlug($slug: String!) {
   external(where: { slug: $slug }) {
-    ...RelatedPost
+    relateds {
+      ...RelatedPost
+    }
   }
 }
