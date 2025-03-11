@@ -3485,6 +3485,7 @@ export type Video = {
   uploaderEmail?: Maybe<Scalars['String']['output']>
   videoSection?: Maybe<Scalars['String']['output']>
   videoSrc?: Maybe<Scalars['String']['output']>
+  youtubeUrl?: Maybe<Scalars['String']['output']>
 }
 
 export type VideoRelated_PostsArgs = {
@@ -3530,6 +3531,7 @@ export type VideoCreateInput = {
   uploader?: InputMaybe<Scalars['String']['input']>
   uploaderEmail?: InputMaybe<Scalars['String']['input']>
   videoSection?: InputMaybe<Scalars['String']['input']>
+  youtubeUrl?: InputMaybe<Scalars['String']['input']>
 }
 
 export type VideoOrderByInput = {
@@ -3545,6 +3547,7 @@ export type VideoOrderByInput = {
   uploader?: InputMaybe<OrderDirection>
   uploaderEmail?: InputMaybe<OrderDirection>
   videoSection?: InputMaybe<OrderDirection>
+  youtubeUrl?: InputMaybe<OrderDirection>
 }
 
 export type VideoRelateToManyForCreateInput = {
@@ -3594,6 +3597,7 @@ export type VideoUpdateInput = {
   uploader?: InputMaybe<Scalars['String']['input']>
   uploaderEmail?: InputMaybe<Scalars['String']['input']>
   videoSection?: InputMaybe<Scalars['String']['input']>
+  youtubeUrl?: InputMaybe<Scalars['String']['input']>
 }
 
 export type VideoWhereInput = {
@@ -3617,6 +3621,7 @@ export type VideoWhereInput = {
   uploader?: InputMaybe<StringFilter>
   uploaderEmail?: InputMaybe<StringFilter>
   videoSection?: InputMaybe<StringNullableFilter>
+  youtubeUrl?: InputMaybe<StringFilter>
 }
 
 export type VideoWhereUniqueInput = {
