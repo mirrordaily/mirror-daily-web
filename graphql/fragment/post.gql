@@ -31,18 +31,16 @@ fragment TopicPost on Post {
 }
 
 fragment RelatedPost on Post {
-  relateds {
-    title
-    slug
-    heroImage {
-      ...ImageData
-    }
-    og_image {
-      ...ImageData
-    }
-    sections {
-      name
-      color
-    }
+  title
+  slug
+  heroImage {
+    ...ImageData
+  }
+  og_image {
+    ...ImageData
+  }
+  sections {
+    name
+    color
   }
 }

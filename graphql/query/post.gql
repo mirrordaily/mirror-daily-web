@@ -112,6 +112,8 @@ query GetPostBySlug($slug: String!) {
 
 query GetRelatedPostsBySlug($slug: String!) {
   post(where: { slug: $slug }) {
-    ...RelatedPost
+    relateds {
+      ...RelatedPost
+    }
   }
 }
