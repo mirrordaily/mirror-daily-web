@@ -15,9 +15,9 @@ import IconInstagram from '@/public/icons/logos/instagram-gray.svg'
 import IconThreads from '@/public/icons/logos/threads-gray.svg'
 import IconYouTube from '@/public/icons/logos/youtube-gray.svg'
 import IconLine from '@/public/icons/logos/line-gray.svg'
-import IconMirrorMedia from '@/public/icons/logos/mirror-media.svg'
+import IconMirrorMedia from '@/public/icons/logos/mirror-media-black.svg'
 import IconMirrorFiction from '@/public/icons/logos/mirror-fiction.png'
-import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
+import IconMirrorNews from '@/public/icons/logos/mirror-news-blue.svg'
 import { SHORTS_TYPE } from '@/types/common'
 
 const ExtendedSocialLinks = [
