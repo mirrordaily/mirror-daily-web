@@ -17,10 +17,10 @@ export default function TopicCard({ topic }: { topic: Topic }) {
         />
       </figure>
       <div>
-        <p className="mt-3 text-[20px] font-bold leading-[100%] text-[rgb(74,74,74)] md:mt-4">
+        <p className="mt-3 line-clamp-1 text-[20px] font-bold leading-[100%] text-[rgb(74,74,74)] md:mt-4">
           {topic.name}
         </p>
-        <p className="mt-3 line-clamp-2 h-12 md:line-clamp-3 md:h-[72px] lg:mt-[17px]">
+        <p className="mt-3 line-clamp-3 h-[72px] lg:mt-[17px] lg:line-clamp-2 lg:h-12">
           {topic.brief}
         </p>
       </div>
