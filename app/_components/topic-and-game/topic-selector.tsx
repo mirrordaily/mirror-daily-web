@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useWindowSize } from 'usehooks-ts'
 import { getTailwindConfig } from '@/utils/tailwind'
-import { getTopicSectionPage } from '@/utils/site-urls'
+import { getTopicListingPage } from '@/utils/site-urls'
 import { isServer } from '@/utils/common'
 
 function getWidthOfText(text: string, styles: unknown): number {
@@ -145,7 +145,7 @@ export default function TopicSelector({
         )
       })}
       <NextLink
-        href={getTopicSectionPage()}
+        href={getTopicListingPage()}
         target="_blank"
         className="whitespace-nowrap font-medium text-[#000928] hover-or-active:text-[#575D71] md:ml-auto"
       >
