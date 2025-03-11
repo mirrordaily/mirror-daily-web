@@ -1,11 +1,12 @@
 import CustomImage from '@/shared-components/custom-image'
 import type { Topic } from '@/types/topic'
+import { getTopicPageUrl } from '@/utils/site-urls'
 import Link from 'next/link'
 
 export default function TopicCard({ topic }: { topic: Topic }) {
   return (
     <Link
-      href={`/topic/${topic.slug}`}
+      href={getTopicPageUrl(topic.slug)}
       target="_blank"
       className="mx-auto w-[319px] md:w-[280px] lg:w-[466px]"
     >

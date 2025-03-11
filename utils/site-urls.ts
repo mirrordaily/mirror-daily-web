@@ -15,10 +15,12 @@ export const getSectionPageUrl = (slug: string) =>
 
 export const getCategoryPageUrl = (slug: string) => `/category/${slug}`
 
-export const getTopicSectionPage = () => `/topics`
+export const getTopicListingPage = () => `/topic`
 
 export const getTopicPageUrl = (slug: string) => `/topic/${slug}`
 
 export const getShortsPageUrl = (id: string) => `/shorts/${id}`
 
 export const getAuthorPageUrl = (id: string) => `/author/${id}`
+
+export const getTagPageUrl = (slug: string) => `/tag/${slug}`
