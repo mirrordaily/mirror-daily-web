@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const externalPost = await fetchExternal(slug)
   const relatedPosts = await fetchRelatedPosts(slug)
   const popularPosts = await fetchPopularPost(6)
-  const latestPosts = (await fetchLatestPost(0)).slice(0, 6)
+  const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 
   if (!externalPost) notFound()
 

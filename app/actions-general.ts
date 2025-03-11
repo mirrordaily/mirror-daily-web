@@ -44,7 +44,7 @@ import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 import { hasExternalLink, transformRawLatestPost } from '@/utils/post'
 
 export const fetchLatestPost = async (
-  page: number = 0
+  page: number = 1
 ): Promise<LatestPost[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest posts',
@@ -52,7 +52,7 @@ export const fetchLatestPost = async (
   )
 
   try {
-    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page + 1}.json`)
+    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page}.json`)
 
     const rawPostData = await resp.json()
     const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
