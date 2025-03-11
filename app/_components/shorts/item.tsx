@@ -30,7 +30,7 @@ export default function ShortsItem({
 
   return (
     <NextLink className="w-full select-none" href={link}>
-      <div className="relative h-[480px] w-full lg:h-[566px]">
+      <div className="relative h-[480px] w-full lg:h-[400px]">
         {isClientSide && (
           <ReactPlayer
             url={fileUrl}
