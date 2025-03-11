@@ -22,3 +22,5 @@ export const getTopicPageUrl = (slug: string) => `/topic/${slug}`
 export const getShortsPageUrl = (id: string) => `/shorts/${id}`
 
 export const getAuthorPageUrl = (id: string) => `/author/${id}`
+
+export const getTagPageUrl = (slug: string) => `/tag/${slug}`
