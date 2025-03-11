@@ -16,7 +16,7 @@ export default async function ArticleSection({
 }: Props) {
   const relatedPosts = await fetchRelatedPosts(slug)
   const popularPosts = await fetchPopularPost(6)
-  const latestPosts = (await fetchLatestPost(0)).slice(0, 6)
+  const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
