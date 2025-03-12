@@ -2,12 +2,42 @@ import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '../../../shared-components/articles-list'
 import { fetchSectionPosts, fetchSectionInformation } from '../actions'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
+import { SITE_NAME } from '@/constants/misc'
+import { getSectionPageUrl } from '@/utils/site-urls'
+import { IMAGE_PATH } from '@/constants/default-path'
+
+type PageProps = { params: { slug: string } }
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = params
+  const sectionInfo = await fetchSectionInformation(slug)
+
+  if (!sectionInfo) {
+    notFound()
+  }
+
+  const title = `${sectionInfo.name} -${SITE_NAME}`
+
+  // TODO: fill the blank
+  return {
+    title,
+    description: '',
+    openGraph: {
+      siteName: SITE_NAME,
+      title,
+      description: '',
+      url: getSectionPageUrl(slug),
+      images: IMAGE_PATH,
+    },
+  }
+}
 
 export default async function Page({
   params,
-}: {
-  params: { slug: string }
-}): Promise<JSX.Element> {
+}: PageProps): Promise<JSX.Element> {
   const slug = params.slug
 
   const sectionInfo = await fetchSectionInformation(slug)

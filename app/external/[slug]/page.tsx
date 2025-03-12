@@ -5,8 +5,40 @@ import Article from './components/article'
 import RelatedNewsList from './components/related-news-list'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import FeatureNewsList from './components/feature-news-list'
+import type { Metadata } from 'next'
+import { SITE_NAME } from '@/constants/misc'
+import { IMAGE_PATH } from '@/constants/default-path'
+import { getExternalPageUrl } from '@/utils/site-urls'
 
-export default async function Page({ params }: { params: { slug: string } }) {
+type PageProps = { params: { slug: string } }
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = params
+  const externalPost = await fetchExternal(slug)
+
+  if (!externalPost) {
+    notFound()
+  }
+
+  const title = `${externalPost.title} - ${SITE_NAME}`
+  const image = externalPost.thumb || IMAGE_PATH
+
+  return {
+    title,
+    description: '',
+    openGraph: {
+      siteName: SITE_NAME,
+      title,
+      description: '',
+      url: getExternalPageUrl(slug),
+      images: image,
+    },
+  }
+}
+
+export default async function Page({ params }: PageProps) {
   const slug = params.slug
   const externalPost = await fetchExternal(slug)
   const relatedPosts = await fetchRelatedPosts(slug)
