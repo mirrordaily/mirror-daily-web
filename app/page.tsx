@@ -15,6 +15,9 @@ import LatestNewsSection from './_components/latest-news/section'
 import Loading from './_components/loading'
 import { Suspense } from 'react'
 
+// add segment config to prevent data fetch during build
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const liveEvent = await fetchLiveEvent()
   const latestPosts = await fetchLatestPost(1)

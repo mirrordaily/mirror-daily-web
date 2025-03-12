@@ -4,6 +4,9 @@ import { SHORTS_TYPE } from '@/types/common'
 import { notFound } from 'next/navigation'
 import { LATEST_SHORT_PAGES } from '@/constants/misc'
 
+// add segment config to prevent data fetch during build
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
   const data = await fetchLatestShorts(SHORTS_TYPE.DERIVATIVE, 50)
 
