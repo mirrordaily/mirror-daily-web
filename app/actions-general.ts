@@ -68,11 +68,11 @@ export const fetchLatestPost = async (
   }
 }
 
-const transformRawPopularPost = async (
-  rawPosts: z.infer<typeof rawPopularPostSchema>
-): Promise<LatestPost> => {
+const transformRawPopularPost = (
+  rawPosts: z.infer<typeof rawPopularPostSchema>,
+  sectionData: Parameters<typeof getSectionColor>[0]
+): LatestPost => {
   const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
-  const sectionData = await fetchSectionsAndCategories()
   const color = getSectionColor(sectionData, sections[0]?.slug)
 
   return {
@@ -101,14 +101,10 @@ export const fetchPopularPost = async (
       .promise(z.array(rawPopularPostSchema))
       .parse(resp.json())
 
-    const result = await Promise.allSettled(
-      rawPostData.map(transformRawPopularPost)
-    )
-    return result
-      .filter(
-        (r): r is PromiseFulfilledResult<LatestPost> => r.status === 'fulfilled'
-      )
-      .map((r) => r.value)
+    const sectionData = await fetchSectionsAndCategories()
+
+    return rawPostData
+      .map((item) => transformRawPopularPost(item, sectionData))
       .slice(0, amount)
   } catch (e) {
     errorLogger(e)
