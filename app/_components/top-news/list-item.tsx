@@ -23,7 +23,7 @@ export default function ListItem({
   const timeStr = dayjs(publishedDate).format('YYYY/MM/DD HH:mm:ss')
 
   return (
-    <div className="[&:not(:last-child)]:border-b [&:not(:last-child)]:border-[#CCCED4] [&:not(:last-child)]:pb-[10px] md:[&:not(:last-child)]:pb-2">
+    <div className="[&:not(:last-child)]:border-b [&:not(:last-child)]:border-[#CCCED4] [&:not(:last-child)]:pb-3 md:[&:not(:last-child)]:pb-2">
       <div className={`flex items-center`}>
         <span
           style={{ backgroundColor: categoryColor || '#FF5A36' }}
