@@ -32,6 +32,18 @@ const GCP_PROJECT_ID = 'mirrordaily'
 const FIXED_KEY_FOR_SECTION_SHORTS = 'short'
 
 switch (ENV) {
+  case ENVIRONMENT.PRODUCTION:
+    STATIC_FILE_DOMAIN = 'statics-prod.mirrordaily.news'
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
+    SITE_URL = 'https://www.mirrordaily.news'
+    break
+
+  case ENVIRONMENT.STAGING:
+    STATIC_FILE_DOMAIN = 'statics-staging.mirrordaily.news'
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
+    SITE_URL = 'https://staging.mirrordaily.news'
+    break
+
   case ENVIRONMENT.DEVELOPMENT:
     STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`

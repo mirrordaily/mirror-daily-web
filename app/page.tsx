@@ -12,10 +12,12 @@ import ShortsNewsSection from './_components/shorts/news-section'
 import TopicAndGameSection from './_components/topic-and-game/section'
 import ShortsDerivativeSection from './_components/shorts/derivative-section'
 import LatestNewsSection from './_components/latest-news/section'
+import Loading from './_components/loading'
+import { Suspense } from 'react'
 
 export default async function Home() {
   const liveEvent = await fetchLiveEvent()
-  const latestPosts = await fetchLatestPost(0)
+  const latestPosts = await fetchLatestPost(1)
   const popularPosts = await fetchPopularPost()
 
   let startIndexOfLatestNewsSection: number = 0
@@ -84,13 +86,37 @@ export default async function Home() {
           <TopNewsSection postsOfTab={postsOfTab} />
           <SectionDivider />
           {/* 短影音新聞 */}
-          <ShortsNewsSection />
+          <Suspense
+            fallback={
+              <div className="h-[80vh] w-full">
+                <Loading />
+              </div>
+            }
+          >
+            <ShortsNewsSection />
+          </Suspense>
           <SectionDivider />
           {/* Topic（4則）＋遊戲區 */}
-          <TopicAndGameSection />
+          <Suspense
+            fallback={
+              <div className="h-[80vh] w-full">
+                <Loading />
+              </div>
+            }
+          >
+            <TopicAndGameSection />
+          </Suspense>
           <SectionDivider />
           {/* 短影音．二創 */}
-          <ShortsDerivativeSection />
+          <Suspense
+            fallback={
+              <div className="h-[80vh] w-full">
+                <Loading />
+              </div>
+            }
+          >
+            <ShortsDerivativeSection />
+          </Suspense>
           <SectionDivider />
           {/* 最新新聞 */}
           <LatestNewsSection
