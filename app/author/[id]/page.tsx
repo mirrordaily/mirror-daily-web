@@ -3,6 +3,9 @@ import { fetchAuthorPosts, fetchAuthorInformation } from '../actions'
 import { notFound } from 'next/navigation'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 
+// add segment config to prevent data fetch during build
+export const dynamic = 'force-dynamic'
+
 export default async function Home({ params }: { params: { id: string } }) {
   const id = params.id
 

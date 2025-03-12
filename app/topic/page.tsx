@@ -5,6 +5,9 @@ import { fetchTopicListingByPage } from './action'
 import TopicList from './_components/topic-list'
 import { PAGE_SIZE } from '@/constants/topic-list'
 
+// add segment config to prevent data fetch during build
+export const dynamic = 'force-dynamic'
+
 // TODO: fill the blank
 export const metadata: Metadata = {
   title: '專題 - 鏡報',
