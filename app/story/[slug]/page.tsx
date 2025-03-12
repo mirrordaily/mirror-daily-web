@@ -1,8 +1,42 @@
 import { notFound } from 'next/navigation'
 import { fetchPost } from '../actions'
 import ArticleSection from '../_components/article-section'
+import type { Metadata } from 'next'
+import { SITE_NAME } from '@/constants/misc'
+import { getFirstParagraphFromApiData } from '@/utils/data-process'
+import { IMAGE_PATH } from '@/constants/default-path'
+import { getStoryPageUrl } from '@/utils/site-urls'
 
-export default async function Page({ params }: { params: { slug: string } }) {
+type PageProps = { params: { slug: string } }
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = params
+  const postData = await fetchPost(slug)
+
+  if (!postData) {
+    notFound()
+  }
+
+  const title = `${postData.title} - ${SITE_NAME}`
+  const description = getFirstParagraphFromApiData(postData.apiDataBrief) || ''
+  const image = postData.postMainImage?.resized?.original || IMAGE_PATH
+
+  return {
+    title,
+    description,
+    openGraph: {
+      siteName: SITE_NAME,
+      title,
+      description,
+      url: getStoryPageUrl(slug),
+      images: image,
+    },
+  }
+}
+
+export default async function Page({ params }: PageProps) {
   const slug = params.slug
 
   const postData = await fetchPost(slug)
