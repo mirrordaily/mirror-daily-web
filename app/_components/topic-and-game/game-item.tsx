@@ -1,3 +1,8 @@
+{
+  /*
+   * This component is currently not needed due to requirement changes.
+   */
+}
 import NextLink from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
 import type { Game } from '@/types/homepage'

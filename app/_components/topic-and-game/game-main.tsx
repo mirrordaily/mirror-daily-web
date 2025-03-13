@@ -1,3 +1,8 @@
+{
+  /*
+   * This component is currently not needed due to requirement changes.
+   */
+}
 import GameItem from './game-item'
 import { fetchGames } from '@/app/actions'
 
