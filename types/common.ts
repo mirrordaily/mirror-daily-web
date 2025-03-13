@@ -83,3 +83,5 @@ export type RelatedPost = {
   sectionName: string
   postMainImage: HeroImage
 }
+
+export type SectionData = Pick<SectionAndCategory, 'slug' | 'color'>[]

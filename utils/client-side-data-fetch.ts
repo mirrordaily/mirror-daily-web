@@ -3,19 +3,13 @@ import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
 } from '@/constants/config'
-import type {
-  LatestPost,
-  PopularNews,
-  SectionAndCategory,
-} from '@/types/common'
+import type { LatestPost, PopularNews, SectionData } from '@/types/common'
 import { rawLatestPostSchema, rawPopularPostSchema } from './data-schema'
 import {
   hasExternalLink,
   transformRawLatestPost,
   transformRawPopularPost,
 } from './post'
-
-type SectionData = Pick<SectionAndCategory, 'slug' | 'color'>[]
 
 const fetchLatestPost = async (
   sectionData: SectionData,

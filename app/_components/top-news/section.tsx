@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Selector from './selector'
 import PostList from './post-list'
-import type { ParameterOfComponent, SectionAndCategory } from '@/types/common'
+import type { ParameterOfComponent, SectionData } from '@/types/common'
 import { fetchLiveEvent } from '@/app/actions'
 import {
   fetchLatestPost,
@@ -15,7 +15,7 @@ export const TAB = {
 } as const
 
 type Props = {
-  sectionData: Pick<SectionAndCategory, 'slug' | 'color'>[]
+  sectionData: SectionData
 }
 
 type PostData = Record<
