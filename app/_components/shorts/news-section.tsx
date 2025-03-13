@@ -8,15 +8,11 @@ export default async function ShortsNewsSection() {
   if (!items.length) return null
 
   return (
-    <section className="mb-[34px] mt-9 w-full max-w-screen-sm md:mb-9 md:mt-6 md:max-w-screen-md lg:my-9 lg:max-w-none">
+    <section className="my-9 w-full max-w-screen-sm md:max-w-screen-md lg:mt-5 lg:max-w-none">
       <p className="flex justify-center text-lg font-bold leading-none text-[#896FCC] md:justify-start md:pl-5 lg:pl-9 lg:text-xl">
         短影音．新聞
       </p>
-      <ShortsList
-        customClass="mt-5 md:mt-[21px] lg:mt-5"
-        customColor="#1F668E"
-        items={items}
-      />
+      <ShortsList customClass="mt-9 lg:mt-5" items={items} />
     </section>
   )
 }

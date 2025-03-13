@@ -7,7 +7,6 @@ import NextLink from 'next/link'
 
 type Props = Shorts & {
   isActive: boolean
-  customColor: string
   onPlay(): void
   onPause(): void
 }
@@ -18,7 +17,6 @@ export default function ShortsItem({
   title,
   link,
   isActive,
-  customColor,
   onPlay,
   onPause,
 }: Props) {
@@ -30,7 +28,7 @@ export default function ShortsItem({
 
   return (
     <NextLink className="w-full select-none" href={link}>
-      <div className="relative h-[480px] w-full lg:h-[400px]">
+      <div className="relative h-[400px] w-full lg:h-[400px]">
         {isClientSide && (
           <ReactPlayer
             url={fileUrl}
@@ -56,11 +54,7 @@ export default function ShortsItem({
           onMouseLeave={() => onPause()}
         />
       </div>
-      <p className="mt-2 line-clamp-2 text-base font-medium leading-normal lg:text-xl lg:font-bold">
-        <span
-          className="inline-block size-[15px] align-middle lg:size-5"
-          style={{ backgroundColor: customColor }}
-        />{' '}
+      <p className="mt-4 line-clamp-2 text-base font-normal leading-normal">
         {title}
       </p>
     </NextLink>
