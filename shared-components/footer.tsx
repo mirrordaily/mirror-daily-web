@@ -95,8 +95,7 @@ export default function Footer(): ReactElement {
             <SocialLinksList />
           </div>
         </section>
-        {/* TODO: 距離未設 */}
-        <section className="order-3 mt-[35px] flex md:mt-[49px] lg:ml-[189px] lg:mt-0">
+        <section className="order-3 mt-[35px] flex gap-x-[18px] md:mt-[49px] lg:ml-[189px] lg:mt-0">
           <a target="_blank" href={SITE_LINKS[0].href}>
             <NextImage
               src={IconMirrorMedia}
