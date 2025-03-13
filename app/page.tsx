@@ -1,6 +1,4 @@
-import { fetchLiveEvent } from '@/app/actions'
-import { fetchPopularPost, fetchLatestPost } from './actions-general'
-import type { ParameterOfComponent } from '@/types/common'
+import { fetchSectionsAndCategories } from './actions-general'
 
 import Header from '@/shared-components/header'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
@@ -19,62 +17,7 @@ import { Suspense } from 'react'
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
-  const liveEvent = await fetchLiveEvent()
-  const latestPosts = await fetchLatestPost(1)
-  const popularPosts = await fetchPopularPost()
-
-  let startIndexOfLatestNewsSection: number = 0
-
-  let latestList: ParameterOfComponent<
-    typeof TopNewsSection
-  >['postsOfTab']['Latest'] = [undefined]
-
-  if (liveEvent) {
-    startIndexOfLatestNewsSection = 9
-    latestList = [
-      liveEvent,
-      ...latestPosts.slice(0, startIndexOfLatestNewsSection),
-    ]
-  } else {
-    const first = latestPosts[0]
-
-    if (first) {
-      startIndexOfLatestNewsSection = 10
-      latestList = [
-        {
-          postName: first.postName,
-          heroImage: first.heroImage,
-          link: first.link,
-        },
-        ...latestPosts.slice(1, startIndexOfLatestNewsSection),
-      ]
-    }
-  }
-
-  let hotList: ParameterOfComponent<
-    typeof TopNewsSection
-  >['postsOfTab']['Hot'] = [undefined]
-
-  {
-    const first = popularPosts[0]
-
-    if (first) {
-      hotList = [
-        {
-          postName: first.postName,
-          heroImage: first.heroImage,
-          link: first.link,
-        },
-        ...popularPosts.slice(1, 10),
-      ]
-    }
-  }
-
-  const postsOfTab: ParameterOfComponent<typeof TopNewsSection>['postsOfTab'] =
-    {
-      Latest: latestList,
-      Hot: hotList,
-    }
+  const sectionData = await fetchSectionsAndCategories()
 
   return (
     <>
@@ -83,10 +26,18 @@ export default async function Home() {
         <main className="flex w-full grow flex-col items-center justify-center">
           <SectionDivider customClasses="hidden md:block" />
           {/* 編輯精選 */}
-          <EditorChoiceSection />
+          <Suspense
+            fallback={
+              <div className="h-[80vh] w-full">
+                <Loading />
+              </div>
+            }
+          >
+            <EditorChoiceSection />
+          </Suspense>
           <SectionDivider />
           {/* 即時新聞/熱門新聞（10則） */}
-          <TopNewsSection postsOfTab={postsOfTab} />
+          <TopNewsSection sectionData={sectionData} />
           <SectionDivider />
           {/* 短影音新聞 */}
           <Suspense
@@ -122,9 +73,7 @@ export default async function Home() {
           </Suspense>
           <SectionDivider />
           {/* 最新新聞 */}
-          <LatestNewsSection
-            initialList={latestPosts.slice(startIndexOfLatestNewsSection)}
-          />
+          <LatestNewsSection />
         </main>
       </div>
       <NewsletterSubscription />

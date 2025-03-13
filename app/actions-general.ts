@@ -7,8 +7,6 @@ import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import {
   createDataFetchingChain,
-  getHeroImage,
-  getSectionColor,
   transformLatestShorts,
 } from '@/utils/data-process'
 import { fetchGQLData, updateGQLData } from '@/utils/graphql'
@@ -31,7 +29,6 @@ import {
   GetSectionsAndCategoriesDocument,
 } from '@/graphql/__generated__/graphql'
 import type { LatestPost } from '@/types/common'
-import { getPostPageUrl } from '@/utils/site-urls'
 import {
   AVAILABLE_IMAGE_MIME_TYPE,
   AVAILABLE_VIDEO_MIME_TYPE,
@@ -40,8 +37,12 @@ import {
 } from '@/constants/multimedia'
 import type { FormActionResponse } from '@/types/shorts'
 import { FormState } from '@/types/shorts'
-import { DEFAULT_SECTION_NAME } from '@/constants/misc'
-import { hasExternalLink, transformRawLatestPost } from '@/utils/post'
+import {
+  hasExternalLink,
+  transformRawLatestPost,
+  transformRawPopularPost,
+} from '@/utils/post'
+import { cache } from 'react'
 
 export const fetchLatestPost = async (
   page: number = 1
@@ -65,24 +66,6 @@ export const fetchLatestPost = async (
   } catch (e) {
     errorLogger(e)
     return []
-  }
-}
-
-const transformRawPopularPost = (
-  rawPosts: z.infer<typeof rawPopularPostSchema>,
-  sectionData: Parameters<typeof getSectionColor>[0]
-): LatestPost => {
-  const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
-  const color = getSectionColor(sectionData, sections[0]?.slug)
-
-  return {
-    categoryName: sections[0]?.name ?? DEFAULT_SECTION_NAME,
-    categoryColor: color,
-    postName: title,
-    postSlug: slug,
-    heroImage: getHeroImage(heroImage),
-    publishedDate: new Date().toISOString(),
-    link: getPostPageUrl(slug),
   }
 }
 
@@ -296,33 +279,33 @@ const transformRawSectionsAndCategories = (
   })
 }
 
-export const fetchSectionsAndCategories = async (): Promise<
-  SectionAndCategory[]
-> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching sections and categories',
-    getTraceObject()
-  )
-  const schema = z.promise(z.object({ sections: z.array(sectionSchema) }))
+export const fetchSectionsAndCategories = cache(
+  async (): Promise<SectionAndCategory[]> => {
+    const errorLogger = createErrorLogger(
+      'Error occurs while fetching sections and categories',
+      getTraceObject()
+    )
+    const schema = z.promise(z.object({ sections: z.array(sectionSchema) }))
 
-  const data = await createDataFetchingChain<
-    z.infer<ZodArray<typeof sectionSchema>>
-  >(
-    errorLogger,
-    [],
-    async () => {
-      const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY)
+    const data = await createDataFetchingChain<
+      z.infer<ZodArray<typeof sectionSchema>>
+    >(
+      errorLogger,
+      [],
+      async () => {
+        const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY)
 
-      const result = await schema.parse(resp.json())
-      return result.sections
-    },
-    async () => {
-      const result = await schema.parse(
-        fetchGQLData(errorLogger, GetSectionsAndCategoriesDocument)
-      )
-      return result.sections
-    }
-  )
+        const result = await schema.parse(resp.json())
+        return result.sections
+      },
+      async () => {
+        const result = await schema.parse(
+          fetchGQLData(errorLogger, GetSectionsAndCategoriesDocument)
+        )
+        return result.sections
+      }
+    )
 
-  return transformRawSectionsAndCategories(data)
-}
+    return transformRawSectionsAndCategories(data)
+  }
+)

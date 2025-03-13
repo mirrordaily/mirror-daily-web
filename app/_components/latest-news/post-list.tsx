@@ -1,55 +1,56 @@
 'use client'
-import { z } from 'zod'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import LatestNewsCard from './card'
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
+import type { LatestPost } from '@/types/common'
+import type { getSectionColor } from '@/utils/data-process'
+import { fetchLatestPost } from '@/utils/client-side-data-fetch'
+import { fetchLiveEvent } from '@/app/actions'
 
 /** the amount of articles each time load-more is clicked  */
 const RENDER_PAGE_SIZE = 20
 
-import type { LatestPost } from '@/types/common'
-import { URL_STATIC_LATEST_NEWS } from '@/constants/config'
-import { rawLatestPostSchema } from '@/utils/data-schema'
-import { hasExternalLink, transformRawLatestPost } from '@/utils/post'
-import type { getSectionColor } from '@/utils/data-process'
-
 type PostListProps = {
-  initialList: LatestPost[]
   sectionData: Parameters<typeof getSectionColor>[0]
 }
 
-export default function PostList({
-  initialList,
-  sectionData,
-}: PostListProps): ReactNode {
+export default function PostList({ sectionData }: PostListProps): ReactNode {
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [initialPostData, setInitialPostData] = useState<LatestPost[]>([])
+
   const fetchMoreLatestPost = async (
     page: number = 0
   ): Promise<LatestPost[]> => {
     // fetch more latest post on browser side
-    try {
-      const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page}.json`)
-
-      const rawPostData = await resp.json()
-      const latestPosts = z
-        .array(rawLatestPostSchema)
-        .parse(rawPostData?.latest)
-      const filteredData = latestPosts.filter(
-        (rawPost) => !hasExternalLink(rawPost)
-      )
-
-      return filteredData.map((item) =>
-        transformRawLatestPost(item, sectionData)
-      )
-    } catch (e) {
-      // TODO: send error log
-      console.error(e)
-      return []
-    }
+    return await fetchLatestPost(sectionData, page)
   }
+
+  useEffect(() => {
+    const initialize = async () => {
+      const liveEvent = await fetchLiveEvent()
+      const latestPosts = await fetchLatestPost(sectionData, 1)
+
+      let startIndexOfLatestNewsSection = 0
+
+      if (liveEvent) {
+        startIndexOfLatestNewsSection = 9
+      } else {
+        startIndexOfLatestNewsSection = 10
+      }
+
+      setInitialPostData(latestPosts.slice(startIndexOfLatestNewsSection))
+      setIsInitialized(true)
+    }
+
+    if (!isInitialized) {
+      initialize()
+    }
+  }, [isInitialized, sectionData])
 
   return (
     <InfiniteScrollList
-      initialList={initialList}
+      key={String(isInitialized)}
+      initialList={initialPostData}
       pageSize={RENDER_PAGE_SIZE}
       amountOfElements={200}
       fetchListInPage={fetchMoreLatestPost}

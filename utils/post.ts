@@ -1,10 +1,12 @@
 import type { z } from 'zod'
 import { isValidUrl } from './common'
-import type { rawLatestPostSchema } from './data-schema'
-import type { LatestPost } from '@/types/common'
+import type { rawLatestPostSchema, rawPopularPostSchema } from './data-schema'
+import type { LatestPost, SectionAndCategory } from '@/types/common'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 import { getHeroImage, getSectionColor } from './data-process'
 import { getPostPageUrl } from './site-urls'
+
+type SectionData = Pick<SectionAndCategory, 'slug' | 'color'>[]
 
 const hasExternalLink = (
   rawPost: z.infer<typeof rawLatestPostSchema>
@@ -20,7 +22,7 @@ type CategoryConfig = {
 
 const getSectionConfig = (
   rawPosts: z.infer<typeof rawLatestPostSchema>,
-  sectionData: Parameters<typeof getSectionColor>[0]
+  sectionData: SectionData
 ): CategoryConfig => {
   const { partner, sections } = rawPosts
 
@@ -52,7 +54,7 @@ const getSectionConfig = (
 
 const transformRawLatestPost = (
   rawPosts: z.infer<typeof rawLatestPostSchema>,
-  sectionData: Parameters<typeof getSectionColor>[0]
+  sectionData: SectionData
 ): LatestPost => {
   const { title, slug, heroImage, publishedDate, partner } = rawPosts
   const { name, color } = getSectionConfig(rawPosts, sectionData)
@@ -68,4 +70,22 @@ const transformRawLatestPost = (
   }
 }
 
-export { hasExternalLink, transformRawLatestPost }
+const transformRawPopularPost = (
+  rawPosts: z.infer<typeof rawPopularPostSchema>,
+  sectionData: SectionData
+): LatestPost => {
+  const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
+  const color = getSectionColor(sectionData, sections[0]?.slug)
+
+  return {
+    categoryName: sections[0]?.name ?? DEFAULT_SECTION_NAME,
+    categoryColor: color,
+    postName: title,
+    postSlug: slug,
+    heroImage: getHeroImage(heroImage),
+    publishedDate: new Date().toISOString(),
+    link: getPostPageUrl(slug),
+  }
+}
+
+export { hasExternalLink, transformRawLatestPost, transformRawPopularPost }
