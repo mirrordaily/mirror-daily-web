@@ -29,7 +29,7 @@ const ENV = (function () {
 
 const GCP_PROJECT_ID = 'mirrordaily'
 /** section shorts must use specific key for navigation purpose */
-const FIXED_KEY_FOR_SECTION_SHORTS = 'short'
+const FIXED_KEY_FOR_SECTION_SHORTS = 'shorts'
 
 switch (ENV) {
   case ENVIRONMENT.PRODUCTION:
