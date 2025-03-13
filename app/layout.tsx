@@ -1,4 +1,4 @@
-import { GA4_ID, GTM_ID, SITE_URL } from '@/constants/config'
+import { GTM_ID, SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { SITE_NAME } from '@/constants/misc'
 import StoreProvider from '@/redux/store-provider'
@@ -6,7 +6,7 @@ import UploadModal from '@/shared-components/shorts-upload/upload-modal'
 import '@/shared-styles/global.css'
 import type { Metadata } from 'next'
 import { Noto_Sans_TC } from 'next/font/google'
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
@@ -41,7 +41,6 @@ export default function RootLayout({
           <UploadModal />
         </StoreProvider>
       </body>
-      <GoogleAnalytics gaId={GA4_ID} />
     </html>
   )
 }
