@@ -7,7 +7,7 @@ import type {
   GetRelatedPostsBySlugQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
-import type { HeroImage, SectionAndCategory, Shorts } from '@/types/common'
+import type { HeroImage, SectionData, Shorts } from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { createErrorLogger } from './log/common'
@@ -267,10 +267,7 @@ const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
   })
 }
 
-const getSectionColor = (
-  sectionData: Pick<SectionAndCategory, 'slug' | 'color'>[],
-  slug?: string
-) => {
+const getSectionColor = (sectionData: SectionData, slug?: string) => {
   return (
     sectionData.find((item) => slug === item.slug)?.color ??
     DEFAULT_SECTION_COLOR

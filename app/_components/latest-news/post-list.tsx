@@ -1,11 +1,16 @@
 'use client'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import LatestNewsCard from './card'
-import { useEffect, useState, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import type { LatestPost } from '@/types/common'
 import type { getSectionColor } from '@/utils/data-process'
 import { fetchLatestPost } from '@/utils/client-side-data-fetch'
-import { fetchLiveEvent } from '@/app/actions'
+import { useAppSelector } from '@/redux/hooks'
+import {
+  selectIsInitialized,
+  selectLatestPosts,
+  selectLiveEvent,
+} from '@/redux/homepage/selector'
 
 /** the amount of articles each time load-more is clicked  */
 const RENDER_PAGE_SIZE = 20
@@ -15,8 +20,9 @@ type PostListProps = {
 }
 
 export default function PostList({ sectionData }: PostListProps): ReactNode {
-  const [isInitialized, setIsInitialized] = useState(false)
-  const [initialPostData, setInitialPostData] = useState<LatestPost[]>([])
+  const isInitialized = useAppSelector(selectIsInitialized)
+  const liveEvent = useAppSelector(selectLiveEvent)
+  const latestPosts = useAppSelector(selectLatestPosts)
 
   const fetchMoreLatestPost = async (
     page: number = 0
@@ -25,32 +31,20 @@ export default function PostList({ sectionData }: PostListProps): ReactNode {
     return await fetchLatestPost(sectionData, page)
   }
 
-  useEffect(() => {
-    const initialize = async () => {
-      const liveEvent = await fetchLiveEvent()
-      const latestPosts = await fetchLatestPost(sectionData, 1)
+  if (!isInitialized) return null
 
-      let startIndexOfLatestNewsSection = 0
+  let startIndexOfLatestNewsSection = 0
 
-      if (liveEvent) {
-        startIndexOfLatestNewsSection = 9
-      } else {
-        startIndexOfLatestNewsSection = 10
-      }
-
-      setInitialPostData(latestPosts.slice(startIndexOfLatestNewsSection))
-      setIsInitialized(true)
-    }
-
-    if (!isInitialized) {
-      initialize()
-    }
-  }, [isInitialized, sectionData])
+  if (liveEvent) {
+    startIndexOfLatestNewsSection = 9
+  } else {
+    startIndexOfLatestNewsSection = 10
+  }
 
   return (
     <InfiniteScrollList
       key={String(isInitialized)}
-      initialList={initialPostData}
+      initialList={latestPosts.slice(startIndexOfLatestNewsSection)}
       pageSize={RENDER_PAGE_SIZE}
       amountOfElements={200}
       fetchListInPage={fetchMoreLatestPost}

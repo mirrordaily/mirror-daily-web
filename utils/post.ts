@@ -1,12 +1,10 @@
 import type { z } from 'zod'
 import { isValidUrl } from './common'
 import type { rawLatestPostSchema, rawPopularPostSchema } from './data-schema'
-import type { LatestPost, SectionAndCategory } from '@/types/common'
+import type { LatestPost, SectionData } from '@/types/common'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 import { getHeroImage, getSectionColor } from './data-process'
 import { getPostPageUrl } from './site-urls'
-
-type SectionData = Pick<SectionAndCategory, 'slug' | 'color'>[]
 
 const hasExternalLink = (
   rawPost: z.infer<typeof rawLatestPostSchema>
