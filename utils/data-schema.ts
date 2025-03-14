@@ -58,8 +58,8 @@ const partnerSchema = z.object({
 })
 
 export const rawLatestPostSchema = z.object({
+  id: z.string(),
   title: z.string(),
-  slug: z.string(),
   heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
   sections: z.array(sectionSchema.pick({ name: true, slug: true })),
   partner: z.union([partnerSchema, z.string()]),
@@ -68,15 +68,15 @@ export const rawLatestPostSchema = z.object({
 })
 
 export const rawPopularPostSchema = z.object({
+  id: z.string(),
   title: z.string(),
-  slug: z.string(),
   heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
   sectionsInInputOrder: z.array(sectionSchema.pick({ name: true, slug: true })),
 })
 
 export const rawFlashNewsSchema = rawLatestPostSchema.pick({
+  id: true,
   title: true,
-  slug: true,
 })
 
 export const editorChoiceSchenma = z.object({
@@ -84,8 +84,8 @@ export const editorChoiceSchenma = z.object({
   heroImage: heroImageSchema.nullable(),
   choices: rawLatestPostSchema
     .pick({
+      id: true,
       title: true,
-      slug: true,
       heroImage: true,
     })
     .nullish(),
@@ -96,8 +96,8 @@ export const topicsSchema = z.object({
   slug: z.string(),
   posts: z.array(
     rawLatestPostSchema.pick({
+      id: true,
       title: true,
-      slug: true,
       heroImage: true,
     })
   ),

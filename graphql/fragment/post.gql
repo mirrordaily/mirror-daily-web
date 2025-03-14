@@ -1,8 +1,8 @@
 fragment PostOverview on Post {
+  id
   title
   createdAt
   apiDataBrief
-  slug
   apiData
   heroImage {
     ...ImageData
@@ -13,16 +13,16 @@ fragment PostOverview on Post {
 }
 
 fragment PostItem on Post {
+  id
   title
-  slug
   heroImage {
     ...ImageData
   }
 }
 
 fragment TopicPost on Post {
+  id
   title
-  slug
   apiDataBrief
   apiData
   heroImage {
@@ -31,8 +31,8 @@ fragment TopicPost on Post {
 }
 
 fragment RelatedPost on Post {
+  id
   title
-  slug
   heroImage {
     ...ImageData
   }

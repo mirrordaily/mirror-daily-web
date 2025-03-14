@@ -3,10 +3,10 @@
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
 import {
-  GetPostBySlugDocument,
-  GetRelatedPostsBySlugDocument,
+  GetPostByIdDocument,
+  GetRelatedPostsByIdDocument,
 } from '@/graphql/__generated__/graphql'
-import type { GetPostBySlugQuery } from '@/graphql/__generated__/graphql'
+import type { GetPostByIdQuery } from '@/graphql/__generated__/graphql'
 import {
   dateFormatter,
   getHeroImage,
@@ -18,7 +18,7 @@ import type { RelatedPost } from '@/types/common'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
-function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
+function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   if (!rawData) return null
 
   const title = rawData.title ?? ''
@@ -47,10 +47,10 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
       name: tag.name ?? '',
       slug: tag.slug ?? '',
     })) ?? []
-  const slug = rawData.slug ?? ''
-  const link = getStoryPageUrl(slug)
+  const link = getStoryPageUrl(rawData.id)
 
   return {
+    id: rawData.id,
     title,
     subtitle,
     heroCaption,
@@ -67,14 +67,14 @@ function transformPost(rawData: GetPostBySlugQuery['post']): Post | null {
   }
 }
 
-async function fetchPost(slug: string) {
+async function fetchPost(id: string) {
   const errorLogger = createErrorLogger(
-    `Error occurs while fetching post with slug: ${slug} on story page`,
+    `Error occurs while fetching post with id: ${id} on story page`,
     getTraceObject()
   )
 
-  const result = await fetchGQLData(errorLogger, GetPostBySlugDocument, {
-    slug: slug,
+  const result = await fetchGQLData(errorLogger, GetPostByIdDocument, {
+    id: id,
   })
 
   if (result) {
@@ -85,17 +85,15 @@ async function fetchPost(slug: string) {
   }
 }
 
-async function fetchRelatedPosts(slug: string): Promise<RelatedPost[]> {
+async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
-    `Error occurs while fetching related posts using post slug ${slug} on story page`,
+    `Error occurs while fetching related posts using post id ${id} on story page`,
     getTraceObject()
   )
 
-  const result = await fetchGQLData(
-    errorLogger,
-    GetRelatedPostsBySlugDocument,
-    { slug: slug }
-  )
+  const result = await fetchGQLData(errorLogger, GetRelatedPostsByIdDocument, {
+    id: id,
+  })
 
   if (result) {
     const { post } = result

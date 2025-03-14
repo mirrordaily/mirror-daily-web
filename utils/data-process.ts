@@ -4,7 +4,7 @@ import type {
   GetPostsBySectionSlugQuery,
   GetPostsByTagSlugQuery,
   GetRelatedPostsByExternalSlugQuery,
-  GetRelatedPostsBySlugQuery,
+  GetRelatedPostsByIdQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
 import type { HeroImage, SectionData, Shorts } from '@/types/common'
@@ -186,9 +186,9 @@ type RawPost = NonNullable<
 export type PostData = CategoryPost | SectionPost
 
 const transfromRawPost = (rawPost: RawPost): PostData => {
+  const id = rawPost.id
   const title = rawPost.title ?? ''
-  const slug = rawPost.slug ?? ''
-  const link = getStoryPageUrl(slug)
+  const link = getStoryPageUrl(id)
   const createdTime = dateFormatter(rawPost.createdAt)
   const heroImage = getHeroImage(rawPost.heroImage)
   const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
@@ -198,8 +198,8 @@ const transfromRawPost = (rawPost: RawPost): PostData => {
   const textContent = brief || content
 
   return {
+    id,
     title,
-    slug,
     link,
     createdTime,
     textContent,
@@ -216,9 +216,9 @@ export type PostDataWithSection = AuthorPost | TagPost
 const transfromRawPostWithSection = (
   rawPost: RawPostWithSection
 ): PostDataWithSection => {
+  const id = rawPost.id
   const title = rawPost.title ?? ''
-  const slug = rawPost.slug ?? ''
-  const link = getStoryPageUrl(slug)
+  const link = getStoryPageUrl(id)
   const createdTime = dateFormatter(rawPost.createdAt) ?? ''
   const heroImage = getHeroImage(rawPost.heroImage)
   const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
@@ -242,15 +242,14 @@ const transfromRawPostWithSection = (
 
 type RawRelatedPosts =
   | GetRelatedPostsByExternalSlugQuery['external']
-  | GetRelatedPostsBySlugQuery['post']
+  | GetRelatedPostsByIdQuery['post']
 
 const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
   if (!rawData || !rawData.relateds) return []
 
   return rawData.relateds.map((rawPost) => {
     const title = rawPost.title ?? ''
-    const slug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(slug)
+    const link = getStoryPageUrl(rawPost.id)
     const heroImage = getHeroImage(rawPost.heroImage)
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)

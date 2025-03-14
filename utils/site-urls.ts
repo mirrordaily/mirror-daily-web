@@ -6,7 +6,7 @@ export const getPostPageUrl = (slug: string, isExternal?: boolean) =>
 
 export const getExternalPageUrl = (slug: string) => `/external/${slug}`
 
-export const getStoryPageUrl = (slug: string) => `/story/${slug}`
+export const getStoryPageUrl = (id: string) => `/story/${id}`
 
 export const getSectionPageUrl = (slug: string) =>
   slug === FIXED_KEY_FOR_SECTION_SHORTS

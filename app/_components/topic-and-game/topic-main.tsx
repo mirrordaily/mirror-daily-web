@@ -20,7 +20,7 @@ export default function TopicMain({ data }: Props) {
       {!!topicData && (
         <div className="mt-[15px] flex w-full flex-col flex-wrap justify-start gap-y-4 md:flex-row md:gap-x-[34px] md:gap-y-7 lg:gap-x-8">
           {topicData.map((data, index) => (
-            <TopicItem {...data} isFirst={index === 0} key={data.postSlug} />
+            <TopicItem {...data} isFirst={index === 0} key={data.postId} />
           ))}
         </div>
       )}

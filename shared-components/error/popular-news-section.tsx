@@ -14,7 +14,7 @@ export default function PopularNewsSection({
       <div className="grid grid-cols-1 gap-y-5 md:grid-cols-2 md:gap-7">
         {articles &&
           articles.map((item) => (
-            <PopularNewsCard {...item} key={item.postSlug} />
+            <PopularNewsCard {...item} key={item.postId} />
           ))}
       </div>
     </section>
