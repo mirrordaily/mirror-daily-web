@@ -1,10 +1,10 @@
 import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
 import { LATEST_SHORT_PAGES } from '@/constants/misc'
 
-export const getPostPageUrl = (slug: string, isExternal?: boolean) =>
-  isExternal ? getExternalPageUrl(slug) : getStoryPageUrl(slug)
+export const getPostPageUrl = (id: string, isExternal?: boolean) =>
+  isExternal ? getExternalPageUrl(id) : getStoryPageUrl(id)
 
-export const getExternalPageUrl = (slug: string) => `/external/${slug}`
+export const getExternalPageUrl = (id: string) => `/external/${id}`
 
 export const getStoryPageUrl = (id: string) => `/story/${id}`
 

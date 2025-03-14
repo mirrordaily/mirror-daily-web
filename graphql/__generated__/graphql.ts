@@ -4057,15 +4057,15 @@ export type GetLiveEventForHomepageQuery = {
   }> | null
 }
 
-export type GetExternalBySlugQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+export type GetExternalByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input']
 }>
 
-export type GetExternalBySlugQuery = {
+export type GetExternalByIdQuery = {
   __typename?: 'Query'
   external?: {
     __typename?: 'External'
-    slug?: string | null
+    id: string
     title?: string | null
     thumb?: string | null
     extend_byline?: string | null
@@ -4080,11 +4080,11 @@ export type GetExternalBySlugQuery = {
   } | null
 }
 
-export type GetRelatedPostsByExternalSlugQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+export type GetRelatedPostsByExternalIdQueryVariables = Exact<{
+  id: Scalars['ID']['input']
 }>
 
-export type GetRelatedPostsByExternalSlugQuery = {
+export type GetRelatedPostsByExternalIdQuery = {
   __typename?: 'Query'
   external?: {
     __typename?: 'External'
@@ -6521,23 +6521,20 @@ export const GetLiveEventForHomepageDocument = {
   GetLiveEventForHomepageQuery,
   GetLiveEventForHomepageQueryVariables
 >
-export const GetExternalBySlugDocument = {
+export const GetExternalByIdDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetExternalBySlug' },
+      name: { kind: 'Name', value: 'GetExternalById' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
         },
       ],
@@ -6556,10 +6553,10 @@ export const GetExternalBySlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'slug' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
                         kind: 'Variable',
-                        name: { kind: 'Name', value: 'slug' },
+                        name: { kind: 'Name', value: 'id' },
                       },
                     },
                   ],
@@ -6569,7 +6566,7 @@ export const GetExternalBySlugDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'thumb' } },
                 {
@@ -6601,26 +6598,23 @@ export const GetExternalBySlugDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetExternalBySlugQuery,
-  GetExternalBySlugQueryVariables
+  GetExternalByIdQuery,
+  GetExternalByIdQueryVariables
 >
-export const GetRelatedPostsByExternalSlugDocument = {
+export const GetRelatedPostsByExternalIdDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetRelatedPostsByExternalSlug' },
+      name: { kind: 'Name', value: 'GetRelatedPostsByExternalId' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
         },
       ],
@@ -6639,10 +6633,10 @@ export const GetRelatedPostsByExternalSlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'slug' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
                         kind: 'Variable',
-                        name: { kind: 'Name', value: 'slug' },
+                        name: { kind: 'Name', value: 'id' },
                       },
                     },
                   ],
@@ -6769,8 +6763,8 @@ export const GetRelatedPostsByExternalSlugDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetRelatedPostsByExternalSlugQuery,
-  GetRelatedPostsByExternalSlugQueryVariables
+  GetRelatedPostsByExternalIdQuery,
+  GetRelatedPostsByExternalIdQueryVariables
 >
 export const GetGamesDocument = {
   kind: 'Document',

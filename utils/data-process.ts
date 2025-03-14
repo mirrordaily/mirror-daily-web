@@ -3,7 +3,7 @@ import type {
   GetPostsByCategorySlugQuery,
   GetPostsBySectionSlugQuery,
   GetPostsByTagSlugQuery,
-  GetRelatedPostsByExternalSlugQuery,
+  GetRelatedPostsByExternalIdQuery,
   GetRelatedPostsByIdQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
@@ -241,7 +241,7 @@ const transfromRawPostWithSection = (
 }
 
 type RawRelatedPosts =
-  | GetRelatedPostsByExternalSlugQuery['external']
+  | GetRelatedPostsByExternalIdQuery['external']
   | GetRelatedPostsByIdQuery['post']
 
 const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
