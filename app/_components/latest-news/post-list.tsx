@@ -56,7 +56,7 @@ export default function PostList({ sectionData }: PostListProps): ReactNode {
       }
     >
       {(posts: LatestPost[]) =>
-        posts.map((post) => <LatestNewsCard {...post} key={post.postSlug} />)
+        posts.map((post) => <LatestNewsCard {...post} key={post.postId} />)
       }
     </InfiniteScrollList>
   )

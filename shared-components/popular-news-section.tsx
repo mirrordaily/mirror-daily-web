@@ -12,7 +12,7 @@ export default async function PopularNewsSection(): Promise<JSX.Element> {
       <div className="grid md:grid-cols-2 md:gap-7 lg:grid-cols-1 lg:gap-y-5">
         {articles &&
           articles.map((item) => (
-            <FeaturedNewsCard {...item} key={item.postSlug} />
+            <FeaturedNewsCard {...item} key={item.postId} />
           ))}
       </div>
     </section>

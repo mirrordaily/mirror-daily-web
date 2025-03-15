@@ -35,10 +35,10 @@ export default function SwiperComponent({ list }: Props) {
       className="relative w-full md:rounded"
     >
       {list.map((item) => {
-        const { postSlug, postName, heroImage, link } = item
+        const { postId, postName, heroImage, link } = item
         return (
           <SwiperSlide
-            key={postSlug}
+            key={postId}
             className="relative w-full max-w-screen-sm md:max-w-none"
           >
             <NextLink

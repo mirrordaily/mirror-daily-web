@@ -8,15 +8,14 @@ import FeatureNewsList from './components/feature-news-list'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
-import { getExternalPageUrl } from '@/utils/site-urls'
 
-type PageProps = { params: { slug: string } }
+type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug } = params
-  const externalPost = await fetchExternal(slug)
+  const { id } = params
+  const externalPost = await fetchExternal(id)
 
   if (!externalPost) {
     notFound()
@@ -32,16 +31,16 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       title,
       description: '',
-      url: getExternalPageUrl(slug),
+      url: externalPost.link,
       images: image,
     },
   }
 }
 
 export default async function Page({ params }: PageProps) {
-  const slug = params.slug
-  const externalPost = await fetchExternal(slug)
-  const relatedPosts = await fetchRelatedPosts(slug)
+  const id = params.id
+  const externalPost = await fetchExternal(id)
+  const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 

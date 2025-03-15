@@ -54,17 +54,17 @@ const transformRawLatestPost = (
   rawPosts: z.infer<typeof rawLatestPostSchema>,
   sectionData: SectionData
 ): LatestPost => {
-  const { title, slug, heroImage, publishedDate, partner } = rawPosts
+  const { id, title, heroImage, publishedDate, partner } = rawPosts
   const { name, color } = getSectionConfig(rawPosts, sectionData)
 
   return {
     categoryName: name,
     categoryColor: color,
+    postId: id,
     postName: title,
-    postSlug: slug,
     heroImage: getHeroImage(heroImage),
     publishedDate,
-    link: getPostPageUrl(slug, !!partner),
+    link: getPostPageUrl(id, !!partner),
   }
 }
 
@@ -72,17 +72,17 @@ const transformRawPopularPost = (
   rawPosts: z.infer<typeof rawPopularPostSchema>,
   sectionData: SectionData
 ): LatestPost => {
-  const { title, slug, heroImage, sectionsInInputOrder: sections } = rawPosts
+  const { id, title, heroImage, sectionsInInputOrder: sections } = rawPosts
   const color = getSectionColor(sectionData, sections[0]?.slug)
 
   return {
     categoryName: sections[0]?.name ?? DEFAULT_SECTION_NAME,
     categoryColor: color,
+    postId: id,
     postName: title,
-    postSlug: slug,
     heroImage: getHeroImage(heroImage),
     publishedDate: new Date().toISOString(),
-    link: getPostPageUrl(slug),
+    link: getPostPageUrl(id),
   }
 }
 

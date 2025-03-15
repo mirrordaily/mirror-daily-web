@@ -7,8 +7,8 @@ type Props = Pick<
   ItemInTopNewsSection,
   | 'categoryColor'
   | 'categoryName'
+  | 'postId'
   | 'postName'
-  | 'postSlug'
   | 'publishedDate'
   | 'link'
 >

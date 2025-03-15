@@ -3,17 +3,17 @@
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
 import {
-  GetExternalBySlugDocument,
-  GetRelatedPostsByExternalSlugDocument,
+  GetExternalByIdDocument,
+  GetRelatedPostsByExternalIdDocument,
 } from '@/graphql/__generated__/graphql'
-import type { GetExternalBySlugQuery } from '@/graphql/__generated__/graphql'
+import type { GetExternalByIdQuery } from '@/graphql/__generated__/graphql'
 import type { ExternalPost } from '@/types/external'
 import { dateFormatter, transfromRawRelatedPosts } from '@/utils/data-process'
 import { getExternalPageUrl } from '@/utils/site-urls'
 import type { RelatedPost } from '@/types/common'
 
 function transformExternal(
-  rawData: GetExternalBySlugQuery['external']
+  rawData: GetExternalByIdQuery['external']
 ): ExternalPost | null {
   if (!rawData) return null
   const title = rawData.title ?? ''
@@ -27,8 +27,7 @@ function transformExternal(
       name: tag.name ?? '',
       slug: tag.slug ?? '',
     })) ?? []
-  const slug = rawData.slug ?? ''
-  const link = getExternalPageUrl(slug)
+  const link = getExternalPageUrl(rawData.id)
   const sectionName = '時事'
 
   return {
@@ -44,13 +43,13 @@ function transformExternal(
   }
 }
 
-async function fetchExternal(slug: string): Promise<ExternalPost | null> {
+async function fetchExternal(id: string): Promise<ExternalPost | null> {
   const errorLogger = createErrorLogger(
-    `Error occurs while fetching external with slug:${slug} on external page`,
+    `Error occurs while fetching external with id:${id} on external page`,
     getTraceObject()
   )
-  const result = await fetchGQLData(errorLogger, GetExternalBySlugDocument, {
-    slug,
+  const result = await fetchGQLData(errorLogger, GetExternalByIdDocument, {
+    id,
   })
   if (result) {
     const { external } = result
@@ -60,16 +59,16 @@ async function fetchExternal(slug: string): Promise<ExternalPost | null> {
   }
 }
 
-async function fetchRelatedPosts(slug: string): Promise<RelatedPost[]> {
+async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
-    `Error occurs while fetching related posts using external slug:${slug} on external page`,
+    `Error occurs while fetching related posts using external id:${id} on external page`,
     getTraceObject()
   )
   const result = await fetchGQLData(
     errorLogger,
-    GetRelatedPostsByExternalSlugDocument,
+    GetRelatedPostsByExternalIdDocument,
     {
-      slug,
+      id,
     }
   )
   if (result) {

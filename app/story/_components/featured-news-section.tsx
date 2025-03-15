@@ -17,7 +17,7 @@ export default function FeaturedNewsSection<
       </h3>
       <div className="grid grid-cols-1 gap-y-7 md:grid-cols-2 md:gap-x-7 lg:grid-cols-1 lg:gap-y-5">
         {posts.map((item) => (
-          <FeaturedNewsCard {...item} key={item.postSlug} />
+          <FeaturedNewsCard {...item} key={item.postId} />
         ))}
       </div>
     </section>
