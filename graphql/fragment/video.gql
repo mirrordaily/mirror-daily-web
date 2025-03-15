@@ -3,6 +3,7 @@ fragment LatestShorts on Video {
   name
   uploader
   videoSrc
+  youtubeUrl
   heroImage {
     ...ImageData
   }
