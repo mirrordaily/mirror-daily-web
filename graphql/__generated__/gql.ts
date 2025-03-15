@@ -19,7 +19,7 @@ const documents = {
     types.ImageDataFragmentDoc,
   'fragment PostOverview on Post {\n  id\n  title\n  createdAt\n  apiDataBrief\n  apiData\n  heroImage {\n    ...ImageData\n  }\n  og_image {\n    ...ImageData\n  }\n}\n\nfragment PostItem on Post {\n  id\n  title\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment TopicPost on Post {\n  id\n  title\n  apiDataBrief\n  apiData\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment RelatedPost on Post {\n  id\n  title\n  heroImage {\n    ...ImageData\n  }\n  og_image {\n    ...ImageData\n  }\n  sections {\n    name\n    color\n  }\n}':
     types.PostOverviewFragmentDoc,
-  'fragment LatestShorts on Video {\n  id\n  name\n  uploader\n  videoSrc\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  isShorts\n  uploader\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}':
+  'fragment LatestShorts on Video {\n  id\n  name\n  uploader\n  videoSrc\n  youtubeUrl\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  isShorts\n  uploader\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}':
     types.LatestShortsFragmentDoc,
   'mutation CreateShortsPreview($name: String!, $file: Upload!) {\n  photo: createPhoto(data: {name: $name, imageFile: {upload: $file}}) {\n    id\n  }\n}':
     types.CreateShortsPreviewDocument,
@@ -85,8 +85,8 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: 'fragment LatestShorts on Video {\n  id\n  name\n  uploader\n  videoSrc\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  isShorts\n  uploader\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}'
-): (typeof documents)['fragment LatestShorts on Video {\n  id\n  name\n  uploader\n  videoSrc\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  isShorts\n  uploader\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}']
+  source: 'fragment LatestShorts on Video {\n  id\n  name\n  uploader\n  videoSrc\n  youtubeUrl\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  isShorts\n  uploader\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}'
+): (typeof documents)['fragment LatestShorts on Video {\n  id\n  name\n  uploader\n  videoSrc\n  youtubeUrl\n  heroImage {\n    ...ImageData\n  }\n}\n\nfragment ShortsData on Video {\n  id\n  state\n  isShorts\n  uploader\n  videoSection\n  tags(take: 1) {\n    id\n  }\n}']
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

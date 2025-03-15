@@ -3877,6 +3877,7 @@ export type LatestShortsFragment = {
   name?: string | null
   uploader?: string | null
   videoSrc?: string | null
+  youtubeUrl?: string | null
   heroImage?: {
     __typename?: 'Photo'
     id: string
@@ -4939,6 +4940,7 @@ export type GetLatestShortsQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -4968,6 +4970,7 @@ export type GetLatestShortsQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -5023,6 +5026,7 @@ export type GetShortsByTagAndVideoSectionQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -5060,6 +5064,7 @@ export type GetShortsByVideoSectionQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -5618,6 +5623,7 @@ export const LatestShortsFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -10046,6 +10052,7 @@ export const GetLatestShortsDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -10368,6 +10375,7 @@ export const GetShortsByTagAndVideoSectionDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -10549,6 +10557,7 @@ export const GetShortsByVideoSectionDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },

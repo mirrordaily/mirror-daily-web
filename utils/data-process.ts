@@ -116,7 +116,7 @@ const createDataFetchingChain = async <T>(
     })
   }
 
-  chain.catch((err) => {
+  chain = chain.catch((err) => {
     errorLogger(err)
 
     return defaultValue
@@ -167,7 +167,7 @@ const transformLatestShorts = (
   return {
     id: rawData.id,
     title: rawData.name,
-    fileUrl: rawData.videoSrc,
+    fileUrl: rawData.youtubeUrl || rawData.videoSrc || '',
     poster: getPosterFromShorts(rawData.heroImage),
     link: getShortsPageUrl(rawData.id),
     contributor: rawData.uploader,
