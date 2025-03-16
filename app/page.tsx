@@ -7,7 +7,7 @@ import SectionDivider from './_components/divider'
 import EditorChoiceSection from './_components/editor-choice/section'
 import TopNewsSection from './_components/top-news/section'
 import ShortsNewsSection from './_components/shorts/news-section'
-import TopicAndGameSection from './_components/topic-and-game/section'
+import TopicSection from './_components/topic/section'
 import ShortsDerivativeSection from './_components/shorts/derivative-section'
 import LatestNewsSection from './_components/latest-news/section'
 import Loading from './_components/loading'
@@ -58,7 +58,7 @@ export default async function Home() {
               </div>
             }
           >
-            <TopicAndGameSection />
+            <TopicSection />
           </Suspense>
           <SectionDivider />
           {/* 短影音．二創 */}
