@@ -18,6 +18,7 @@ module.exports = {
       backgroundColor: {
         mirror: {
           blue: {
+            600: '#896fcc',
             800: '#3b1e86',
           },
         },
