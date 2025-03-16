@@ -6,7 +6,7 @@ import {
   CONTACT_LINKS,
   SITE_LINKS,
 } from '@/constants/misc'
-import IconMirrorDaily from '@/public/icons/logos/mirror-daily-footer.svg'
+import IconMirrorDaily from '@/public/icons/logos/mirror-daily.svg'
 import IconFacebook from '@/public/icons/logos/facebook-white.svg'
 import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
