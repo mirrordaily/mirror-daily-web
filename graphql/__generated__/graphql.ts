@@ -690,7 +690,6 @@ export type ExternalOrderByInput = {
   id?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
   publishedDateString?: InputMaybe<OrderDirection>
-  slug?: InputMaybe<OrderDirection>
   source?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   thumb?: InputMaybe<OrderDirection>
@@ -751,7 +750,6 @@ export type ExternalWhereInput = {
   publishedDate?: InputMaybe<DateTimeNullableFilter>
   publishedDateString?: InputMaybe<StringFilter>
   relateds?: InputMaybe<PostManyRelationFilter>
-  slug?: InputMaybe<StringFilter>
   source?: InputMaybe<StringFilter>
   state?: InputMaybe<StringNullableFilter>
   tags?: InputMaybe<TagManyRelationFilter>
@@ -763,7 +761,6 @@ export type ExternalWhereInput = {
 
 export type ExternalWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
-  slug?: InputMaybe<Scalars['String']['input']>
 }
 
 export type FileFieldInput = {
@@ -2293,7 +2290,6 @@ export type PostOrderByInput = {
   publishedDate?: InputMaybe<OrderDirection>
   publishedDateString?: InputMaybe<OrderDirection>
   redirect?: InputMaybe<OrderDirection>
-  slug?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   style?: InputMaybe<OrderDirection>
   subtitle?: InputMaybe<OrderDirection>
@@ -2415,7 +2411,6 @@ export type PostWhereInput = {
   redirect?: InputMaybe<StringFilter>
   relateds?: InputMaybe<PostManyRelationFilter>
   sections?: InputMaybe<SectionManyRelationFilter>
-  slug?: InputMaybe<StringFilter>
   state?: InputMaybe<StringNullableFilter>
   style?: InputMaybe<StringNullableFilter>
   subtitle?: InputMaybe<StringFilter>
@@ -2430,7 +2425,6 @@ export type PostWhereInput = {
 
 export type PostWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
-  slug?: InputMaybe<Scalars['String']['input']>
 }
 
 export type Query = {
@@ -3387,6 +3381,20 @@ export type User = {
   name?: Maybe<Scalars['String']['output']>
   password?: Maybe<PasswordState>
   role?: Maybe<Scalars['String']['output']>
+  sections?: Maybe<Array<Section>>
+  sectionsCount?: Maybe<Scalars['Int']['output']>
+}
+
+export type UserSectionsArgs = {
+  cursor?: InputMaybe<SectionWhereUniqueInput>
+  orderBy?: Array<SectionOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: SectionWhereInput
+}
+
+export type UserSectionsCountArgs = {
+  where?: SectionWhereInput
 }
 
 export type UserAuthenticationWithPasswordFailure = {
@@ -3410,6 +3418,7 @@ export type UserCreateInput = {
   name?: InputMaybe<Scalars['String']['input']>
   password?: InputMaybe<Scalars['String']['input']>
   role?: InputMaybe<Scalars['String']['input']>
+  sections?: InputMaybe<SectionRelateToManyForCreateInput>
 }
 
 export type UserOrderByInput = {
@@ -3442,6 +3451,7 @@ export type UserUpdateInput = {
   name?: InputMaybe<Scalars['String']['input']>
   password?: InputMaybe<Scalars['String']['input']>
   role?: InputMaybe<Scalars['String']['input']>
+  sections?: InputMaybe<SectionRelateToManyForUpdateInput>
 }
 
 export type UserWhereInput = {
@@ -3453,6 +3463,7 @@ export type UserWhereInput = {
   isProtected?: InputMaybe<BooleanFilter>
   name?: InputMaybe<StringFilter>
   role?: InputMaybe<StringFilter>
+  sections?: InputMaybe<SectionManyRelationFilter>
 }
 
 export type UserWhereUniqueInput = {
