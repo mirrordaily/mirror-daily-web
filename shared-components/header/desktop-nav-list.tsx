@@ -27,7 +27,7 @@ export default function DesktopNavList({ data }: Props) {
       onMouseLeave={() => setActiveItem('')}
       onBlur={() => setActiveItem('')}
     >
-      <ul className="mt-[30px] flex h-[28px] w-full items-center text-base font-bold tracking-[0.5px]">
+      <ul className="flex h-[28px] w-full items-center text-base font-bold tracking-[0.5px]">
         {data.map((section) => {
           const { name, slug, color, categories } = section
           const shouldShowCategories = activeItem === slug

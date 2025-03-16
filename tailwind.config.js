@@ -19,6 +19,7 @@ module.exports = {
         mirror: {
           blue: {
             600: '#896fcc',
+            700: '#674ab1',
             800: '#3b1e86',
           },
         },

@@ -24,7 +24,7 @@ export default async function Home() {
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
-          <SectionDivider customClasses="hidden md:block" />
+          <SectionDivider customClasses="hidden md:block lg:hidden" />
           {/* 編輯精選 */}
           <Suspense
             fallback={
