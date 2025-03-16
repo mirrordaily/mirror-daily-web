@@ -42,7 +42,7 @@ const ExtendedSocialLinks = [
 
 export default function Footer(): ReactElement {
   return (
-    <footer className="flex w-full flex-col bg-[#2B2B2B]">
+    <footer className="flex w-full flex-col bg-mirror-blue-800">
       <div className="flex w-full max-w-screen-lg flex-col items-center self-center lg:flex-row">
         <NextLink href="/" className="mt-5 md:mt-7 lg:ml-5 lg:mt-0">
           <NextImage
