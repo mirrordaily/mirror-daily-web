@@ -27,8 +27,8 @@ export type HeroImage = {
 export type PopularNews = {
   categoryName: string
   categoryColor: string
+  postId: string
   postName: string
-  postSlug: string
   heroImage: HeroImage
   publishedDate: string
   link: string
@@ -69,8 +69,8 @@ export type Shorts = {
 export type LatestPost = {
   categoryName: string
   categoryColor: string
+  postId: string
   postName: string
-  postSlug: string
   heroImage: HeroImage
   publishedDate: string
   link: string
@@ -83,3 +83,5 @@ export type RelatedPost = {
   sectionName: string
   postMainImage: HeroImage
 }
+
+export type SectionData = Pick<SectionAndCategory, 'slug' | 'color'>[]

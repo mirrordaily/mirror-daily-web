@@ -24,7 +24,7 @@ export default function TopicMain({ data }: Props) {
           </div>
           <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-[34px] lg:flex-col lg:gap-y-5">
             {topicData.slice(1, 4).map((data) => (
-              <TopicItem {...data} key={data.postSlug} />
+              <TopicItem {...data} key={data.postId} />
             ))}
           </div>
         </div>

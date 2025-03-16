@@ -3,6 +3,7 @@ import Image from 'next/image'
 import SocialShareBar from '@/shared-components/social-share-bar'
 import Link from 'next/link'
 import { IMAGE_PATH } from '@/constants/default-path'
+import { getTagPageUrl } from '@/utils/site-urls'
 
 export default function ArticleIntro({
   title,
@@ -39,7 +40,11 @@ export default function ArticleIntro({
         {tags.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-x-2 gap-y-4 md:mb-6 md:grid-cols-6 md:gap-x-3 lg:mb-4">
             {tags.map((tag) => (
-              <Link href={`/tag/${tag.slug}`} target="_blank" key={tag.slug}>
+              <Link
+                href={getTagPageUrl(tag.slug)}
+                target="_blank"
+                key={tag.slug}
+              >
                 <div className="flex justify-center rounded bg-[#CCCED4] py-1 pl-[10px] pr-3 text-sm font-normal leading-[24px]">
                   {tag.name}
                 </div>

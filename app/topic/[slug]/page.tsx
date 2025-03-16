@@ -17,6 +17,7 @@ import CustomImage from '@/shared-components/custom-image'
 import LeadingSlideshow from './_components/leading-slideshow'
 import ListTypeListing from './_components/list-type'
 import GroupTypeListing from './_components/group-type'
+import { getTopicPageUrl } from '@/utils/site-urls'
 
 type PageProps = {
   params: { slug: string }
@@ -32,7 +33,7 @@ export async function generateMetadata({
     notFound()
   }
 
-  const title = `${topic.og_title || topic.name} -${SITE_NAME}`
+  const title = `${topic.og_title || topic.name} - ${SITE_NAME}`
   const description =
     topic.og_description ||
     getFirstParagraphFromApiData(topic.apiDataBrief) ||
@@ -49,6 +50,7 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       title,
       description,
+      url: getTopicPageUrl(slug),
       images: image,
     },
   }

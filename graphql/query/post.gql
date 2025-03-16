@@ -18,8 +18,8 @@ query GetFlashNews {
     orderBy: { publishedDate: desc }
     where: { state: { equals: "published" } }
   ) {
+    id
     title
-    slug
   }
 }
 
@@ -76,9 +76,9 @@ query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
   }
 }
 
-query GetPostBySlug($slug: String!) {
-  post(where: { slug: $slug }) {
-    slug
+query GetPostById($id: ID!) {
+  post(where: { id: $id }) {
+    id
     title
     subtitle
     heroCaption
@@ -110,8 +110,8 @@ query GetPostBySlug($slug: String!) {
   }
 }
 
-query GetRelatedPostsBySlug($slug: String!) {
-  post(where: { slug: $slug }) {
+query GetRelatedPostsById($id: ID!) {
+  post(where: { id: $id }) {
     relateds {
       ...RelatedPost
     }

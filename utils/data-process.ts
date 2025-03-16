@@ -3,11 +3,11 @@ import type {
   GetPostsByCategorySlugQuery,
   GetPostsBySectionSlugQuery,
   GetPostsByTagSlugQuery,
-  GetRelatedPostsByExternalSlugQuery,
-  GetRelatedPostsBySlugQuery,
+  GetRelatedPostsByExternalIdQuery,
+  GetRelatedPostsByIdQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
-import type { HeroImage, Shorts } from '@/types/common'
+import type { HeroImage, SectionData, Shorts } from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { createErrorLogger } from './log/common'
@@ -116,7 +116,7 @@ const createDataFetchingChain = async <T>(
     })
   }
 
-  chain.catch((err) => {
+  chain = chain.catch((err) => {
     errorLogger(err)
 
     return defaultValue
@@ -167,7 +167,7 @@ const transformLatestShorts = (
   return {
     id: rawData.id,
     title: rawData.name,
-    fileUrl: rawData.videoSrc,
+    fileUrl: rawData.youtubeUrl || rawData.videoSrc || '',
     poster: getPosterFromShorts(rawData.heroImage),
     link: getShortsPageUrl(rawData.id),
     contributor: rawData.uploader,
@@ -186,9 +186,9 @@ type RawPost = NonNullable<
 export type PostData = CategoryPost | SectionPost
 
 const transfromRawPost = (rawPost: RawPost): PostData => {
+  const id = rawPost.id
   const title = rawPost.title ?? ''
-  const slug = rawPost.slug ?? ''
-  const link = getStoryPageUrl(slug)
+  const link = getStoryPageUrl(id)
   const createdTime = dateFormatter(rawPost.createdAt)
   const heroImage = getHeroImage(rawPost.heroImage)
   const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
@@ -198,8 +198,8 @@ const transfromRawPost = (rawPost: RawPost): PostData => {
   const textContent = brief || content
 
   return {
+    id,
     title,
-    slug,
     link,
     createdTime,
     textContent,
@@ -216,9 +216,9 @@ export type PostDataWithSection = AuthorPost | TagPost
 const transfromRawPostWithSection = (
   rawPost: RawPostWithSection
 ): PostDataWithSection => {
+  const id = rawPost.id
   const title = rawPost.title ?? ''
-  const slug = rawPost.slug ?? ''
-  const link = getStoryPageUrl(slug)
+  const link = getStoryPageUrl(id)
   const createdTime = dateFormatter(rawPost.createdAt) ?? ''
   const heroImage = getHeroImage(rawPost.heroImage)
   const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
@@ -241,16 +241,15 @@ const transfromRawPostWithSection = (
 }
 
 type RawRelatedPosts =
-  | GetRelatedPostsByExternalSlugQuery['external']
-  | GetRelatedPostsBySlugQuery['post']
+  | GetRelatedPostsByExternalIdQuery['external']
+  | GetRelatedPostsByIdQuery['post']
 
 const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
   if (!rawData || !rawData.relateds) return []
 
   return rawData.relateds.map((rawPost) => {
     const title = rawPost.title ?? ''
-    const slug = rawPost.slug ?? ''
-    const link = getStoryPageUrl(slug)
+    const link = getStoryPageUrl(rawPost.id)
     const heroImage = getHeroImage(rawPost.heroImage)
     const ogImage = getHeroImage(rawPost.og_image)
     const postMainImage = selectMainImage(heroImage, ogImage)
@@ -267,6 +266,13 @@ const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
   })
 }
 
+const getSectionColor = (sectionData: SectionData, slug?: string) => {
+  return (
+    sectionData.find((item) => slug === item.slug)?.color ??
+    DEFAULT_SECTION_COLOR
+  )
+}
+
 export {
   getHeroImage,
   dateFormatter,
@@ -278,4 +284,5 @@ export {
   transfromRawPostWithSection,
   getImageSrc,
   transfromRawRelatedPosts,
+  getSectionColor,
 }

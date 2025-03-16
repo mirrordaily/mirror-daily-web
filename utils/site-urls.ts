@@ -1,12 +1,12 @@
 import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
 import { LATEST_SHORT_PAGES } from '@/constants/misc'
 
-export const getPostPageUrl = (slug: string, isExternal?: boolean) =>
-  isExternal ? getExternalPageUrl(slug) : getStoryPageUrl(slug)
+export const getPostPageUrl = (id: string, isExternal?: boolean) =>
+  isExternal ? getExternalPageUrl(id) : getStoryPageUrl(id)
 
-export const getExternalPageUrl = (slug: string) => `/external/${slug}`
+export const getExternalPageUrl = (id: string) => `/external/${id}`
 
-export const getStoryPageUrl = (slug: string) => `/story/${slug}`
+export const getStoryPageUrl = (id: string) => `/story/${id}`
 
 export const getSectionPageUrl = (slug: string) =>
   slug === FIXED_KEY_FOR_SECTION_SHORTS
@@ -15,10 +15,12 @@ export const getSectionPageUrl = (slug: string) =>
 
 export const getCategoryPageUrl = (slug: string) => `/category/${slug}`
 
-export const getTopicSectionPage = () => `/topics`
+export const getTopicListingPage = () => `/topic`
 
 export const getTopicPageUrl = (slug: string) => `/topic/${slug}`
 
 export const getShortsPageUrl = (id: string) => `/shorts/${id}`
 
 export const getAuthorPageUrl = (id: string) => `/author/${id}`
+
+export const getTagPageUrl = (slug: string) => `/tag/${slug}`

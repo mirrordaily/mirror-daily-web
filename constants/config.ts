@@ -16,6 +16,7 @@ const JSON_ROOT = '/json'
 let STATIC_FILE_DOMAIN: string
 let JSON_FILE_PATH: string
 let SITE_URL: `https://${string}`
+let GTM_ID: string
 
 const ENV = (function () {
   const env = process.env.NEXT_PUBLIC_ENV
@@ -29,19 +30,35 @@ const ENV = (function () {
 
 const GCP_PROJECT_ID = 'mirrordaily'
 /** section shorts must use specific key for navigation purpose */
-const FIXED_KEY_FOR_SECTION_SHORTS = 'short'
+const FIXED_KEY_FOR_SECTION_SHORTS = 'shorts'
 
 switch (ENV) {
+  case ENVIRONMENT.PRODUCTION:
+    STATIC_FILE_DOMAIN = 'statics-prod.mirrordaily.news'
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
+    SITE_URL = 'https://www.mirrordaily.news'
+    GTM_ID = 'GTM-MPWSXJ4X'
+    break
+
+  case ENVIRONMENT.STAGING:
+    STATIC_FILE_DOMAIN = 'statics-staging.mirrordaily.news'
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
+    SITE_URL = 'https://staging.mirrordaily.news'
+    GTM_ID = 'GTM-P7XPJ6P4'
+    break
+
   case ENVIRONMENT.DEVELOPMENT:
     STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://dev.mirrordaily.news'
+    GTM_ID = 'GTM-MG9V2TJC'
     break
 
   default:
     STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://dev.mirrordaily.news'
+    GTM_ID = 'GTM-MG9V2TJC'
     break
 }
 
@@ -70,4 +87,5 @@ export {
   GCP_PROJECT_ID,
   FIXED_KEY_FOR_SECTION_SHORTS,
   SITE_URL,
+  GTM_ID,
 }

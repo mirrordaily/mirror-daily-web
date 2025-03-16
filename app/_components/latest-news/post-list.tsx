@@ -2,27 +2,52 @@
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import LatestNewsCard from './card'
 import type { ReactNode } from 'react'
+import type { LatestPost } from '@/types/common'
+import type { getSectionColor } from '@/utils/data-process'
+import { fetchLatestPost } from '@/utils/client-side-data-fetch'
+import { useAppSelector } from '@/redux/hooks'
+import {
+  selectIsInitialized,
+  selectLatestPosts,
+  selectLiveEvent,
+} from '@/redux/homepage/selector'
 
 /** the amount of articles each time load-more is clicked  */
 const RENDER_PAGE_SIZE = 20
 
-import type { LatestPost } from '@/types/common'
-
 type PostListProps = {
-  initialList: LatestPost[]
-  fetchLatestPost(page: number): Promise<LatestPost[]>
+  sectionData: Parameters<typeof getSectionColor>[0]
 }
 
-export default function PostList({
-  initialList,
-  fetchLatestPost,
-}: PostListProps): ReactNode {
+export default function PostList({ sectionData }: PostListProps): ReactNode {
+  const isInitialized = useAppSelector(selectIsInitialized)
+  const liveEvent = useAppSelector(selectLiveEvent)
+  const latestPosts = useAppSelector(selectLatestPosts)
+
+  const fetchMoreLatestPost = async (
+    page: number = 0
+  ): Promise<LatestPost[]> => {
+    // fetch more latest post on browser side
+    return await fetchLatestPost(sectionData, page)
+  }
+
+  if (!isInitialized) return null
+
+  let startIndexOfLatestNewsSection = 0
+
+  if (liveEvent) {
+    startIndexOfLatestNewsSection = 9
+  } else {
+    startIndexOfLatestNewsSection = 10
+  }
+
   return (
     <InfiniteScrollList
-      initialList={initialList}
+      key={String(isInitialized)}
+      initialList={latestPosts.slice(startIndexOfLatestNewsSection)}
       pageSize={RENDER_PAGE_SIZE}
       amountOfElements={200}
-      fetchListInPage={fetchLatestPost}
+      fetchListInPage={fetchMoreLatestPost}
       isAutoFetch={false}
       loader={
         <button className="mt-4 inline-block rounded border-2 border-solid border-[#896fcc] p-[10px] text-lg font-bold leading-normal text-[#896fcc] hover-or-active:bg-[#896fcc] hover-or-active:text-[#ffffff] lg:mt-6">
@@ -31,7 +56,7 @@ export default function PostList({
       }
     >
       {(posts: LatestPost[]) =>
-        posts.map((post) => <LatestNewsCard {...post} key={post.postSlug} />)
+        posts.map((post) => <LatestNewsCard {...post} key={post.postId} />)
       }
     </InfiniteScrollList>
   )

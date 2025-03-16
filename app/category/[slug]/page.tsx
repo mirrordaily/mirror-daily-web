@@ -2,8 +2,40 @@ import { notFound } from 'next/navigation'
 import { fetchCategoryPosts, fetchCategoryInformation } from '../actions'
 import ArticlesList from '../../../shared-components/articles-list'
 import PopularNewsSection from '@/shared-components/popular-news-section'
+import type { Metadata } from 'next'
+import { SITE_NAME } from '@/constants/misc'
+import { IMAGE_PATH } from '@/constants/default-path'
+import { getCategoryPageUrl } from '@/utils/site-urls'
 
-export default async function Page({ params }: { params: { slug: string } }) {
+type PageProps = { params: { slug: string } }
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = params
+  const categoryInfo = await fetchCategoryInformation(slug)
+
+  if (!categoryInfo) {
+    notFound()
+  }
+
+  const title = `${categoryInfo.name} -${SITE_NAME}`
+
+  // TODO: fill the blank
+  return {
+    title,
+    description: '',
+    openGraph: {
+      siteName: SITE_NAME,
+      title,
+      description: '',
+      url: getCategoryPageUrl(slug),
+      images: IMAGE_PATH,
+    },
+  }
+}
+
+export default async function Page({ params }: PageProps) {
   const slug = params.slug
 
   const categoryInfo = await fetchCategoryInformation(slug)

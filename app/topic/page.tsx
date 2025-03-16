@@ -4,16 +4,20 @@ import type { Metadata } from 'next'
 import { fetchTopicListingByPage } from './action'
 import TopicList from './_components/topic-list'
 import { PAGE_SIZE } from '@/constants/topic-list'
+import { getTopicListingPage } from '@/utils/site-urls'
+
+// add segment config to prevent data fetch during build
+export const dynamic = 'force-dynamic'
 
 // TODO: fill the blank
 export const metadata: Metadata = {
-  title: '專題 - 鏡報',
+  title: `專題 - ${SITE_NAME}`,
   description: '',
   openGraph: {
     siteName: SITE_NAME,
-    title: '專題 - 鏡報',
+    title: `專題 - ${SITE_NAME}`,
     description: '',
-    url: '/topic',
+    url: getTopicListingPage(),
     images: IMAGE_PATH,
   },
 }

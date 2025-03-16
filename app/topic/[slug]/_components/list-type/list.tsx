@@ -28,7 +28,7 @@ export default function List({
         loader={<button className="load-more">看更多</button>}
       >
         {(posts) =>
-          posts.map((post) => <ArticleCard key={post.slug} {...post} />)
+          posts.map((post) => <ArticleCard key={post.id} {...post} />)
         }
       </InfiniteScrollList>
     </div>
