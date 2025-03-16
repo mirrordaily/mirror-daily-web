@@ -35,11 +35,11 @@
     @apply lg:h-5 lg:w-5 lg:text-sm lg:leading-[18px] lg:border-[1px];
   }
   .homepage-editor-choice-bullet-active {
-    @apply homepage-editor-choice-bullet text-white bg-[#19B7E8] border-white md:bg-[#004EBC];
+    @apply homepage-editor-choice-bullet text-white bg-mirror-blue-600 border-white md:bg-[#004EBC];
   }
   .homepage-editor-choice-pagination-horizontal {
-    @apply z-over-editor-choice  mt-6 flex w-full justify-center space-x-[6px];
-    @apply md:!w-auto md:absolute md:bottom-3 md:right-3 md:justify-end md:space-x-1;
+    @apply z-over-editor-choice mt-8 flex w-full justify-center space-x-[6px];
+    @apply md:!w-auto md:absolute md:!bottom-3 md:!right-4 md:justify-end md:space-x-1 lg:!bottom-[26px] lg:!right-3; 
     @apply lg:space-x-[6px];
   }
 

@@ -35,7 +35,7 @@ export default async function Home() {
           >
             <EditorChoiceSection />
           </Suspense>
-          <SectionDivider />
+          <SectionDivider customClasses="lg:hidden" />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection sectionData={sectionData} />
           <SectionDivider />
