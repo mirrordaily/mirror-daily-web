@@ -1,3 +1,4 @@
+import type { HeaderData, HeaderSection } from '@/types/common'
 import { z } from 'zod'
 
 function isServer(): boolean {
@@ -18,4 +19,7 @@ const checkEmail = (email: string) => {
   return success
 }
 
-export { isServer, isValidUrl, checkShortsTitle, checkEmail }
+const isSectionItem = (item: HeaderData): item is HeaderSection =>
+  item.type === 'Section'
+
+export { isServer, isValidUrl, checkShortsTitle, checkEmail, isSectionItem }
