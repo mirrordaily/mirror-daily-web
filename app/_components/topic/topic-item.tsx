@@ -19,10 +19,10 @@ export default function TopicItem({
     >
       <NextLink
         href={topicLink}
-        className={`relative aspect-[329/182] w-full overflow-hidden rounded ${
+        className={`relative aspect-[329/182] w-full shrink-0 overflow-hidden rounded ${
           isFirst
-            ? 'md:aspect-[680/377] lg:aspect-[648/424]'
-            : 'md:aspect-[204/113] lg:aspect-[232/128] lg:min-w-[232px]'
+            ? 'md:aspect-[680/377] lg:aspect-[648/424] lg:w-[648px]'
+            : 'md:aspect-[204/113] lg:aspect-[232/128] lg:w-[232px]'
         } `}
       >
         <CustomImage
@@ -41,7 +41,7 @@ export default function TopicItem({
         className={`line-clamp-2 text-base font-normal leading-normal text-[#000928] group-hover/card:text-[#575D71] group-active/card:text-[#575D71] ${
           isFirst
             ? 'md:absolute md:bottom-[14px] md:left-[21px] md:w-[471px] md:text-xl md:text-white md:group-hover/card:text-white md:group-hover/card:underline md:group-active/card:text-white md:group-active/card:underline lg:bottom-3 lg:left-4 lg:w-[526px] lg:font-bold lg:leading-none'
-            : 'md:line-clamp-3'
+            : 'md:line-clamp-3 md:h-[72px]'
         }`}
       >
         {postName}
