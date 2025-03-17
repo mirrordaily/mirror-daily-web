@@ -1,7 +1,7 @@
 import TopicMain from './topic-main'
 import { fetchTopics } from '@/app/actions'
 
-export default async function TopicAndGameSection() {
+export default async function TopicSection() {
   const data = await fetchTopics()
 
   if (!data) return null
