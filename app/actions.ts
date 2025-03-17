@@ -28,7 +28,7 @@ import { getStoryPageUrl, getTopicPageUrl } from '@/utils/site-urls'
 import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
-import type TopicMain from './_components/topic-and-game/topic-main'
+import type TopicMain from './_components/topic/topic-main'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import {
