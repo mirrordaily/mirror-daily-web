@@ -6,16 +6,16 @@ import {
   CONTACT_LINKS,
   SITE_LINKS,
 } from '@/constants/misc'
-import IconMirrorDaily from '@/public/icons/logos/mirror-daily-footer.svg'
+import IconMirrorDaily from '@/public/icons/logos/mirror-daily.svg'
 import IconFacebook from '@/public/icons/logos/facebook-white.svg'
 import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
-import IconMirrorMedia from '@/public/icons/logos/mirror-media.svg'
-import IconMirrorFiction from '@/public/icons/logos/mirror-fiction.png'
-import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
 import { Fragment, type ReactElement } from 'react'
+import IconMirrorMedia from '@/public/icons/logos/mirror-media-white.svg'
+import IconMirrorFiction from '@/public/icons/logos/mirror-fiction.png'
+import IconMirrorNews from '@/public/icons/logos/mirror-news-white.svg'
 
 const ExtendedSocialLinks = [
   {

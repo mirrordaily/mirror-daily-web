@@ -34,7 +34,7 @@ export default function EditorChoiceMain(props: Props) {
 
   return (
     <div className="relative w-full">
-      <div className="z-over-editor-choice mb-4 flex justify-center gap-x-2 md:absolute md:left-4 md:top-4 lg:left-7">
+      <div className="z-over-editor-choice mb-6 flex justify-center gap-x-2 md:absolute md:left-4 md:top-4">
         {validTabs.map((tab) => {
           const amount = props[tab].length
 
@@ -53,6 +53,7 @@ export default function EditorChoiceMain(props: Props) {
         })}
       </div>
       <SwiperComponent key={activeTab} list={list} />
+      <div className="hidden h-[20px] w-full bg-mirror-blue-700 lg:block" />
     </div>
   )
 }

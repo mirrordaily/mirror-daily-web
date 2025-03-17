@@ -7,7 +7,7 @@ import SectionDivider from './_components/divider'
 import EditorChoiceSection from './_components/editor-choice/section'
 import TopNewsSection from './_components/top-news/section'
 import ShortsNewsSection from './_components/shorts/news-section'
-import TopicAndGameSection from './_components/topic-and-game/section'
+import TopicSection from './_components/topic/section'
 import ShortsDerivativeSection from './_components/shorts/derivative-section'
 import LatestNewsSection from './_components/latest-news/section'
 import Loading from './_components/loading'
@@ -24,7 +24,7 @@ export default async function Home() {
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
-          <SectionDivider customClasses="hidden md:block" />
+          <SectionDivider customClasses="hidden md:block lg:hidden" />
           {/* 編輯精選 */}
           <Suspense
             fallback={
@@ -35,7 +35,7 @@ export default async function Home() {
           >
             <EditorChoiceSection />
           </Suspense>
-          <SectionDivider />
+          <SectionDivider customClasses="lg:hidden" />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection sectionData={sectionData} />
           <SectionDivider />
@@ -58,7 +58,7 @@ export default async function Home() {
               </div>
             }
           >
-            <TopicAndGameSection />
+            <TopicSection />
           </Suspense>
           <SectionDivider />
           {/* 短影音．二創 */}

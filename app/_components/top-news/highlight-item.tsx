@@ -28,7 +28,7 @@ export default function HighlightItem({
           }}
         />
       </div>
-      <p className="mt-2 line-clamp-3 text-base font-medium leading-normal text-[#000928] group-hover/highlight-item:text-[#575D71] group-active/highlight-item:text-[#575D71] md:mt-[6px] md:line-clamp-2 md:text-sm md:font-bold lg:mt-2 lg:text-xl">
+      <p className="mt-4 line-clamp-3 text-base font-medium leading-none text-[#000928] group-hover/highlight-item:text-[#575D71] group-active/highlight-item:text-[#575D71] md:mt-2 md:line-clamp-2 lg:mt-2 lg:text-xl lg:font-bold">
         {postName}
       </p>
     </NextLink>

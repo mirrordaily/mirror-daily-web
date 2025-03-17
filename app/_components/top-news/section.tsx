@@ -89,7 +89,7 @@ export default function TopNewsSection({ sectionData }: Props) {
   if (!isInitialized) return null
 
   return (
-    <section className="section-in-homepage my-9 md:mt-6 lg:mb-[30px] lg:mt-7">
+    <section className="section-in-homepage mb-4 mt-[41px] md:mb-14 md:mt-6 lg:mb-9 lg:mt-[26px]">
       <Selector selectedTab={tab} setTab={setTab} />
       <PostList key={tab} list={posts} />
     </section>
