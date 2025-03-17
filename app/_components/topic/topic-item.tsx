@@ -21,7 +21,7 @@ export default function TopicItem({
         href={topicLink}
         className={`relative aspect-[329/182] w-full shrink-0 overflow-hidden rounded ${
           isFirst
-            ? 'md:aspect-[680/377] md:min-w-[648px] lg:aspect-[648/424] lg:w-[648px]'
+            ? 'md:aspect-[680/377] lg:aspect-[648/424] lg:w-[648px]'
             : 'md:aspect-[204/113] lg:aspect-[232/128] lg:w-[232px]'
         } `}
       >
