@@ -136,9 +136,9 @@ export default function TopicSelector({
             onClick={() => setTopic(topic)}
             className={`${
               isActive
-                ? 'text-[#896FCC] lg:bg-[#674AB1] lg:p-[10px] lg:text-[#FFFFFF]'
+                ? 'text-[#896FCC] lg:bg-[#674AB1] lg:p-[10px] lg:text-white'
                 : 'text-[#7F8493] lg:bg-[#CCCED4] lg:p-[10px]'
-            } whitespace-nowrap hover-or-active:text-[#FFFFFF] lg:rounded-md`}
+            } whitespace-nowrap hover-or-active:text-[#896FCC] lg:rounded-md lg:hover-or-active:bg-mirror-blue-700 lg:hover-or-active:text-white`}
           >
             {topic}
           </button>
