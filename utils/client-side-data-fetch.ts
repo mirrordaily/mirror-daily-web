@@ -3,7 +3,7 @@ import {
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_POPULAR_NEWS,
 } from '@/constants/config'
-import type { LatestPost, PopularNews, SectionData } from '@/types/common'
+import type { HeaderData, LatestPost, PopularNews } from '@/types/common'
 import { rawLatestPostSchema, rawPopularPostSchema } from './data-schema'
 import {
   hasExternalLink,
@@ -12,7 +12,7 @@ import {
 } from './post'
 
 const fetchLatestPost = async (
-  sectionData: SectionData,
+  headerData: HeaderData[],
   page: number = 0
 ): Promise<LatestPost[]> => {
   // fetch more latest post on browser side
@@ -25,7 +25,7 @@ const fetchLatestPost = async (
       (rawPost) => !hasExternalLink(rawPost)
     )
 
-    return filteredData.map((item) => transformRawLatestPost(item, sectionData))
+    return filteredData.map((item) => transformRawLatestPost(item, headerData))
   } catch (e) {
     // TODO: send error log
     console.error(e)
@@ -34,7 +34,7 @@ const fetchLatestPost = async (
 }
 
 const fetchPopularPost = async (
-  sectionData: SectionData,
+  headerData: HeaderData[],
   amount: number = 10
 ): Promise<PopularNews[]> => {
   try {
@@ -45,7 +45,7 @@ const fetchPopularPost = async (
       .parse(resp.json())
 
     return rawPostData
-      .map((item) => transformRawPopularPost(item, sectionData))
+      .map((item) => transformRawPopularPost(item, headerData))
       .slice(0, amount)
   } catch (e) {
     // TODO: send error log

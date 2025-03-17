@@ -1,17 +1,3 @@
-query GetSectionsAndCategories {
-  sections(orderBy: { order: asc }, where: { state: { equals: "active" } }) {
-    name
-    slug
-    color
-    categories(
-      orderBy: { order: asc }
-      where: { state: { equals: "active" } }
-    ) {
-      name
-      slug
-    }
-  }
-}
 query GetSectionInformation($slug: String!) {
   section(where: { slug: $slug }) {
     slug

@@ -1,8 +1,7 @@
 'use server'
 
-import type { PopularNews, SectionAndCategory, Shorts } from '@/types/common'
+import type { HeaderData, PopularNews, Shorts } from '@/types/common'
 import { SHORTS_TYPE } from '@/types/common'
-import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import {
@@ -14,19 +13,18 @@ import {
   latestShortsSchema,
   rawPopularPostSchema,
   rawLatestPostSchema,
-  sectionSchema,
+  headerSchema,
 } from '@/utils/data-schema'
 import {
   URL_STATIC_LATEST_SHORTS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
-  URL_STATIC_SECTION_AND_CATEGORY,
+  URL_STATIC_HEADER,
 } from '@/constants/config'
 import {
   CreateCreativityShortsDocument,
   CreateShortsPreviewDocument,
   GetLatestShortsDocument,
-  GetSectionsAndCategoriesDocument,
 } from '@/graphql/__generated__/graphql'
 import type { LatestPost } from '@/types/common'
 import {
@@ -61,8 +59,8 @@ export const fetchLatestPost = async (
       (rawPost) => !hasExternalLink(rawPost)
     )
 
-    const sectionData = await fetchSectionsAndCategories()
-    return filteredData.map((item) => transformRawLatestPost(item, sectionData))
+    const headerData = await fetchHeaderData()
+    return filteredData.map((item) => transformRawLatestPost(item, headerData))
   } catch (e) {
     errorLogger(e)
     return []
@@ -84,10 +82,10 @@ export const fetchPopularPost = async (
       .promise(z.array(rawPopularPostSchema))
       .parse(resp.json())
 
-    const sectionData = await fetchSectionsAndCategories()
+    const headerData = await fetchHeaderData()
 
     return rawPostData
-      .map((item) => transformRawPopularPost(item, sectionData))
+      .map((item) => transformRawPopularPost(item, headerData))
       .slice(0, amount)
   } catch (e) {
     errorLogger(e)
@@ -250,62 +248,64 @@ export const createCreativityShorts = async (
   }
 }
 
-const transformRawSectionsAndCategories = (
-  rawData: z.infer<ZodArray<typeof sectionSchema>>
-): SectionAndCategory[] => {
+const transformHeaderData = (
+  rawData: z.infer<typeof headerSchema>
+): HeaderData[] => {
   if (!rawData) return []
 
-  return rawData.map((rawSection) => {
-    const name = rawSection.name ?? ''
-    const slug = rawSection.slug ?? ''
-    const color = rawSection.color ?? ''
-    const categories = (rawSection.categories ?? []).map((rawCategory) => {
-      const name = rawCategory.name ?? ''
-      const slug = rawCategory.slug ?? ''
+  return rawData.map((item) => {
+    if (item.type === 'Topic') {
+      const name = item.name ?? ''
+      const slug = item.slug ?? ''
+
+      return {
+        name,
+        slug,
+        type: item.type,
+      }
+    } else {
+      const name = item.name ?? ''
+      const slug = item.slug ?? ''
+      const color = item.color ?? ''
+      const categories = (item.categories ?? []).map((rawCategory) => {
+        const name = rawCategory.name ?? ''
+        const slug = rawCategory.slug ?? ''
+
+        return {
+          name,
+          slug,
+          color,
+        }
+      })
 
       return {
         name,
         slug,
         color,
+        categories,
+        type: item.type ?? 'Section',
       }
-    })
-
-    return {
-      name,
-      slug,
-      color,
-      categories,
     }
   })
 }
 
-export const fetchSectionsAndCategories = cache(
-  async (): Promise<SectionAndCategory[]> => {
-    const errorLogger = createErrorLogger(
-      'Error occurs while fetching sections and categories',
-      getTraceObject()
-    )
-    const schema = z.promise(z.object({ sections: z.array(sectionSchema) }))
+export const fetchHeaderData = cache(async (): Promise<HeaderData[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching header json',
+    getTraceObject()
+  )
+  const schema = z.promise(headerSchema)
 
-    const data = await createDataFetchingChain<
-      z.infer<ZodArray<typeof sectionSchema>>
-    >(
-      errorLogger,
-      [],
-      async () => {
-        const resp = await fetch(URL_STATIC_SECTION_AND_CATEGORY)
+  const data = await createDataFetchingChain<z.infer<typeof headerSchema>>(
+    errorLogger,
+    [],
+    async () => {
+      const resp = await fetch(URL_STATIC_HEADER)
 
-        const result = await schema.parse(resp.json())
-        return result.sections
-      },
-      async () => {
-        const result = await schema.parse(
-          fetchGQLData(errorLogger, GetSectionsAndCategoriesDocument)
-        )
-        return result.sections
-      }
-    )
+      const result = await schema.parse(resp.json())
+      return result
+    }
+  )
 
-    return transformRawSectionsAndCategories(data)
-  }
-)
+  return transformHeaderData(data)
+})

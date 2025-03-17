@@ -41,7 +41,7 @@ export type ParameterOfComponent<T> = T extends (
   ? P
   : never
 
-export type SectionAndCategory = {
+export type HeaderSection = {
   name: string
   slug: string
   color: string
@@ -50,7 +50,16 @@ export type SectionAndCategory = {
     slug: string
     color: string
   }[]
+  type: 'Section'
 }
+
+export type HeaderTopic = {
+  name: string
+  slug: string
+  type: 'Topic'
+}
+
+export type HeaderData = HeaderSection | HeaderTopic
 
 export enum SHORTS_TYPE {
   NEWS = 'news',
@@ -84,4 +93,4 @@ export type RelatedPost = {
   postMainImage: HeroImage
 }
 
-export type SectionData = Pick<SectionAndCategory, 'slug' | 'color'>[]
+export type SectionData = Pick<HeaderSection, 'slug' | 'color'>[]

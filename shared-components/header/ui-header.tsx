@@ -11,7 +11,7 @@ import IconInstagram from '@/public/icons/logos/instagram-black.svg'
 import IconThreads from '@/public/icons/logos/threads-black.svg'
 import IconYouTube from '@/public/icons/logos/youtube-black.svg'
 import IconLine from '@/public/icons/logos/line-black.svg'
-import type { SectionAndCategory } from '@/types/common'
+import type { HeaderData } from '@/types/common'
 import type { FlashNews } from '@/types/homepage'
 
 const ExtendedSocialLinks = [
@@ -50,7 +50,7 @@ export default function UiHeader({
   data,
   flashNews,
 }: {
-  data: SectionAndCategory[]
+  data: HeaderData[]
   flashNews: FlashNews[]
 }) {
   return (

@@ -51,6 +51,7 @@ export const sectionSchema = z.object({
   slug: z.string(),
   color: z.string(),
   categories: z.array(categorySchema),
+  type: z.literal('Section'),
 })
 
 const partnerSchema = z.object({
@@ -131,3 +132,17 @@ export const shortsDataSchema = z.object({
     })
   ),
 })
+
+export const headerSchema = z.array(
+  z.union([
+    sectionSchema,
+    topicsSchema
+      .pick({
+        name: true,
+        slug: true,
+      })
+      .extend({
+        type: z.literal('Topic'),
+      }),
+  ])
+)

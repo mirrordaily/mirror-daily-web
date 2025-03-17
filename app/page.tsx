@@ -1,4 +1,4 @@
-import { fetchSectionsAndCategories } from './actions-general'
+import { fetchHeaderData } from './actions-general'
 
 import Header from '@/shared-components/header'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
@@ -17,7 +17,7 @@ import { Suspense } from 'react'
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
-  const sectionData = await fetchSectionsAndCategories()
+  const headerData = await fetchHeaderData()
 
   return (
     <>
@@ -37,7 +37,7 @@ export default async function Home() {
           </Suspense>
           <SectionDivider customClasses="lg:hidden" />
           {/* 即時新聞/熱門新聞（10則） */}
-          <TopNewsSection sectionData={sectionData} />
+          <TopNewsSection headerData={headerData} />
           <SectionDivider />
           {/* 短影音新聞 */}
           <Suspense
