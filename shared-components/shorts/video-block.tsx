@@ -9,6 +9,7 @@ import { Keyboard, Mousewheel } from 'swiper/modules'
 import 'swiper/css'
 import { useAppSelector } from '@/redux/hooks'
 import { selectIsModalOpened } from '@/redux/shorts-upload/selector'
+import { updateMetadataOnClientSide } from '@/utils/common'
 
 type Props = {
   items: Shorts[]
@@ -39,6 +40,11 @@ export default function VideoBlock({
         if (shouldChangePathOnSlideChange) {
           const url = items[swiper.realIndex]?.link
           window.history.replaceState(null, '', url)
+
+          updateMetadataOnClientSide({
+            title: items[swiper.realIndex]?.title,
+            url,
+          })
         }
       }}
       className="shorts-swiper-in-shorts-page"

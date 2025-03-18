@@ -7,7 +7,7 @@ import type {
   GetRelatedPostsByIdQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
-import type { HeroImage, SectionData, Shorts } from '@/types/common'
+import type { HeaderData, HeroImage, Shorts } from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { createErrorLogger } from './log/common'
@@ -24,6 +24,7 @@ import type { AuthorPost } from '@/types/author'
 import type { TagPost } from '@/types/tag'
 import type { RelatedPost } from '@/types/common'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
+import { isSectionItem } from './common'
 
 const getHeroImage = (
   rawImageObj:
@@ -266,10 +267,10 @@ const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
   })
 }
 
-const getSectionColor = (sectionData: SectionData, slug?: string) => {
+const getSectionColor = (headerData: HeaderData[], slug?: string) => {
   return (
-    sectionData.find((item) => slug === item.slug)?.color ??
-    DEFAULT_SECTION_COLOR
+    headerData.filter(isSectionItem).find((item) => item.slug === slug)
+      ?.color ?? DEFAULT_SECTION_COLOR
   )
 }
 

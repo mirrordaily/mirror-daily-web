@@ -51,6 +51,7 @@ export const sectionSchema = z.object({
   slug: z.string(),
   color: z.string(),
   categories: z.array(categorySchema),
+  type: z.literal('Section'),
 })
 
 const partnerSchema = z.object({
@@ -121,6 +122,7 @@ export const latestShortsSchema = z.object({
 
 export const shortsDataSchema = z.object({
   id: z.string(),
+  name: z.string(),
   isShorts: z.boolean(),
   uploader: z.string(),
   videoSection: z.nativeEnum(SHORTS_TYPE),
@@ -131,3 +133,17 @@ export const shortsDataSchema = z.object({
     })
   ),
 })
+
+export const headerSchema = z.array(
+  z.union([
+    sectionSchema,
+    topicsSchema
+      .pick({
+        name: true,
+        slug: true,
+      })
+      .extend({
+        type: z.literal('Topic'),
+      }),
+  ])
+)

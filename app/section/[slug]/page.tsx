@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { getSectionPageUrl } from '@/utils/site-urls'
-import { IMAGE_PATH } from '@/constants/default-path'
+import { getDefaultMetadata } from '@/utils/common'
 
 type PageProps = { params: { slug: string } }
 
@@ -19,20 +19,24 @@ export async function generateMetadata({
     notFound()
   }
 
-  const title = `${sectionInfo.name} -${SITE_NAME}`
+  const defaultMetadata = getDefaultMetadata()
 
-  // TODO: fill the blank
-  return {
-    title,
-    description: '',
-    openGraph: {
-      siteName: SITE_NAME,
+  const title = `${sectionInfo.name} - ${SITE_NAME}`
+
+  const metaData = Object.assign(
+    {},
+    {
+      ...defaultMetadata,
       title,
-      description: '',
-      url: getSectionPageUrl(slug),
-      images: IMAGE_PATH,
-    },
-  }
+      openGraph: {
+        ...(defaultMetadata.openGraph ?? {}),
+        title,
+        url: getSectionPageUrl(slug),
+      },
+    }
+  )
+
+  return metaData
 }
 
 export default async function Page({

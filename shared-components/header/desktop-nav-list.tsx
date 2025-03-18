@@ -1,16 +1,23 @@
 'use client'
-import type { SectionAndCategory } from '@/types/common'
+import type { HeaderData, HeaderSection } from '@/types/common'
 import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
-import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
+import {
+  getCategoryPageUrl,
+  getSectionPageUrl,
+  getTopicPageUrl,
+} from '@/utils/site-urls'
+import { isSectionItem } from '@/utils/common'
 
 type Props = {
-  data: SectionAndCategory[]
+  data: HeaderData[]
 }
 
 export default function DesktopNavList({ data }: Props) {
   const [activeItem, setActiveItem] = useState('')
-  const section = data.find((section) => section.slug === activeItem)
+  const section = data
+    .filter(isSectionItem)
+    .find((section) => section.slug === activeItem)
 
   useEffect(() => {
     if (section) {
@@ -29,8 +36,22 @@ export default function DesktopNavList({ data }: Props) {
     >
       <ul className="flex h-[28px] w-full items-center text-base font-bold tracking-[0.5px]">
         {data.map((section) => {
-          const { name, slug, color, categories } = section
-          const shouldShowCategories = activeItem === slug
+          const { name, slug } = section
+          let shouldShowCategories: boolean
+          let color: string
+          let link: string
+          let categories: HeaderSection['categories'] = []
+
+          if (isSectionItem(section)) {
+            shouldShowCategories = activeItem === slug
+            color = section.color
+            link = getSectionPageUrl(slug)
+            categories = section.categories
+          } else {
+            shouldShowCategories = false
+            color = '#2b2b2b'
+            link = getTopicPageUrl(slug)
+          }
 
           return (
             <li
@@ -39,7 +60,7 @@ export default function DesktopNavList({ data }: Props) {
               onMouseEnter={() => setActiveItem(slug)}
               onFocus={() => setActiveItem(slug)}
             >
-              <NextLink href={getSectionPageUrl(slug)} style={{ color }}>
+              <NextLink href={link} style={{ color }}>
                 {name}
               </NextLink>
               <ul

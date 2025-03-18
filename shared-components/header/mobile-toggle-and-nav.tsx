@@ -1,6 +1,6 @@
 'use client'
 
-import type { SectionAndCategory } from '@/types/common'
+import type { HeaderData } from '@/types/common'
 import NextImage from 'next/image'
 import { useState } from 'react'
 import { SOCIAL_LINKS } from '@/constants/misc'
@@ -37,7 +37,7 @@ const ExtendedSocialLinks = [
 ] as const
 
 type Props = {
-  data: SectionAndCategory[]
+  data: HeaderData[]
 }
 
 export default function MobileToggleAndNav({ data }: Props) {

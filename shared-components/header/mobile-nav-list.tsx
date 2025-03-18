@@ -1,17 +1,22 @@
 'use client'
 
-import type { SectionAndCategory } from '@/types/common'
+import type { HeaderData, HeaderSection } from '@/types/common'
 import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import NextImage from 'next/image'
-import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
+import {
+  getCategoryPageUrl,
+  getSectionPageUrl,
+  getTopicPageUrl,
+} from '@/utils/site-urls'
 import { useWindowSize } from 'usehooks-ts'
 import IconTogggle from '@/public/icons/sidebar-toggle.svg'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
+import { isSectionItem } from '@/utils/common'
 
 type Props = {
-  data: SectionAndCategory[]
+  data: HeaderData[]
 }
 
 export default function MobileNavList({ data }: Props) {
@@ -41,11 +46,29 @@ export default function MobileNavList({ data }: Props) {
     <nav className="w-full max-w-[calc(375px-46px*2)] grow self-center overflow-y-scroll">
       <ul className="flex w-[188px] flex-col">
         {data.map((section) => {
-          const { name, slug, color, categories } = section
+          const { name, slug } = section
 
-          const hasCategories =
-            categories.length > 0 && slug !== FIXED_KEY_FOR_SECTION_SHORTS
-          const shouldShowCategories = slug === activeItem
+          let hasCategories: boolean
+          let shouldShowCategories: boolean
+          let link: string
+          let color: string
+          let categories: HeaderSection['categories'] = []
+
+          if (isSectionItem(section)) {
+            hasCategories =
+              section.categories.length > 0 &&
+              slug !== FIXED_KEY_FOR_SECTION_SHORTS
+
+            shouldShowCategories = slug === activeItem
+            link = getSectionPageUrl(slug)
+            color = section.color
+            categories = section.categories
+          } else {
+            hasCategories = false
+            shouldShowCategories = false
+            link = getTopicPageUrl(slug)
+            color = '#e5e6e9'
+          }
 
           return (
             <li
@@ -55,7 +78,7 @@ export default function MobileNavList({ data }: Props) {
               {/* section item */}
               <div className="flex items-center justify-between">
                 <NextLink
-                  href={getSectionPageUrl(slug)}
+                  href={link}
                   className="grow text-base font-bold leading-[175%] tracking-[0.5px]"
                   style={{
                     color: color,

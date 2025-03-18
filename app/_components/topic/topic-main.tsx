@@ -20,7 +20,7 @@ export default function TopicMain({ data }: Props) {
       {!!topicData && (
         <div className="mt-6 flex w-full flex-col gap-y-4 md:mt-[11px] md:gap-y-7 lg:mt-[22px] lg:flex-row lg:gap-x-6">
           <div>
-            <TopicItem {...topicData[0]} isFirst />
+            <TopicItem {...topicData[0]} isFirst key={topicData[0].postId} />
           </div>
           <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-[34px] lg:flex-col lg:gap-y-5">
             {topicData.slice(1, 4).map((data) => (

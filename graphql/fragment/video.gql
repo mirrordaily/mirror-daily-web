@@ -11,6 +11,7 @@ fragment LatestShorts on Video {
 
 fragment ShortsData on Video {
   id
+  name
   state
   isShorts
   uploader

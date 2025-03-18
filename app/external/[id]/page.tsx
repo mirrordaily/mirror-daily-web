@@ -8,6 +8,7 @@ import FeatureNewsList from './components/feature-news-list'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
+import { getDefaultMetadata } from '@/utils/common'
 
 type PageProps = { params: { id: string } }
 
@@ -21,20 +22,27 @@ export async function generateMetadata({
     notFound()
   }
 
+  const defaultMetadata = getDefaultMetadata()
+
   const title = `${externalPost.title} - ${SITE_NAME}`
   const image = externalPost.thumb || IMAGE_PATH
 
-  return {
-    title,
-    description: '',
-    openGraph: {
-      siteName: SITE_NAME,
+  const metaData = Object.assign(
+    {},
+    {
+      ...defaultMetadata,
       title,
-      description: '',
-      url: externalPost.link,
-      images: image,
-    },
-  }
+      openGraph: {
+        ...(defaultMetadata.openGraph ?? {}),
+        title,
+        url: externalPost.link,
+        images: image,
+        type: 'website',
+      },
+    }
+  )
+
+  return metaData
 }
 
 export default async function Page({ params }: PageProps) {

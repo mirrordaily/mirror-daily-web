@@ -3916,6 +3916,7 @@ export type LatestShortsFragment = {
 export type ShortsDataFragment = {
   __typename?: 'Video'
   id: string
+  name?: string | null
   state?: string | null
   isShorts?: boolean | null
   uploader?: string | null
@@ -4607,25 +4608,6 @@ export type GetRelatedPostsByIdQuery = {
   } | null
 }
 
-export type GetSectionsAndCategoriesQueryVariables = Exact<{
-  [key: string]: never
-}>
-
-export type GetSectionsAndCategoriesQuery = {
-  __typename?: 'Query'
-  sections?: Array<{
-    __typename?: 'Section'
-    name?: string | null
-    slug?: string | null
-    color?: string | null
-    categories?: Array<{
-      __typename?: 'Category'
-      name?: string | null
-      slug?: string | null
-    }> | null
-  }> | null
-}
-
 export type GetSectionInformationQueryVariables = Exact<{
   slug: Scalars['String']['input']
 }>
@@ -5016,6 +4998,7 @@ export type GetShortsDataQuery = {
   video?: {
     __typename?: 'Video'
     id: string
+    name?: string | null
     state?: string | null
     isShorts?: boolean | null
     uploader?: string | null
@@ -5711,6 +5694,7 @@ export const ShortsDataFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
@@ -8384,133 +8368,6 @@ export const GetRelatedPostsByIdDocument = {
   GetRelatedPostsByIdQuery,
   GetRelatedPostsByIdQueryVariables
 >
-export const GetSectionsAndCategoriesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetSectionsAndCategories' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'sections' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'order' },
-                      value: { kind: 'EnumValue', value: 'asc' },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'state' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'equals' },
-                            value: {
-                              kind: 'StringValue',
-                              value: 'active',
-                              block: false,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'color' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'categories' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'orderBy' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'order' },
-                            value: { kind: 'EnumValue', value: 'asc' },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'where' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'state' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'equals' },
-                                  value: {
-                                    kind: 'StringValue',
-                                    value: 'active',
-                                    block: false,
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  GetSectionsAndCategoriesQuery,
-  GetSectionsAndCategoriesQueryVariables
->
 export const GetSectionInformationDocument = {
   kind: 'Document',
   definitions: [
@@ -10151,6 +10008,7 @@ export const GetShortsDataDocument = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
