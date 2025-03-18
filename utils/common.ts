@@ -39,6 +39,47 @@ const getDefaultMetadata = (): Metadata => ({
     images: IMAGE_PATH,
   },
 })
+
+type CustomMetadata = {
+  title?: string
+  description?: string
+  url?: string
+}
+const updateMetadataOnClientSide = ({
+  title,
+  description,
+  url,
+}: CustomMetadata) => {
+  if (title) {
+    const titleElement = document.querySelector('title')
+    if (titleElement) titleElement.textContent = title
+
+    const ogElement = document.querySelector('meta[property="og:title"]')
+    if (ogElement) ogElement.setAttribute('content', title)
+
+    const twitterElement = document.querySelector('meta[name="twitter:title"]')
+    if (twitterElement) twitterElement.setAttribute('content', title)
+  }
+
+  if (description) {
+    const metaElement = document.querySelector('meta[name="description"]')
+    if (metaElement) metaElement.setAttribute('content', description)
+
+    const ogElement = document.querySelector('meta[property="og:description"]')
+    if (ogElement) ogElement.setAttribute('content', description)
+
+    const twitterElement = document.querySelector(
+      'meta[name="twitter:description"]'
+    )
+    if (twitterElement) twitterElement.setAttribute('content', description)
+  }
+
+  if (url) {
+    const ogElement = document.querySelector('meta[property="og:url"]')
+    if (ogElement) ogElement.setAttribute('content', url)
+  }
+}
+
 export {
   isServer,
   isValidUrl,
@@ -46,4 +87,5 @@ export {
   checkEmail,
   isSectionItem,
   getDefaultMetadata,
+  updateMetadataOnClientSide,
 }
