@@ -14,7 +14,7 @@ import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
 import { Fragment, type ReactElement } from 'react'
 import IconMirrorMedia from '@/public/icons/logos/mirror-media-white.svg'
-import IconMirrorFiction from '@/public/icons/logos/mirror-fiction.png'
+import IconMirrorFiction from '@/public/icons/logos/mirror-fiction-white.svg'
 import IconMirrorNews from '@/public/icons/logos/mirror-news-white.svg'
 
 const ExtendedSocialLinks = [
@@ -83,7 +83,7 @@ export default function Footer(): ReactElement {
           <a target="_blank" href={SITE_LINKS[1].href}>
             <NextImage
               src={IconMirrorFiction}
-              width={99}
+              width={56}
               height={24}
               alt={SITE_LINKS[1].name}
             />
