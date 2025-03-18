@@ -2,6 +2,7 @@ import type { SHORTS_TYPE } from './common'
 
 export type ShortsData = {
   id: string
+  name: string
   state: string
   contributor: string
   videoSection: SHORTS_TYPE

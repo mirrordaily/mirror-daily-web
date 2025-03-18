@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { getFirstParagraphFromApiData } from '@/utils/data-process'
 import { IMAGE_PATH } from '@/constants/default-path'
+import { getDefaultMetadata } from '@/utils/common'
 
 type PageProps = { params: { id: string } }
 
@@ -18,21 +19,30 @@ export async function generateMetadata({
     notFound()
   }
 
+  const defaultMetadata = getDefaultMetadata()
+
   const title = `${postData.title} - ${SITE_NAME}`
   const description = getFirstParagraphFromApiData(postData.apiDataBrief) || ''
   const image = postData.postMainImage?.resized?.original || IMAGE_PATH
 
-  return {
-    title,
-    description,
-    openGraph: {
-      siteName: SITE_NAME,
+  const metaData = Object.assign(
+    {},
+    {
+      ...defaultMetadata,
       title,
       description,
-      url: postData.link,
-      images: image,
-    },
-  }
+      openGraph: {
+        ...(defaultMetadata.openGraph ?? {}),
+        title,
+        description,
+        url: postData.link,
+        images: image,
+        type: 'website',
+      },
+    }
+  )
+
+  return metaData
 }
 
 export default async function Page({ params }: PageProps) {

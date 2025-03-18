@@ -122,6 +122,7 @@ export const latestShortsSchema = z.object({
 
 export const shortsDataSchema = z.object({
   id: z.string(),
+  name: z.string(),
   isShorts: z.boolean(),
   uploader: z.string(),
   videoSection: z.nativeEnum(SHORTS_TYPE),
