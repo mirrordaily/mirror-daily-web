@@ -3916,6 +3916,7 @@ export type LatestShortsFragment = {
 export type ShortsDataFragment = {
   __typename?: 'Video'
   id: string
+  name?: string | null
   state?: string | null
   isShorts?: boolean | null
   uploader?: string | null
@@ -4997,6 +4998,7 @@ export type GetShortsDataQuery = {
   video?: {
     __typename?: 'Video'
     id: string
+    name?: string | null
     state?: string | null
     isShorts?: boolean | null
     uploader?: string | null
@@ -5692,6 +5694,7 @@ export const ShortsDataFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
@@ -10005,6 +10008,7 @@ export const GetShortsDataDocument = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },

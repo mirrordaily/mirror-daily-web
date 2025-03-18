@@ -40,6 +40,7 @@ export const fetchShortsData = async (
 
     return {
       id: data.id,
+      name: data.name,
       state: data.state,
       contributor: data.uploader,
       videoSection: data.videoSection,
