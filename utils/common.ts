@@ -1,4 +1,8 @@
+import { SITE_URL } from '@/constants/config'
+import { IMAGE_PATH } from '@/constants/default-path'
+import { SITE_NAME } from '@/constants/misc'
 import type { HeaderData, HeaderSection } from '@/types/common'
+import type { Metadata } from 'next'
 import { z } from 'zod'
 
 function isServer(): boolean {
@@ -22,4 +26,24 @@ const checkEmail = (email: string) => {
 const isSectionItem = (item: HeaderData): item is HeaderSection =>
   item.type === 'Section'
 
-export { isServer, isValidUrl, checkShortsTitle, checkEmail, isSectionItem }
+// TODO: update default description
+const getDefaultMetadata = (): Metadata => ({
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description: '',
+  openGraph: {
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: '',
+    url: '/',
+    images: IMAGE_PATH,
+  },
+})
+export {
+  isServer,
+  isValidUrl,
+  checkShortsTitle,
+  checkEmail,
+  isSectionItem,
+  getDefaultMetadata,
+}

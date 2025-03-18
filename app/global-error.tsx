@@ -7,10 +7,8 @@ import { useEffect } from 'react'
 import { Noto_Sans_TC } from 'next/font/google'
 import StoreProvider from '@/redux/store-provider'
 import UploadModal from '@/shared-components/shorts-upload/upload-modal'
-import { SITE_URL } from '@/constants/config'
-import { SITE_NAME } from '@/constants/misc'
-import { IMAGE_PATH } from '@/constants/default-path'
 import type { Metadata } from 'next'
+import { getDefaultMetadata } from '@/utils/common'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
@@ -18,18 +16,7 @@ const notoSans = Noto_Sans_TC({
   display: 'swap',
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: SITE_NAME,
-  description: '',
-  openGraph: {
-    siteName: SITE_NAME,
-    title: SITE_NAME,
-    description: '',
-    url: '/',
-    images: IMAGE_PATH,
-  },
-}
+export const metadata: Metadata = getDefaultMetadata()
 
 export default function GlobalError({ error }: { error: Error }) {
   useEffect(() => {
