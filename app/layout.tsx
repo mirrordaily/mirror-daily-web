@@ -36,9 +36,11 @@ export default function RootLayout({
                 })();`,
         }}
       />
-      <noscript>
-        <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=24318560&amp;cv=3.9.1&amp;cj=1" />
-      </noscript>
+      <noscript
+        dangerouslySetInnerHTML={{
+          __html: `<img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=24318560&amp;cv=3.9.1&amp;cj=1">`,
+        }}
+      />
       <body className="app-layout">
         <StoreProvider>
           {children}
