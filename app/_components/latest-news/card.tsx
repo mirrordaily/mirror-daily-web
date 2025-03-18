@@ -43,7 +43,7 @@ export default function LatestNewsCard({
             }}
           />
         </div>
-        <p className="mt-2 line-clamp-2 h-[54px] text-ellipsis text-base font-normal leading-normal text-[#000928] group-hover/card:text-[#575D71] group-active/card:text-[#575D71] md:mt-3 md:line-clamp-3 md:h-[81px]">
+        <p className="mt-2 line-clamp-2 h-[48px] text-ellipsis text-base font-normal leading-normal text-[#000928] group-hover/card:text-[#575D71] group-active/card:text-[#575D71] md:mt-3 md:line-clamp-3 md:h-[69px]">
           {postName}
         </p>
       </NextLink>
