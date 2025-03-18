@@ -55,8 +55,8 @@ export default function UiHeader({
 }) {
   return (
     <header className="flex h-[150px] w-full shrink-0 flex-col items-center md:h-[134px] lg:h-[202px]">
-      <div className="flex h-[68px] w-full justify-center bg-mirror-blue-700 pl-4 pr-6 md:h-[95px] md:pl-5 lg:h-[80px] lg:pl-9">
-        <div className="flex w-full max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg">
+      <div className="flex h-[68px] w-full justify-center bg-mirror-blue-700 md:h-[95px] lg:h-[80px]">
+        <div className="flex w-full max-w-screen-sm pl-4 pr-6 md:max-w-screen-md md:pl-5 lg:max-w-screen-lg lg:pl-9">
           <NextLink
             href="/"
             className="relative mt-4 h-[42px] w-[150px] md:mt-5 md:h-[55.74px] md:w-[200px] lg:mt-3 lg:h-[56px] lg:w-[200px] lg:shrink-0"
