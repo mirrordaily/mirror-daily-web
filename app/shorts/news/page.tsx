@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic'
 
 const defaultMetadata = getDefaultMetadata()
 
-const title = `新聞 - ${SITE_NAME}`
+const title = `短影音–新聞 - ${SITE_NAME}`
 
 export const metadata: Metadata = Object.assign(
   {},
