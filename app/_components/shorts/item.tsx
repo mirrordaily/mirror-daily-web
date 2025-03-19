@@ -41,6 +41,7 @@ export default function ShortsItem({
               file: {
                 attributes: {
                   poster,
+                  preload: 'none',
                 },
               },
             }}
