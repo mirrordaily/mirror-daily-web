@@ -25,6 +25,7 @@ export async function generateMetadata({
   const defaultMetadata = getDefaultMetadata()
 
   const title = `${externalPost.title} - ${SITE_NAME}`
+  const description = externalPost.brief
   const image = externalPost.thumb || IMAGE_PATH
 
   const metaData = Object.assign(
@@ -32,9 +33,11 @@ export async function generateMetadata({
     {
       ...defaultMetadata,
       title,
+      description,
       openGraph: {
         ...(defaultMetadata.openGraph ?? {}),
         title,
+        description,
         url: externalPost.link,
         images: image,
         type: 'website',
