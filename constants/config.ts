@@ -71,6 +71,10 @@ const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json`
 const URL_STATIC_GAME = `${JSON_FILE_PATH}/games.json`
 const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/latest-shorts.json`
 
+// shorts listing page
+const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
+const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
+
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
 export {
@@ -84,6 +88,8 @@ export {
   URL_STATIC_TOPIC,
   URL_STATIC_GAME,
   URL_STATIC_LATEST_SHORTS,
+  URL_STATIC_NEWS_SHORTSPAGE,
+  URL_STATIC_CREATIVTY_SHORTPAGE,
   GCP_PROJECT_ID,
   FIXED_KEY_FOR_SECTION_SHORTS,
   SITE_URL,
