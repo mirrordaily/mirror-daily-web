@@ -5010,6 +5010,8 @@ export type GetShortsDataQuery = {
 export type GetShortsByTagAndVideoSectionQueryVariables = Exact<{
   tagId: Scalars['ID']['input']
   section: Scalars['String']['input']
+  skip?: InputMaybe<Scalars['Int']['input']>
+  take?: InputMaybe<Scalars['Int']['input']>
 }>
 
 export type GetShortsByTagAndVideoSectionQuery = {
@@ -5048,6 +5050,8 @@ export type GetShortsByTagAndVideoSectionQuery = {
 
 export type GetShortsByVideoSectionQueryVariables = Exact<{
   section: Scalars['String']['input']
+  skip?: InputMaybe<Scalars['Int']['input']>
+  take?: InputMaybe<Scalars['Int']['input']>
 }>
 
 export type GetShortsByVideoSectionQuery = {
@@ -10068,6 +10072,18 @@ export const GetShortsByTagAndVideoSectionDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -10170,6 +10186,22 @@ export const GetShortsByTagAndVideoSectionDocument = {
                       },
                     },
                   ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'take' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
                 },
               },
             ],
@@ -10288,6 +10320,18 @@ export const GetShortsByVideoSectionDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -10352,6 +10396,22 @@ export const GetShortsByVideoSectionDocument = {
                       },
                     },
                   ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'take' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
                 },
               },
             ],
