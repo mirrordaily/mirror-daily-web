@@ -5,6 +5,7 @@ import { fetchShortsByTagAndVideoSection, fetchShortsData } from './action'
 import type { Metadata } from 'next'
 import { getDefaultMetadata } from '@/utils/common'
 import { getShortsPageUrl } from '@/utils/site-urls'
+import VideoBlock from '@/shared-components/shorts/video-block'
 
 type PageProps = {
   params: { id?: string }
@@ -56,8 +57,19 @@ export default async function Page({ params }: PageProps) {
     <ShortsLayout
       tabLinks={LATEST_SHORT_PAGES}
       activeTab={shortsData.videoSection}
-      items={data}
-      shouldChangePathOnSlideChange={true}
-    />
+    >
+      <VideoBlock
+        items={data}
+        fetchMore={async (page: number) => {
+          'use server'
+          return await fetchShortsByTagAndVideoSection(
+            videoId,
+            shortsData.tagId,
+            shortsData.videoSection,
+            page
+          )
+        }}
+      />
+    </ShortsLayout>
   )
 }

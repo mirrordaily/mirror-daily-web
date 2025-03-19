@@ -1,10 +1,11 @@
 import ShortsLayout from '@/shared-components/shorts/layout'
-import { fetchLatestShorts } from '@/app/actions-general'
 import { SHORTS_TYPE } from '@/types/common'
 import { notFound } from 'next/navigation'
 import { LATEST_SHORT_PAGES, SITE_NAME } from '@/constants/misc'
 import type { Metadata } from 'next'
 import { getDefaultMetadata } from '@/utils/common'
+import { fetchShortsForShortpage } from '@/utils/client-side-data-fetch'
+import DataSourceWrapperForShortpage from '../_components/data-source-wrapper-for-shortpage'
 
 // add segment config to prevent data fetch during build
 export const dynamic = 'force-dynamic'
@@ -27,15 +28,16 @@ export const metadata: Metadata = Object.assign(
 )
 
 export default async function Page() {
-  const data = await fetchLatestShorts(SHORTS_TYPE.NEWS, 50)
+  const data = await fetchShortsForShortpage(SHORTS_TYPE.NEWS, 1)
 
   if (!data) notFound()
 
   return (
-    <ShortsLayout
-      tabLinks={LATEST_SHORT_PAGES}
-      activeTab={SHORTS_TYPE.NEWS}
-      items={data}
-    />
+    <ShortsLayout tabLinks={LATEST_SHORT_PAGES} activeTab={SHORTS_TYPE.NEWS}>
+      <DataSourceWrapperForShortpage
+        items={data}
+        videoSection={SHORTS_TYPE.NEWS}
+      />
+    </ShortsLayout>
   )
 }

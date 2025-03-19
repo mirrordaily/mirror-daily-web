@@ -41,7 +41,7 @@ query GetShortsData($id: ID!) {
   }
 }
 
-query GetShortsByTagAndVideoSection($tagId: ID!, $section: String!) {
+query GetShortsByTagAndVideoSection($tagId: ID!, $section: String!, $skip: Int = 0, $take: Int = 0) {
   videos(
     orderBy: { publishedDate: desc },
     where: {
@@ -59,12 +59,14 @@ query GetShortsByTagAndVideoSection($tagId: ID!, $section: String!) {
         }
       }
     }
+    take: $take,
+    skip: $skip,
   ) {
     ...LatestShorts
   }
 }
 
-query GetShortsByVideoSection($section: String!) {
+query GetShortsByVideoSection($section: String!, $skip: Int = 0, $take: Int = 0) {
   videos(
     orderBy: { publishedDate: desc },
     where: {
@@ -74,7 +76,9 @@ query GetShortsByVideoSection($section: String!) {
       videoSection:  {
         equals: $section
       }
-    }
+    },
+    take: $take,
+    skip: $skip
   ) {
     ...LatestShorts
   }
