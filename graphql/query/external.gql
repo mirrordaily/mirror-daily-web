@@ -1,6 +1,6 @@
-query GetExternalBySlug($slug: String!) {
-  external(where: { slug: $slug }) {
-    slug
+query GetExternalById($id: ID!) {
+  external(where: { id: $id }) {
+    id
     title
     thumb
     extend_byline
@@ -14,8 +14,8 @@ query GetExternalBySlug($slug: String!) {
   }
 }
 
-query GetRelatedPostsByExternalSlug($slug: String!) {
-  external(where: { slug: $slug }) {
+query GetRelatedPostsByExternalId($id: ID!) {
+  external(where: { id: $id }) {
     relateds {
       ...RelatedPost
     }

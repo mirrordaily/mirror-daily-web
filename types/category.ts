@@ -1,8 +1,8 @@
 import type { HeroImage } from './common'
 
 export type CategoryPost = {
+  id: string
   title: string
-  slug: string
   createdTime: string
   link: string
   postMainImage: HeroImage

@@ -5,11 +5,53 @@ import Article from './components/article'
 import RelatedNewsList from './components/related-news-list'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import FeatureNewsList from './components/feature-news-list'
+import type { Metadata } from 'next'
+import { SITE_NAME } from '@/constants/misc'
+import { IMAGE_PATH } from '@/constants/default-path'
+import { getDefaultMetadata } from '@/utils/common'
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const slug = params.slug
-  const externalPost = await fetchExternal(slug)
-  const relatedPosts = await fetchRelatedPosts(slug)
+type PageProps = { params: { id: string } }
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { id } = params
+  const externalPost = await fetchExternal(id)
+
+  if (!externalPost) {
+    notFound()
+  }
+
+  const defaultMetadata = getDefaultMetadata()
+
+  const title = `${externalPost.title} - ${SITE_NAME}`
+  const description = externalPost.brief
+  const image = externalPost.thumb || IMAGE_PATH
+
+  const metaData = Object.assign(
+    {},
+    {
+      ...defaultMetadata,
+      title,
+      description,
+      openGraph: {
+        ...(defaultMetadata.openGraph ?? {}),
+        title,
+        description,
+        url: externalPost.link,
+        images: image,
+        type: 'website',
+      },
+    }
+  )
+
+  return metaData
+}
+
+export default async function Page({ params }: PageProps) {
+  const id = params.id
+  const externalPost = await fetchExternal(id)
+  const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 

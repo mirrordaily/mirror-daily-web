@@ -690,7 +690,6 @@ export type ExternalOrderByInput = {
   id?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
   publishedDateString?: InputMaybe<OrderDirection>
-  slug?: InputMaybe<OrderDirection>
   source?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   thumb?: InputMaybe<OrderDirection>
@@ -751,7 +750,6 @@ export type ExternalWhereInput = {
   publishedDate?: InputMaybe<DateTimeNullableFilter>
   publishedDateString?: InputMaybe<StringFilter>
   relateds?: InputMaybe<PostManyRelationFilter>
-  slug?: InputMaybe<StringFilter>
   source?: InputMaybe<StringFilter>
   state?: InputMaybe<StringNullableFilter>
   tags?: InputMaybe<TagManyRelationFilter>
@@ -763,7 +761,6 @@ export type ExternalWhereInput = {
 
 export type ExternalWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
-  slug?: InputMaybe<Scalars['String']['input']>
 }
 
 export type FileFieldInput = {
@@ -2293,7 +2290,6 @@ export type PostOrderByInput = {
   publishedDate?: InputMaybe<OrderDirection>
   publishedDateString?: InputMaybe<OrderDirection>
   redirect?: InputMaybe<OrderDirection>
-  slug?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   style?: InputMaybe<OrderDirection>
   subtitle?: InputMaybe<OrderDirection>
@@ -2415,7 +2411,6 @@ export type PostWhereInput = {
   redirect?: InputMaybe<StringFilter>
   relateds?: InputMaybe<PostManyRelationFilter>
   sections?: InputMaybe<SectionManyRelationFilter>
-  slug?: InputMaybe<StringFilter>
   state?: InputMaybe<StringNullableFilter>
   style?: InputMaybe<StringNullableFilter>
   subtitle?: InputMaybe<StringFilter>
@@ -2430,7 +2425,6 @@ export type PostWhereInput = {
 
 export type PostWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
-  slug?: InputMaybe<Scalars['String']['input']>
 }
 
 export type Query = {
@@ -3387,6 +3381,20 @@ export type User = {
   name?: Maybe<Scalars['String']['output']>
   password?: Maybe<PasswordState>
   role?: Maybe<Scalars['String']['output']>
+  sections?: Maybe<Array<Section>>
+  sectionsCount?: Maybe<Scalars['Int']['output']>
+}
+
+export type UserSectionsArgs = {
+  cursor?: InputMaybe<SectionWhereUniqueInput>
+  orderBy?: Array<SectionOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: SectionWhereInput
+}
+
+export type UserSectionsCountArgs = {
+  where?: SectionWhereInput
 }
 
 export type UserAuthenticationWithPasswordFailure = {
@@ -3410,6 +3418,7 @@ export type UserCreateInput = {
   name?: InputMaybe<Scalars['String']['input']>
   password?: InputMaybe<Scalars['String']['input']>
   role?: InputMaybe<Scalars['String']['input']>
+  sections?: InputMaybe<SectionRelateToManyForCreateInput>
 }
 
 export type UserOrderByInput = {
@@ -3442,6 +3451,7 @@ export type UserUpdateInput = {
   name?: InputMaybe<Scalars['String']['input']>
   password?: InputMaybe<Scalars['String']['input']>
   role?: InputMaybe<Scalars['String']['input']>
+  sections?: InputMaybe<SectionRelateToManyForUpdateInput>
 }
 
 export type UserWhereInput = {
@@ -3453,6 +3463,7 @@ export type UserWhereInput = {
   isProtected?: InputMaybe<BooleanFilter>
   name?: InputMaybe<StringFilter>
   role?: InputMaybe<StringFilter>
+  sections?: InputMaybe<SectionManyRelationFilter>
 }
 
 export type UserWhereUniqueInput = {
@@ -3655,8 +3666,8 @@ export type EditorChoiceDataFragment = {
   } | null
   choices?: {
     __typename?: 'Post'
+    id: string
     title?: string | null
-    slug?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -3707,10 +3718,10 @@ export type ImageDataFragment = {
 
 export type PostOverviewFragment = {
   __typename?: 'Post'
+  id: string
   title?: string | null
   createdAt?: any | null
   apiDataBrief?: any | null
-  slug?: string | null
   apiData?: any | null
   heroImage?: {
     __typename?: 'Photo'
@@ -3760,8 +3771,8 @@ export type PostOverviewFragment = {
 
 export type PostItemFragment = {
   __typename?: 'Post'
+  id: string
   title?: string | null
-  slug?: string | null
   heroImage?: {
     __typename?: 'Photo'
     id: string
@@ -3788,8 +3799,8 @@ export type PostItemFragment = {
 
 export type TopicPostFragment = {
   __typename?: 'Post'
+  id: string
   title?: string | null
-  slug?: string | null
   apiDataBrief?: any | null
   apiData?: any | null
   heroImage?: {
@@ -3818,8 +3829,8 @@ export type TopicPostFragment = {
 
 export type RelatedPostFragment = {
   __typename?: 'Post'
+  id: string
   title?: string | null
-  slug?: string | null
   heroImage?: {
     __typename?: 'Photo'
     id: string
@@ -3877,6 +3888,7 @@ export type LatestShortsFragment = {
   name?: string | null
   uploader?: string | null
   videoSrc?: string | null
+  youtubeUrl?: string | null
   heroImage?: {
     __typename?: 'Photo'
     id: string
@@ -3904,6 +3916,7 @@ export type LatestShortsFragment = {
 export type ShortsDataFragment = {
   __typename?: 'Video'
   id: string
+  name?: string | null
   state?: string | null
   isShorts?: boolean | null
   uploader?: string | null
@@ -3994,8 +4007,8 @@ export type GetEditorChoicesQuery = {
     } | null
     choices?: {
       __typename?: 'Post'
+      id: string
       title?: string | null
-      slug?: string | null
       heroImage?: {
         __typename?: 'Photo'
         id: string
@@ -4057,15 +4070,15 @@ export type GetLiveEventForHomepageQuery = {
   }> | null
 }
 
-export type GetExternalBySlugQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+export type GetExternalByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input']
 }>
 
-export type GetExternalBySlugQuery = {
+export type GetExternalByIdQuery = {
   __typename?: 'Query'
   external?: {
     __typename?: 'External'
-    slug?: string | null
+    id: string
     title?: string | null
     thumb?: string | null
     extend_byline?: string | null
@@ -4080,18 +4093,18 @@ export type GetExternalBySlugQuery = {
   } | null
 }
 
-export type GetRelatedPostsByExternalSlugQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+export type GetRelatedPostsByExternalIdQueryVariables = Exact<{
+  id: Scalars['ID']['input']
 }>
 
-export type GetRelatedPostsByExternalSlugQuery = {
+export type GetRelatedPostsByExternalIdQuery = {
   __typename?: 'Query'
   external?: {
     __typename?: 'External'
     relateds?: Array<{
       __typename?: 'Post'
+      id: string
       title?: string | null
-      slug?: string | null
       heroImage?: {
         __typename?: 'Photo'
         id: string
@@ -4189,10 +4202,10 @@ export type GetPostsBySectionSlugQuery = {
   __typename?: 'Query'
   posts?: Array<{
     __typename?: 'Post'
+    id: string
     title?: string | null
     createdAt?: any | null
     apiDataBrief?: any | null
-    slug?: string | null
     apiData?: any | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4247,8 +4260,8 @@ export type GetFlashNewsQuery = {
   __typename?: 'Query'
   posts?: Array<{
     __typename?: 'Post'
+    id: string
     title?: string | null
-    slug?: string | null
   }> | null
 }
 
@@ -4262,10 +4275,10 @@ export type GetPostsByCategorySlugQuery = {
   __typename?: 'Query'
   posts?: Array<{
     __typename?: 'Post'
+    id: string
     title?: string | null
     createdAt?: any | null
     apiDataBrief?: any | null
-    slug?: string | null
     apiData?: any | null
     heroImage?: {
       __typename?: 'Photo'
@@ -4324,10 +4337,10 @@ export type GetPostsByAuthorIdQuery = {
   __typename?: 'Query'
   posts?: Array<{
     __typename?: 'Post'
+    id: string
     title?: string | null
     createdAt?: any | null
     apiDataBrief?: any | null
-    slug?: string | null
     apiData?: any | null
     sections?: Array<{
       __typename?: 'Section'
@@ -4391,10 +4404,10 @@ export type GetPostsByTagSlugQuery = {
   __typename?: 'Query'
   posts?: Array<{
     __typename?: 'Post'
+    id: string
     title?: string | null
     createdAt?: any | null
     apiDataBrief?: any | null
-    slug?: string | null
     apiData?: any | null
     sections?: Array<{
       __typename?: 'Section'
@@ -4448,15 +4461,15 @@ export type GetPostsByTagSlugQuery = {
   }> | null
 }
 
-export type GetPostBySlugQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+export type GetPostByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input']
 }>
 
-export type GetPostBySlugQuery = {
+export type GetPostByIdQuery = {
   __typename?: 'Query'
   post?: {
     __typename?: 'Post'
-    slug?: string | null
+    id: string
     title?: string | null
     subtitle?: string | null
     heroCaption?: string | null
@@ -4530,18 +4543,18 @@ export type GetPostBySlugQuery = {
   } | null
 }
 
-export type GetRelatedPostsBySlugQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+export type GetRelatedPostsByIdQueryVariables = Exact<{
+  id: Scalars['ID']['input']
 }>
 
-export type GetRelatedPostsBySlugQuery = {
+export type GetRelatedPostsByIdQuery = {
   __typename?: 'Query'
   post?: {
     __typename?: 'Post'
     relateds?: Array<{
       __typename?: 'Post'
+      id: string
       title?: string | null
-      slug?: string | null
       heroImage?: {
         __typename?: 'Photo'
         id: string
@@ -4595,25 +4608,6 @@ export type GetRelatedPostsBySlugQuery = {
   } | null
 }
 
-export type GetSectionsAndCategoriesQueryVariables = Exact<{
-  [key: string]: never
-}>
-
-export type GetSectionsAndCategoriesQuery = {
-  __typename?: 'Query'
-  sections?: Array<{
-    __typename?: 'Section'
-    name?: string | null
-    slug?: string | null
-    color?: string | null
-    categories?: Array<{
-      __typename?: 'Category'
-      name?: string | null
-      slug?: string | null
-    }> | null
-  }> | null
-}
-
 export type GetSectionInformationQueryVariables = Exact<{
   slug: Scalars['String']['input']
 }>
@@ -4652,8 +4646,8 @@ export type GetTopicsQuery = {
     slug?: string | null
     posts?: Array<{
       __typename?: 'Post'
+      id: string
       title?: string | null
-      slug?: string | null
       heroImage?: {
         __typename?: 'Photo'
         id: string
@@ -4817,8 +4811,8 @@ export type GetListTypeTopcPostsQuery = {
     postsCount?: number | null
     posts?: Array<{
       __typename?: 'Post'
+      id: string
       title?: string | null
-      slug?: string | null
       apiDataBrief?: any | null
       apiData?: any | null
       heroImage?: {
@@ -4857,8 +4851,8 @@ export type GetGroupTypeTopicPostsQuery = {
     __typename?: 'Topic'
     posts?: Array<{
       __typename?: 'Post'
+      id: string
       title?: string | null
-      slug?: string | null
       apiDataBrief?: any | null
       apiData?: any | null
       tags?: Array<{ __typename?: 'Tag'; id: string }> | null
@@ -4939,6 +4933,7 @@ export type GetLatestShortsQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -4968,6 +4963,7 @@ export type GetLatestShortsQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -5002,6 +4998,7 @@ export type GetShortsDataQuery = {
   video?: {
     __typename?: 'Video'
     id: string
+    name?: string | null
     state?: string | null
     isShorts?: boolean | null
     uploader?: string | null
@@ -5013,6 +5010,8 @@ export type GetShortsDataQuery = {
 export type GetShortsByTagAndVideoSectionQueryVariables = Exact<{
   tagId: Scalars['ID']['input']
   section: Scalars['String']['input']
+  skip?: InputMaybe<Scalars['Int']['input']>
+  take?: InputMaybe<Scalars['Int']['input']>
 }>
 
 export type GetShortsByTagAndVideoSectionQuery = {
@@ -5023,6 +5022,7 @@ export type GetShortsByTagAndVideoSectionQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -5050,6 +5050,8 @@ export type GetShortsByTagAndVideoSectionQuery = {
 
 export type GetShortsByVideoSectionQueryVariables = Exact<{
   section: Scalars['String']['input']
+  skip?: InputMaybe<Scalars['Int']['input']>
+  take?: InputMaybe<Scalars['Int']['input']>
 }>
 
 export type GetShortsByVideoSectionQuery = {
@@ -5060,6 +5062,7 @@ export type GetShortsByVideoSectionQuery = {
     name?: string | null
     uploader?: string | null
     videoSrc?: string | null
+    youtubeUrl?: string | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -5147,8 +5150,8 @@ export const PostItemFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5308,8 +5311,8 @@ export const EditorChoiceDataFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5341,10 +5344,10 @@ export const PostOverviewFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
@@ -5434,8 +5437,8 @@ export const TopicPostFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
@@ -5513,8 +5516,8 @@ export const RelatedPostFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5618,6 +5621,7 @@ export const LatestShortsFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -5694,6 +5698,7 @@ export const ShortsDataFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
@@ -6273,8 +6278,8 @@ export const GetEditorChoicesDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -6521,23 +6526,20 @@ export const GetLiveEventForHomepageDocument = {
   GetLiveEventForHomepageQuery,
   GetLiveEventForHomepageQueryVariables
 >
-export const GetExternalBySlugDocument = {
+export const GetExternalByIdDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetExternalBySlug' },
+      name: { kind: 'Name', value: 'GetExternalById' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
         },
       ],
@@ -6556,10 +6558,10 @@ export const GetExternalBySlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'slug' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
                         kind: 'Variable',
-                        name: { kind: 'Name', value: 'slug' },
+                        name: { kind: 'Name', value: 'id' },
                       },
                     },
                   ],
@@ -6569,7 +6571,7 @@ export const GetExternalBySlugDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'thumb' } },
                 {
@@ -6601,26 +6603,23 @@ export const GetExternalBySlugDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetExternalBySlugQuery,
-  GetExternalBySlugQueryVariables
+  GetExternalByIdQuery,
+  GetExternalByIdQueryVariables
 >
-export const GetRelatedPostsByExternalSlugDocument = {
+export const GetRelatedPostsByExternalIdDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetRelatedPostsByExternalSlug' },
+      name: { kind: 'Name', value: 'GetRelatedPostsByExternalId' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
         },
       ],
@@ -6639,10 +6638,10 @@ export const GetRelatedPostsByExternalSlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'slug' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
                         kind: 'Variable',
-                        name: { kind: 'Name', value: 'slug' },
+                        name: { kind: 'Name', value: 'id' },
                       },
                     },
                   ],
@@ -6725,8 +6724,8 @@ export const GetRelatedPostsByExternalSlugDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -6769,8 +6768,8 @@ export const GetRelatedPostsByExternalSlugDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetRelatedPostsByExternalSlugQuery,
-  GetRelatedPostsByExternalSlugQueryVariables
+  GetRelatedPostsByExternalIdQuery,
+  GetRelatedPostsByExternalIdQueryVariables
 >
 export const GetGamesDocument = {
   kind: 'Document',
@@ -7107,10 +7106,10 @@ export const GetPostsBySectionSlugDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
@@ -7210,8 +7209,8 @@ export const GetFlashNewsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
               ],
             },
           },
@@ -7420,10 +7419,10 @@ export const GetPostsByCategorySlugDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
@@ -7736,10 +7735,10 @@ export const GetPostsByAuthorIdDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
@@ -7989,10 +7988,10 @@ export const GetPostsByTagSlugDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
             kind: 'Field',
@@ -8028,23 +8027,20 @@ export const GetPostsByTagSlugDocument = {
   GetPostsByTagSlugQuery,
   GetPostsByTagSlugQueryVariables
 >
-export const GetPostBySlugDocument = {
+export const GetPostByIdDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetPostBySlug' },
+      name: { kind: 'Name', value: 'GetPostById' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
         },
       ],
@@ -8063,10 +8059,10 @@ export const GetPostBySlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'slug' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
                         kind: 'Variable',
-                        name: { kind: 'Name', value: 'slug' },
+                        name: { kind: 'Name', value: 'id' },
                       },
                     },
                   ],
@@ -8076,7 +8072,7 @@ export const GetPostBySlugDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'subtitle' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'heroCaption' } },
@@ -8210,24 +8206,21 @@ export const GetPostBySlugDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<GetPostBySlugQuery, GetPostBySlugQueryVariables>
-export const GetRelatedPostsBySlugDocument = {
+} as unknown as DocumentNode<GetPostByIdQuery, GetPostByIdQueryVariables>
+export const GetRelatedPostsByIdDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetRelatedPostsBySlug' },
+      name: { kind: 'Name', value: 'GetRelatedPostsById' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'slug' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
         },
       ],
@@ -8246,10 +8239,10 @@ export const GetRelatedPostsBySlugDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'slug' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
                         kind: 'Variable',
-                        name: { kind: 'Name', value: 'slug' },
+                        name: { kind: 'Name', value: 'id' },
                       },
                     },
                   ],
@@ -8332,8 +8325,8 @@ export const GetRelatedPostsBySlugDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -8376,135 +8369,8 @@ export const GetRelatedPostsBySlugDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetRelatedPostsBySlugQuery,
-  GetRelatedPostsBySlugQueryVariables
->
-export const GetSectionsAndCategoriesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetSectionsAndCategories' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'sections' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'order' },
-                      value: { kind: 'EnumValue', value: 'asc' },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'state' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'equals' },
-                            value: {
-                              kind: 'StringValue',
-                              value: 'active',
-                              block: false,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'color' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'categories' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'orderBy' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'order' },
-                            value: { kind: 'EnumValue', value: 'asc' },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'where' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'state' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'equals' },
-                                  value: {
-                                    kind: 'StringValue',
-                                    value: 'active',
-                                    block: false,
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  GetSectionsAndCategoriesQuery,
-  GetSectionsAndCategoriesQueryVariables
+  GetRelatedPostsByIdQuery,
+  GetRelatedPostsByIdQueryVariables
 >
 export const GetSectionInformationDocument = {
   kind: 'Document',
@@ -8817,8 +8683,8 @@ export const GetTopicsDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -9327,8 +9193,8 @@ export const GetListTypeTopcPostsDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
@@ -9554,8 +9420,8 @@ export const GetGroupTypeTopicPostsDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiDataBrief' } },
           { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
           {
@@ -10058,6 +9924,7 @@ export const GetLatestShortsDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -10145,6 +10012,7 @@ export const GetShortsDataDocument = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'state' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isShorts' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
@@ -10203,6 +10071,18 @@ export const GetShortsByTagAndVideoSectionDocument = {
               name: { kind: 'Name', value: 'String' },
             },
           },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
         },
       ],
       selectionSet: {
@@ -10308,6 +10188,22 @@ export const GetShortsByTagAndVideoSectionDocument = {
                   ],
                 },
               },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'take' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
+                },
+              },
             ],
             selectionSet: {
               kind: 'SelectionSet',
@@ -10380,6 +10276,7 @@ export const GetShortsByTagAndVideoSectionDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -10422,6 +10319,18 @@ export const GetShortsByVideoSectionDocument = {
               name: { kind: 'Name', value: 'String' },
             },
           },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          defaultValue: { kind: 'IntValue', value: '0' },
         },
       ],
       selectionSet: {
@@ -10489,6 +10398,22 @@ export const GetShortsByVideoSectionDocument = {
                   ],
                 },
               },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'take' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'take' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'skip' },
+                },
+              },
             ],
             selectionSet: {
               kind: 'SelectionSet',
@@ -10561,6 +10486,7 @@ export const GetShortsByVideoSectionDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },

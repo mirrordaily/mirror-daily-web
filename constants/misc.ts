@@ -49,8 +49,8 @@ export const PAGE_LINKS: PageLink[] = [
 export const CONTACT_LINKS: ContactLink[] = [
   {
     name: '鏡報客服',
-    href: 'tel:+886(02)7752-5678',
-    text: '(02)7752-5678',
+    href: 'tel:+886(02)7737-4683',
+    text: '(02)7737-4683',
   },
   {
     // TODO: update email

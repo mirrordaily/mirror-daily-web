@@ -17,6 +17,8 @@ import CustomImage from '@/shared-components/custom-image'
 import LeadingSlideshow from './_components/leading-slideshow'
 import ListTypeListing from './_components/list-type'
 import GroupTypeListing from './_components/group-type'
+import { getTopicPageUrl } from '@/utils/site-urls'
+import { getDefaultMetadata } from '@/utils/common'
 
 type PageProps = {
   params: { slug: string }
@@ -32,7 +34,9 @@ export async function generateMetadata({
     notFound()
   }
 
-  const title = `${topic.og_title || topic.name} -${SITE_NAME}`
+  const defaultMetadata = getDefaultMetadata()
+
+  const title = `${topic.og_title || topic.name} - ${SITE_NAME}`
   const description =
     topic.og_description ||
     getFirstParagraphFromApiData(topic.apiDataBrief) ||
@@ -42,16 +46,23 @@ export async function generateMetadata({
   const mainImage = selectMainImage(heroImage, ogImage)
   const image = mainImage.resized?.original || IMAGE_PATH
 
-  return {
-    title,
-    description,
-    openGraph: {
-      siteName: SITE_NAME,
+  const metaData = Object.assign(
+    {},
+    {
+      ...defaultMetadata,
       title,
       description,
-      images: image,
-    },
-  }
+      openGraph: {
+        ...(defaultMetadata.openGraph ?? {}),
+        title,
+        description,
+        url: getTopicPageUrl(slug),
+        images: image,
+      },
+    }
+  )
+
+  return metaData
 }
 
 export default async function Page({

@@ -18,15 +18,10 @@ import { useIntersectionObserver } from 'usehooks-ts'
 
 type Props = {
   items: Shorts[]
-  customColor: string
   customClass?: string
 }
 
-export default function ShortsList({
-  items,
-  customColor,
-  customClass = '',
-}: Props) {
+export default function ShortsList({ items, customClass = '' }: Props) {
   const swiperRef = useRef<SwiperRef>(null)
   const slideNextRef = useRef<HTMLButtonElement>(null)
   const slidePrevRef = useRef<HTMLButtonElement>(null)
@@ -52,7 +47,7 @@ export default function ShortsList({
         grabCursor={true}
         breakpoints={{
           320: {
-            spaceBetween: 16,
+            spaceBetween: 36,
             freeMode: {
               enabled: true,
               sticky: true,
@@ -83,7 +78,6 @@ export default function ShortsList({
               {...item}
               key={index}
               isActive={isIntersecting && activeIndex === index}
-              customColor={customColor}
               onPlay={() => {
                 swiperRef.current?.swiper.slideTo(index)
                 setActiveIndex(index)

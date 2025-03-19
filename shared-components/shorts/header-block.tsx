@@ -4,7 +4,7 @@ import type { ChangeEvent } from 'react'
 import { useState } from 'react'
 import NextImage from 'next/image'
 import NextLink from 'next/link'
-import IconLogo from '@/public/icons/logos/mirror-daily-full-color.svg'
+import IconLogo from '@/public/icons/logos/mirror-daily-shorts-header.svg'
 import IconSearchGray from '@/public/icons/search-gray.svg'
 import IconSearchWhite from '@/public/icons/search-white.svg'
 import IconClose from '@/public/icons/shorts/close.svg'
@@ -30,11 +30,11 @@ export default function HeaderBlock({ inputValue, setInputValue }: Props) {
     <div className="relative hidden w-full md:flex">
       <NextLink
         href="/"
-        className="relative mb-[21px] ml-5 mt-[31px] h-11 w-[188px] lg:mb-6 lg:mt-8 lg:h-[50px] lg:w-[214px]"
+        className="relative my-5 ml-5 h-[58px] w-[200px] lg:my-6 lg:h-[60px] lg:w-[208px]"
       >
         <NextImage src={IconLogo} fill={true} alt="Logo" />
       </NextLink>
-      <p className="my-[30px] ml-6 whitespace-nowrap text-2xl font-black leading-normal text-[#FF5A36] lg:my-[35px] lg:ml-5">
+      <p className="my-[30px] ml-3 whitespace-nowrap text-2xl font-black leading-normal text-[#FF5A36] lg:my-[35px] lg:ml-[26px]">
         短影音
       </p>
       {/* tablet */}

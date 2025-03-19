@@ -14,12 +14,12 @@ export enum TOPIC_LIST_TYPE {
 
 export type TopicPostData = Pick<
   PostData,
-  'title' | 'slug' | 'link' | 'textContent' | 'postMainImage'
+  'title' | 'id' | 'link' | 'textContent' | 'postMainImage'
 >
 
 export type PostDataWithTags = {
+  id: string
   title: string
-  slug: string
   link: string
   postMainImage: HeroImage
   textContent: string

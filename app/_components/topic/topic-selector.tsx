@@ -127,7 +127,7 @@ export default function TopicSelector({
   }, [activeTopic, displayTopics, setTopic])
 
   return (
-    <div className="flex w-full flex-row gap-x-3 text-base leading-normal md:text-lg lg:gap-x-5">
+    <div className="flex w-full flex-row items-center gap-x-2 text-lg font-bold leading-none md:gap-x-3 lg:max-w-[846px] lg:gap-x-5 lg:text-xl lg:font-normal">
       {displayTopics.map((topic) => {
         const isActive = activeTopic === topic
         return (
@@ -136,9 +136,9 @@ export default function TopicSelector({
             onClick={() => setTopic(topic)}
             className={`${
               isActive
-                ? 'font-bold text-[#119CC7]'
-                : 'font-medium text-[#7F8493]'
-            } whitespace-nowrap hover-or-active:font-bold hover-or-active:text-[#119CC7]`}
+                ? 'text-[#896fcc] lg:bg-[#674ab1] lg:text-white'
+                : 'text-[#68666d] lg:bg-[#ccced4]'
+            } whitespace-nowrap hover-or-active:text-[#896FCC] lg:rounded-lg lg:px-2 lg:py-1 lg:hover-or-active:bg-mirror-blue-700 lg:hover-or-active:text-white`}
           >
             {topic}
           </button>
