@@ -6,16 +6,16 @@ const { SITE_BASE_PATH, IS_PREVIEW_MODE } = await tsImport.load(
 
 /** @typedef {import('next/dist/lib/load-custom-routes').Header['headers'][number]} Header  */
 
-const SECOND = 1
-const MINUTE = SECOND * 60
-const HOUR = MINUTE * 60
-const DAY = HOUR * 24
+// const SECOND = 1
+// const MINUTE = SECOND * 60
+// const HOUR = MINUTE * 60
+// const DAY = HOUR * 24
 
 /** @type {Header} */
-const cacheControl5Min = {
-  key: 'cache-control',
-  value: `public, s-maxage=${MINUTE * 5}, stale-while-revalidate=60`,
-}
+// const cacheControl5Min = {
+//   key: 'cache-control',
+//   value: `public, s-maxage=${MINUTE * 5}, stale-while-revalidate=60`,
+// }
 
 // /** @type {Header} */
 // const cacheControl10Min = {
@@ -30,10 +30,10 @@ const cacheControl5Min = {
 // }
 
 /** @type {Header} */
-const cacheControl7Day = {
-  key: 'cache-control',
-  value: `public, s-maxage=${DAY * 7}, stale-while-revalidate=60`,
-}
+// const cacheControl7Day = {
+//   key: 'cache-control',
+//   value: `public, s-maxage=${DAY * 7}, stale-while-revalidate=60`,
+// }
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -53,20 +53,20 @@ const nextConfig = {
     }
 
     return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'ETag',
-            value: `"${process.env.GIT_HASH}"`,
-          },
-          cacheControl5Min,
-        ],
-      },
-      {
-        source: '/story/:path*',
-        headers: [cacheControl7Day],
-      },
+      // {
+      //   source: '/:path*',
+      //   headers: [
+      //     {
+      //       key: 'ETag',
+      //       value: `"${process.env.GIT_HASH}"`,
+      //     },
+      //     cacheControl5Min,
+      //   ],
+      // },
+      // {
+      //   source: '/story/:path*',
+      //   headers: [cacheControl7Day],
+      // },
     ]
   },
   poweredByHeader: false,
