@@ -2,7 +2,8 @@ import HeroSection from '../_components/hero-section'
 import FeaturedNewsSection from '../_components/featured-news-section'
 import RelatedNewsSection from '../_components/related-news-section'
 import Article from '../_components/article'
-import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
+// import { fetchPopularPost } from '@/app/actions-general'
+import { fetchLatestPost } from '@/app/actions-general'
 import { fetchRelatedPosts } from '../actions'
 import type { Post } from '@/types/story'
 
@@ -15,7 +16,7 @@ export default async function ArticleSection({
   ...heroContent
 }: Props) {
   const relatedPosts = await fetchRelatedPosts(id)
-  const popularPosts = await fetchPopularPost(6)
+  // const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 
   return (
@@ -35,9 +36,9 @@ export default async function ArticleSection({
         {latestPosts.length > 0 && (
           <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
         )}
-        {popularPosts.length > 0 && (
-          <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
-        )}
+        {/* {popularPosts.length > 0 && (
+            <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
+          )} */}
       </div>
     </section>
   )
