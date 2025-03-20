@@ -14,6 +14,20 @@ const nextConfig = {
       bodySizeLimit: '31MB',
     },
   },
+  async headers() {
+    // add etag for all the routes to revalidate CDN cache for each build
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'ETag',
+            value: `"${process.env.GIT_HASH}"`,
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default nextConfig
