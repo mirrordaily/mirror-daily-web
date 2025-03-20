@@ -147,7 +147,7 @@ export default function TopicSelector({
       <NextLink
         href={getTopicListingPage()}
         target="_blank"
-        className="whitespace-nowrap font-medium text-[#000928] hover-or-active:text-[#575D71] md:ml-auto"
+        className="whitespace-nowrap font-medium text-[#000928] hover-or-active:text-[#575D71]"
       >
         更多
       </NextLink>
