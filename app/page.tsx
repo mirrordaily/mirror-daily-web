@@ -61,7 +61,7 @@ export default async function Home() {
             <TopicSection />
           </Suspense>
           <SectionDivider />
-          {/* 短影音．二創 */}
+          {/* 短影音．投稿 */}
           <Suspense
             fallback={
               <div className="h-[80vh] w-full">
