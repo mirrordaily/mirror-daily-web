@@ -8,6 +8,7 @@ import {
   getTopicPageUrl,
 } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
+import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
 
 type Props = {
   data: HeaderData[]
@@ -41,16 +42,19 @@ export default function DesktopNavList({ data }: Props) {
           let color: string
           let link: string
           let categories: HeaderSection['categories'] = []
+          let isShortsCategory: boolean
 
           if (isSectionItem(section)) {
             shouldShowCategories = activeItem === slug
             color = section.color
             link = getSectionPageUrl(slug)
             categories = section.categories
+            isShortsCategory = slug === FIXED_KEY_FOR_SECTION_SHORTS
           } else {
             shouldShowCategories = false
             color = '#2b2b2b'
             link = getTopicPageUrl(slug)
+            isShortsCategory = false
           }
 
           return (
@@ -74,7 +78,9 @@ export default function DesktopNavList({ data }: Props) {
                       key={slug}
                       className="whitespace-nowrap focus-within:text-[color:var(--active-section-color)] hover-or-active:text-[color:var(--active-section-color)]"
                     >
-                      <NextLink href={getCategoryPageUrl(slug)}>
+                      <NextLink
+                        href={getCategoryPageUrl(slug, isShortsCategory)}
+                      >
                         {name}
                       </NextLink>
                     </li>
