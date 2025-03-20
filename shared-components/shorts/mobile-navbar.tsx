@@ -36,8 +36,8 @@ export default function MobileNavbar({ tabs, activeTab }: Props) {
           activeTab === SHORTS_TYPE.DERIVATIVE ? 'bg-[#F0F0F1]' : ''
         }`}
       >
-        <NextImage src={IconCreatity} alt="二創" />
-        <p>二創</p>
+        <NextImage src={IconCreatity} alt="投稿" />
+        <p>投稿</p>
       </NextLink>
       <MobileUploadButton />
     </nav>

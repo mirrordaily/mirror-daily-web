@@ -12,7 +12,7 @@ export default async function ShortsDerivativeSection() {
     <section className="mb-9 mt-[60px] w-full max-w-screen-sm md:mt-[72px] md:max-w-screen-md lg:mt-9 lg:max-w-none">
       <div className="flex items-center justify-center gap-x-4 md:justify-start md:gap-x-3 lg:gap-x-5">
         <p className="inline-block text-lg font-bold leading-none text-[#FF5A36] md:pl-5 lg:pl-9 lg:text-xl">
-          短影音．二創
+          短影音．投稿
         </p>
         <UploadButton />
       </div>
