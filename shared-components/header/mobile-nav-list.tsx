@@ -53,21 +53,22 @@ export default function MobileNavList({ data }: Props) {
           let link: string
           let color: string
           let categories: HeaderSection['categories'] = []
+          let isShortsCategory: boolean
 
           if (isSectionItem(section)) {
-            hasCategories =
-              section.categories.length > 0 &&
-              slug !== FIXED_KEY_FOR_SECTION_SHORTS
+            hasCategories = section.categories.length > 0
 
             shouldShowCategories = slug === activeItem
             link = getSectionPageUrl(slug)
             color = section.color
             categories = section.categories
+            isShortsCategory = slug === FIXED_KEY_FOR_SECTION_SHORTS
           } else {
             hasCategories = false
             shouldShowCategories = false
             link = getTopicPageUrl(slug)
             color = '#e5e6e9'
+            isShortsCategory = false
           }
 
           return (
@@ -112,7 +113,7 @@ export default function MobileNavList({ data }: Props) {
                       <li key={slug}>
                         {/* category item */}
                         <NextLink
-                          href={getCategoryPageUrl(slug)}
+                          href={getCategoryPageUrl(slug, isShortsCategory)}
                           className="hover-or-active:text-[color:var(--active-section-color)]"
                         >
                           {name}

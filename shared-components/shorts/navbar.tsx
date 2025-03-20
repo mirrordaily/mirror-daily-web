@@ -75,8 +75,8 @@ export default function Navbar({ tabs, activeTab }: Props) {
             activeTab === SHORTS_TYPE.DERIVATIVE ? 'bg-[#F0F0F1]' : ''
           }`}
         >
-          <NextImage src={IconCreatity} alt="二創" />
-          <p>二創</p>
+          <NextImage src={IconCreatity} alt="投稿" />
+          <p>投稿</p>
         </NextLink>
       </nav>
       <section className="mt-auto shrink-0 text-sm font-normal leading-[20px] tracking-[0.5px]">
