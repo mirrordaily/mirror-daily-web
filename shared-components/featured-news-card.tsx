@@ -12,8 +12,8 @@ export default function FeaturedNewsCard({
 }: PopularNews): ReactElement {
   return (
     <Link href={link} target="_blank" rel="noopener noreferrer">
-      <figure className="flex aspect-[280/154] max-w-[280px] flex-col gap-y-2 lg:w-[240px] lg:gap-y-3">
-        <div className="relative max-h-[154px] overflow-hidden rounded lg:h-[133px]">
+      <figure className="flex max-w-[280px] flex-col gap-y-2 lg:w-[240px] lg:gap-y-3">
+        <div className="relative aspect-[280/154] overflow-hidden rounded lg:h-[133px]">
           <CustomImage
             images={heroImage.resized}
             imagesWebP={heroImage.resizedWebp}
