@@ -15,6 +15,15 @@ module.exports = {
     },
     extend: {
       colors: {},
+      backgroundColor: {
+        mirror: {
+          blue: {
+            600: '#896fcc',
+            700: '#674ab1',
+            800: '#3b1e86',
+          },
+        },
+      },
       backgroundImage: {
         'image-mask':
           'linear-gradient(180deg, rgba(0, 0, 0, 0) 40.54%, #000 100%)',

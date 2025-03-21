@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge'
 import NextImage from 'next/image'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ShortsItem from './item'
 import type { SwiperRef } from 'swiper/react'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -18,15 +18,10 @@ import { useIntersectionObserver } from 'usehooks-ts'
 
 type Props = {
   items: Shorts[]
-  customColor: string
   customClass?: string
 }
 
-export default function ShortsList({
-  items,
-  customColor,
-  customClass = '',
-}: Props) {
+export default function ShortsList({ items, customClass = '' }: Props) {
   const swiperRef = useRef<SwiperRef>(null)
   const slideNextRef = useRef<HTMLButtonElement>(null)
   const slidePrevRef = useRef<HTMLButtonElement>(null)
@@ -34,6 +29,14 @@ export default function ShortsList({
   const [swiperIsEnd, setSwiperIsEnd] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { isIntersecting, ref } = useIntersectionObserver({ threshold: 0.75 })
+  const initialized = useRef(false)
+
+  useEffect(() => {
+    if (initialized.current === false && swiperRef.current) {
+      setActiveIndex(swiperRef.current?.swiper.realIndex)
+      initialized.current = true
+    }
+  }, [isIntersecting])
 
   return (
     <div
@@ -52,7 +55,7 @@ export default function ShortsList({
         grabCursor={true}
         breakpoints={{
           320: {
-            spaceBetween: 16,
+            spaceBetween: 36,
             freeMode: {
               enabled: true,
               sticky: true,
@@ -67,9 +70,6 @@ export default function ShortsList({
           nextEl: slideNextRef.current,
           prevEl: slidePrevRef.current,
         }}
-        onInit={(swiper) => {
-          setActiveIndex(swiper.realIndex)
-        }}
         onSlideChange={(swiper) => {
           setSwiperIsBeginning(swiper.isBeginning)
           setSwiperIsEnd(swiper.isEnd)
@@ -83,7 +83,6 @@ export default function ShortsList({
               {...item}
               key={index}
               isActive={isIntersecting && activeIndex === index}
-              customColor={customColor}
               onPlay={() => {
                 swiperRef.current?.swiper.slideTo(index)
                 setActiveIndex(index)

@@ -66,7 +66,7 @@ export default function HeroSection({
           {subtitle}
         </h2>
 
-        <div className="mb-4 flex flex-col gap-y-1 font-normal text-[#7F8493] md:mb-3 lg:mb-4">
+        <div className="mb-4 flex flex-col gap-y-1 text-[13px] font-normal leading-normal text-[#7F8493] md:mb-3 lg:mb-4">
           <p>發佈時間：{publishedTime}</p>
           <div className="flex">
             <p className="shrink-0">記者：</p>

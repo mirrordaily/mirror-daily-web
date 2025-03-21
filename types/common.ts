@@ -27,8 +27,8 @@ export type HeroImage = {
 export type PopularNews = {
   categoryName: string
   categoryColor: string
+  postId: string
   postName: string
-  postSlug: string
   heroImage: HeroImage
   publishedDate: string
   link: string
@@ -41,7 +41,7 @@ export type ParameterOfComponent<T> = T extends (
   ? P
   : never
 
-export type SectionAndCategory = {
+export type HeaderSection = {
   name: string
   slug: string
   color: string
@@ -50,7 +50,16 @@ export type SectionAndCategory = {
     slug: string
     color: string
   }[]
+  type: 'Section'
 }
+
+export type HeaderTopic = {
+  name: string
+  slug: string
+  type: 'Topic'
+}
+
+export type HeaderData = HeaderSection | HeaderTopic
 
 export enum SHORTS_TYPE {
   NEWS = 'news',
@@ -69,8 +78,8 @@ export type Shorts = {
 export type LatestPost = {
   categoryName: string
   categoryColor: string
+  postId: string
   postName: string
-  postSlug: string
   heroImage: HeroImage
   publishedDate: string
   link: string
@@ -83,3 +92,5 @@ export type RelatedPost = {
   sectionName: string
   postMainImage: HeroImage
 }
+
+export type SectionData = Pick<HeaderSection, 'slug' | 'color'>[]

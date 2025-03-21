@@ -15,9 +15,9 @@ import IconInstagram from '@/public/icons/logos/instagram-gray.svg'
 import IconThreads from '@/public/icons/logos/threads-gray.svg'
 import IconYouTube from '@/public/icons/logos/youtube-gray.svg'
 import IconLine from '@/public/icons/logos/line-gray.svg'
-import IconMirrorMedia from '@/public/icons/logos/mirror-media.svg'
-import IconMirrorFiction from '@/public/icons/logos/mirror-fiction.png'
-import IconMirrorNews from '@/public/icons/logos/mirror-news.svg'
+import IconMirrorMedia from '@/public/icons/logos/mirror-media-shorts.svg'
+import IconMirrorFiction from '@/public/icons/logos/mirror-fiction-shorts.png'
+import IconMirrorNews from '@/public/icons/logos/mirror-news-shorts.svg'
 import { SHORTS_TYPE } from '@/types/common'
 
 const ExtendedSocialLinks = [
@@ -75,8 +75,8 @@ export default function Navbar({ tabs, activeTab }: Props) {
             activeTab === SHORTS_TYPE.DERIVATIVE ? 'bg-[#F0F0F1]' : ''
           }`}
         >
-          <NextImage src={IconCreatity} alt="二創" />
-          <p>二創</p>
+          <NextImage src={IconCreatity} alt="投稿" />
+          <p>投稿</p>
         </NextLink>
       </nav>
       <section className="mt-auto shrink-0 text-sm font-normal leading-[20px] tracking-[0.5px]">

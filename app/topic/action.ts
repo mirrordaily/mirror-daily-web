@@ -95,9 +95,9 @@ type RawPostWithTags = NonNullable<
 const transfromRawPostWithTags = (
   rawPost: RawPostWithTags
 ): PostDataWithTags => {
+  const id = rawPost.id ?? ''
   const title = rawPost.title ?? ''
-  const slug = rawPost.slug ?? ''
-  const link = getStoryPageUrl(slug)
+  const link = getStoryPageUrl(id)
   const postMainImage = getHeroImage(rawPost.heroImage)
   const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
   const content = getFirstParagraphFromApiData(rawPost.apiData) ?? ''
@@ -105,8 +105,8 @@ const transfromRawPostWithTags = (
   const tags = rawPost.tags || []
 
   return {
+    id,
     title,
-    slug,
     link,
     textContent,
     postMainImage,

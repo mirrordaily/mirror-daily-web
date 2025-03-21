@@ -40,6 +40,7 @@ export const fetchShortsData = async (
 
     return {
       id: data.id,
+      name: data.name,
       state: data.state,
       contributor: data.uploader,
       videoSection: data.videoSection,
@@ -53,7 +54,8 @@ export const fetchShortsData = async (
 export const fetchShortsByTagAndVideoSection = async (
   originalVideoId: string,
   tagId: string | undefined,
-  section: SHORTS_TYPE
+  section: SHORTS_TYPE,
+  page: number = 1
 ): Promise<Shorts[]> => {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching shorts by tag (tagId: ${tagId})`,
@@ -64,6 +66,9 @@ export const fetchShortsByTagAndVideoSection = async (
   const isValidTagId = (tagId: string | undefined): tagId is string =>
     !Number.isNaN(Number(tagId))
 
+  const take = 20
+  const skip = (page - 1) * take
+
   const data = await createDataFetchingChain<
     z.infer<z.ZodArray<typeof latestShortsSchema>>
   >(errorLogger, [], async () => {
@@ -71,8 +76,14 @@ export const fetchShortsByTagAndVideoSection = async (
       ? fetchGQLData(errorLogger, GetShortsByTagAndVideoSectionDocument, {
           tagId,
           section,
+          skip,
+          take,
         })
-      : fetchGQLData(errorLogger, GetShortsByVideoSectionDocument, { section })
+      : fetchGQLData(errorLogger, GetShortsByVideoSectionDocument, {
+          section,
+          skip,
+          take,
+        })
 
     const result = await schema.parse(fetchFunc)
     return result.videos
@@ -82,8 +93,8 @@ export const fetchShortsByTagAndVideoSection = async (
   if (orginalVideo) {
     const filteredData = data.filter((video) => video.id !== originalVideoId)
     filteredData.unshift(orginalVideo)
-    return filteredData.map(transformLatestShorts).slice(0, 20)
+    return filteredData.map(transformLatestShorts)
   }
 
-  return data.map(transformLatestShorts).slice(0, 20)
+  return data.map(transformLatestShorts)
 }

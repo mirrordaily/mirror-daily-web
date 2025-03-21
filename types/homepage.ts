@@ -6,7 +6,7 @@ export type ItemInTopNewsSection = Pick<
   | 'categoryName'
   | 'categoryColor'
   | 'postName'
-  | 'postSlug'
+  | 'postId'
   | 'publishedDate'
   | 'link'
 >
@@ -16,16 +16,16 @@ export type PickupItemInTopNewsSection = Pick<
   'postName' | 'heroImage' | 'link'
 >
 
-export type FlashNews = Pick<LatestPost, 'postSlug' | 'postName' | 'link'>
+export type FlashNews = Pick<LatestPost, 'postId' | 'postName' | 'link'>
 
 export type EditorChoice = Pick<
   LatestPost,
-  'postName' | 'postSlug' | 'link' | 'heroImage'
+  'postName' | 'postId' | 'link' | 'heroImage'
 >
 
 export type TopicPost = Pick<
   LatestPost,
-  'postName' | 'postSlug' | 'link' | 'heroImage'
+  'postName' | 'postId' | 'link' | 'heroImage'
 > & {
   topicLink: string
 }

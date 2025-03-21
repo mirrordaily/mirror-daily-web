@@ -15,13 +15,18 @@ export default function TopicMain({ data }: Props) {
   const topicData = data[topic]
 
   return (
-    <div className="flex w-full shrink-0 flex-col lg:max-w-[760px]">
+    <div className="flex w-full shrink-0 flex-col">
       <TopicSelector topics={topics} activeTopic={topic} setTopic={setTopic} />
       {!!topicData && (
-        <div className="mt-[15px] flex w-full flex-col flex-wrap justify-start gap-y-4 md:flex-row md:gap-x-[34px] md:gap-y-7 lg:gap-x-8">
-          {topicData.map((data, index) => (
-            <TopicItem {...data} isFirst={index === 0} key={data.postSlug} />
-          ))}
+        <div className="mt-6 flex w-full flex-col gap-y-4 md:mt-[11px] md:gap-y-7 lg:mt-[22px] lg:flex-row lg:gap-x-6">
+          <div>
+            <TopicItem {...topicData[0]} isFirst key={topicData[0].postId} />
+          </div>
+          <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-[34px] lg:flex-col lg:gap-y-5">
+            {topicData.slice(1, 4).map((data) => (
+              <TopicItem {...data} key={data.postId} />
+            ))}
+          </div>
         </div>
       )}
     </div>

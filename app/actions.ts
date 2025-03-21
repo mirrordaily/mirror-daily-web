@@ -28,7 +28,7 @@ import { getStoryPageUrl, getTopicPageUrl } from '@/utils/site-urls'
 import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
-import type TopicMain from './_components/topic-and-game/topic-main'
+import type TopicMain from './_components/topic/topic-main'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import {
@@ -80,12 +80,12 @@ const transformRawFlashNews = (
   if (!rawData) return []
 
   return rawData.map((rawPost) => {
-    const postSlug = rawPost.slug ?? ''
+    const postId = rawPost.id ?? ''
 
     return {
+      postId,
       postName: rawPost.title ?? '',
-      postSlug,
-      link: getStoryPageUrl(postSlug),
+      link: getStoryPageUrl(postId),
     }
   })
 }
@@ -125,21 +125,21 @@ const transformEditorChoices = (
   if (!rawData) return []
 
   return rawData.map(({ outlink, heroImage, choices: rawPost }, index) => {
-    const postSlug = rawPost?.slug ?? ''
+    const postId = rawPost?.id ?? ''
 
     if (outlink) {
       return {
+        postId: `${index}-${postId}`,
         postName: rawPost?.title ?? '',
-        postSlug: `${index}-${postSlug}`,
         link: outlink,
         heroImage: getHeroImage(heroImage),
       }
     }
 
     return {
+      postId: `${index}-${postId}`,
       postName: rawPost?.title ?? '',
-      postSlug: `${index}-${postSlug}`,
-      link: getStoryPageUrl(postSlug),
+      link: getStoryPageUrl(postId),
       heroImage: getHeroImage(rawPost?.heroImage),
     }
   })
@@ -193,12 +193,12 @@ const transformTopics = (
     const topicLink = getTopicPageUrl(topicSlug)
     const posts: TopicPost[] =
       topic.posts?.map((rawPost) => {
-        const postSlug = rawPost?.slug ?? ''
+        const postId = rawPost?.id ?? ''
         return {
+          postId,
           postName: rawPost?.title ?? '',
-          postSlug,
           heroImage: getHeroImage(rawPost?.heroImage),
-          link: getStoryPageUrl(postSlug),
+          link: getStoryPageUrl(postId),
           topicLink,
         }
       }) ?? []

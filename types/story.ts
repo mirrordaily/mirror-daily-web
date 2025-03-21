@@ -7,6 +7,7 @@ export type Contact = {
 }
 
 export type Post = {
+  id: string
   title: string
   subtitle: string
   heroCaption: string
@@ -22,4 +23,4 @@ export type Post = {
   link: string
 }
 
-export type ItemInHeroSection = Omit<Post, 'apiData' | 'apiDataBrief'>
+export type ItemInHeroSection = Omit<Post, 'apiData' | 'apiDataBrief' | 'id'>

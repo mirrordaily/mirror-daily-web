@@ -19,7 +19,7 @@ export default function ArticleSection({ info, initialList, slug }: Props) {
     <section className="flex flex-col items-center">
       <div className="mb-5 flex w-full flex-col items-center gap-y-5 md:mb-6 md:gap-y-7 lg:mb-3 lg:items-start lg:gap-y-10">
         <hr className="w-full max-w-[343px] border-2 border-[#000928] md:w-[680px] md:max-w-none md:text-base lg:w-[768px]" />
-        <div className="bg-[#3CD1FF] p-1 text-base font-bold tracking-[0.5px] text-[#FFFFFF] md:text-xl">
+        <div className="bg-[#9A82DA] p-1 text-base font-bold tracking-[0.5px] text-[#FFFFFF] md:text-xl">
           {info.name}
         </div>
       </div>

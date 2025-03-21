@@ -17,7 +17,7 @@ export default function List({ groupName, posts }: Props) {
         <p className="title">{groupName}</p>
         <div className="list-container">
           {posts.map((post) => (
-            <ArticleCard key={post.slug} {...post} />
+            <ArticleCard key={post.id} {...post} />
           ))}
         </div>
       </div>

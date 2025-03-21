@@ -3,6 +3,7 @@ fragment LatestShorts on Video {
   name
   uploader
   videoSrc
+  youtubeUrl
   heroImage {
     ...ImageData
   }
@@ -10,6 +11,7 @@ fragment LatestShorts on Video {
 
 fragment ShortsData on Video {
   id
+  name
   state
   isShorts
   uploader

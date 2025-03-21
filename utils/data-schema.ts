@@ -51,6 +51,7 @@ export const sectionSchema = z.object({
   slug: z.string(),
   color: z.string(),
   categories: z.array(categorySchema),
+  type: z.literal('Section'),
 })
 
 const partnerSchema = z.object({
@@ -58,8 +59,8 @@ const partnerSchema = z.object({
 })
 
 export const rawLatestPostSchema = z.object({
+  id: z.string(),
   title: z.string(),
-  slug: z.string(),
   heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
   sections: z.array(sectionSchema.pick({ name: true, slug: true })),
   partner: z.union([partnerSchema, z.string()]),
@@ -68,15 +69,15 @@ export const rawLatestPostSchema = z.object({
 })
 
 export const rawPopularPostSchema = z.object({
+  id: z.string(),
   title: z.string(),
-  slug: z.string(),
   heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
   sectionsInInputOrder: z.array(sectionSchema.pick({ name: true, slug: true })),
 })
 
 export const rawFlashNewsSchema = rawLatestPostSchema.pick({
+  id: true,
   title: true,
-  slug: true,
 })
 
 export const editorChoiceSchenma = z.object({
@@ -84,8 +85,8 @@ export const editorChoiceSchenma = z.object({
   heroImage: heroImageSchema.nullable(),
   choices: rawLatestPostSchema
     .pick({
+      id: true,
       title: true,
-      slug: true,
       heroImage: true,
     })
     .nullish(),
@@ -96,8 +97,8 @@ export const topicsSchema = z.object({
   slug: z.string(),
   posts: z.array(
     rawLatestPostSchema.pick({
+      id: true,
       title: true,
-      slug: true,
       heroImage: true,
     })
   ),
@@ -114,12 +115,14 @@ export const latestShortsSchema = z.object({
   id: z.string(),
   name: z.string(),
   uploader: z.string(),
-  videoSrc: z.string(),
+  youtubeUrl: z.string().nullish(),
+  videoSrc: z.string().nullish(),
   heroImage: heroImageSchema.nullable(),
 })
 
 export const shortsDataSchema = z.object({
   id: z.string(),
+  name: z.string(),
   isShorts: z.boolean(),
   uploader: z.string(),
   videoSection: z.nativeEnum(SHORTS_TYPE),
@@ -130,3 +133,17 @@ export const shortsDataSchema = z.object({
     })
   ),
 })
+
+export const headerSchema = z.array(
+  z.union([
+    sectionSchema,
+    topicsSchema
+      .pick({
+        name: true,
+        slug: true,
+      })
+      .extend({
+        type: z.literal('Topic'),
+      }),
+  ])
+)

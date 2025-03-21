@@ -1,67 +1,62 @@
 'use client'
-import { z } from 'zod'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import LatestNewsCard from './card'
 import type { ReactNode } from 'react'
+import type { LatestPost } from '@/types/common'
+import type { getSectionColor } from '@/utils/data-process'
+import { fetchLatestPost } from '@/utils/client-side-data-fetch'
+import { useAppSelector } from '@/redux/hooks'
+import {
+  selectIsInitialized,
+  selectLatestPosts,
+  selectLiveEvent,
+} from '@/redux/homepage/selector'
 
 /** the amount of articles each time load-more is clicked  */
 const RENDER_PAGE_SIZE = 20
 
-import type { LatestPost } from '@/types/common'
-import { URL_STATIC_LATEST_NEWS } from '@/constants/config'
-import { rawLatestPostSchema } from '@/utils/data-schema'
-import { hasExternalLink, transformRawLatestPost } from '@/utils/post'
-import type { getSectionColor } from '@/utils/data-process'
-
 type PostListProps = {
-  initialList: LatestPost[]
-  sectionData: Parameters<typeof getSectionColor>[0]
+  headerData: Parameters<typeof getSectionColor>[0]
 }
 
-export default function PostList({
-  initialList,
-  sectionData,
-}: PostListProps): ReactNode {
+export default function PostList({ headerData }: PostListProps): ReactNode {
+  const isInitialized = useAppSelector(selectIsInitialized)
+  const liveEvent = useAppSelector(selectLiveEvent)
+  const latestPosts = useAppSelector(selectLatestPosts)
+
   const fetchMoreLatestPost = async (
     page: number = 0
   ): Promise<LatestPost[]> => {
     // fetch more latest post on browser side
-    try {
-      const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page}.json`)
+    return await fetchLatestPost(headerData, page)
+  }
 
-      const rawPostData = await resp.json()
-      const latestPosts = z
-        .array(rawLatestPostSchema)
-        .parse(rawPostData?.latest)
-      const filteredData = latestPosts.filter(
-        (rawPost) => !hasExternalLink(rawPost)
-      )
+  if (!isInitialized) return null
 
-      return filteredData.map((item) =>
-        transformRawLatestPost(item, sectionData)
-      )
-    } catch (e) {
-      // TODO: send error log
-      console.error(e)
-      return []
-    }
+  let startIndexOfLatestNewsSection = 0
+
+  if (liveEvent) {
+    startIndexOfLatestNewsSection = 9
+  } else {
+    startIndexOfLatestNewsSection = 10
   }
 
   return (
     <InfiniteScrollList
-      initialList={initialList}
+      key={String(isInitialized)}
+      initialList={latestPosts.slice(startIndexOfLatestNewsSection)}
       pageSize={RENDER_PAGE_SIZE}
       amountOfElements={200}
       fetchListInPage={fetchMoreLatestPost}
       isAutoFetch={false}
       loader={
-        <button className="mt-4 inline-block rounded border-2 border-solid border-[#1f668e] p-[10px] text-lg font-bold leading-normal text-[#1f668e] hover-or-active:border-[#119cc9] hover-or-active:text-[#119cc9] md:mt-5 lg:mt-5">
+        <button className="mt-4 inline-block rounded border-2 border-solid border-[#896fcc] p-[10px] text-lg font-bold leading-normal text-[#896fcc] hover-or-active:bg-[#896fcc] hover-or-active:text-[#ffffff] lg:mt-6">
           看更多
         </button>
       }
     >
       {(posts: LatestPost[]) =>
-        posts.map((post) => <LatestNewsCard {...post} key={post.postSlug} />)
+        posts.map((post) => <LatestNewsCard {...post} key={post.postId} />)
       }
     </InfiniteScrollList>
   )

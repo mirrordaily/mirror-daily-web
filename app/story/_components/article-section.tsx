@@ -6,15 +6,15 @@ import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import { fetchRelatedPosts } from '../actions'
 import type { Post } from '@/types/story'
 
-type Props = Post & { slug: string }
+type Props = Post
 
 export default async function ArticleSection({
   apiData,
   apiDataBrief,
-  slug,
+  id,
   ...heroContent
 }: Props) {
-  const relatedPosts = await fetchRelatedPosts(slug)
+  const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 
