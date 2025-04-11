@@ -41,6 +41,11 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
       link: getAuthorPageUrl(id),
       name: name ?? '',
     })) ?? []
+  const editors =
+    rawData.designers?.map(({ id, name }) => ({
+      link: getAuthorPageUrl(id),
+      name: name ?? '',
+    })) ?? []
   const apiData = rawData.apiData
   const apiDataBrief = rawData.apiDataBrief
   const tags =
@@ -66,12 +71,14 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     sectionColor,
     writers,
     photographers,
+    editors,
     apiData,
     apiDataBrief,
     tags,
     algoTags,
     link,
     warning,
+    isAdult: rawData.isAdult ?? false,
   }
 }
 

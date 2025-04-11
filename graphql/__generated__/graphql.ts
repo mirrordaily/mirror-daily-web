@@ -4750,6 +4750,7 @@ export type GetPostByIdQuery = {
     publishedDate?: any | null
     apiData?: any | null
     apiDataBrief?: any | null
+    isAdult?: boolean | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -4815,6 +4816,11 @@ export type GetPostByIdQuery = {
       name?: string | null
     }> | null
     photographers?: Array<{
+      __typename?: 'Contact'
+      id: string
+      name?: string | null
+    }> | null
+    designers?: Array<{
       __typename?: 'Contact'
       id: string
       name?: string | null
@@ -8599,6 +8605,17 @@ export const GetPostByIdDocument = {
                     ],
                   },
                 },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'designers' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
                 { kind: 'Field', name: { kind: 'Name', value: 'apiData' } },
                 {
                   kind: 'Field',
@@ -8617,6 +8634,7 @@ export const GetPostByIdDocument = {
                     ],
                   },
                 },
+                { kind: 'Field', name: { kind: 'Name', value: 'isAdult' } },
               ],
             },
           },
