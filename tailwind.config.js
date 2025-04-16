@@ -34,10 +34,12 @@ module.exports = {
         'over-editor-choice': 10,
         'over-shorts': 10,
         'over-slides': 10,
+        'over-flashnews': 10,
         'city-selection-box': 10,
         'upload-modal': 1000000,
         'light-box': 10000000,
         'mobile-nav': 1000000000,
+        'warning-modal': 1000000000,
       },
       height: {
         header: {
@@ -48,6 +50,24 @@ module.exports = {
       },
       boxShadow: {
         input: ['2px 2px 2px 0px rgba(0,0,0,0.05)'],
+        modal: ['0px 4px 4px 0px rgba(0, 0, 0, 0.25)'],
+      },
+      keyframes: {
+        popup: {
+          '0%, 100%': {
+            transform: 'translateY(-100%)',
+            top: '0px',
+            opacity: 0,
+          },
+          '25%, 75%': {
+            transform: 'translateY(0%)',
+            top: '40px',
+            opacity: 1,
+          },
+        },
+      },
+      animation: {
+        popup: 'popup 1s ease-in-out',
       },
     },
   },

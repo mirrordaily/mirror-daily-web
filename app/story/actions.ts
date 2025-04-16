@@ -41,10 +41,20 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
       link: getAuthorPageUrl(id),
       name: name ?? '',
     })) ?? []
+  const editors =
+    rawData.designers?.map(({ id, name }) => ({
+      link: getAuthorPageUrl(id),
+      name: name ?? '',
+    })) ?? []
   const apiData = rawData.apiData
   const apiDataBrief = rawData.apiDataBrief
   const tags =
     rawData.tags?.map((tag) => ({
+      name: tag.name ?? '',
+      slug: tag.slug ?? '',
+    })) ?? []
+  const algoTags =
+    rawData.tags_algo?.map((tag) => ({
       name: tag.name ?? '',
       slug: tag.slug ?? '',
     })) ?? []
@@ -61,11 +71,14 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     sectionColor,
     writers,
     photographers,
+    editors,
     apiData,
     apiDataBrief,
     tags,
+    algoTags,
     link,
     warning,
+    isAdult: rawData.isAdult ?? false,
   }
 }
 

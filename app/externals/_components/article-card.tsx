@@ -1,29 +1,29 @@
-import Link from 'next/link'
-import CustomImage from '../custom-image'
-import type { PostDataWithSection } from '@/utils/data-process'
+import NextImage from 'next/image'
+import type { External } from '@/types/externals'
 
 export default function ArticleCard({
   title,
   link,
+  thumb,
   publishedDate,
   sectionName,
   sectionColor,
   textContent,
-  postMainImage,
-}: PostDataWithSection) {
+}: External) {
   return (
-    <Link
-      prefetch={false}
+    <a
       href={link}
       target="_blank"
       rel="noopener noreferrer"
       className="flex max-w-[340px] flex-col md:min-h-[291px] md:w-[280px] md:max-w-none lg:w-[240px]"
     >
       <figure className="relative mb-1 aspect-[340/188] overflow-hidden rounded md:h-[155px] lg:h-[133px]">
-        <CustomImage
-          images={postMainImage.resized}
-          imagesWebP={postMainImage.resizedWebp}
+        <NextImage
+          src={thumb}
+          unoptimized
+          fill
           alt={title}
+          className="object-cover"
         />
         <p
           style={{ backgroundColor: sectionColor }}
@@ -44,6 +44,6 @@ export default function ArticleCard({
       <p className="line-clamp-2 text-sm font-normal leading-normal text-[#4A4A4A]">
         {textContent}
       </p>
-    </Link>
+    </a>
   )
 }

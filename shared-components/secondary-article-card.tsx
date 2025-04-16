@@ -16,7 +16,7 @@ export default function SecondaryArticleCard({ postItem, color }: Props) {
       rel="noopener noreferrer"
       className="flex flex-row gap-x-3 md:gap-x-6 lg:gap-x-8"
     >
-      <figure className="relative h-[88px] w-40 shrink-0 overflow-hidden rounded md:h-[133px] md:w-60">
+      <figure className="relative aspect-[160/88] max-h-[88px] w-full max-w-[160px] shrink-0 overflow-hidden rounded md:aspect-auto md:h-[134px] md:max-h-none md:w-60 md:max-w-none">
         <CustomImage
           images={postItem.postMainImage.resized}
           imagesWebP={postItem.postMainImage.resizedWebp}
@@ -28,7 +28,7 @@ export default function SecondaryArticleCard({ postItem, color }: Props) {
           style={{ color: color }}
           className={`$md:mb-[17px] mb-[5px] text-sm font-normal`}
         >
-          {postItem.createdTime}
+          {postItem.publishedDate}
         </p>
         <figcaption className="line-clamp-3 text-sm font-bold text-[#4A4A4A] md:mb-[6px] md:line-clamp-2 md:text-lg">
           {postItem.title}

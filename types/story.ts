@@ -17,14 +17,17 @@ export type Post = {
   sectionColor: string
   writers: Contact[]
   photographers: Contact[]
+  editors: Contact[]
   apiData: ApiData
   apiDataBrief: ApiData
   tags: { name: string; slug: string }[]
+  algoTags: { name: string; slug: string }[]
   link: string
   warning: string
+  isAdult: boolean
 }
 
 export type ItemInHeroSection = Omit<
   Post,
-  'apiData' | 'apiDataBrief' | 'id' | 'warning'
+  'apiData' | 'apiDataBrief' | 'id' | 'warning' | 'isAdult'
 >
