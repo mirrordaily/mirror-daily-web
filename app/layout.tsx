@@ -37,6 +37,11 @@ export default function RootLayout({
                 })();`,
           }}
         />
+        <Script
+          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+          async
+          crossOrigin="anonymous"
+        />
         <noscript
           dangerouslySetInnerHTML={{
             __html: `<img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=24318560&amp;cv=3.9.1&amp;cj=1">`,
@@ -44,6 +49,11 @@ export default function RootLayout({
         />
       </head>
       <body className="app-layout">
+        <Script
+          async
+          strategy="beforeInteractive"
+          src="https://cdn.jsdelivr.net/npm/@miso.ai/client-sdk@1.11.4/dist/umd/miso.min.js"
+        />
         <StoreProvider>
           {children}
           <UploadModal />

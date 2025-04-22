@@ -12,6 +12,8 @@ import ShortsDerivativeSection from './_components/shorts/derivative-section'
 import LatestNewsSection from './_components/latest-news/section'
 import Loading from './_components/loading'
 import { Suspense } from 'react'
+import PageLogger from './_components/page-logger'
+import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 
 // add segment config to prevent data fetch during build
 export const dynamic = 'force-dynamic'
@@ -21,9 +23,18 @@ export default async function Home() {
 
   return (
     <>
+      <Suspense>
+        <PageLogger />
+      </Suspense>
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
+          <div className="hidden h-[306px] lg:block">
+            <DesktopGptAd
+              slotKey="mirrordaily_home_PC_970x250_1"
+              customClasses="mt-5 mb-9"
+            />
+          </div>
           <SectionDivider customClasses="hidden md:block lg:hidden" />
           {/* 編輯精選 */}
           <Suspense
@@ -35,6 +46,10 @@ export default async function Home() {
           >
             <EditorChoiceSection />
           </Suspense>
+          <DesktopGptAd
+            slotKey="mirrordaily_home_PC_728x90_1"
+            customClasses="my-7"
+          />
           <SectionDivider customClasses="lg:hidden" />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection headerData={headerData} />
