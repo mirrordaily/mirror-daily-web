@@ -14,6 +14,7 @@ import Loading from './_components/loading'
 import { Suspense } from 'react'
 import PageLogger from './_components/page-logger'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 
 // add segment config to prevent data fetch during build
 export const dynamic = 'force-dynamic'
@@ -29,10 +30,16 @@ export default async function Home() {
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
-          <div className="hidden h-[306px] lg:block">
+          <div className="hidden min-h-[306px] lg:block">
             <DesktopGptAd
               slotKey="mirrordaily_home_PC_970x250_1"
               customClasses="mt-5 mb-9"
+            />
+          </div>
+          <div className="block min-h-[352px] md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_list_MW_336x280_HD"
+              customClasses="my-9 mx-auto"
             />
           </div>
           <SectionDivider customClasses="hidden md:block lg:hidden" />

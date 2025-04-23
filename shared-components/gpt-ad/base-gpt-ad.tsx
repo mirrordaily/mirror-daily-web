@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import Script from 'next/script'
 import { ENV } from '@/constants/config'
 import { ENVIRONMENT } from '@/constants/misc'
 import { adSlots } from '@/constants/ad'
@@ -58,16 +57,11 @@ export default function BaseGptAd({
 
   return (
     <>
-      <Script
-        id="gpt-sdk"
-        strategy="afterInteractive"
-        src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-      />
       <div
         id={adDivId}
         style={{
           width: size[0],
-          height: size[1],
+          minHeight: size[1],
         }}
         className={twMerge(
           `${isDebugMode ? `relative border-2 border-dashed border-red-500` : ''}`,
