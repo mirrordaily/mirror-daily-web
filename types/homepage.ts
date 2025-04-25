@@ -2,6 +2,7 @@ import type { LatestPost } from './common'
 
 export type ItemInTopNewsSection = Pick<
   LatestPost,
+  | 'sectionColor'
   | 'categoryName'
   | 'categoryColor'
   | 'postName'

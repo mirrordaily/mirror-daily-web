@@ -3,7 +3,7 @@ import { isValidUrl } from './common'
 import type { rawLatestPostSchema, rawPopularPostSchema } from './data-schema'
 import type { HeaderData, LatestPost, PopularNews } from '@/types/common'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
-import { getHeroImage, getSectionColor } from './data-process'
+import { getHeroImage, getSectionColor, getCategoryColor } from './data-process'
 import { getPostPageUrl } from './site-urls'
 import { dateFormatter } from './data-process'
 
@@ -55,12 +55,16 @@ const transformRawLatestPost = (
   rawPosts: z.infer<typeof rawLatestPostSchema>,
   headerData: HeaderData[]
 ): LatestPost => {
-  const { id, title, brief, heroImage, publishedDate, partner } = rawPosts
+  const { id, title, brief, heroImage, publishedDate, partner, categories } =
+    rawPosts
   const { name, color } = getSectionConfig(rawPosts, headerData)
+  const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
 
   return {
-    categoryName: name,
-    categoryColor: color,
+    sectionName: name,
+    sectionColor: color,
+    categoryName: categories[0]?.name ?? DEFAULT_SECTION_NAME,
+    categoryColor,
     postId: id,
     postName: title,
     postBrief: brief,
@@ -81,12 +85,16 @@ const transformRawPopularPost = (
     heroImage,
     publishedDate,
     sectionsInInputOrder: sections,
+    categories,
   } = rawPosts
-  const color = getSectionColor(headerData, sections[0]?.slug)
+  const sectionColor = getSectionColor(headerData, sections[0]?.slug)
+  const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
 
   return {
-    categoryName: sections[0]?.name ?? DEFAULT_SECTION_NAME,
-    categoryColor: color,
+    sectionName: sections[0]?.name ?? DEFAULT_SECTION_NAME,
+    sectionColor,
+    categoryName: categories[0]?.name ?? DEFAULT_SECTION_NAME,
+    categoryColor,
     postId: id,
     postName: title,
     postBrief: brief,
