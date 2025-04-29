@@ -34,11 +34,11 @@ export const PAGE_LINKS: PageLink[] = [
     href: '/',
     isExternal: true,
   },
-  {
-    name: '下載APP',
-    href: '/',
-    isExternal: true,
-  },
+  // {
+  //   name: '下載APP',
+  //   href: '/',
+  //   isExternal: true,
+  // },
   {
     name: '新聞自律',
     href: '/',
@@ -48,39 +48,38 @@ export const PAGE_LINKS: PageLink[] = [
 
 export const CONTACT_LINKS: ContactLink[] = [
   {
-    name: '鏡報客服',
+    name: '爆料專線',
     href: 'tel:+886(02)6619-8085',
     text: '(02)6619-8085',
   },
   {
-    name: '客服信箱',
-    href: 'mailto:119@mirrordaily.news',
-    text: '119@mirrordaily.news',
+    name: '爆料信箱',
+    href: 'mailto:service@mirrordaily.news',
+    text: 'service@mirrordaily.news',
   },
 ]
 
-// TODO: update url values
 export const SOCIAL_LINKS = [
   {
     name: 'Facebook',
-    href: '/',
+    href: 'https://www.facebook.com/mirrordailytw/',
   },
   {
     name: 'Instagram',
-    href: '/',
+    href: 'https://www.instagram.com/mirrordaily_tw/',
   },
   {
     name: 'Threads',
-    href: '/',
+    href: 'https://www.threads.net/@mirrordaily_tw',
   },
   {
     name: 'YouTube',
-    href: '/',
+    href: 'https://www.youtube.com/@%E9%8F%A1%E6%95%A2%E7%88%86',
   },
-  {
-    name: 'LINE',
-    href: '/',
-  },
+  // {
+  //   name: 'LINE',
+  //   href: '/',
+  // },
 ] as const satisfies SocialLinks[]
 
 export const SITE_LINKS = [
