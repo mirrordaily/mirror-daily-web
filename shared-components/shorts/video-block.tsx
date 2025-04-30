@@ -26,21 +26,6 @@ export default function VideoBlock({
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const isModalOpened = useAppSelector(selectIsModalOpened)
 
-  if (items.length === 1) {
-    const item = items?.[0] as Shorts
-    return (
-      <div className="shorts-swiper-in-shorts-page">
-        <ShortsItem
-          {...item}
-          readyToLoad={true}
-          isActive={!isModalOpened}
-          onPause={() => setActiveIndex(null)}
-          onPlay={() => setActiveIndex(0)}
-        />
-      </div>
-    )
-  }
-
   return (
     <InfiniteScrollList
       initialList={items}
