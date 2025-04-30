@@ -76,6 +76,7 @@ export const fetchShortsByTagAndVideoSection = async (
     errorLogger,
     [],
     async () => {
+      console.log({ tagId })
       const fetchFunc = isValidTagId(tagId)
         ? fetchGQLData(errorLogger, GetShortsByTagAndVideoSectionDocument, {
             tagId,
@@ -90,6 +91,7 @@ export const fetchShortsByTagAndVideoSection = async (
           })
 
       const result = await schema.parse(fetchFunc)
+      console.log({ URL_STATIC_NEWS_SHORTSPAGE }, result.videos)
       return result.videos
     },
     async () => {
@@ -98,6 +100,7 @@ export const fetchShortsByTagAndVideoSection = async (
       const resp = await fetch(jsonUrl)
 
       const result = await resp.json()
+      console.log(12345, result.map(transformLatestShorts))
       return result
     }
   )
