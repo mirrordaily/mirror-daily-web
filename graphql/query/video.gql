@@ -54,8 +54,7 @@ query GetShortsByTagAndVideoSection(
     take: $take
     skip: $skip
   ) {
-    id
-    name
+    ...LatestShorts
   }
 }
 
@@ -69,6 +68,7 @@ query GetShortsByVideoSection(
     where: {
       state: { equals: "published" }
       videoSection: { equals: $section }
+      isShorts: { equals: true }
     }
     take: $take
     skip: $skip
