@@ -155,21 +155,46 @@ const transfromRawTopic = (rawTopic: RawTopic): Topic => {
   }
 }
 
-async function fetchTopicListingByPage(page: number, pageSize: number) {
+async function fetchTopicListingByPage({
+  take,
+  skip = 0,
+  withAmount = false,
+}: {
+  take: number
+  skip: number
+  withAmount?: boolean
+}): Promise<{
+  items: Topic[]
+  totalAmount?: number
+}> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching topic listing`,
     getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetTopicListDocument, {
-    skip: (page - 1) * pageSize,
-    take: pageSize * 2,
+    skip,
+    take,
+    withAmount,
   })
 
   if (result && Array.isArray(result.topics)) {
-    return result.topics.map(transfromRawTopic)
+    const items = result.topics.map(transfromRawTopic)
+    if (typeof result.topicsCount === 'number') {
+      return {
+        items,
+        totalAmount: result.topicsCount,
+      }
+    } else {
+      return {
+        items,
+      }
+    }
   } else {
-    return []
+    return {
+      items: [],
+      totalAmount: 0,
+    }
   }
 }
 
