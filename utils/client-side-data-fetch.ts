@@ -28,11 +28,11 @@ const fetchLatestPost = async (
   headerData: HeaderData[],
   page: number = 0
 ): Promise<LatestPost[]> => {
-  const requestTimestamp = String(Date.now()).slice(0, 8)
+  const param = String(Date.now()).slice(0, 8)
   // fetch more latest post on browser side
   try {
     const resp = await fetch(
-      `${URL_STATIC_LATEST_NEWS}0${page}.json?timestamp=${requestTimestamp}`
+      `${URL_STATIC_LATEST_NEWS}0${page}.json?param=${param}`
     )
 
     const rawPostData = await resp.json()
