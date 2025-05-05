@@ -1,9 +1,6 @@
 query GetTopics {
   topics(
-    orderBy: [
-      { sortOrder: asc},
-      { id: desc }
-    ]
+    orderBy: [{ sortOrder: asc }, { id: desc }]
     where: { state: { equals: "published" } }
   ) {
     name
@@ -94,7 +91,7 @@ query GetGroupTypeTopicPosts($slug: String!) {
   }
 }
 
-query GetTopicList($skip: Int, $take: Int) {
+query GetTopicList($skip: Int, $take: Int, $withAmount: Boolean! = false) {
   topics(
     where: { state: { equals: "published" } }
     orderBy: [{ sortOrder: asc }, { createdAt: desc }]
@@ -109,4 +106,6 @@ query GetTopicList($skip: Int, $take: Int) {
       ...ImageData
     }
   }
+  topicsCount(where: { state: { equals: "published" } })
+    @include(if: $withAmount)
 }

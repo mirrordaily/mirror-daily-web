@@ -2,21 +2,25 @@
 
 import type { Topic } from '@/types/topic'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import { fetchTopicListingByPage } from '../action'
 import { PAGE_SIZE } from '@/constants/topic-list'
 import TopicCard from './topic-card'
 
-export default function TopicList({ topics }: { topics: Topic[] }) {
-  const fetchMoreTopics = async (page: number) => {
-    const topics = await fetchTopicListingByPage(page, PAGE_SIZE)
-    return topics
-  }
-
+type Props = {
+  totalAmount: number
+  initialList: Topic[]
+  fetchMoreItems(page: number): Promise<Topic[]>
+}
+export default function TopicList({
+  totalAmount,
+  initialList,
+  fetchMoreItems,
+}: Props) {
   return (
     <InfiniteScrollList
-      initialList={topics}
+      initialList={initialList}
       pageSize={PAGE_SIZE}
-      fetchListInPage={fetchMoreTopics}
+      amountOfElements={totalAmount}
+      fetchListInPage={fetchMoreItems}
       isAutoFetch={false}
       loader={
         <div className="mt-[60px] flex justify-center">

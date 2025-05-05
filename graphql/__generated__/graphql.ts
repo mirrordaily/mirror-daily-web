@@ -5445,10 +5445,12 @@ export type GetGroupTypeTopicPostsQuery = {
 export type GetTopicListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>
   take?: InputMaybe<Scalars['Int']['input']>
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetTopicListQuery = {
   __typename?: 'Query'
+  topicsCount?: number | null
   topics?: Array<{
     __typename?: 'Topic'
     id: string
@@ -10411,6 +10413,21 @@ export const GetTopicListDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'take' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -10517,6 +10534,55 @@ export const GetTopicListDocument = {
                 },
               ],
             },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'topicsCount' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            directives: [
+              {
+                kind: 'Directive',
+                name: { kind: 'Name', value: 'include' },
+                arguments: [
+                  {
+                    kind: 'Argument',
+                    name: { kind: 'Name', value: 'if' },
+                    value: {
+                      kind: 'Variable',
+                      name: { kind: 'Name', value: 'withAmount' },
+                    },
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
