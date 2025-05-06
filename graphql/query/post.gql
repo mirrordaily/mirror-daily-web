@@ -1,4 +1,9 @@
-query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
+query GetPostsBySectionSlug(
+  $skip: Int!
+  $take: Int
+  $slug: String!
+  $withAmount: Boolean! = false
+) {
   posts(
     skip: $skip
     take: $take
@@ -10,6 +15,12 @@ query GetPostsBySectionSlug($skip: Int!, $take: Int, $slug: String!) {
   ) {
     ...PostOverview
   }
+  postsCount(
+    where: {
+      state: { equals: "published" }
+      sections: { some: { slug: { equals: $slug } } }
+    }
+  ) @include(if: $withAmount)
 }
 
 query GetPostsByCategorySlug($skip: Int!, $take: Int, $slug: String!) {

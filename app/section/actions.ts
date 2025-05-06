@@ -16,7 +16,6 @@ function transformSectionPost(
   rawData: GetPostsBySectionSlugQuery['posts']
 ): SectionPost[] {
   if (!rawData) return []
-
   return rawData.map(transfromRawPost)
 }
 
@@ -24,16 +23,20 @@ async function fetchSectionPosts({
   take,
   skip = 0,
   slug,
+  withAmount = false,
 }: {
   take: number
-  skip: number
+  skip?: number
   slug: string
-}) {
+  withAmount?: boolean
+}): Promise<{
+  posts: SectionPost[]
+  totalAmount?: number
+}> {
   const errorLogger = createErrorLogger(
-    'Error occurs while fetching section posts in section page',
+    'Error occurs while fetching section posts on section page',
     getTraceObject()
   )
-
   const result = await fetchGQLData(
     errorLogger,
     GetPostsBySectionSlugDocument,
@@ -41,14 +44,25 @@ async function fetchSectionPosts({
       skip,
       take,
       slug,
+      withAmount,
     }
   )
-
-  if (result) {
-    const { posts } = result
-    return transformSectionPost(posts)
+  if (!result) {
+    return {
+      posts: [],
+      totalAmount: 0,
+    }
+  }
+  const posts = transformSectionPost(result.posts)
+  if (typeof result.postsCount === 'number') {
+    return {
+      posts,
+      totalAmount: result.postsCount,
+    }
   } else {
-    return []
+    return {
+      posts,
+    }
   }
 }
 
