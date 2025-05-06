@@ -68,6 +68,10 @@ export const CONTACT_LINKS: ContactLink[] = [
   },
 ]
 
+export const CONTACT_LINKS_WITHOUT_FIRST = CONTACT_LINKS.filter(
+  (_, idx) => idx !== 0
+)
+
 export const SOCIAL_LINKS = [
   {
     name: 'Facebook',

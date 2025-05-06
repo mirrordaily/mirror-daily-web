@@ -3,7 +3,7 @@
 import type { HeaderData } from '@/types/common'
 import NextImage from 'next/image'
 import { useState } from 'react'
-import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
+import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
 import MobileNavList from './mobile-nav-list'
 import IconHamburger from '@/public/icons/hamburger.svg'
 import IconClose from '@/public/icons/sidebar-close.svg'
@@ -71,18 +71,16 @@ export default function MobileToggleAndNav({ data }: Props) {
         <div className="fixed left-0 top-0 z-mobile-nav hidden h-screen w-screen flex-col bg-[#000928] peer-checked:flex md:bg-[rgba(12,12,12,0.7)] peer-checked:lg:hidden">
           <div className="relative flex h-full flex-col bg-[#2B2B2B] px-[46px] pb-[18px] pt-6 md:w-[375px]">
             <div className="flex gap-4">
-              <a
-                className="mobile-toggle-and-nav-submit-button"
-                href={CONTACT_LINKS[1]?.href}
-              >
-                我要爆料
-              </a>
-              <a
-                className="mobile-toggle-and-nav-submit-button"
-                href={CONTACT_LINKS[2]?.href}
-              >
-                我要投書
-              </a>
+              {/* Filter out the first item and render remaining contact links */}
+              {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => (
+                <a
+                  key={`${contactLink.href}-${contactLink.headerSubmitButtonName}`}
+                  className="mobile-toggle-and-nav-submit-button"
+                  href={contactLink.href}
+                >
+                  {contactLink.headerSubmitButtonName}
+                </a>
+              ))}
             </div>
             <button
               className="absolute right-5 top-8 inline-block"

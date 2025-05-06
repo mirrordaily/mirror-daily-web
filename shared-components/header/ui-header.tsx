@@ -1,5 +1,5 @@
 import NextImage from 'next/image'
-import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
+import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
@@ -82,16 +82,14 @@ export default function UiHeader({
             </button>
           </div> */}
           <div className="flex w-full justify-end">
-            {CONTACT_LINKS.map((link, index) => {
-              // NOTE: 爆料專線是第一個目前沒有渲染
-              if (index === 0) return
+            {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
               return (
                 <a
-                  key={link.href + link.name}
+                  key={contactLink.href + contactLink.name}
                   className="header-submit-button"
-                  href={link?.href}
+                  href={contactLink.href}
                 >
-                  {link.headerSubmitButtonName}
+                  {contactLink.headerSubmitButtonName}
                 </a>
               )
             })}
