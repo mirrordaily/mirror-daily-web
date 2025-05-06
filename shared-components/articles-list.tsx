@@ -23,7 +23,7 @@ export default function ArticlesList<T extends PostData>({
   totalAmount,
   fetchMorePosts,
 }: Props<T>): ReactElement {
-  const [firstPost, ...otherPosts] = initialPosts ?? []
+  const [firstPost, ...otherPosts] = initialPosts
   if (!firstPost) notFound()
   const otherPostsCount = totalAmount - 1
   return (

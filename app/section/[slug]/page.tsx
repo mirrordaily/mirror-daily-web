@@ -49,13 +49,13 @@ export default async function Page({
   const slug = params.slug
 
   const sectionInfo = await fetchSectionInformation(slug)
-  const { posts, totalAmount } = await fetchSectionPosts({
+  const { posts, totalAmount = 0 } = await fetchSectionPosts({
     take: PAGE_SIZE,
     skip: 0,
     slug,
     withAmount: true,
   })
-  if (!sectionInfo || !totalAmount) notFound()
+  if (!sectionInfo) notFound()
 
   const color = sectionInfo.color
   const name = sectionInfo.name

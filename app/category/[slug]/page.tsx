@@ -47,12 +47,12 @@ export default async function Page({ params }: PageProps) {
   const slug = params.slug
 
   const categoryInfo = await fetchCategoryInformation(slug)
-  const posts = await fetchCategoryPosts({
+  const { posts, totalAmount = 0 } = await fetchCategoryPosts({
     take: PAGE_SIZE,
     skip: 0,
     slug,
+    withAmount: true,
   })
-
   if (!categoryInfo) notFound()
 
   const color = categoryInfo.color
@@ -60,11 +60,12 @@ export default async function Page({ params }: PageProps) {
 
   const fetchMorePosts = async (page: number) => {
     'use server'
-    return await fetchCategoryPosts({
+    const { posts } = await fetchCategoryPosts({
       slug,
       take: PAGE_SIZE,
       skip: PAGE_SIZE * (page - 1),
     })
+    return posts
   }
 
   return (
@@ -87,6 +88,7 @@ export default async function Page({ params }: PageProps) {
           color={color}
           name={name}
           fetchMorePosts={fetchMorePosts}
+          totalAmount={totalAmount}
         />
         <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
         <PopularNewsSection />
