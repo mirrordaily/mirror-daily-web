@@ -50,16 +50,21 @@ export default async function Page({
 
   const tagInfo = await fetchTagInformation(slug)
   if (!tagInfo) notFound()
-  const posts = await fetchTagPosts({ take: PAGE_SIZE, skip: 0, slug })
-  if (posts.length === 0) notFound()
-
+  const { posts, totalAmount = 0 } = await fetchTagPosts({
+    take: PAGE_SIZE,
+    skip: 0,
+    slug,
+    withAmount: true,
+  })
+  if (!totalAmount) notFound()
   const fetchMorePosts = async (page: number) => {
     'use server'
-    return await fetchTagPosts({
+    const { posts } = await fetchTagPosts({
       slug,
       take: PAGE_SIZE,
       skip: PAGE_SIZE * (page - 1),
     })
+    return posts
   }
 
   return (
@@ -67,6 +72,7 @@ export default async function Page({
       <ArticlesSection
         info={tagInfo}
         initialList={posts}
+        totalAmount={totalAmount}
         fetchMorePosts={fetchMorePosts}
       />
       <PopularNewsSection />

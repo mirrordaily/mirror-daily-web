@@ -48,7 +48,12 @@ query GetPostsByCategorySlug(
   ) @include(if: $withAmount)
 }
 
-query GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {
+query GetPostsByAuthorId(
+  $skip: Int!
+  $take: Int!
+  $id: ID!
+  $withAmount: Boolean! = false
+) {
   posts(
     skip: $skip
     take: $take
@@ -69,9 +74,25 @@ query GetPostsByAuthorId($skip: Int!, $take: Int!, $id: ID!) {
     }
     ...PostOverview
   }
+  postsCount(
+    where: {
+      state: { equals: "published" }
+      OR: [
+        { writers: { some: { id: { equals: $id } } } }
+        { photographers: { some: { id: { equals: $id } } } }
+        { designers: { some: { id: { equals: $id } } } }
+        { engineers: { some: { id: { equals: $id } } } }
+      ]
+    }
+  ) @include(if: $withAmount)
 }
 
-query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
+query GetPostsByTagSlug(
+  $skip: Int!
+  $take: Int!
+  $slug: String!
+  $withAmount: Boolean! = false
+) {
   posts(
     skip: $skip
     take: $take
@@ -90,6 +111,15 @@ query GetPostsByTagSlug($skip: Int!, $take: Int!, $slug: String!) {
     }
     ...PostOverview
   }
+  postsCount(
+    where: {
+      state: { equals: "published" }
+      OR: [
+        { tags: { some: { slug: { equals: $slug } } } }
+        { tags_algo: { some: { slug: { equals: $slug } } } }
+      ]
+    }
+  ) @include(if: $withAmount)
 }
 
 query GetPostById($id: ID!) {
