@@ -47,6 +47,10 @@
     @apply lg:space-x-[6px];
   }
 
+  .header-submit-button {
+    @apply ml-3 mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white lg:flex;
+  }
+
   .shorts-swiper-in-homepage .swiper-slide {
     @apply w-[225px];
   }

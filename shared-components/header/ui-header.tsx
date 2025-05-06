@@ -82,13 +82,13 @@ export default function UiHeader({
             </button>
           </div> */}
           <a
-            className="ml-auto mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white lg:flex"
+            className="header-submit-button ml-auto"
             href={CONTACT_LINKS[1]?.href}
           >
             我要爆料
           </a>
           <a
-            className="ml-3 mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white lg:flex"
+            className="header-submit-button ml-3"
             href={CONTACT_LINKS[2]?.href}
           >
             我要投書
