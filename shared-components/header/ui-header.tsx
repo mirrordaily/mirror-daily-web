@@ -86,7 +86,7 @@ export default function UiHeader({
               return (
                 <a
                   key={contactLink.href + contactLink.name}
-                  className="header-submit-button"
+                  className="header-submit-button ml-3 first:ml-0"
                   href={contactLink.href}
                 >
                   {contactLink.headerSubmitButtonName}
