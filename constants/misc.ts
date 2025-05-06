@@ -57,6 +57,11 @@ export const CONTACT_LINKS: ContactLink[] = [
     href: 'mailto:service@mirrordaily.news',
     text: 'service@mirrordaily.news',
   },
+  {
+    name: '投書信箱',
+    href: 'mailto:editor@mirrordaily.news',
+    text: 'editor@mirrordaily.news',
+  },
 ]
 
 export const SOCIAL_LINKS = [

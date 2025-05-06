@@ -87,6 +87,12 @@ export default function UiHeader({
           >
             我要爆料
           </a>
+          <a
+            className="ml-3 mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white lg:flex"
+            href={CONTACT_LINKS[2]?.href}
+          >
+            我要投書
+          </a>
           <MobileToggleAndNav data={data} />
         </div>
       </div>
