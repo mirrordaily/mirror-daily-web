@@ -51,6 +51,11 @@
     @apply ml-3 mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white lg:flex;
   }
 
+  .mobile-toggle-and-nav-submit-button {
+    @apply inline-block self-start rounded-xl bg-[#FF5457] px-4 py-1 text-base font-bold text-white
+  }
+
+
   .shorts-swiper-in-homepage .swiper-slide {
     @apply w-[225px];
   }
