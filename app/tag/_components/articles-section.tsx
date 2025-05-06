@@ -4,6 +4,7 @@ import type { TagInfo, TagPost } from '@/types/tag'
 type Props = {
   info: TagInfo
   initialList: TagPost[]
+  totalAmount: number
   fetchMorePosts: (page: number) => Promise<TagPost[]>
 }
 
@@ -11,6 +12,7 @@ export default function ArticleSection({
   info,
   initialList,
   fetchMorePosts,
+  totalAmount,
 }: Props) {
   return (
     <section className="flex flex-col items-center">
@@ -25,6 +27,7 @@ export default function ArticleSection({
         <ArticlesList
           fetchMorePosts={fetchMorePosts}
           initialList={initialList}
+          totalAmount={totalAmount}
         />
       </div>
 
