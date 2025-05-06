@@ -1,5 +1,5 @@
 import NextImage from 'next/image'
-import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
+import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
@@ -81,12 +81,19 @@ export default function UiHeader({
               <NextImage src={IconSearch} fill={true} alt="搜尋" />
             </button>
           </div> */}
-          <a
-            className="ml-auto mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white lg:flex"
-            href={CONTACT_LINKS[1]?.href}
-          >
-            我要爆料
-          </a>
+          <div className="flex w-full justify-end">
+            {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
+              return (
+                <a
+                  key={contactLink.href + contactLink.name}
+                  className="header-submit-button ml-3 first:ml-0"
+                  href={contactLink.href}
+                >
+                  {contactLink.headerSubmitButtonName}
+                </a>
+              )
+            })}
+          </div>
           <MobileToggleAndNav data={data} />
         </div>
       </div>
