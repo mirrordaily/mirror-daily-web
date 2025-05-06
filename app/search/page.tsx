@@ -1,5 +1,5 @@
 import { ENV } from '@/constants/config'
-import SearchComponent from './_components/search-component'
+import SearchComponent from './_components/miso-search'
 import { notFound } from 'next/navigation'
 
 export default function GcseSearch() {

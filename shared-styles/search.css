@@ -1,0 +1,135 @@
+/* topic pages have special css customization, so we create dedicated file for them */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .miso-hybrid-search-combo__question {
+    padding: 12px 20px !important;
+    background: #eaeaea;
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    .miso-hybrid-search-combo__question {
+      padding: 20px 0 !important;
+      background: rgba(0, 0, 0, 0);
+    }
+  }
+
+  .miso-hybrid-search-combo__question
+    .miso-hybrid-search-combo__query-container {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 768px) {
+    .miso-hybrid-search-combo__question
+      .miso-hybrid-search-combo__query-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .miso-hybrid-search-combo__question
+      .miso-hybrid-search-combo__query-container {
+      max-width: 1024px;
+    }
+  }
+
+  .miso-hybrid-search-combo__question miso-query {
+    border: 0;
+  }
+
+  .miso-hybrid-search-combo__answer {
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    .miso-hybrid-search-combo__answer {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+  }
+
+  .miso-hybrid-search-combo__answer-container {
+    padding: 0;
+  }
+
+  @media (min-width: 768px) {
+    .miso-hybrid-search-combo__answer-container {
+      width: 50%;
+      padding: 0 24px;
+    }
+  }
+
+  .miso-hybrid-search-combo__answer-container miso-answer {
+    width: 100%;
+    border: 0;
+  }
+
+  .miso-hybrid-search-combo__separator {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .miso-hybrid-search-combo__separator {
+      display: block;
+      font-size: 20px;
+      color: #999;
+    }
+  }
+
+  .miso-hybrid-search-combo__title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+  }
+
+  @media (min-width: 768px) {
+    .miso-hybrid-search-combo__title {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .miso-hybrid-search-combo__desc {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .miso-hybrid-search-combo__desc {
+      font-size: 18px;
+    }
+  }
+
+  .miso-hybrid-search-combo__cta {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+  }
+
+  .miso-hybrid-search-combo__cta a {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .miso-hybrid-search-combo__cta a:hover {
+    background-color: #0056b3;
+  }
+}
