@@ -81,18 +81,21 @@ export default function UiHeader({
               <NextImage src={IconSearch} fill={true} alt="搜尋" />
             </button>
           </div> */}
-          <a
-            className="header-submit-button ml-auto"
-            href={CONTACT_LINKS[1]?.href}
-          >
-            我要爆料
-          </a>
-          <a
-            className="header-submit-button ml-3"
-            href={CONTACT_LINKS[2]?.href}
-          >
-            我要投書
-          </a>
+          <div className="flex w-full justify-end">
+            {CONTACT_LINKS.map((link, index) => {
+              // NOTE: 爆料專線是第一個目前沒有渲染
+              if (index === 0) return
+              return (
+                <a
+                  key={link.href + link.name}
+                  className="header-submit-button"
+                  href={link?.href}
+                >
+                  {link.headerSubmitButtonName}
+                </a>
+              )
+            })}
+          </div>
           <MobileToggleAndNav data={data} />
         </div>
       </div>

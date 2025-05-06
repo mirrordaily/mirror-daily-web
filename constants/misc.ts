@@ -20,6 +20,7 @@ type PageLink = SocialLinks & {
 
 type ContactLink = SocialLinks & {
   text: string
+  headerSubmitButtonName: string
 }
 
 // TODO: update url values
@@ -49,16 +50,19 @@ export const PAGE_LINKS: PageLink[] = [
 export const CONTACT_LINKS: ContactLink[] = [
   {
     name: '爆料專線',
+    headerSubmitButtonName: '',
     href: 'tel:+886(02)6619-8085',
     text: '(02)6619-8085',
   },
   {
     name: '爆料信箱',
+    headerSubmitButtonName: '我要爆料',
     href: 'mailto:service@mirrordaily.news',
     text: 'service@mirrordaily.news',
   },
   {
     name: '投書信箱',
+    headerSubmitButtonName: '我要投書',
     href: 'mailto:editor@mirrordaily.news',
     text: 'editor@mirrordaily.news',
   },
