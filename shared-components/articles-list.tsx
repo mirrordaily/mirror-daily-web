@@ -10,6 +10,7 @@ type Props<T> = {
   initialPosts: T[]
   color: string
   name: string
+  totalAmount: number
   fetchMorePosts: (page: number) => Promise<T[]>
 }
 
@@ -19,12 +20,12 @@ export default function ArticlesList<T extends PostData>({
   initialPosts,
   color,
   name,
+  totalAmount,
   fetchMorePosts,
 }: Props<T>): ReactElement {
-  const [firstPost, ...otherPosts] = initialPosts ?? []
-
+  const [firstPost, ...otherPosts] = initialPosts
   if (!firstPost) notFound()
-
+  const otherPostsCount = totalAmount - 1
   return (
     <div className="flex w-full max-w-screen-sm flex-col items-center md:max-w-[670px] lg:max-w-[740px]">
       <div className="mb-5 w-full pl-[23px] pr-[22px] md:mb-7 md:px-0">
@@ -51,6 +52,7 @@ export default function ArticlesList<T extends PostData>({
                 pageSize={PAGE_SIZE}
                 fetchListInPage={fetchMorePosts}
                 isAutoFetch={false}
+                amountOfElements={otherPostsCount}
                 loader={
                   <div className="mt-4 flex justify-center md:mt-12">
                     <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493] hover-or-active:border-[#119CC7] hover-or-active:text-[#119CC7]">

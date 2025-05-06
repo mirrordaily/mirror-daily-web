@@ -49,8 +49,12 @@ export default async function Page({
   const slug = params.slug
 
   const sectionInfo = await fetchSectionInformation(slug)
-  const posts = await fetchSectionPosts({ take: PAGE_SIZE, skip: 0, slug })
-
+  const { posts, totalAmount = 0 } = await fetchSectionPosts({
+    take: PAGE_SIZE,
+    skip: 0,
+    slug,
+    withAmount: true,
+  })
   if (!sectionInfo) notFound()
 
   const color = sectionInfo.color
@@ -58,11 +62,12 @@ export default async function Page({
 
   const fetchMorePosts = async (page: number) => {
     'use server'
-    return await fetchSectionPosts({
+    const { posts } = await fetchSectionPosts({
       slug,
       take: PAGE_SIZE,
       skip: PAGE_SIZE * (page - 1),
     })
+    return posts
   }
 
   return (
@@ -82,6 +87,7 @@ export default async function Page({
       <main className="mb-10 flex w-full flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList
           initialPosts={posts}
+          totalAmount={totalAmount}
           color={color}
           name={name}
           fetchMorePosts={fetchMorePosts}

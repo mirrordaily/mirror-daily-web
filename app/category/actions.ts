@@ -24,16 +24,17 @@ async function fetchCategoryPosts({
   take,
   skip = 0,
   slug,
+  withAmount = false,
 }: {
   take: number
   skip: number
   slug: string
+  withAmount?: boolean
 }) {
   const errorLogger = createErrorLogger(
-    'Error occurs while fetching category posts in category page',
+    'Error occurs while fetching category posts on category page',
     getTraceObject()
   )
-
   const result = await fetchGQLData(
     errorLogger,
     GetPostsByCategorySlugDocument,
@@ -41,14 +42,26 @@ async function fetchCategoryPosts({
       skip,
       take,
       slug,
+      withAmount,
     }
   )
 
-  if (result) {
-    const { posts } = result
-    return transformCategoryPost(posts)
+  if (!result)
+    return {
+      posts: [],
+      totalAmount: 0,
+    }
+
+  const posts = transformCategoryPost(result.posts)
+  if (typeof result.postsCount === 'number') {
+    return {
+      posts,
+      totalAmount: result.postsCount,
+    }
   } else {
-    return []
+    return {
+      posts,
+    }
   }
 }
 
