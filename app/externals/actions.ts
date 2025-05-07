@@ -77,11 +77,13 @@ async function fetchExternals({
   slug,
   take,
   skip = 0,
+  withAmount = false,
 }: {
   slug: string
   take: number
   skip?: number
-}): Promise<External[]> {
+  withAmount?: boolean
+}): Promise<{ posts: External[]; totalAmount?: number }> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching external posts by partner slug: ${slug} on externals page`,
     getTraceObject()
@@ -94,14 +96,26 @@ async function fetchExternals({
       skip,
       take,
       slug,
+      withAmount,
     }
   )
-
-  if (result) {
-    const { externals } = result
-    return transformExternal(externals)
+  if (!result) {
+    return {
+      posts: [],
+      totalAmount: 0,
+    }
+  }
+  const { externals } = result
+  const posts = transformExternal(externals)
+  if (typeof result.externalsCount === 'number') {
+    return {
+      posts,
+      totalAmount: result.externalsCount,
+    }
   } else {
-    return []
+    return {
+      posts,
+    }
   }
 }
 

@@ -4707,10 +4707,12 @@ export type GetExternalsByPartnerSlugQueryVariables = Exact<{
   skip: Scalars['Int']['input']
   take: Scalars['Int']['input']
   slug: Scalars['String']['input']
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetExternalsByPartnerSlugQuery = {
   __typename?: 'Query'
+  externalsCount?: number | null
   externals?: Array<{
     __typename?: 'External'
     id: string
@@ -7455,6 +7457,21 @@ export const GetExternalsByPartnerSlugDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -7542,6 +7559,63 @@ export const GetExternalsByPartnerSlugDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'thumb' } },
               ],
             },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'externalsCount' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'partner' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'slug' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'equals' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'slug' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            directives: [
+              {
+                kind: 'Directive',
+                name: { kind: 'Name', value: 'include' },
+                arguments: [
+                  {
+                    kind: 'Argument',
+                    name: { kind: 'Name', value: 'if' },
+                    value: {
+                      kind: 'Variable',
+                      name: { kind: 'Name', value: 'withAmount' },
+                    },
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

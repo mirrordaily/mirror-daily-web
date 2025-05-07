@@ -5,11 +5,13 @@ type Props = {
   partnerName: string
   initialList: External[]
   fetchMorePosts: (page: number) => Promise<External[]>
+  totalAmount: number
 }
 export default function ArticleSection({
   partnerName,
   initialList,
   fetchMorePosts,
+  totalAmount,
 }: Props) {
   return (
     <section className="flex flex-col items-center">
@@ -25,6 +27,7 @@ export default function ArticleSection({
         <ArticlesList
           fetchMorePosts={fetchMorePosts}
           initialList={initialList}
+          totalAmount={totalAmount}
         />
       </div>
       <hr className="mb-[38px] hidden w-[588px] border border-[#000928] md:block lg:hidden" />
