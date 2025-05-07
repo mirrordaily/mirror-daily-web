@@ -80,7 +80,7 @@ export const rawPopularPostSchema = z.object({
   categories: z.array(categorySchema.pick({ name: true, slug: true })),
 })
 
-export const rawFlashNewsSchema = z.object({
+export const rawHotNewsSchema = z.object({
   outlink: z.string(),
   hotnews: z
     .object({
