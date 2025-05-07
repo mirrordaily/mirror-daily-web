@@ -25,7 +25,12 @@ query GetRelatedPostsByExternalId($id: ID!) {
   }
 }
 
-query GetExternalsByPartnerSlug($skip: Int!, $take: Int!, $slug: String!) {
+query GetExternalsByPartnerSlug(
+  $skip: Int!
+  $take: Int!
+  $slug: String!
+  $withAmount: Boolean! = false
+) {
   externals(
     skip: $skip
     take: $take
@@ -38,4 +43,6 @@ query GetExternalsByPartnerSlug($skip: Int!, $take: Int!, $slug: String!) {
     publishedDate
     thumb
   }
+  externalsCount(where: { partner: { slug: { equals: $slug } } })
+    @include(if: $withAmount)
 }

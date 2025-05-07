@@ -15,24 +15,31 @@ export default async function Page({ params }: Props) {
   const partnerName = await fetchPartnerInformation(slug)
   if (!partnerName) notFound()
 
-  const externals = await fetchExternals({ take: PAGE_SIZE, slug, skip: 0 })
-  if (!externals.length) notFound()
+  const { posts, totalAmount = 0 } = await fetchExternals({
+    take: PAGE_SIZE,
+    slug,
+    skip: 0,
+    withAmount: true,
+  })
+  if (!totalAmount) notFound()
 
   const fetchMoreExternals = async (page: number) => {
     'use server'
-    return await fetchExternals({
+    const { posts } = await fetchExternals({
       slug,
       take: PAGE_SIZE,
       skip: PAGE_SIZE * (page - 1),
     })
+    return posts
   }
 
   return (
     <main className="flex flex-col items-center pl-[17px] pr-[18px] md:mb-[68px] md:pt-3 lg:flex-row lg:items-start lg:justify-center lg:gap-x-[100px] lg:pt-5">
       <ArticleSection
         partnerName={partnerName}
-        initialList={externals}
+        initialList={posts}
         fetchMorePosts={fetchMoreExternals}
+        totalAmount={totalAmount}
       />
       <PopularNewsSection />
     </main>
