@@ -54,7 +54,20 @@ export default function MisoSearch() {
         },
       })
 
-      function renderProduct(layout, state, product) {
+      interface Product {
+        id: string | number
+        url: string
+        cover_image: string
+        title: string
+        published_at: string | Date
+        snippet: string
+      }
+
+      function renderProduct(
+        layout: object,
+        state: object,
+        product: Product
+      ): string {
         const html = `
           <a class="miso-list__item-body" data-role="item" data-miso-product-id="${
             product.id
