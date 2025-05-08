@@ -111,7 +111,9 @@ export default function MisoSearch() {
       wireAnswerBox(client, rootElement)
 
       // start query if specified in URL parameters
-      // workflow.autoQuery()
+      setTimeout(() => {
+        workflow.autoQuery()
+      }, 1000)
     })
   }, [])
   return (
