@@ -46,7 +46,21 @@
     @apply md:!w-auto md:absolute md:!bottom-3 md:!right-4 md:justify-end md:space-x-1 lg:!bottom-[26px] lg:!right-3; 
     @apply lg:space-x-[6px];
   }
-
+  
+  /* editor choice swiper button */
+  .swiper {
+    .custom-swiper-navigation-next, .custom-swiper-navigation-prev { 
+      @apply absolute top-1/2 size-10 -translate-y-1/2 items-center justify-center z-10 hidden lg:flex;
+    }
+    
+    .custom-swiper-navigation-next {
+      @apply right-3 lg:right-6;
+    }
+  
+    .custom-swiper-navigation-prev {
+      @apply left-3 lg:left-6;
+    }
+  }
   .header-submit-button {
     @apply mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white first:ml-0 lg:flex;
   }

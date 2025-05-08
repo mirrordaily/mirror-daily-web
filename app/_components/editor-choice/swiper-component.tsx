@@ -1,8 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
 import CustomImage from '@/shared-components/custom-image'
-import { Swiper, SwiperSlide, type SwiperRef } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation, Autoplay, Keyboard } from 'swiper/modules'
 
 import 'swiper/css'
@@ -16,9 +15,6 @@ type Props = {
 }
 
 export default function SwiperComponent({ list }: Props) {
-  const swiperRef = useRef<SwiperRef>(null)
-  const commonSwipeNavigationButtonStyle =
-    'absolute top-1/2 size-10 -translate-y-1/2 items-center justify-center z-10 hidden lg:flex'
   const swiperNavigationButtonSize = { width: 48, height: 48 }
   return (
     <div className="relative">
@@ -44,7 +40,6 @@ export default function SwiperComponent({ list }: Props) {
         }}
         keyboard={true}
         className="relative w-full md:rounded lg:rounded-none"
-        ref={swiperRef}
       >
         {list.map((item) => {
           const { postId, postName, heroImage, link } = item
@@ -71,14 +66,7 @@ export default function SwiperComponent({ list }: Props) {
         })}
         <div className="custom-swiper-pagination" />
 
-        <button
-          // use '+' to combine class name to avoid ESLint tailwindcss/no-custom-classname rule
-          className={
-            commonSwipeNavigationButtonStyle +
-            ' right-3 lg:right-6' +
-            ' custom-swiper-navigation-next'
-          }
-        >
+        <button className="custom-swiper-navigation-next">
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Next Slide</span>
           <Image
@@ -87,14 +75,7 @@ export default function SwiperComponent({ list }: Props) {
             {...swiperNavigationButtonSize}
           />
         </button>
-        <button
-          // use '+' to combine class name to avoid ESLint tailwindcss/no-custom-classname rule
-          className={
-            commonSwipeNavigationButtonStyle +
-            ' left-3 lg:left-6' +
-            ' custom-swiper-navigation-prev'
-          }
-        >
+        <button className="custom-swiper-navigation-prev">
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Previous Slide</span>
           <Image
