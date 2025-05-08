@@ -78,10 +78,10 @@ export default function MisoSearch() {
               }">
             </div>
             <div class="miso-list__item-info-container">
-              <div class="miso-list__item-title">${product.title}</div>
               <div class='miso-list__item-time'>${dateFormatter(
                 product['published_at'].toString()
               )}</div>
+              <div class="miso-list__item-title">${product.title}</div>
               <div class="miso-list__item-snippet">${product.snippet}</div>
             </div>
          </a>
@@ -111,7 +111,7 @@ export default function MisoSearch() {
       wireAnswerBox(client, rootElement)
 
       // start query if specified in URL parameters
-      workflow.autoQuery()
+      // workflow.autoQuery()
     })
   }, [])
   return (

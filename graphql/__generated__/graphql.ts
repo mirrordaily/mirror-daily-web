@@ -2325,6 +2325,8 @@ export type PopularTagWhereUniqueInput = {
 export type Post = {
   __typename?: 'Post'
   Warning?: Maybe<Warning>
+  Warnings?: Maybe<Array<Warning>>
+  WarningsCount?: Maybe<Scalars['Int']['output']>
   adTrace?: Maybe<Scalars['String']['output']>
   apiData?: Maybe<Scalars['JSON']['output']>
   apiDataBrief?: Maybe<Scalars['JSON']['output']>
@@ -2402,6 +2404,18 @@ export type Post = {
   writers?: Maybe<Array<Contact>>
   writersCount?: Maybe<Scalars['Int']['output']>
   writersInInputOrder?: Maybe<Array<Maybe<Contact>>>
+}
+
+export type PostWarningsArgs = {
+  cursor?: InputMaybe<WarningWhereUniqueInput>
+  orderBy?: Array<WarningOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: WarningWhereInput
+}
+
+export type PostWarningsCountArgs = {
+  where?: WarningWhereInput
 }
 
 export type PostCamera_ManArgs = {
@@ -2574,6 +2588,7 @@ export type PostWritersCountArgs = {
 
 export type PostCreateInput = {
   Warning?: InputMaybe<WarningRelateToOneForCreateInput>
+  Warnings?: InputMaybe<WarningRelateToManyForCreateInput>
   adTrace?: InputMaybe<Scalars['String']['input']>
   apiData?: InputMaybe<Scalars['JSON']['input']>
   apiDataBrief?: InputMaybe<Scalars['JSON']['input']>
@@ -2692,6 +2707,7 @@ export type PostUpdateArgs = {
 
 export type PostUpdateInput = {
   Warning?: InputMaybe<WarningRelateToOneForUpdateInput>
+  Warnings?: InputMaybe<WarningRelateToManyForUpdateInput>
   adTrace?: InputMaybe<Scalars['String']['input']>
   apiData?: InputMaybe<Scalars['JSON']['input']>
   apiDataBrief?: InputMaybe<Scalars['JSON']['input']>
@@ -2753,6 +2769,7 @@ export type PostWhereInput = {
   NOT?: InputMaybe<Array<PostWhereInput>>
   OR?: InputMaybe<Array<PostWhereInput>>
   Warning?: InputMaybe<WarningWhereInput>
+  Warnings?: InputMaybe<WarningManyRelationFilter>
   adTrace?: InputMaybe<StringFilter>
   camera_man?: InputMaybe<ContactManyRelationFilter>
   categories?: InputMaybe<CategoryManyRelationFilter>
@@ -4132,11 +4149,29 @@ export type WarningCreateInput = {
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
 }
 
+export type WarningManyRelationFilter = {
+  every?: InputMaybe<WarningWhereInput>
+  none?: InputMaybe<WarningWhereInput>
+  some?: InputMaybe<WarningWhereInput>
+}
+
 export type WarningOrderByInput = {
   content?: InputMaybe<OrderDirection>
   createdAt?: InputMaybe<OrderDirection>
   id?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
+}
+
+export type WarningRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<WarningWhereUniqueInput>>
+  create?: InputMaybe<Array<WarningCreateInput>>
+}
+
+export type WarningRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<WarningWhereUniqueInput>>
+  create?: InputMaybe<Array<WarningCreateInput>>
+  disconnect?: InputMaybe<Array<WarningWhereUniqueInput>>
+  set?: InputMaybe<Array<WarningWhereUniqueInput>>
 }
 
 export type WarningRelateToOneForCreateInput = {
