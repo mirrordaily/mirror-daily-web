@@ -246,10 +246,41 @@ type RawRelatedPosts =
   | GetRelatedPostsByExternalIdQuery['external']
   | GetRelatedPostsByIdQuery['post']
 
-const transfromRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
-  if (!rawData || !rawData.relateds) return []
+const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
+  if (!rawData) return []
 
-  return rawData.relateds.map((rawPost) => {
+  /**
+   * NOTE:
+   * 相關文章因為排序問題，改成使用relatedsInInputOrder
+   * 外部相關文章仍然使用relateds
+   * 結論：相關文章來源有兩種可能，所以增加型別判斷。
+   */
+  const hasRelatedsInInputOrder = 'relatedsInInputOrder' in rawData
+  const hasRelateds = 'relateds' in rawData
+  const relatedData =
+    (hasRelatedsInInputOrder && rawData.relatedsInInputOrder) ||
+    (hasRelateds && rawData.relateds) ||
+    null
+
+  if (!relatedData) return []
+
+  return relatedData.map((rawPost) => {
+    /**
+     * rawPost是null的時候給預設值
+     * 這個問題發生在有判斷之後TS型別推斷
+     */
+    if (!rawPost) {
+      return {
+        title: '',
+        link: '',
+        postMainImage: {
+          resized: { original: '' },
+        },
+        sectionColor: DEFAULT_SECTION_COLOR,
+        sectionName: DEFAULT_SECTION_NAME,
+      }
+    }
+
     const title = rawPost.title ?? ''
     const link = getStoryPageUrl(rawPost.id)
     const heroImage = getHeroImage(rawPost.heroImage)
@@ -298,7 +329,7 @@ export {
   transfromRawPost,
   transfromRawPostWithSection,
   getImageSrc,
-  transfromRawRelatedPosts,
+  transformRawRelatedPosts,
   getSectionColor,
   getCategoryColor,
 }
