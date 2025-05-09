@@ -3976,12 +3976,14 @@ export type Video = {
   manualOrderOfRelatedPosts?: Maybe<Scalars['JSON']['output']>
   name?: Maybe<Scalars['String']['output']>
   publishedDate?: Maybe<Scalars['DateTime']['output']>
+  publishedDateString?: Maybe<Scalars['String']['output']>
   related_posts?: Maybe<Array<Post>>
   related_postsCount?: Maybe<Scalars['Int']['output']>
   related_postsInInputOrder?: Maybe<Array<Maybe<Post>>>
   state?: Maybe<Scalars['String']['output']>
   tags?: Maybe<Array<Tag>>
   tagsCount?: Maybe<Scalars['Int']['output']>
+  updateTimeStamp?: Maybe<Scalars['Boolean']['output']>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
   updatedBy?: Maybe<User>
   uploader?: Maybe<Scalars['String']['output']>
@@ -4026,9 +4028,11 @@ export type VideoCreateInput = {
   manualOrderOfRelatedPosts?: InputMaybe<Scalars['JSON']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  publishedDateString?: InputMaybe<Scalars['String']['input']>
   related_posts?: InputMaybe<PostRelateToManyForCreateInput>
   state?: InputMaybe<Scalars['String']['input']>
   tags?: InputMaybe<TagRelateToManyForCreateInput>
+  updateTimeStamp?: InputMaybe<Scalars['Boolean']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
   uploader?: InputMaybe<Scalars['String']['input']>
@@ -4045,7 +4049,9 @@ export type VideoOrderByInput = {
   isShorts?: InputMaybe<OrderDirection>
   name?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
+  publishedDateString?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
+  updateTimeStamp?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
   uploader?: InputMaybe<OrderDirection>
   uploaderEmail?: InputMaybe<OrderDirection>
@@ -4092,9 +4098,11 @@ export type VideoUpdateInput = {
   manualOrderOfRelatedPosts?: InputMaybe<Scalars['JSON']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  publishedDateString?: InputMaybe<Scalars['String']['input']>
   related_posts?: InputMaybe<PostRelateToManyForUpdateInput>
   state?: InputMaybe<Scalars['String']['input']>
   tags?: InputMaybe<TagRelateToManyForUpdateInput>
+  updateTimeStamp?: InputMaybe<Scalars['Boolean']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
   uploader?: InputMaybe<Scalars['String']['input']>
@@ -4116,6 +4124,7 @@ export type VideoWhereInput = {
   isShorts?: InputMaybe<BooleanFilter>
   name?: InputMaybe<StringFilter>
   publishedDate?: InputMaybe<DateTimeNullableFilter>
+  publishedDateString?: InputMaybe<StringFilter>
   related_posts?: InputMaybe<PostManyRelationFilter>
   state?: InputMaybe<StringNullableFilter>
   tags?: InputMaybe<TagManyRelationFilter>

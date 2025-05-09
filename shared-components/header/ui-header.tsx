@@ -3,7 +3,7 @@ import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
-// import IconSearch from '@/public/icons/search.svg'
+import IconSearch from '@/public/icons/search.svg'
 import IconLogo from '@/public/icons/logos/mirror-daily.svg'
 import IconFacebook from '@/public/icons/logos/facebook-black.svg'
 import IconInstagram from '@/public/icons/logos/instagram-black.svg'
@@ -69,19 +69,16 @@ export default function UiHeader({
               className="aspect-[150/42] md:aspect-auto"
             />
           </a>
-          {/* <div className="ml-auto mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mt-8 lg:gap-x-[7px]">
-            {/* TODO: form submit handler, expanded search bar on mobile device 
-            <input
-              type="text"
-              name="search"
-              placeholder="請輸入關鍵字"
-              className="hidden h-5 w-[104px] rounded-[7px] border-[0.5px] border-[#000928] bg-[#F6F6FB] px-4 py-px text-xs font-normal leading-normal outline-none placeholder:text-[#7F8493] md:inline-block lg:h-6 lg:w-[180px] lg:px-[13px] lg:text-sm"
-            />
-            <button className="relative inline-block h-[22.15px] w-[22.29px] md:h-5 md:w-[18.57px] lg:mt-[3px] lg:h-[16.7px] lg:w-[14.86px]">
-              <NextImage src={IconSearch} fill={true} alt="搜尋" />
-            </button>
-          </div> */}
+
           <div className="flex w-full justify-end">
+            <div className="ml-auto mr-[16px] mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
+              <a
+                className="relative inline-block h-[22.15px] w-[22.29px] md:h-5 md:w-[18.57px] lg:mt-[3px] lg:h-[16.7px] lg:w-[14.86px]"
+                href="/search"
+              >
+                <NextImage src={IconSearch} fill={true} alt="搜尋" />
+              </a>
+            </div>
             {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
               return (
                 <a
