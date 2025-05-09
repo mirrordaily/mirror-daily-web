@@ -35,22 +35,24 @@ export default function HighlightItem({
 }: PickupItemInTopNewsSection): ReactNode {
   if (isVideoType) {
     return (
-      <div className="aspect-[330/220] w-full shrink-0 md:aspect-auto md:h-[208px] md:w-[312px] lg:h-[374px] lg:w-[560px]">
-        <ReactPlayer
-          url={link}
-          width="100%"
-          height="100%"
-          muted={false}
-          playing={false}
-          playsinline={true}
-          config={{
-            file: {
-              attributes: {
-                preload: 'none',
+      <div className="flex flex-col">
+        <div className="aspect-[330/220] w-full shrink-0 md:aspect-auto md:h-[208px] md:w-[312px] lg:h-[374px] lg:w-[560px]">
+          <ReactPlayer
+            url={link}
+            width="100%"
+            height="100%"
+            muted={false}
+            playing={false}
+            playsinline={true}
+            config={{
+              file: {
+                attributes: {
+                  preload: 'none',
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
         <PostTitleAndBrief postName={postName} postBrief={postBrief} />
       </div>
     )
