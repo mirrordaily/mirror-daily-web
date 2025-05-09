@@ -16,7 +16,7 @@ import {
 import {
   getFirstParagraphFromApiData,
   getHeroImage,
-  transfromRawPost,
+  transformRawPost,
 } from '@/utils/data-process'
 import type { PostDataWithTags, Topic, TopicPostData } from '@/types/topic'
 import { getStoryPageUrl } from '@/utils/site-urls'
@@ -68,7 +68,7 @@ async function fetchListTypeTopicPostBySlug({
   })
 
   if (result && result.topic && Array.isArray(result.topic.posts)) {
-    const items = result.topic.posts.map(transfromRawPost)
+    const items = result.topic.posts.map(transformRawPost)
 
     if (typeof result.topic.postsCount === 'number') {
       return {
@@ -92,7 +92,7 @@ type RawPostWithTags = NonNullable<
   NonNullable<GetGroupTypeTopicPostsQuery['topic']>['posts']
 >[0]
 
-const transfromRawPostWithTags = (
+const transformRawPostWithTags = (
   rawPost: RawPostWithTags
 ): PostDataWithTags => {
   const id = rawPost.id ?? ''
@@ -131,7 +131,7 @@ async function fetchGorupTypeTopicPostBySlug(
   )
 
   if (result && result.topic && Array.isArray(result.topic.posts)) {
-    return result.topic.posts.map(transfromRawPostWithTags)
+    return result.topic.posts.map(transformRawPostWithTags)
   } else {
     return []
   }
@@ -139,7 +139,7 @@ async function fetchGorupTypeTopicPostBySlug(
 
 type RawTopic = NonNullable<GetTopicListQuery['topics']>[number]
 
-const transfromRawTopic = (rawTopic: RawTopic): Topic => {
+const transformRawTopic = (rawTopic: RawTopic): Topic => {
   const id = rawTopic.id
   const name = rawTopic.name ?? ''
   const slug = rawTopic.slug ?? ''
@@ -179,7 +179,7 @@ async function fetchTopicListingByPage({
   })
 
   if (result && Array.isArray(result.topics)) {
-    const items = result.topics.map(transfromRawTopic)
+    const items = result.topics.map(transformRawTopic)
     if (typeof result.topicsCount === 'number') {
       return {
         items,

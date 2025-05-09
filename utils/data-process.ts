@@ -187,7 +187,7 @@ type RawPost = NonNullable<
 
 export type PostData = CategoryPost | SectionPost
 
-const transfromRawPost = (rawPost: RawPost): PostData => {
+const transformRawPost = (rawPost: RawPost): PostData => {
   const id = rawPost.id
   const title = rawPost.title ?? ''
   const link = getStoryPageUrl(id)
@@ -215,7 +215,7 @@ type RawPostWithSection = NonNullable<
 
 export type PostDataWithSection = AuthorPost | TagPost
 
-const transfromRawPostWithSection = (
+const transformRawPostWithSection = (
   rawPost: RawPostWithSection
 ): PostDataWithSection => {
   const id = rawPost.id
@@ -326,8 +326,8 @@ export {
   selectMainImage,
   transformLatestShorts,
   getFirstParagraphFromApiData,
-  transfromRawPost,
-  transfromRawPostWithSection,
+  transformRawPost,
+  transformRawPostWithSection,
   getImageSrc,
   transformRawRelatedPosts,
   getSectionColor,

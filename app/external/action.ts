@@ -8,7 +8,7 @@ import {
 } from '@/graphql/__generated__/graphql'
 import type { GetExternalByIdQuery } from '@/graphql/__generated__/graphql'
 import type { ExternalPost } from '@/types/external'
-import { dateFormatter, transfromRawRelatedPosts } from '@/utils/data-process'
+import { dateFormatter, transformRawRelatedPosts } from '@/utils/data-process'
 import { getExternalPageUrl, getExternalsPageUrl } from '@/utils/site-urls'
 import type { RelatedPost } from '@/types/common'
 
@@ -76,7 +76,7 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   )
   if (result) {
     const { external } = result
-    return transfromRawRelatedPosts(external)
+    return transformRawRelatedPosts(external)
   } else {
     return []
   }
