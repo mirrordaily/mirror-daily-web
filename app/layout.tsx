@@ -59,6 +59,24 @@ export default function RootLayout({
         })(); `,
           }}
         />
+        {/* <!-- Begin Dable Script / For inquiries, visit http://dable.io --> */}
+        <Script
+          type="text/javascript"
+          id="dable"
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function(d,a,b,l,e,r) {
+              if(d[b] && d[b].q)return;d[b]=d[b]||function(){(d[b].q=d[b].q||[]).push(arguments)};e=a.createElement(l);
+              e.async=1;e.charset='utf-8';e.src='//static.dable.io/dist/plugin.min.js';
+              r=a.getElementsByTagName(l)[0];r.parentNode.insertBefore(e,r);
+              })(window,document,'dable','script');
+            dable('setService', 'mirrordaily.news');
+            dable('sendLogOnce');
+              `,
+          }}
+        />
+
+        {/* <!-- End Dable Script / For inquiries, visit http://dable.io --> */}
         <noscript
           dangerouslySetInnerHTML={{
             __html: `<img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=24318560&amp;cv=3.9.1&amp;cj=1">`,
