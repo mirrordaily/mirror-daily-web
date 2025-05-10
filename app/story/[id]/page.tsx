@@ -44,16 +44,13 @@ export async function generateMetadata({
         url: postData.link,
         images: image,
         type: 'website',
+      },
+      other: {
         'product:availability': 'oos',
         'article:published_time': new Date(
           postData.publishedTime
         ).toISOString(),
         'article:section': postData.sectionName || 'UnCategorized',
-        'dable:author': postData.writers?.[0]
-          ? postData.writers[0].name
-          : 'Unknown Author',
-        'dable:item_id': postData.id,
-        'section:color': postData.sectionColor,
       },
     }
   )
