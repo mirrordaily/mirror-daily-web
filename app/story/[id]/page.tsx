@@ -51,6 +51,11 @@ export async function generateMetadata({
           postData.publishedTime
         ).toISOString(),
         'article:section': postData.sectionName || 'UnCategorized',
+        'dable:author': postData.writers?.[0]
+          ? postData.writers[0].name
+          : 'Unknown Author',
+        'dable:item_id': postData.id,
+        'section:color': postData.sectionColor,
       },
     }
   )
