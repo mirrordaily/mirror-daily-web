@@ -1,6 +1,7 @@
 type Organization = 'mirror-media' | 'readr-media'
 
 enum ApiDataBlockType {
+  Section = 'section',
   Unstyled = 'unstyled',
   HeaderTwo = 'header-two',
   HeaderThree = 'header-three',
