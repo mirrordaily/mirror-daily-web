@@ -83,7 +83,7 @@ const transformRawHotNews = (
   rawData: z.infer<ZodArray<typeof rawHotNewsSchema>>
 ): FlashNews[] => {
   if (!rawData) return []
-  return rawData.map(({ hotnews, hotexternals, outlink }) => {
+  return rawData.map(({ hotnews, hotexternal, outlink }) => {
     if (outlink) {
       return {
         link: outlink,
@@ -99,11 +99,11 @@ const transformRawHotNews = (
       }
     }
 
-    if (hotexternals) {
-      const postId = hotexternals?.id ?? ''
+    if (hotexternal) {
+      const postId = hotexternal?.id ?? ''
       return {
         link: getExternalPageUrl(postId),
-        postName: hotexternals?.title ?? '',
+        postName: hotexternal?.title ?? '',
       }
     }
 
@@ -128,7 +128,6 @@ export const fetchHotNews = async (): Promise<FlashNews[]> => {
     [],
     async () => {
       const resp = await fetch(URL_STATIC_HOT_NEWS)
-
       const result = await schema.parse(resp.json())
       return result.hots
     },

@@ -88,7 +88,7 @@ export const rawHotNewsSchema = z.object({
       title: z.string(),
     })
     .nullish(),
-  hotexternals: z
+  hotexternal: z
     .object({
       id: z.string(),
       title: z.string(),
