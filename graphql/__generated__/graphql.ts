@@ -2325,6 +2325,8 @@ export type PopularTagWhereUniqueInput = {
 export type Post = {
   __typename?: 'Post'
   Warning?: Maybe<Warning>
+  Warnings?: Maybe<Array<Warning>>
+  WarningsCount?: Maybe<Scalars['Int']['output']>
   adTrace?: Maybe<Scalars['String']['output']>
   apiData?: Maybe<Scalars['JSON']['output']>
   apiDataBrief?: Maybe<Scalars['JSON']['output']>
@@ -2402,6 +2404,18 @@ export type Post = {
   writers?: Maybe<Array<Contact>>
   writersCount?: Maybe<Scalars['Int']['output']>
   writersInInputOrder?: Maybe<Array<Maybe<Contact>>>
+}
+
+export type PostWarningsArgs = {
+  cursor?: InputMaybe<WarningWhereUniqueInput>
+  orderBy?: Array<WarningOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: WarningWhereInput
+}
+
+export type PostWarningsCountArgs = {
+  where?: WarningWhereInput
 }
 
 export type PostCamera_ManArgs = {
@@ -2574,6 +2588,7 @@ export type PostWritersCountArgs = {
 
 export type PostCreateInput = {
   Warning?: InputMaybe<WarningRelateToOneForCreateInput>
+  Warnings?: InputMaybe<WarningRelateToManyForCreateInput>
   adTrace?: InputMaybe<Scalars['String']['input']>
   apiData?: InputMaybe<Scalars['JSON']['input']>
   apiDataBrief?: InputMaybe<Scalars['JSON']['input']>
@@ -2692,6 +2707,7 @@ export type PostUpdateArgs = {
 
 export type PostUpdateInput = {
   Warning?: InputMaybe<WarningRelateToOneForUpdateInput>
+  Warnings?: InputMaybe<WarningRelateToManyForUpdateInput>
   adTrace?: InputMaybe<Scalars['String']['input']>
   apiData?: InputMaybe<Scalars['JSON']['input']>
   apiDataBrief?: InputMaybe<Scalars['JSON']['input']>
@@ -2753,6 +2769,7 @@ export type PostWhereInput = {
   NOT?: InputMaybe<Array<PostWhereInput>>
   OR?: InputMaybe<Array<PostWhereInput>>
   Warning?: InputMaybe<WarningWhereInput>
+  Warnings?: InputMaybe<WarningManyRelationFilter>
   adTrace?: InputMaybe<StringFilter>
   camera_man?: InputMaybe<ContactManyRelationFilter>
   categories?: InputMaybe<CategoryManyRelationFilter>
@@ -3959,12 +3976,14 @@ export type Video = {
   manualOrderOfRelatedPosts?: Maybe<Scalars['JSON']['output']>
   name?: Maybe<Scalars['String']['output']>
   publishedDate?: Maybe<Scalars['DateTime']['output']>
+  publishedDateString?: Maybe<Scalars['String']['output']>
   related_posts?: Maybe<Array<Post>>
   related_postsCount?: Maybe<Scalars['Int']['output']>
   related_postsInInputOrder?: Maybe<Array<Maybe<Post>>>
   state?: Maybe<Scalars['String']['output']>
   tags?: Maybe<Array<Tag>>
   tagsCount?: Maybe<Scalars['Int']['output']>
+  updateTimeStamp?: Maybe<Scalars['Boolean']['output']>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
   updatedBy?: Maybe<User>
   uploader?: Maybe<Scalars['String']['output']>
@@ -4009,9 +4028,11 @@ export type VideoCreateInput = {
   manualOrderOfRelatedPosts?: InputMaybe<Scalars['JSON']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  publishedDateString?: InputMaybe<Scalars['String']['input']>
   related_posts?: InputMaybe<PostRelateToManyForCreateInput>
   state?: InputMaybe<Scalars['String']['input']>
   tags?: InputMaybe<TagRelateToManyForCreateInput>
+  updateTimeStamp?: InputMaybe<Scalars['Boolean']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
   uploader?: InputMaybe<Scalars['String']['input']>
@@ -4028,7 +4049,9 @@ export type VideoOrderByInput = {
   isShorts?: InputMaybe<OrderDirection>
   name?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
+  publishedDateString?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
+  updateTimeStamp?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
   uploader?: InputMaybe<OrderDirection>
   uploaderEmail?: InputMaybe<OrderDirection>
@@ -4075,9 +4098,11 @@ export type VideoUpdateInput = {
   manualOrderOfRelatedPosts?: InputMaybe<Scalars['JSON']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
+  publishedDateString?: InputMaybe<Scalars['String']['input']>
   related_posts?: InputMaybe<PostRelateToManyForUpdateInput>
   state?: InputMaybe<Scalars['String']['input']>
   tags?: InputMaybe<TagRelateToManyForUpdateInput>
+  updateTimeStamp?: InputMaybe<Scalars['Boolean']['input']>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
   uploader?: InputMaybe<Scalars['String']['input']>
@@ -4099,6 +4124,7 @@ export type VideoWhereInput = {
   isShorts?: InputMaybe<BooleanFilter>
   name?: InputMaybe<StringFilter>
   publishedDate?: InputMaybe<DateTimeNullableFilter>
+  publishedDateString?: InputMaybe<StringFilter>
   related_posts?: InputMaybe<PostManyRelationFilter>
   state?: InputMaybe<StringNullableFilter>
   tags?: InputMaybe<TagManyRelationFilter>
@@ -4132,11 +4158,29 @@ export type WarningCreateInput = {
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
 }
 
+export type WarningManyRelationFilter = {
+  every?: InputMaybe<WarningWhereInput>
+  none?: InputMaybe<WarningWhereInput>
+  some?: InputMaybe<WarningWhereInput>
+}
+
 export type WarningOrderByInput = {
   content?: InputMaybe<OrderDirection>
   createdAt?: InputMaybe<OrderDirection>
   id?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
+}
+
+export type WarningRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<WarningWhereUniqueInput>>
+  create?: InputMaybe<Array<WarningCreateInput>>
+}
+
+export type WarningRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<WarningWhereUniqueInput>>
+  create?: InputMaybe<Array<WarningCreateInput>>
+  disconnect?: InputMaybe<Array<WarningWhereUniqueInput>>
+  set?: InputMaybe<Array<WarningWhereUniqueInput>>
 }
 
 export type WarningRelateToOneForCreateInput = {
@@ -4707,10 +4751,12 @@ export type GetExternalsByPartnerSlugQueryVariables = Exact<{
   skip: Scalars['Int']['input']
   take: Scalars['Int']['input']
   slug: Scalars['String']['input']
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetExternalsByPartnerSlugQuery = {
   __typename?: 'Query'
+  externalsCount?: number | null
   externals?: Array<{
     __typename?: 'External'
     id: string
@@ -4750,10 +4796,12 @@ export type GetPostsBySectionSlugQueryVariables = Exact<{
   skip: Scalars['Int']['input']
   take?: InputMaybe<Scalars['Int']['input']>
   slug: Scalars['String']['input']
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetPostsBySectionSlugQuery = {
   __typename?: 'Query'
+  postsCount?: number | null
   posts?: Array<{
     __typename?: 'Post'
     id: string
@@ -4812,10 +4860,12 @@ export type GetPostsByCategorySlugQueryVariables = Exact<{
   skip: Scalars['Int']['input']
   take?: InputMaybe<Scalars['Int']['input']>
   slug: Scalars['String']['input']
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetPostsByCategorySlugQuery = {
   __typename?: 'Query'
+  postsCount?: number | null
   posts?: Array<{
     __typename?: 'Post'
     id: string
@@ -4874,10 +4924,12 @@ export type GetPostsByAuthorIdQueryVariables = Exact<{
   skip: Scalars['Int']['input']
   take: Scalars['Int']['input']
   id: Scalars['ID']['input']
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetPostsByAuthorIdQuery = {
   __typename?: 'Query'
+  postsCount?: number | null
   posts?: Array<{
     __typename?: 'Post'
     id: string
@@ -4941,10 +4993,12 @@ export type GetPostsByTagSlugQueryVariables = Exact<{
   skip: Scalars['Int']['input']
   take: Scalars['Int']['input']
   slug: Scalars['String']['input']
+  withAmount?: Scalars['Boolean']['input']
 }>
 
 export type GetPostsByTagSlugQuery = {
   __typename?: 'Query'
+  postsCount?: number | null
   posts?: Array<{
     __typename?: 'Post'
     id: string
@@ -7447,6 +7501,21 @@ export const GetExternalsByPartnerSlugDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -7534,6 +7603,63 @@ export const GetExternalsByPartnerSlugDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'thumb' } },
               ],
             },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'externalsCount' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'partner' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'slug' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'equals' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'slug' },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            directives: [
+              {
+                kind: 'Directive',
+                name: { kind: 'Name', value: 'include' },
+                arguments: [
+                  {
+                    kind: 'Argument',
+                    name: { kind: 'Name', value: 'if' },
+                    value: {
+                      kind: 'Variable',
+                      name: { kind: 'Name', value: 'withAmount' },
+                    },
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
@@ -7716,6 +7842,21 @@ export const GetPostsBySectionSlugDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -7831,6 +7972,90 @@ export const GetPostsBySectionSlugDocument = {
                 },
               ],
             },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'postsCount' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'sections' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'some' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'slug' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'equals' },
+                                        value: {
+                                          kind: 'Variable',
+                                          name: { kind: 'Name', value: 'slug' },
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            directives: [
+              {
+                kind: 'Directive',
+                name: { kind: 'Name', value: 'include' },
+                arguments: [
+                  {
+                    kind: 'Argument',
+                    name: { kind: 'Name', value: 'if' },
+                    value: {
+                      kind: 'Variable',
+                      name: { kind: 'Name', value: 'withAmount' },
+                    },
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
@@ -7960,6 +8185,21 @@ export const GetPostsByCategorySlugDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -8075,6 +8315,90 @@ export const GetPostsByCategorySlugDocument = {
                 },
               ],
             },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'postsCount' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'categories' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'some' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'slug' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'equals' },
+                                        value: {
+                                          kind: 'Variable',
+                                          name: { kind: 'Name', value: 'slug' },
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            directives: [
+              {
+                kind: 'Directive',
+                name: { kind: 'Name', value: 'include' },
+                arguments: [
+                  {
+                    kind: 'Argument',
+                    name: { kind: 'Name', value: 'if' },
+                    value: {
+                      kind: 'Variable',
+                      name: { kind: 'Name', value: 'withAmount' },
+                    },
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
@@ -8203,6 +8527,21 @@ export const GetPostsByAuthorIdDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
         },
       ],
       selectionSet: {
@@ -8489,6 +8828,248 @@ export const GetPostsByAuthorIdDocument = {
               ],
             },
           },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'postsCount' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ListValue',
+                        values: [
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'writers' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'some' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: { kind: 'Name', value: 'id' },
+                                            value: {
+                                              kind: 'ObjectValue',
+                                              fields: [
+                                                {
+                                                  kind: 'ObjectField',
+                                                  name: {
+                                                    kind: 'Name',
+                                                    value: 'equals',
+                                                  },
+                                                  value: {
+                                                    kind: 'Variable',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'id',
+                                                    },
+                                                  },
+                                                },
+                                              ],
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'photographers' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'some' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: { kind: 'Name', value: 'id' },
+                                            value: {
+                                              kind: 'ObjectValue',
+                                              fields: [
+                                                {
+                                                  kind: 'ObjectField',
+                                                  name: {
+                                                    kind: 'Name',
+                                                    value: 'equals',
+                                                  },
+                                                  value: {
+                                                    kind: 'Variable',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'id',
+                                                    },
+                                                  },
+                                                },
+                                              ],
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'designers' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'some' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: { kind: 'Name', value: 'id' },
+                                            value: {
+                                              kind: 'ObjectValue',
+                                              fields: [
+                                                {
+                                                  kind: 'ObjectField',
+                                                  name: {
+                                                    kind: 'Name',
+                                                    value: 'equals',
+                                                  },
+                                                  value: {
+                                                    kind: 'Variable',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'id',
+                                                    },
+                                                  },
+                                                },
+                                              ],
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'engineers' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'some' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: { kind: 'Name', value: 'id' },
+                                            value: {
+                                              kind: 'ObjectValue',
+                                              fields: [
+                                                {
+                                                  kind: 'ObjectField',
+                                                  name: {
+                                                    kind: 'Name',
+                                                    value: 'equals',
+                                                  },
+                                                  value: {
+                                                    kind: 'Variable',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'id',
+                                                    },
+                                                  },
+                                                },
+                                              ],
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            directives: [
+              {
+                kind: 'Directive',
+                name: { kind: 'Name', value: 'include' },
+                arguments: [
+                  {
+                    kind: 'Argument',
+                    name: { kind: 'Name', value: 'if' },
+                    value: {
+                      kind: 'Variable',
+                      name: { kind: 'Name', value: 'withAmount' },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
     },
@@ -8619,6 +9200,21 @@ export const GetPostsByTagSlugDocument = {
               name: { kind: 'Name', value: 'String' },
             },
           },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'withAmount' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Boolean' },
+            },
+          },
+          defaultValue: { kind: 'BooleanValue', value: false },
         },
       ],
       selectionSet: {
@@ -8818,6 +9414,162 @@ export const GetPostsByTagSlugDocument = {
                 },
               ],
             },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'postsCount' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'state' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'equals' },
+                            value: {
+                              kind: 'StringValue',
+                              value: 'published',
+                              block: false,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ListValue',
+                        values: [
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'tags' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'some' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: 'slug',
+                                            },
+                                            value: {
+                                              kind: 'ObjectValue',
+                                              fields: [
+                                                {
+                                                  kind: 'ObjectField',
+                                                  name: {
+                                                    kind: 'Name',
+                                                    value: 'equals',
+                                                  },
+                                                  value: {
+                                                    kind: 'Variable',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'slug',
+                                                    },
+                                                  },
+                                                },
+                                              ],
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'tags_algo' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'some' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: 'slug',
+                                            },
+                                            value: {
+                                              kind: 'ObjectValue',
+                                              fields: [
+                                                {
+                                                  kind: 'ObjectField',
+                                                  name: {
+                                                    kind: 'Name',
+                                                    value: 'equals',
+                                                  },
+                                                  value: {
+                                                    kind: 'Variable',
+                                                    name: {
+                                                      kind: 'Name',
+                                                      value: 'slug',
+                                                    },
+                                                  },
+                                                },
+                                              ],
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            directives: [
+              {
+                kind: 'Directive',
+                name: { kind: 'Name', value: 'include' },
+                arguments: [
+                  {
+                    kind: 'Argument',
+                    name: { kind: 'Name', value: 'if' },
+                    value: {
+                      kind: 'Variable',
+                      name: { kind: 'Name', value: 'withAmount' },
+                    },
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

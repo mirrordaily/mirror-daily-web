@@ -1,12 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { SECOND } from '@/constants/time-unit'
-import type { LatestPost } from '@/types/common'
+import type { FlashNews } from '@/types/homepage'
 
 const DISPLAY_TIMING = SECOND * 3
 
 type Props = {
-  items: LatestPost[]
+  items: FlashNews[]
 }
 
 export default function FlashNewsList({ items }: Props) {

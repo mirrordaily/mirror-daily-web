@@ -9,7 +9,7 @@ import type {
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
-  URL_STATIC_FLASH_NEWS,
+  URL_STATIC_HOT_NEWS,
   URL_STATIC_TOPIC,
   URL_STATIC_WEATHER,
 } from '@/constants/config'
@@ -35,7 +35,7 @@ import type TopicMain from './_components/topic/topic-main'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import {
-  rawFlashNewsSchema,
+  rawHotNewsSchema,
   editorChoiceSchenma,
   topicsSchema,
   cityWeatherSchema,
@@ -79,11 +79,11 @@ export const fetchLiveEvent =
     return null
   }
 
-const transformRawFlashNews = (
-  rawData: z.infer<ZodArray<typeof rawFlashNewsSchema>>
+const transformRawHotNews = (
+  rawData: z.infer<ZodArray<typeof rawHotNewsSchema>>
 ): FlashNews[] => {
   if (!rawData) return []
-  return rawData.map(({ hotnews, hotexternals, outlink }) => {
+  return rawData.map(({ hotnews, hotexternal, outlink }) => {
     if (outlink) {
       return {
         link: outlink,
@@ -99,11 +99,11 @@ const transformRawFlashNews = (
       }
     }
 
-    if (hotexternals) {
-      const postId = hotexternals?.id ?? ''
+    if (hotexternal) {
+      const postId = hotexternal?.id ?? ''
       return {
         link: getExternalPageUrl(postId),
-        postName: hotexternals?.title ?? '',
+        postName: hotexternal?.title ?? '',
       }
     }
 
@@ -114,21 +114,20 @@ const transformRawFlashNews = (
   })
 }
 
-export const fetchFlashNews = async (): Promise<FlashNews[]> => {
+export const fetchHotNews = async (): Promise<FlashNews[]> => {
   const errorLogger = createErrorLogger(
-    'Error occurs while fetching flash news',
+    'Error occurs while fetching hot news',
     getTraceObject()
   )
-  const schema = z.promise(z.object({ hots: z.array(rawFlashNewsSchema) }))
+  const schema = z.promise(z.object({ hots: z.array(rawHotNewsSchema) }))
 
   const data = await createDataFetchingChain<
-    z.infer<ZodArray<typeof rawFlashNewsSchema>>
+    z.infer<ZodArray<typeof rawHotNewsSchema>>
   >(
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_FLASH_NEWS)
-
+      const resp = await fetch(URL_STATIC_HOT_NEWS)
       const result = await schema.parse(resp.json())
       return result.hots
     },
@@ -139,8 +138,7 @@ export const fetchFlashNews = async (): Promise<FlashNews[]> => {
       return result.hots
     }
   )
-
-  return transformRawFlashNews(data).slice(0, 8)
+  return transformRawHotNews(data)
 }
 
 const transformEditorChoices = (

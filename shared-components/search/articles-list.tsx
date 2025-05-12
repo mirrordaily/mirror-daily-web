@@ -6,6 +6,7 @@ import type { PostDataWithSection } from '@/utils/data-process'
 
 type Props<T> = {
   initialList: T[]
+  totalAmount: number
   fetchMorePosts(page: number): Promise<T[]>
 }
 
@@ -13,6 +14,7 @@ const PAGE_SIZE = 12
 
 export default function ArticlesList<T extends PostDataWithSection>({
   initialList,
+  totalAmount,
   fetchMorePosts,
 }: Props<T>) {
   return (
@@ -21,6 +23,7 @@ export default function ArticlesList<T extends PostDataWithSection>({
       pageSize={PAGE_SIZE}
       fetchListInPage={fetchMorePosts}
       isAutoFetch={false}
+      amountOfElements={totalAmount}
       loader={
         <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493] hover-or-active:border-[#119CC7] hover-or-active:text-[#119CC7]">
           看更多

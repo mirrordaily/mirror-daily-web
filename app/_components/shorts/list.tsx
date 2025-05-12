@@ -83,7 +83,6 @@ export default function ShortsList({ items, customClass = '' }: Props) {
               key={index}
               isActive={isIntersecting && activeIndex === index}
               onPlay={() => {
-                swiperRef.current?.swiper.slideTo(index)
                 setActiveIndex(index)
               }}
               onPause={() => {

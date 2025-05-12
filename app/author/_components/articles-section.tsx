@@ -4,6 +4,7 @@ import type { AuthorInfo, AuthorPost } from '@/types/author'
 type Props = {
   info: AuthorInfo
   initialList: AuthorPost[]
+  totalAmount: number
   fetchMorePosts: (page: number) => Promise<AuthorPost[]>
 }
 
@@ -11,6 +12,7 @@ export default function ArticleSection({
   info,
   initialList,
   fetchMorePosts,
+  totalAmount,
 }: Props) {
   return (
     <section className="flex flex-col items-center">
@@ -26,6 +28,7 @@ export default function ArticleSection({
         <ArticlesList
           fetchMorePosts={fetchMorePosts}
           initialList={initialList}
+          totalAmount={totalAmount}
         />
       </div>
 

@@ -28,7 +28,10 @@ export default async function ArticleSection({
           <HeroSection {...heroContent} />
           <div className="mb-12">
             <Article content={apiDataBrief} isBrief={true} />
-            <Article content={apiData} isBrief={false} />
+            {/* for dable */}
+            <div itemProp="articleBody">
+              <Article content={apiData} isBrief={false} />
+            </div>
             <p className="mt-3 px-5 text-lg font-bold leading-loose text-[#212944] md:mt-8 md:px-0">
               {warning}
             </p>
