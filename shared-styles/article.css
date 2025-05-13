@@ -443,7 +443,7 @@
 
     & div.video-block {
       width: 100%;
-      aspect-ratio: 100/56;
+      aspect-ratio: 1.2;
       display: flex;
       justify-content: center;
 
