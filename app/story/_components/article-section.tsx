@@ -11,7 +11,7 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 type Props = Post
 
 export default async function ArticleSection({
-  warning,
+  warnings,
   apiData,
   apiDataBrief,
   id,
@@ -20,7 +20,7 @@ export default async function ArticleSection({
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
-
+  console.log(warnings, 'warning')
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
       <div>
@@ -32,9 +32,14 @@ export default async function ArticleSection({
             <div itemProp="articleBody">
               <Article content={apiData} isBrief={false} />
             </div>
-            <p className="mt-3 px-5 text-lg font-bold leading-loose text-[#212944] md:mt-8 md:px-0">
-              {warning}
-            </p>
+            {warnings.map(({ id, content }) => (
+              <p
+                key={id}
+                className="mt-3 whitespace-pre-wrap px-5 text-lg font-bold leading-loose text-[#212944] md:mt-8 md:px-0"
+              >
+                {content}
+              </p>
+            ))}
           </div>
           {relatedPosts.length > 0 && (
             <RelatedNewsSection posts={relatedPosts} />

@@ -5153,7 +5153,11 @@ export type GetPostByIdQuery = {
       id: string
       name?: string | null
     }> | null
-    Warning?: { __typename?: 'Warning'; content?: string | null } | null
+    Warnings?: Array<{
+      __typename?: 'Warning'
+      id: string
+      content?: string | null
+    }> | null
   } | null
 }
 
@@ -9830,10 +9834,11 @@ export const GetPostByIdDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'Warning' },
+                  name: { kind: 'Name', value: 'Warnings' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'content' },

@@ -24,11 +24,11 @@ export type Post = {
   tags: { name: string; slug: string }[]
   algoTags: { name: string; slug: string }[]
   link: string
-  warning: string
+  warnings: { id: string; content: string }[]
   isAdult: boolean
 }
 
 export type ItemInHeroSection = Omit<
   Post,
-  'apiData' | 'apiDataBrief' | 'id' | 'warning' | 'isAdult'
+  'apiData' | 'apiDataBrief' | 'id' | 'warnings' | 'isAdult'
 >
