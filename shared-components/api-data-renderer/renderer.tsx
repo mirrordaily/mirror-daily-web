@@ -40,6 +40,7 @@ export default function ApiDataRenderer({
   const getApiDataBlockJsx = (apiDataBlock: ApiDataBlock) => {
     switch (apiDataBlock.type) {
       case ApiDataBlockType.Unstyled:
+      case ApiDataBlockType.Section:
         return (
           <UnstyledBlock key={apiDataBlock.id} apiDataBlock={apiDataBlock} />
         )
