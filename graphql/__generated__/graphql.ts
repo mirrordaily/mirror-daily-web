@@ -5169,7 +5169,7 @@ export type GetRelatedPostsByIdQuery = {
   __typename?: 'Query'
   post?: {
     __typename?: 'Post'
-    relateds?: Array<{
+    relatedsInInputOrder?: Array<{
       __typename?: 'Post'
       id: string
       title?: string | null
@@ -5222,7 +5222,7 @@ export type GetRelatedPostsByIdQuery = {
         name?: string | null
         color?: string | null
       }> | null
-    }> | null
+    } | null> | null
   } | null
 }
 
@@ -9946,7 +9946,7 @@ export const GetRelatedPostsByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'relateds' },
+                  name: { kind: 'Name', value: 'relatedsInInputOrder' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [

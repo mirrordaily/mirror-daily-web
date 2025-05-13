@@ -10,7 +10,7 @@ import type {
   GetPostsByAuthorIdQuery,
   GetAuthorInformationQuery,
 } from '@/graphql/__generated__/graphql'
-import { transfromRawPostWithSection } from '@/utils/data-process'
+import { transformRawPostWithSection } from '@/utils/data-process'
 import type { AuthorPost, AuthorInfo } from '@/types/author'
 
 function transformAuthorPost(
@@ -18,7 +18,7 @@ function transformAuthorPost(
 ): AuthorPost[] {
   if (!rawData) return []
 
-  return rawData.map(transfromRawPostWithSection)
+  return rawData.map(transformRawPostWithSection)
 }
 
 async function fetchAuthorPosts({

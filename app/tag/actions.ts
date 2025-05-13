@@ -1,7 +1,7 @@
 'use server'
 
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { transfromRawPostWithSection } from '@/utils/data-process'
+import { transformRawPostWithSection } from '@/utils/data-process'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
   GetTagInformationQuery,
@@ -46,7 +46,7 @@ async function fetchTagInformation(slug: string): Promise<TagInfo | null> {
 function transformTagPost(rawData: GetPostsByTagSlugQuery['posts']): TagPost[] {
   if (!rawData) return []
 
-  return rawData.map(transfromRawPostWithSection)
+  return rawData.map(transformRawPostWithSection)
 }
 
 async function fetchTagPosts({

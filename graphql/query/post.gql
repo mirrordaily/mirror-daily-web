@@ -175,7 +175,7 @@ query GetPostById($id: ID!) {
 
 query GetRelatedPostsById($id: ID!) {
   post(where: { id: $id }) {
-    relateds {
+    relatedsInInputOrder {
       ...RelatedPost
     }
   }
