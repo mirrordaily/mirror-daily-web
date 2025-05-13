@@ -11,7 +11,7 @@ import {
   dateFormatter,
   getHeroImage,
   selectMainImage,
-  transfromRawRelatedPosts,
+  transformRawRelatedPosts,
 } from '@/utils/data-process'
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
@@ -24,13 +24,17 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   const title = rawData.title ?? ''
   const subtitle = rawData.subtitle ?? ''
   const heroCaption = rawData.heroCaption ?? ''
-  const warning = rawData.Warning?.content ?? ''
   const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
   const heroImage = getHeroImage(rawData.heroImage)
   const ogImage = getHeroImage(rawData.og_image)
   const postMainImage = selectMainImage(heroImage, ogImage)
   const sectionName = rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
   const sectionColor = rawData.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
+  const warnings =
+    rawData.Warnings?.map(({ id, content }) => ({
+      id,
+      content: content ?? '',
+    })) ?? []
   const writers =
     rawData.writers?.map(({ id, name }) => ({
       link: getAuthorPageUrl(id),
@@ -83,7 +87,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     tags,
     algoTags,
     link,
-    warning,
+    warnings,
     isAdult: rawData.isAdult ?? false,
   }
 }
@@ -118,7 +122,7 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
 
   if (result) {
     const { post } = result
-    return transfromRawRelatedPosts(post)
+    return transformRawRelatedPosts(post)
   } else return []
 }
 

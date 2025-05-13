@@ -165,7 +165,8 @@ query GetPostById($id: ID!) {
     }
     apiData
     apiDataBrief
-    Warning {
+    Warnings {
+      id
       content
     }
     isAdult
@@ -174,7 +175,7 @@ query GetPostById($id: ID!) {
 
 query GetRelatedPostsById($id: ID!) {
   post(where: { id: $id }) {
-    relateds {
+    relatedsInInputOrder {
       ...RelatedPost
     }
   }

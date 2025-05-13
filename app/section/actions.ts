@@ -9,14 +9,14 @@ import type {
   GetPostsBySectionSlugQuery,
   GetSectionInformationQuery,
 } from '@/graphql/__generated__/graphql'
-import { transfromRawPost } from '@/utils/data-process'
+import { transformRawPost } from '@/utils/data-process'
 import type { SectionPost } from '@/types/section'
 
 function transformSectionPost(
   rawData: GetPostsBySectionSlugQuery['posts']
 ): SectionPost[] {
   if (!rawData) return []
-  return rawData.map(transfromRawPost)
+  return rawData.map(transformRawPost)
 }
 
 async function fetchSectionPosts({

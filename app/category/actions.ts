@@ -10,14 +10,14 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { CategoryPost } from '@/types/category'
-import { transfromRawPost } from '@/utils/data-process'
+import { transformRawPost } from '@/utils/data-process'
 
 function transformCategoryPost(
   rawData: GetPostsByCategorySlugQuery['posts']
 ): CategoryPost[] {
   if (!rawData) return []
 
-  return rawData.map(transfromRawPost)
+  return rawData.map(transformRawPost)
 }
 
 async function fetchCategoryPosts({

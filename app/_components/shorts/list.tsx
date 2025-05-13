@@ -74,6 +74,12 @@ export default function ShortsList({ items, customClass = '' }: Props) {
           setSwiperIsEnd(swiper.isEnd)
           setActiveIndex(swiper.realIndex)
         }}
+        onReachEnd={() => {
+          setSwiperIsEnd(true)
+        }}
+        onReachBeginning={() => {
+          setSwiperIsBeginning(true)
+        }}
         className="shorts-swiper-in-homepage"
       >
         {items.map((item, index) => (

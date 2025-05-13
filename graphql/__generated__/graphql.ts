@@ -5153,7 +5153,11 @@ export type GetPostByIdQuery = {
       id: string
       name?: string | null
     }> | null
-    Warning?: { __typename?: 'Warning'; content?: string | null } | null
+    Warnings?: Array<{
+      __typename?: 'Warning'
+      id: string
+      content?: string | null
+    }> | null
   } | null
 }
 
@@ -5165,7 +5169,7 @@ export type GetRelatedPostsByIdQuery = {
   __typename?: 'Query'
   post?: {
     __typename?: 'Post'
-    relateds?: Array<{
+    relatedsInInputOrder?: Array<{
       __typename?: 'Post'
       id: string
       title?: string | null
@@ -5218,7 +5222,7 @@ export type GetRelatedPostsByIdQuery = {
         name?: string | null
         color?: string | null
       }> | null
-    }> | null
+    } | null> | null
   } | null
 }
 
@@ -9830,10 +9834,11 @@ export const GetPostByIdDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'Warning' },
+                  name: { kind: 'Name', value: 'Warnings' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'content' },
@@ -9941,7 +9946,7 @@ export const GetRelatedPostsByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'relateds' },
+                  name: { kind: 'Name', value: 'relatedsInInputOrder' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
