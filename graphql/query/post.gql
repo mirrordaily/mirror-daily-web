@@ -165,7 +165,8 @@ query GetPostById($id: ID!) {
     }
     apiData
     apiDataBrief
-    Warning {
+    Warnings {
+      id
       content
     }
     isAdult
