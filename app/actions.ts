@@ -146,25 +146,41 @@ const transformEditorChoices = (
 ): EditorChoice[] => {
   if (!rawData) return []
 
-  return rawData.map(({ outlink, heroImage, choices: rawPost }, index) => {
-    const postId = rawPost?.id ?? ''
+  // NOTE: outlink, external, choices 只會擇一出現，因此總共有三種情況
+  return rawData.map(
+    (
+      { outlink, heroImage, choices: rawPost, choiceexternal: externalRawPost },
+      index
+    ) => {
+      const postId = rawPost?.id ?? ''
+      const external = externalRawPost?.id ?? ''
 
-    if (outlink) {
+      if (outlink) {
+        return {
+          postId: `${index}-${postId}`,
+          postName: rawPost?.title ?? '',
+          link: outlink,
+          heroImage: getHeroImage(heroImage),
+        }
+      }
+
+      if (external) {
+        return {
+          postId: `${index}-${postId}`,
+          postName: externalRawPost?.title ?? '',
+          link: getExternalPageUrl(external),
+          heroImage: getHeroImage(heroImage),
+        }
+      }
+
       return {
         postId: `${index}-${postId}`,
         postName: rawPost?.title ?? '',
-        link: outlink,
-        heroImage: getHeroImage(heroImage),
+        link: getStoryPageUrl(postId),
+        heroImage: getHeroImage(rawPost?.heroImage),
       }
     }
-
-    return {
-      postId: `${index}-${postId}`,
-      postName: rawPost?.title ?? '',
-      link: getStoryPageUrl(postId),
-      heroImage: getHeroImage(rawPost?.heroImage),
-    }
-  })
+  )
 }
 
 export const fetchEditorChoices = async (): Promise<

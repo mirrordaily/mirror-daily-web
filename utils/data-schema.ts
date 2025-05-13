@@ -106,6 +106,14 @@ export const editorChoiceSchenma = z.object({
       heroImage: true,
     })
     .nullish(),
+  choiceexternal: z
+    .object({
+      id: z.string(),
+      title: z.string(),
+      slug: z.string(),
+      thumb: z.string(),
+    })
+    .nullish(),
 })
 
 export const topicsSchema = z.object({
