@@ -15,7 +15,10 @@ import {
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
-import type { GetLiveEventForHomepageQuery } from '@/graphql/__generated__/graphql'
+import type {
+  GetLiveEventForHomepageQuery,
+  ImageDataFragment,
+} from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
   GetLiveEventForHomepageDocument,
@@ -146,25 +149,53 @@ const transformEditorChoices = (
 ): EditorChoice[] => {
   if (!rawData) return []
 
-  return rawData.map(({ outlink, heroImage, choices: rawPost }, index) => {
-    const postId = rawPost?.id ?? ''
+  // NOTE: outlink, external, choices 只會擇一出現，因此總共有三種情況
+  return rawData.map(
+    (
+      { outlink, heroImage, choices: rawPost, choiceexternal: externalRawPost },
+      index
+    ) => {
+      const postId = rawPost?.id ?? ''
+      const externalId = externalRawPost?.id ?? ''
 
-    if (outlink) {
+      /**除了choiceexternal, choices 編輯精選也可以設定首圖，如果有設定的話會優先使用。 */
+      const getHeroImageByPostType = (
+        imageParam:
+          | Pick<ImageDataFragment, 'resized' | 'resizedWebp'>
+          | string
+          | null
+          | undefined
+      ) => {
+        const editorChoiceHeroImage = heroImage ? getHeroImage(heroImage) : null
+        return editorChoiceHeroImage || getHeroImage(imageParam)
+      }
+
+      if (outlink) {
+        return {
+          postId: '',
+          postName: '',
+          link: outlink,
+          heroImage: getHeroImageByPostType(heroImage),
+        }
+      }
+
+      if (externalId) {
+        return {
+          postId: `${index}-${externalId}`,
+          postName: externalRawPost?.title ?? '',
+          link: getExternalPageUrl(externalId),
+          heroImage: getHeroImageByPostType(externalRawPost?.thumb),
+        }
+      }
+
       return {
         postId: `${index}-${postId}`,
         postName: rawPost?.title ?? '',
-        link: outlink,
-        heroImage: getHeroImage(heroImage),
+        link: getStoryPageUrl(postId),
+        heroImage: getHeroImageByPostType(rawPost?.heroImage),
       }
     }
-
-    return {
-      postId: `${index}-${postId}`,
-      postName: rawPost?.title ?? '',
-      link: getStoryPageUrl(postId),
-      heroImage: getHeroImage(rawPost?.heroImage),
-    }
-  })
+  )
 }
 
 export const fetchEditorChoices = async (): Promise<
