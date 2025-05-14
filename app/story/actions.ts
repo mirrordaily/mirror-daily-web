@@ -11,7 +11,7 @@ import {
   dateFormatter,
   getHeroImage,
   selectMainImage,
-  transfromRawRelatedPosts,
+  transformRawRelatedPosts,
 } from '@/utils/data-process'
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
@@ -129,7 +129,7 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
 
   if (result) {
     const { post } = result
-    return transfromRawRelatedPosts(post)
+    return transformRawRelatedPosts(post)
   } else return []
 }
 

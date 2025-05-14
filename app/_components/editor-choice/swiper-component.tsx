@@ -9,6 +9,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import type { EditorChoice } from '@/types/homepage'
 import Image from 'next/image'
+import { useState } from 'react'
 
 type Props = {
   list: EditorChoice[]
@@ -16,6 +17,8 @@ type Props = {
 
 export default function SwiperComponent({ list }: Props) {
   const swiperNavigationButtonSize = { width: 48, height: 48 }
+  const [isSwiperBeginning, setIsBeginning] = useState(true)
+  const [isSwiperEnd, setIsSwiperEnd] = useState(false)
   return (
     <div className="relative">
       <Swiper
@@ -39,6 +42,16 @@ export default function SwiperComponent({ list }: Props) {
           delay: 5000,
         }}
         keyboard={true}
+        onReachBeginning={() => {
+          setIsBeginning(true)
+        }}
+        onReachEnd={() => {
+          setIsSwiperEnd(true)
+        }}
+        onTransitionEnd={(swiper) => {
+          setIsBeginning(swiper.isBeginning)
+          setIsSwiperEnd(swiper.isEnd)
+        }}
         className="relative w-full md:rounded lg:rounded-none"
       >
         {list.map((item) => {
@@ -66,24 +79,29 @@ export default function SwiperComponent({ list }: Props) {
         })}
         <div className="custom-swiper-pagination" />
 
-        <button className="custom-swiper-navigation-next">
-          {/* Use sr-only to hide an element visually without hiding it from screen readers */}
-          <span className="sr-only">Next Slide</span>
-          <Image
-            src="icons/swiper/swiper-next.svg"
-            alt="slide-next"
-            {...swiperNavigationButtonSize}
-          />
-        </button>
-        <button className="custom-swiper-navigation-prev">
-          {/* Use sr-only to hide an element visually without hiding it from screen readers */}
-          <span className="sr-only">Previous Slide</span>
-          <Image
-            src="icons/swiper/swiper-prev.svg"
-            alt="slide-prev"
-            {...swiperNavigationButtonSize}
-          />
-        </button>
+        {!isSwiperEnd && (
+          <button className="custom-swiper-navigation-next">
+            {/* Use sr-only to hide an element visually without hiding it from screen readers */}
+            <span className="sr-only">Next Slide</span>
+            <Image
+              src="icons/swiper/swiper-next.svg"
+              alt="slide-next"
+              {...swiperNavigationButtonSize}
+            />
+          </button>
+        )}
+
+        {!isSwiperBeginning && (
+          <button className="custom-swiper-navigation-prev">
+            {/* Use sr-only to hide an element visually without hiding it from screen readers */}
+            <span className="sr-only">Previous Slide</span>
+            <Image
+              src="icons/swiper/swiper-prev.svg"
+              alt="slide-prev"
+              {...swiperNavigationButtonSize}
+            />
+          </button>
+        )}
       </Swiper>
     </div>
   )
