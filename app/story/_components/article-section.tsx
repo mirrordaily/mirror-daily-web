@@ -17,7 +17,6 @@ export default async function ArticleSection({
   id,
   ...heroContent
 }: Props) {
-  console.log(warnings)
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
