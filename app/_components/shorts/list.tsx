@@ -74,6 +74,12 @@ export default function ShortsList({ items, customClass = '' }: Props) {
           setSwiperIsEnd(swiper.isEnd)
           setActiveIndex(swiper.realIndex)
         }}
+        onReachEnd={() => {
+          setSwiperIsEnd(true)
+        }}
+        onReachBeginning={() => {
+          setSwiperIsBeginning(true)
+        }}
         className="shorts-swiper-in-homepage"
       >
         {items.map((item, index) => (
@@ -83,7 +89,6 @@ export default function ShortsList({ items, customClass = '' }: Props) {
               key={index}
               isActive={isIntersecting && activeIndex === index}
               onPlay={() => {
-                swiperRef.current?.swiper.slideTo(index)
                 setActiveIndex(index)
               }}
               onPause={() => {

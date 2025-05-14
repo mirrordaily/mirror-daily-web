@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client'
 import type { ApiDataBlockBase, ApiDataBlockType } from '../types'
 
 export interface ApiDataUnstyled extends ApiDataBlockBase {
-  type: ApiDataBlockType.Unstyled
+  type: ApiDataBlockType.Unstyled | ApiDataBlockType.Section
   content: string
   alignment: 'center'
 }

@@ -49,16 +49,22 @@ export default async function Home({ params }: PageProps) {
 
   const authorInfo = await fetchAuthorInformation(id)
   if (!authorInfo) notFound()
-  const posts = await fetchAuthorPosts({ id, take: PAGE_SIZE, skip: 0 })
-  if (posts.length === 0) notFound()
+  const { posts, totalAmount = 0 } = await fetchAuthorPosts({
+    id,
+    take: PAGE_SIZE,
+    skip: 0,
+    withAmount: true,
+  })
+  if (!totalAmount) notFound()
 
   const fetchMorePosts = async (page: number) => {
     'use server'
-    return await fetchAuthorPosts({
+    const { posts } = await fetchAuthorPosts({
       id,
       take: PAGE_SIZE,
       skip: PAGE_SIZE * (page - 1),
     })
+    return posts
   }
 
   return (
@@ -67,6 +73,7 @@ export default async function Home({ params }: PageProps) {
         info={authorInfo}
         initialList={posts}
         fetchMorePosts={fetchMorePosts}
+        totalAmount={totalAmount}
       />
       <PopularNewsSection />
     </main>

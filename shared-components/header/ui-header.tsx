@@ -1,19 +1,19 @@
 import NextImage from 'next/image'
-import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
+import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
-// import IconSearch from '@/public/icons/search.svg'
+import IconSearch from '@/public/icons/search.svg'
 import IconLogo from '@/public/icons/logos/mirror-daily.svg'
 import IconFacebook from '@/public/icons/logos/facebook-black.svg'
 import IconInstagram from '@/public/icons/logos/instagram-black.svg'
 import IconThreads from '@/public/icons/logos/threads-black.svg'
 import IconYouTube from '@/public/icons/logos/youtube-black.svg'
 // import IconLine from '@/public/icons/logos/line-black.svg'
-import type { HeaderData, LatestPost } from '@/types/common'
-
+import type { HeaderData } from '@/types/common'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
+import type { FlashNews } from '@/types/homepage'
 
 const ExtendedSocialLinks = [
   {
@@ -49,10 +49,10 @@ const iconSizes: Record<(typeof ExtendedSocialLinks)[number]['name'], number> =
 
 export default function UiHeader({
   data,
-  latestPosts,
+  flashNews,
 }: {
   data: HeaderData[]
-  latestPosts: LatestPost[]
+  flashNews: FlashNews[]
 }) {
   return (
     <header className="flex h-[150px] w-full shrink-0 flex-col items-center md:h-[134px] lg:h-[202px]">
@@ -69,24 +69,28 @@ export default function UiHeader({
               className="aspect-[150/42] md:aspect-auto"
             />
           </a>
-          {/* <div className="ml-auto mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mt-8 lg:gap-x-[7px]">
-            {/* TODO: form submit handler, expanded search bar on mobile device 
-            <input
-              type="text"
-              name="search"
-              placeholder="請輸入關鍵字"
-              className="hidden h-5 w-[104px] rounded-[7px] border-[0.5px] border-[#000928] bg-[#F6F6FB] px-4 py-px text-xs font-normal leading-normal outline-none placeholder:text-[#7F8493] md:inline-block lg:h-6 lg:w-[180px] lg:px-[13px] lg:text-sm"
-            />
-            <button className="relative inline-block h-[22.15px] w-[22.29px] md:h-5 md:w-[18.57px] lg:mt-[3px] lg:h-[16.7px] lg:w-[14.86px]">
-              <NextImage src={IconSearch} fill={true} alt="搜尋" />
-            </button>
-          </div> */}
-          <a
-            className="ml-auto mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white lg:flex"
-            href={CONTACT_LINKS[1]?.href}
-          >
-            我要爆料
-          </a>
+
+          <div className="flex w-full justify-end">
+            <div className="ml-auto mr-[16px] mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
+              <a
+                className="relative inline-block h-[22.15px] w-[22.29px] md:h-5 md:w-[18.57px] lg:mt-[3px] lg:h-[16.7px] lg:w-[14.86px]"
+                href="/search"
+              >
+                <NextImage src={IconSearch} fill={true} alt="搜尋" />
+              </a>
+            </div>
+            {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
+              return (
+                <a
+                  key={contactLink.href + contactLink.name}
+                  className="header-submit-button ml-3 first:ml-0"
+                  href={contactLink.href}
+                >
+                  {contactLink.headerSubmitButtonName}
+                </a>
+              )
+            })}
+          </div>
           <MobileToggleAndNav data={data} />
         </div>
       </div>
@@ -126,7 +130,7 @@ export default function UiHeader({
           <p className="mr-[18px] mt-1 shrink-0 font-bold leading-none text-[#FF5457] md:mr-[7px] lg:mr-3">
             快訊
           </p>
-          <FlashNewsList items={latestPosts} />
+          <FlashNewsList items={flashNews} />
         </div>
       </div>
     </header>

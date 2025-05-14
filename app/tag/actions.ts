@@ -1,7 +1,7 @@
 'use server'
 
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { transfromRawPostWithSection } from '@/utils/data-process'
+import { transformRawPostWithSection } from '@/utils/data-process'
 import { fetchGQLData } from '@/utils/graphql'
 import type {
   GetTagInformationQuery,
@@ -46,34 +46,49 @@ async function fetchTagInformation(slug: string): Promise<TagInfo | null> {
 function transformTagPost(rawData: GetPostsByTagSlugQuery['posts']): TagPost[] {
   if (!rawData) return []
 
-  return rawData.map(transfromRawPostWithSection)
+  return rawData.map(transformRawPostWithSection)
 }
 
 async function fetchTagPosts({
   take,
   skip = 0,
   slug,
+  withAmount = false,
 }: {
   take: number
   skip: number
   slug: string
-}): Promise<TagPost[]> {
+  withAmount?: boolean
+}): Promise<{
+  posts: TagPost[]
+  totalAmount?: number
+}> {
   const errorLogger = createErrorLogger(
-    'Error occurs while fetching posts in tag page',
+    'Error occurs while fetching posts on tag page',
     getTraceObject()
   )
-
   const result = await fetchGQLData(errorLogger, GetPostsByTagSlugDocument, {
     skip,
     take,
     slug,
+    withAmount,
   })
-
-  if (result) {
-    const { posts } = result
-    return transformTagPost(posts)
+  if (!result) {
+    return {
+      posts: [],
+      totalAmount: 0,
+    }
+  }
+  const posts = transformTagPost(result.posts)
+  if (typeof result.postsCount === 'number') {
+    return {
+      posts,
+      totalAmount: result.postsCount,
+    }
   } else {
-    return []
+    return {
+      posts,
+    }
   }
 }
 

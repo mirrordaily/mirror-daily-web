@@ -4,6 +4,28 @@ import type { PickupItemInTopNewsSection } from '@/types/homepage'
 import CustomImage from '@/shared-components/custom-image'
 import ReactPlayer from 'react-player/lazy'
 
+// 標題與簡介
+const PostTitleAndBrief = ({
+  postName,
+  postBrief,
+}: {
+  postName: PickupItemInTopNewsSection['postName']
+  postBrief?: PickupItemInTopNewsSection['postBrief']
+}) => {
+  return (
+    <>
+      <p className="mt-4 line-clamp-3 text-base font-medium leading-none text-[#000928] group-hover/highlight-item:text-[#575D71] group-active/highlight-item:text-[#575D71] md:mt-2 md:line-clamp-2 lg:mt-2 lg:text-xl lg:font-bold">
+        {postName}
+      </p>
+      {postBrief && (
+        <p className="mt-3 hidden text-sm font-normal leading-normal text-[#68666D] md:line-clamp-3 lg:text-base lg:font-bold">
+          {postBrief}
+        </p>
+      )}
+    </>
+  )
+}
+
 export default function HighlightItem({
   heroImage,
   postName,
@@ -13,22 +35,25 @@ export default function HighlightItem({
 }: PickupItemInTopNewsSection): ReactNode {
   if (isVideoType) {
     return (
-      <div className="aspect-[330/220] w-full shrink-0 md:aspect-auto md:h-[208px] md:w-[312px] lg:h-[374px] lg:w-[560px]">
-        <ReactPlayer
-          url={link}
-          width="100%"
-          height="100%"
-          muted={false}
-          playing={false}
-          playsinline={true}
-          config={{
-            file: {
-              attributes: {
-                preload: 'none',
+      <div className="flex flex-col">
+        <div className="aspect-[330/220] w-full shrink-0 md:aspect-auto md:h-[208px] md:w-[312px] lg:h-[374px] lg:w-[560px]">
+          <ReactPlayer
+            url={link}
+            width="100%"
+            height="100%"
+            muted={false}
+            playing={false}
+            playsinline={true}
+            config={{
+              file: {
+                attributes: {
+                  preload: 'none',
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
+        <PostTitleAndBrief postName={postName} postBrief={postBrief} />
       </div>
     )
   }
@@ -52,14 +77,7 @@ export default function HighlightItem({
           }}
         />
       </div>
-      <p className="mt-4 line-clamp-3 text-base font-medium leading-none text-[#000928] group-hover/highlight-item:text-[#575D71] group-active/highlight-item:text-[#575D71] md:mt-2 md:line-clamp-2 lg:mt-2 lg:text-xl lg:font-bold">
-        {postName}
-      </p>
-      {postBrief && (
-        <p className="mt-3 hidden text-sm font-normal leading-normal text-[#68666D] md:line-clamp-3 lg:text-base lg:font-bold">
-          {postBrief}
-        </p>
-      )}
+      <PostTitleAndBrief postName={postName} postBrief={postBrief} />
     </a>
   )
 }

@@ -1,9 +1,13 @@
 import { fetchHeaderData, fetchLatestPost } from '@/app/actions-general'
 import UiHeader from './header/ui-header'
+import { fetchHotNews } from '@/app/actions'
+import { FLASH_NEWS_COUNT } from '@/constants/misc'
 
 export default async function Header() {
   const data = await fetchHeaderData()
-  const latestPosts = (await fetchLatestPost()).slice(0, 8)
+  const hotNews = await fetchHotNews()
+  const latestPosts = await fetchLatestPost()
+  const flashNews = [...hotNews, ...latestPosts].slice(0, FLASH_NEWS_COUNT)
 
-  return <UiHeader data={data} latestPosts={latestPosts} />
+  return <UiHeader data={data} flashNews={flashNews} />
 }

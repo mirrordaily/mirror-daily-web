@@ -10,30 +10,31 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { CategoryPost } from '@/types/category'
-import { transfromRawPost } from '@/utils/data-process'
+import { transformRawPost } from '@/utils/data-process'
 
 function transformCategoryPost(
   rawData: GetPostsByCategorySlugQuery['posts']
 ): CategoryPost[] {
   if (!rawData) return []
 
-  return rawData.map(transfromRawPost)
+  return rawData.map(transformRawPost)
 }
 
 async function fetchCategoryPosts({
   take,
   skip = 0,
   slug,
+  withAmount = false,
 }: {
   take: number
   skip: number
   slug: string
+  withAmount?: boolean
 }) {
   const errorLogger = createErrorLogger(
-    'Error occurs while fetching category posts in category page',
+    'Error occurs while fetching category posts on category page',
     getTraceObject()
   )
-
   const result = await fetchGQLData(
     errorLogger,
     GetPostsByCategorySlugDocument,
@@ -41,14 +42,26 @@ async function fetchCategoryPosts({
       skip,
       take,
       slug,
+      withAmount,
     }
   )
 
-  if (result) {
-    const { posts } = result
-    return transformCategoryPost(posts)
+  if (!result)
+    return {
+      posts: [],
+      totalAmount: 0,
+    }
+
+  const posts = transformCategoryPost(result.posts)
+  if (typeof result.postsCount === 'number') {
+    return {
+      posts,
+      totalAmount: result.postsCount,
+    }
   } else {
-    return []
+    return {
+      posts,
+    }
   }
 }
 

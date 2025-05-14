@@ -22,7 +22,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-
 }
 
 .grecaptcha-badge {
@@ -31,31 +30,54 @@
 
 @layer components {
   .section-in-homepage {
-    @apply px-[23px] md:px-5 lg:px-9 w-full max-w-[375px] md:max-w-screen-md lg:max-w-none;
+    @apply w-full max-w-[375px] px-[23px] md:max-w-screen-md md:px-5 lg:max-w-none lg:px-9;
   }
   .homepage-editor-choice-bullet {
-    @apply w-5 h-5 text-sm leading-[18px] text-center font-medium rounded-full cursor-pointer text-[#000928]  border-[1px] border-[#000928];
-    @apply md:w-3 md:h-3 md:text-[8px] md:leading-[10px] md:text-white md:border-white md:border-[0.5px];
-    @apply lg:h-5 lg:w-5 lg:text-sm lg:leading-[18px] lg:border-[1px];
+    @apply h-5 w-5 cursor-pointer rounded-full border-[1px] border-[#000928] text-center text-sm font-medium leading-[18px] text-[#000928];
+    @apply md:h-3 md:w-3 md:border-[0.5px] md:border-white md:text-[8px] md:leading-[10px] md:text-white;
+    @apply lg:h-5 lg:w-5 lg:border-[1px] lg:text-sm lg:leading-[18px];
   }
   .homepage-editor-choice-bullet-active {
-    @apply homepage-editor-choice-bullet text-white bg-mirror-blue-600 border-white md:bg-mirror-blue-800
+    @apply homepage-editor-choice-bullet border-white bg-mirror-blue-600 text-white md:bg-mirror-blue-800;
   }
   .homepage-editor-choice-pagination-horizontal {
     @apply z-over-editor-choice mt-8 flex w-full justify-center space-x-[6px];
-    @apply md:!w-auto md:absolute md:!bottom-3 md:!right-4 md:justify-end md:space-x-1 lg:!bottom-[26px] lg:!right-3; 
+    @apply md:absolute md:!bottom-3 md:!right-4 md:!w-auto md:justify-end md:space-x-1 lg:!bottom-[26px] lg:!right-3;
     @apply lg:space-x-[6px];
+  }
+
+  /* editor choice swiper button */
+  .swiper {
+    .custom-swiper-navigation-next,
+    .custom-swiper-navigation-prev {
+      @apply absolute top-1/2 z-10 hidden size-10 -translate-y-1/2 items-center justify-center lg:flex;
+    }
+
+    .custom-swiper-navigation-next {
+      @apply right-3 lg:right-6;
+    }
+
+    .custom-swiper-navigation-prev {
+      @apply left-3 lg:left-6;
+    }
+  }
+  .header-submit-button {
+    @apply mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white first:ml-0 lg:flex;
+  }
+
+  .mobile-toggle-and-nav-submit-button {
+    @apply inline-block self-start rounded-xl bg-[#FF5457] px-4 py-1 text-base font-bold text-white;
   }
 
   .shorts-swiper-in-homepage .swiper-slide {
     @apply w-[225px];
   }
   .shorts-swiper-button {
-    @apply hidden absolute top-[calc(480px/2)] lg:top-[calc(566px/2)] -translate-y-1/2 lg:inline-block z-over-shorts;
+    @apply absolute top-[calc(480px/2)] z-over-shorts hidden -translate-y-1/2 lg:top-[calc(566px/2)] lg:inline-block;
   }
 
   .shorts-swiper-in-shorts-page {
-    @apply w-full h-full;
+    @apply h-full w-full;
 
     .swiper-wrapper {
       @apply h-auto;
@@ -80,21 +102,28 @@
 
       input.volume-slider {
         @apply h-2 w-[120px] cursor-pointer appearance-none rounded-lg;
-  
+
         /* webkit */
         &::-webkit-slider-runnable-track {
           @apply h-full rounded-lg;
-          background: linear-gradient(to right, #FF5A36 var(--shorts-volume), #FFF 0);
-          
+          background: linear-gradient(
+            to right,
+            #ff5a36 var(--shorts-volume),
+            #fff 0
+          );
         }
         &::-webkit-slider-thumb {
           @apply invisible;
         }
-  
+
         /* firefox */
         &::-moz-range-track {
           @apply h-full rounded-lg;
-          background: linear-gradient(to right, #FF5A36 var(--shorts-volume), #FFF 0);
+          background: linear-gradient(
+            to right,
+            #ff5a36 var(--shorts-volume),
+            #fff 0
+          );
         }
         &::-moz-range-thumb {
           @apply invisible;
@@ -111,8 +140,8 @@
   }
 
   .custom-checkbox {
-    &[type=checkbox] {
-      @apply size-4 appearance-none bg-[#F6F6FB] shadow-input border-[0.5px] border-solid border-[#B2B5BE] rounded-sm outline-0  cursor-pointer;
+    &[type='checkbox'] {
+      @apply size-4 cursor-pointer appearance-none rounded-sm border-[0.5px] border-solid border-[#B2B5BE] bg-[#F6F6FB] shadow-input outline-0;
 
       &:checked {
         @apply bg-[#119CC7];
@@ -126,5 +155,4 @@
 }
 
 @layer utilities {
-
 }

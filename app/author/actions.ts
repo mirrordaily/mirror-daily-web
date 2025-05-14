@@ -10,7 +10,7 @@ import type {
   GetPostsByAuthorIdQuery,
   GetAuthorInformationQuery,
 } from '@/graphql/__generated__/graphql'
-import { transfromRawPostWithSection } from '@/utils/data-process'
+import { transformRawPostWithSection } from '@/utils/data-process'
 import type { AuthorPost, AuthorInfo } from '@/types/author'
 
 function transformAuthorPost(
@@ -18,18 +18,23 @@ function transformAuthorPost(
 ): AuthorPost[] {
   if (!rawData) return []
 
-  return rawData.map(transfromRawPostWithSection)
+  return rawData.map(transformRawPostWithSection)
 }
 
 async function fetchAuthorPosts({
   take,
   skip = 0,
   id,
+  withAmount,
 }: {
   take: number
   skip?: number
   id: string
-}): Promise<AuthorPost[]> {
+  withAmount?: boolean
+}): Promise<{
+  posts: AuthorPost[]
+  totalAmount?: number
+}> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching author posts on author page',
     getTraceObject()
@@ -39,13 +44,24 @@ async function fetchAuthorPosts({
     skip,
     take,
     id,
+    withAmount,
   })
-
-  if (result) {
-    const { posts } = result
-    return transformAuthorPost(posts)
+  if (!result) {
+    return {
+      posts: [],
+      totalAmount: 0,
+    }
+  }
+  const posts = transformAuthorPost(result.posts)
+  if (typeof result.postsCount === 'number') {
+    return {
+      posts,
+      totalAmount: result.postsCount,
+    }
   } else {
-    return []
+    return {
+      posts,
+    }
   }
 }
 
