@@ -30,11 +30,18 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   const postMainImage = selectMainImage(heroImage, ogImage)
   const sectionName = rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
   const sectionColor = rawData.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
+  // 為了相容舊資料：目前警語是複選 (Warnings)，但以前是單選 (Warning)，所以兩個欄位都需要保留
   const warnings =
     rawData.Warnings?.map(({ id, content }) => ({
       id,
       content: content ?? '',
     })) ?? []
+  if (rawData.Warning) {
+    warnings.push({
+      id: rawData.Warning.id ?? '',
+      content: rawData.Warning.content ?? '',
+    })
+  }
   const writers =
     rawData.writers?.map(({ id, name }) => ({
       link: getAuthorPageUrl(id),
