@@ -421,9 +421,9 @@
       width: 100%;
 
       & .image-wrapper {
+        height: auto;
         margin: auto;
         position: relative;
-        aspect-ratio: 3/2;
       }
 
       & figcaption {
