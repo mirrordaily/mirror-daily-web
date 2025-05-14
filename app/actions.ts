@@ -15,7 +15,10 @@ import {
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
-import type { GetLiveEventForHomepageQuery } from '@/graphql/__generated__/graphql'
+import type {
+  GetLiveEventForHomepageQuery,
+  ImageDataFragment,
+} from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
   GetLiveEventForHomepageDocument,
@@ -153,23 +156,35 @@ const transformEditorChoices = (
       index
     ) => {
       const postId = rawPost?.id ?? ''
-      const external = externalRawPost?.id ?? ''
+      const externalId = externalRawPost?.id ?? ''
+
+      /**除了choiceexternal, choices 編輯精選也可以設定首圖，如果有設定的話會優先使用。 */
+      const getHeroImageByPostType = (
+        imageParam:
+          | Pick<ImageDataFragment, 'resized' | 'resizedWebp'>
+          | string
+          | null
+          | undefined
+      ) => {
+        const editorChoiceHeroImage = heroImage ? getHeroImage(heroImage) : null
+        return editorChoiceHeroImage || getHeroImage(imageParam)
+      }
 
       if (outlink) {
         return {
-          postId: `${index}-${postId}`,
-          postName: rawPost?.title ?? '',
+          postId: '',
+          postName: '',
           link: outlink,
-          heroImage: getHeroImage(heroImage),
+          heroImage: getHeroImageByPostType(heroImage),
         }
       }
 
-      if (external) {
+      if (externalId) {
         return {
-          postId: `${index}-${postId}`,
+          postId: `${index}-${externalId}`,
           postName: externalRawPost?.title ?? '',
-          link: getExternalPageUrl(external),
-          heroImage: getHeroImage(heroImage),
+          link: getExternalPageUrl(externalId),
+          heroImage: getHeroImageByPostType(externalRawPost?.thumb),
         }
       }
 
@@ -177,7 +192,7 @@ const transformEditorChoices = (
         postId: `${index}-${postId}`,
         postName: rawPost?.title ?? '',
         link: getStoryPageUrl(postId),
-        heroImage: getHeroImage(rawPost?.heroImage),
+        heroImage: getHeroImageByPostType(rawPost?.heroImage),
       }
     }
   )
