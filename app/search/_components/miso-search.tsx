@@ -31,6 +31,7 @@ export default function MisoSearch() {
           'published_at',
           'title',
         ],
+        snippet_max_chars: 60,
       })
       workflow.useLayouts({
         query: {
