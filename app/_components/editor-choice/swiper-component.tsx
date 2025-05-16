@@ -79,29 +79,31 @@ export default function SwiperComponent({ list }: Props) {
         })}
         <div className="custom-swiper-pagination" />
 
-        {!isSwiperEnd && (
-          <button className="custom-swiper-navigation-next">
-            {/* Use sr-only to hide an element visually without hiding it from screen readers */}
-            <span className="sr-only">Next Slide</span>
-            <Image
-              src="icons/swiper/swiper-next.svg"
-              alt="slide-next"
-              {...swiperNavigationButtonSize}
-            />
-          </button>
-        )}
-
-        {!isSwiperBeginning && (
-          <button className="custom-swiper-navigation-prev">
-            {/* Use sr-only to hide an element visually without hiding it from screen readers */}
-            <span className="sr-only">Previous Slide</span>
-            <Image
-              src="icons/swiper/swiper-prev.svg"
-              alt="slide-prev"
-              {...swiperNavigationButtonSize}
-            />
-          </button>
-        )}
+        <button
+          className="custom-swiper-navigation-next"
+          style={{ display: isSwiperEnd ? 'none' : 'block' }}
+        >
+          {/* Use sr-only to hide an element visually without hiding it from screen readers */}
+          <span className="sr-only">Next Slide</span>
+          <Image
+            src="icons/swiper/swiper-next.svg"
+            alt="slide-next"
+            {...swiperNavigationButtonSize}
+          />
+        </button>
+        <button
+          onClick={() => console.log('prev click')}
+          className="custom-swiper-navigation-prev"
+          style={{ display: isSwiperBeginning ? 'none' : 'block' }}
+        >
+          {/* Use sr-only to hide an element visually without hiding it from screen readers */}
+          <span className="sr-only">Previous Slide</span>
+          <Image
+            src="icons/swiper/swiper-prev.svg"
+            alt="slide-prev"
+            {...swiperNavigationButtonSize}
+          />
+        </button>
       </Swiper>
     </div>
   )
