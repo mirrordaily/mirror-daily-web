@@ -69,7 +69,21 @@ export enum SHORTS_TYPE {
   DERIVATIVE = 'creativity',
 }
 
+export enum LATEST_VIDEOS_TYPE {
+  NEWS = 'news',
+  DERIVATIVE = 'creativity',
+}
+
 export type Shorts = {
+  id: string
+  title: string
+  link: string
+  fileUrl: string
+  poster?: string
+  contributor?: string
+}
+
+export type LatestVideos = {
   id: string
   title: string
   link: string

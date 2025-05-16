@@ -134,6 +134,15 @@ const nextConfig = {
       },
     ],
   },
+  video: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        pathname: '/statics-dev.mirrordaily.news/video-files/**',
+      },
+    ],
+  },
 }
 
 export default nextConfig

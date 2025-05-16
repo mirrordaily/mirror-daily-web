@@ -9,6 +9,17 @@ fragment LatestShorts on Video {
   }
 }
 
+fragment LatestVideos on Video {
+  id
+  name
+  uploader
+  videoSrc
+  youtubeUrl
+  heroImage {
+    ...ImageData
+  }
+}
+
 fragment ShortsData on Video {
   id
   name
