@@ -179,8 +179,6 @@ const transformLatestShorts = (
     poster: getPosterFromShorts(rawData.heroImage),
     link: getShortsPageUrl(rawData.id),
     contributor: rawData.uploader,
-    // TODO: 多拿欄位
-    // date: dateFormatter(rawData.),
   }
 }
 const transformLatestVideos = (
