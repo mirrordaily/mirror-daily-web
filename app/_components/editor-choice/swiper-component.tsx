@@ -10,6 +10,7 @@ import 'swiper/css/navigation'
 import type { EditorChoice } from '@/types/homepage'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useWindowSize } from 'usehooks-ts'
 
 type Props = {
   list: EditorChoice[]
@@ -19,6 +20,8 @@ export default function SwiperComponent({ list }: Props) {
   const swiperNavigationButtonSize = { width: 48, height: 48 }
   const [isSwiperBeginning, setIsBeginning] = useState(true)
   const [isSwiperEnd, setIsSwiperEnd] = useState(false)
+  const { width } = useWindowSize()
+  const isDesktop = width >= 1200
   return (
     <div className="relative">
       <Swiper
@@ -81,7 +84,9 @@ export default function SwiperComponent({ list }: Props) {
 
         <button
           className="custom-swiper-navigation-next"
-          style={{ display: isSwiperEnd ? 'none' : 'block' }}
+          style={{
+            display: !isSwiperEnd && isDesktop ? 'block' : 'none',
+          }}
         >
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Next Slide</span>
@@ -92,9 +97,10 @@ export default function SwiperComponent({ list }: Props) {
           />
         </button>
         <button
-          onClick={() => console.log('prev click')}
-          className="custom-swiper-navigation-prev"
-          style={{ display: isSwiperBeginning ? 'none' : 'block' }}
+          className="custom-swiper-navigation-prev hidden lg:block"
+          style={{
+            display: !isSwiperBeginning && isDesktop ? 'block' : 'none',
+          }}
         >
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Previous Slide</span>
