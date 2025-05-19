@@ -2,6 +2,7 @@
 import type { PickupItemInTopNewsSection } from '@/types/homepage'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
+import Loading from '../loading'
 
 export default function LiveSectionMain({ link }: PickupItemInTopNewsSection) {
   const [isClientSide, setIsClientSide] = useState(false)
@@ -21,6 +22,7 @@ export default function LiveSectionMain({ link }: PickupItemInTopNewsSection) {
             muted={false}
             playing={false}
             playsinline={true}
+            fallback={<Loading />}
             config={{
               file: {
                 attributes: {

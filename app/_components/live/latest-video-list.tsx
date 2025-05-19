@@ -2,6 +2,7 @@
 import type { LatestVideos } from '@/types/common'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
+import Loading from '../loading'
 
 export default function LatestVideoList({
   latestVideos,
@@ -32,12 +33,12 @@ export default function LatestVideoList({
               playing={false}
               playsinline={true}
               controls={true}
-              fallback={<div>error</div>}
+              fallback={<Loading />}
             />
           </div>
-          <div>
+          <div className="flex flex-col gap-1">
             <p className="line-clamp-2">{video.title}</p>
-            <p>{video.updatedAt}</p>
+            <p className="text-sm font-normal leading-4">{video.updatedAt}</p>
           </div>
         </div>
       ))}
