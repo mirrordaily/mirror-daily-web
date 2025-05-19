@@ -170,6 +170,7 @@ export const latestVideosSchema = z.object({
   youtubeUrl: z.string().nullish(),
   videoSrc: z.string().nullish(),
   heroImage: heroImageSchema.nullable(),
+  updatedAt: z.string(),
 })
 
 export const headerSchema = z.array(

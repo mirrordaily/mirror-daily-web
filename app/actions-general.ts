@@ -12,6 +12,7 @@ import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import {
   createDataFetchingChain,
   transformLatestShorts,
+  transformLatestVideos,
 } from '@/utils/data-process'
 import { fetchGQLData, updateGQLData } from '@/utils/graphql'
 import {
@@ -19,6 +20,7 @@ import {
   rawPopularPostSchema,
   rawLatestPostSchema,
   headerSchema,
+  latestVideosSchema,
 } from '@/utils/data-schema'
 import {
   URL_STATIC_LATEST_SHORTS,
@@ -135,7 +137,6 @@ export const fetchLatestShorts = async (
       return result
     }
   )
-
   const matchedData = data[type].slice(start, amount)
   return matchedData.map(transformLatestShorts)
 }
@@ -151,8 +152,8 @@ export const fetchLatestVideos = async (
   )
 
   const original = z.object({
-    [LATEST_VIDEOS_TYPE.NEWS]: z.array(latestShortsSchema),
-    [LATEST_VIDEOS_TYPE.DERIVATIVE]: z.array(latestShortsSchema),
+    [LATEST_VIDEOS_TYPE.NEWS]: z.array(latestVideosSchema),
+    [LATEST_VIDEOS_TYPE.DERIVATIVE]: z.array(latestVideosSchema),
   })
 
   const schema = z.promise(original)
@@ -165,7 +166,6 @@ export const fetchLatestVideos = async (
     },
     async () => {
       const resp = await fetch(URL_STATIC_LATEST_VIDEOS)
-
       const result = await schema.parse(resp.json())
       return result
     },
@@ -177,7 +177,7 @@ export const fetchLatestVideos = async (
     }
   )
   const matchedData = data[type].slice(start, amount)
-  return matchedData.map(transformLatestShorts)
+  return matchedData.map(transformLatestVideos)
 }
 
 export const createCreativityShorts = async (

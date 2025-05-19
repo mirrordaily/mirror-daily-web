@@ -11,8 +11,8 @@ export default function LiveSectionMain({ link }: PickupItemInTopNewsSection) {
   }, [])
 
   return (
-    <div className="flex grow flex-col items-center">
-      <div className="md:tablet-live-video aspect-[330/220] w-full shrink-0 grow">
+    <div className="flex grow flex-col items-center lg:size-full lg:grow-0 lg:items-start">
+      <div className="md:tablet-live-video aspect-[330/220] w-full shrink-0 grow lg:aspect-video lg:w-full">
         {isClientSide && (
           <ReactPlayer
             url={link}

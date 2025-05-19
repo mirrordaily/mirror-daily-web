@@ -4504,6 +4504,7 @@ export type LatestVideosFragment = {
   uploader?: string | null
   videoSrc?: string | null
   youtubeUrl?: string | null
+  updatedAt?: any | null
   heroImage?: {
     __typename?: 'Photo'
     id: string
@@ -5659,6 +5660,7 @@ export type GetLatestVideosQuery = {
     uploader?: string | null
     videoSrc?: string | null
     youtubeUrl?: string | null
+    updatedAt?: any | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -5689,6 +5691,7 @@ export type GetLatestVideosQuery = {
     uploader?: string | null
     videoSrc?: string | null
     youtubeUrl?: string | null
+    updatedAt?: any | null
     heroImage?: {
       __typename?: 'Photo'
       id: string
@@ -6427,6 +6430,7 @@ export const LatestVideosFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
@@ -12242,6 +12246,7 @@ export const GetLatestVideosDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'uploader' } },
           { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
           { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },

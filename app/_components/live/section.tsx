@@ -12,7 +12,7 @@ export default async function LiveSection() {
    * 2. 有直播活動
    * 並且只會顯示最新的三部影片，因此取3
    */
-  const LATEST_VIDEOS_AMOUNT = 10
+  const LATEST_VIDEOS_AMOUNT = 3
   const latestVideosData = await fetchLatestVideos(
     LATEST_VIDEOS_TYPE.NEWS,
     LATEST_VIDEOS_AMOUNT
@@ -22,14 +22,16 @@ export default async function LiveSection() {
   if (!hasLiveEventData) return <></>
   return (
     <section className="section-in-homepage items-center py-7 lg:flex lg:items-start">
-      <div className="flex flex-col justify-start">
-        <p className="mb-6 w-full text-center text-lg font-bold leading-none text-mirror-blue-700">
+      <div className="flex grow flex-col justify-start lg:w-[640px]">
+        <p className="mb-6 w-full text-center text-lg font-bold leading-none text-mirror-blue-700 lg:text-start">
           直播區
         </p>
-        <LiveSectionMain {...liveEventData} />
+        <div className="lg:mr-11 lg:h-[364px] lg:border-r lg:border-r-black lg:pr-11">
+          <LiveSectionMain {...liveEventData} />
+        </div>
       </div>
-      <div className="flex flex-col justify-start">
-        <p className="mb-6 w-full text-center text-lg font-bold leading-none text-mirror-blue-700">
+      <div className="hidden lg:flex lg:w-[400px] lg:flex-col lg:justify-start lg:self-stretch">
+        <p className="mb-6 w-full text-center text-lg font-bold leading-none text-mirror-blue-700 lg:text-start">
           最新影音
         </p>
         <LatestVideoList latestVideos={latestVideosData} />

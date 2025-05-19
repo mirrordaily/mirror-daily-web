@@ -15,6 +15,7 @@ fragment LatestVideos on Video {
   uploader
   videoSrc
   youtubeUrl
+  updatedAt
   heroImage {
     ...ImageData
   }

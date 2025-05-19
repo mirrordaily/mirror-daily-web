@@ -90,6 +90,7 @@ export type LatestVideos = {
   fileUrl: string
   poster?: string
   contributor?: string
+  updatedAt: string
 }
 
 export type LatestPost = {
