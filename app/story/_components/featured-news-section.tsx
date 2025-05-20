@@ -1,7 +1,7 @@
 import FeaturedNewsCard from '@/shared-components/featured-news-card'
 import type { PopularNews } from '@/types/common'
 import type { LatestPost } from '@/types/common'
-
+import DableWidget from '@/app/_components/dable-widget'
 type Props<T> = {
   title: string
   posts: T
@@ -22,6 +22,9 @@ export default function FeaturedNewsSection<
         ))}
         {type === 'latest' && <div id="_popIn_recommend"></div>}
         {type === 'popular' && <div id="_popIn_recommend_nd"></div>}
+        <DableWidget
+          type={type === 'latest' ? 'articleBottomMO1' : 'articleBottomMO2'}
+        />
       </div>
     </section>
   )
