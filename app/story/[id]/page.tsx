@@ -12,7 +12,6 @@ import AdultWarning from '../_components/adult-warning'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/app/_components/miso-pageview'
-import { ENV } from '@/constants/config'
 
 type PageProps = { params: { id: string } }
 
@@ -39,9 +38,6 @@ export async function generateMetadata({
       : 'Unknown Author',
     'dable:item_id': postData.id,
     'section:color': postData.sectionColor,
-  }
-  if (ENV !== 'prod') {
-    other['product:availability'] = 'oos'
   }
 
   const metaData = Object.assign(
