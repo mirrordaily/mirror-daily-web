@@ -60,6 +60,13 @@
     .custom-swiper-navigation-prev {
       @apply left-3 lg:left-6;
     }
+
+    .custom-swiper-navigation-prev.first {
+      @apply invisible;
+    }
+    .custom-swiper-navigation-next.last {
+      @apply invisible;
+    }
   }
   .header-submit-button {
     @apply mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white first:ml-0 lg:flex;
