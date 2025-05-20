@@ -10,7 +10,6 @@ import 'swiper/css/navigation'
 import type { EditorChoice } from '@/types/homepage'
 import Image from 'next/image'
 import { useState } from 'react'
-import { useWindowSize } from 'usehooks-ts'
 
 type Props = {
   list: EditorChoice[]
@@ -20,8 +19,7 @@ export default function SwiperComponent({ list }: Props) {
   const swiperNavigationButtonSize = { width: 48, height: 48 }
   const [isSwiperBeginning, setIsBeginning] = useState(true)
   const [isSwiperEnd, setIsSwiperEnd] = useState(false)
-  const { width } = useWindowSize()
-  const isDesktop = width >= 1200
+
   return (
     <div className="relative">
       <Swiper
@@ -81,32 +79,25 @@ export default function SwiperComponent({ list }: Props) {
           )
         })}
         <div className="custom-swiper-pagination" />
-
         <button
-          className="custom-swiper-navigation-next"
-          style={{
-            display: !isSwiperEnd && isDesktop ? 'block' : 'none',
-          }}
-        >
-          {/* Use sr-only to hide an element visually without hiding it from screen readers */}
-          <span className="sr-only">Next Slide</span>
-          <Image
-            src="icons/swiper/swiper-next.svg"
-            alt="slide-next"
-            {...swiperNavigationButtonSize}
-          />
-        </button>
-        <button
-          className="custom-swiper-navigation-prev hidden lg:block"
-          style={{
-            display: !isSwiperBeginning && isDesktop ? 'block' : 'none',
-          }}
+          className={`custom-swiper-navigation-prev ${isSwiperBeginning ? 'first' : ''}`}
         >
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Previous Slide</span>
           <Image
             src="icons/swiper/swiper-prev.svg"
             alt="slide-prev"
+            {...swiperNavigationButtonSize}
+          />
+        </button>
+        <button
+          className={`custom-swiper-navigation-next ${isSwiperEnd ? 'last' : ''}`}
+        >
+          {/* Use sr-only to hide an element visually without hiding it from screen readers */}
+          <span className="sr-only">Next Slide</span>
+          <Image
+            src="icons/swiper/swiper-next.svg"
+            alt="slide-next"
             {...swiperNavigationButtonSize}
           />
         </button>
