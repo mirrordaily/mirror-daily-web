@@ -57,8 +57,8 @@ export const CONTACT_LINKS: ContactLink[] = [
   {
     name: '爆料信箱',
     headerSubmitButtonName: '我要爆料',
-    href: 'mailto:service@mirrordaily.news',
-    text: 'service@mirrordaily.news',
+    href: 'mailto:119@mirrordaily.news',
+    text: '119@mirrordaily.news',
   },
   {
     name: '投書信箱',
