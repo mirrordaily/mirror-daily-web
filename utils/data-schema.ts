@@ -176,3 +176,29 @@ export const headerSchema = z.array(
       }),
   ])
 )
+
+export const gameSchema = z.object({
+  datetime: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid datetime string',
+  }),
+  game_sno: z.number(),
+  home_logo: z.string(),
+  home_score: z.number(),
+  home_team: z.string(),
+  present_status: z.number(),
+  visiting_logo: z.string(),
+  visiting_score: z.number(),
+  visiting_team: z.string(),
+})
+
+export const dailyScheduleSchema = z.object({
+  // Changed field name from 'datetime' to 'date' and ensured ISO 8601 format
+  date: z.string(),
+  games: z.array(gameSchema),
+})
+
+export const sportsEventsApiResponseSchema = z.object({
+  cpbl: z.array(dailyScheduleSchema).optional(),
+  tpbl: z.array(dailyScheduleSchema).optional(),
+})
+export const sportsEventsSchema = dailyScheduleSchema

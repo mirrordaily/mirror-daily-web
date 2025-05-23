@@ -10,6 +10,7 @@ import type {
 import {
   URL_STATIC_EDITOR_CHOICE,
   URL_STATIC_HOT_NEWS,
+  URL_STATIC_SPORTS_EVENTS,
   URL_STATIC_TOPIC,
   URL_STATIC_WEATHER,
 } from '@/constants/config'
@@ -42,6 +43,7 @@ import {
   editorChoiceSchenma,
   topicsSchema,
   cityWeatherSchema,
+  sportsEventsApiResponseSchema,
 } from '@/utils/data-schema'
 
 const transformRawLiveEvents = (
@@ -331,6 +333,23 @@ export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
     const rawWeatherData = await z.promise(cityWeatherSchema).parse(resp.json())
 
     return transformWeather(rawWeatherData)
+  } catch (e) {
+    errorLogger(e)
+  }
+}
+
+export const fetchSportsEvents = async (): Promise<
+  z.infer<typeof sportsEventsApiResponseSchema> | undefined
+> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching sports events',
+    getTraceObject()
+  )
+  const schema = z.promise(sportsEventsApiResponseSchema)
+  try {
+    const resp = await fetch(URL_STATIC_SPORTS_EVENTS)
+    const rawSportsEventsData = await schema.parse(resp.json())
+    return rawSportsEventsData
   } catch (e) {
     errorLogger(e)
   }

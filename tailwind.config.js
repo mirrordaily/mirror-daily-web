@@ -14,7 +14,15 @@ module.exports = {
       lg: '1200px',
     },
     extend: {
-      colors: {},
+      colors: {
+        mirror: {
+          blue: {
+            600: '#896fcc',
+            700: '#674ab1',
+            800: '#3b1e86',
+          },
+        },
+      },
       backgroundColor: {
         mirror: {
           blue: {
@@ -51,6 +59,7 @@ module.exports = {
       boxShadow: {
         input: ['2px 2px 2px 0px rgba(0,0,0,0.05)'],
         modal: ['0px 4px 4px 0px rgba(0, 0, 0, 0.25)'],
+        sportsEventsSelect: ['0px 2px 2px rgba(0,0,0,0.15)'],
       },
       keyframes: {
         popup: {
