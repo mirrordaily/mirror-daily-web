@@ -12,7 +12,7 @@ import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/app/_components/miso-pageview'
-
+import { ENV } from '@/constants/config'
 type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
@@ -83,8 +83,12 @@ export default async function Page({ params }: PageProps) {
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
           <RelatedNewsList posts={relatedPosts} />
-          <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
-          <div id="_popIn_recommend_word"></div>
+          {ENV !== 'prod' && (
+            <>
+              <div id="_popIn_recommend_word" className="mt-6"></div>
+              <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+            </>
+          )}
         </div>
         <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />
         <div className="flex flex-col gap-y-[46px] md:gap-y-12 lg:gap-y-[60px]">
