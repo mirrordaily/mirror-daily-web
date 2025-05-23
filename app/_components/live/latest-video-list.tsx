@@ -1,6 +1,5 @@
 'use client'
 import type { LatestVideos } from '@/types/common'
-import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
 import Loading from '../loading'
 
@@ -9,12 +8,6 @@ export default function LatestVideoList({
 }: {
   latestVideos: LatestVideos[]
 }) {
-  const [isClientSide, setIsClientSide] = useState(false)
-
-  useEffect(() => {
-    setIsClientSide(true)
-  }, [])
-  if (!isClientSide) return <></>
   return (
     <div className="flex grow flex-col items-center lg:items-start lg:justify-end lg:gap-8">
       {latestVideos.map((video) => (
@@ -34,6 +27,14 @@ export default function LatestVideoList({
               playsinline={true}
               controls={true}
               fallback={<Loading />}
+              onError={(error) => console.error('Video load error:', error)}
+              config={{
+                file: {
+                  attributes: {
+                    'aria-label': `Video: ${video.title}`,
+                  },
+                },
+              }}
             />
           </div>
           <div className="flex flex-col gap-1">

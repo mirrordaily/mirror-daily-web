@@ -2,8 +2,12 @@ import { fetchLiveEvent } from '@/app/actions'
 import LiveSectionMain from './main'
 import { fetchLatestVideos } from '@/app/actions-general'
 import { LATEST_VIDEOS_TYPE } from '@/types/common'
-import LatestVideoList from './latest-video-list'
+// import LatestVideoList from './latest-video-list'
+import dynamic from 'next/dynamic'
 
+const LatestVideoList = dynamic(() => import('./latest-video-list'), {
+  ssr: false,
+})
 export default async function LiveSection() {
   const liveEventData = await fetchLiveEvent()
   /**
@@ -18,7 +22,6 @@ export default async function LiveSection() {
     LATEST_VIDEOS_AMOUNT
   )
   const hasLiveEventData = !!liveEventData?.link
-  console.log({ latestVideosData })
   if (!hasLiveEventData) return <></>
   return (
     <section className="section-in-homepage items-center py-7 lg:flex lg:items-start">
