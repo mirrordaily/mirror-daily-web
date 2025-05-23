@@ -8,6 +8,7 @@ import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { ENV } from '@/constants/config'
+import DableWidget from '@/app/_components/dable-widget'
 type Props = Post
 
 export default async function ArticleSection({
@@ -20,6 +21,8 @@ export default async function ArticleSection({
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const adType = Math.random() < 0.5 ? 'popIn' : 'dable'
+  console.log('adType:', adType)
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
@@ -44,10 +47,16 @@ export default async function ArticleSection({
           {relatedPosts.length > 0 && (
             <RelatedNewsSection posts={relatedPosts} />
           )}
-          {ENV !== 'prod' && (
+          {ENV !== 'prod' && adType === 'popIn' && (
             <>
               <div id="_popIn_recommend_word" className="mt-6"></div>
               <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+            </>
+          )}
+          {ENV !== 'prod' && adType === 'dable' && (
+            <>
+              <DableWidget type="related" />
+              <DableWidget type="articleBottomPC" />
             </>
           )}
         </div>

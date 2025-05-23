@@ -1,7 +1,6 @@
 import FeaturedNewsCard from '@/shared-components/featured-news-card'
 import type { PopularNews } from '@/types/common'
 import type { LatestPost } from '@/types/common'
-import DableWidget from '@/app/_components/dable-widget'
 import { ENV } from '@/constants/config'
 type Props<T> = {
   title: string
@@ -27,9 +26,6 @@ export default function FeaturedNewsSection<
         {type === 'popular' && ENV !== 'prod' && (
           <div id="_popIn_recommend_nd" className="hidden md:block"></div>
         )}
-        <DableWidget
-          type={type === 'latest' ? 'articleBottomMO1' : 'articleBottomMO2'}
-        />
       </div>
     </section>
   )

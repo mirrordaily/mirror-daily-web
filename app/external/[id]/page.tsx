@@ -13,6 +13,7 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/app/_components/miso-pageview'
 import { ENV } from '@/constants/config'
+import DableWidget from '@/app/_components/dable-widget'
 type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
@@ -57,6 +58,8 @@ export default async function Page({ params }: PageProps) {
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const adType = Math.random() < 0.5 ? 'popIn' : 'dable'
+  console.log('adType:', adType)
 
   if (!externalPost) notFound()
 
@@ -83,10 +86,16 @@ export default async function Page({ params }: PageProps) {
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
           <RelatedNewsList posts={relatedPosts} />
-          {ENV !== 'prod' && (
+          {ENV !== 'prod' && adType === 'popIn' && (
             <>
               <div id="_popIn_recommend_word" className="mt-6"></div>
               <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+            </>
+          )}
+          {ENV !== 'prod' && adType === 'dable' && (
+            <>
+              <DableWidget type="related" />
+              <DableWidget type="articleBottomPC" />
             </>
           )}
         </div>

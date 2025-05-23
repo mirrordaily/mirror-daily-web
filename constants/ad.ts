@@ -102,8 +102,6 @@ export const adSlots = {
 export type DableWidgetType =
   | 'related' // 你可能也想看 (PC/Mobile)
   | 'articleBottomPC' // 其他人都在看 (PC only)
-  | 'articleBottomMO1' // 最新新聞 (Mobile only)
-  | 'articleBottomMO2' // 熱門新聞 (Mobile only)
 
 export type DableCommand =
   | 'setService'
@@ -123,6 +121,7 @@ export const DABLE_PROD_WIDGET_CONFIG: Record<
   DableWidgetType,
   DableWidgetConfig
 > = {
+  // 你可能會喜歡
   related: {
     widgetId: '3703Za2o_1XDgJMMl',
     pcWidgetId: '3703Za2o',
@@ -130,20 +129,11 @@ export const DABLE_PROD_WIDGET_CONFIG: Record<
     renderType: 'renderWidgetByWidth',
     device: 'both',
   },
+  // 其他人都在看
   articleBottomPC: {
     widgetId: 'goB9q42X',
     renderType: 'renderWidget',
     device: 'pc',
-  },
-  articleBottomMO1: {
-    widgetId: 'GlGgR5gl',
-    renderType: 'renderWidget',
-    device: 'mobile',
-  },
-  articleBottomMO2: {
-    widgetId: 'zlvm4217',
-    renderType: 'renderWidget',
-    device: 'mobile',
   },
 }
 
@@ -162,15 +152,5 @@ export const DABLE_DEV_WIDGET_CONFIG: Record<
     widgetId: 'goB9q42X',
     renderType: 'renderWidget',
     device: 'pc',
-  },
-  articleBottomMO1: {
-    widgetId: 'GlGgR5gl',
-    renderType: 'renderWidget',
-    device: 'mobile',
-  },
-  articleBottomMO2: {
-    widgetId: 'zlvm4217',
-    renderType: 'renderWidget',
-    device: 'mobile',
   },
 }
