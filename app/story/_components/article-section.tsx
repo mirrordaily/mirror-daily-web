@@ -7,7 +7,7 @@ import { fetchRelatedPosts } from '../actions'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
-
+import { ENV } from '@/constants/config'
 type Props = Post
 
 export default async function ArticleSection({
@@ -44,8 +44,12 @@ export default async function ArticleSection({
           {relatedPosts.length > 0 && (
             <RelatedNewsSection posts={relatedPosts} />
           )}
-          <div id="_popIn_recommend_word" className="mt-6"></div>
-          <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+          {ENV !== 'prod' && (
+            <>
+              <div id="_popIn_recommend_word" className="mt-6"></div>
+              <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+            </>
+          )}
         </div>
       </div>
 
