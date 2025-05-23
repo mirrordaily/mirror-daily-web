@@ -1,11 +1,12 @@
 import { fetchLiveEvent } from '@/app/actions'
-import LiveSectionMain from './main'
 import { fetchLatestVideos } from '@/app/actions-general'
 import { LATEST_VIDEOS_TYPE } from '@/types/common'
-// import LatestVideoList from './latest-video-list'
 import dynamic from 'next/dynamic'
 
 const LatestVideoList = dynamic(() => import('./latest-video-list'), {
+  ssr: false,
+})
+const LiveSectionMain = dynamic(() => import('./main'), {
   ssr: false,
 })
 export default async function LiveSection() {
