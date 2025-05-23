@@ -82,18 +82,8 @@ export const rawPopularPostSchema = z.object({
 
 export const rawHotNewsSchema = z.object({
   outlink: z.string(),
-  hotnews: z
-    .object({
-      id: z.string(),
-      title: z.string(),
-    })
-    .nullish(),
-  hotexternal: z
-    .object({
-      id: z.string(),
-      title: z.string(),
-    })
-    .nullish(),
+  hotnews: rawLatestPostSchema.pick({ id: true, title: true }).nullish(),
+  hotexternal: rawLatestPostSchema.pick({ id: true, title: true }).nullish(),
 })
 
 export const editorChoiceSchenma = z.object({
