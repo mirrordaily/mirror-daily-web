@@ -98,3 +98,79 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
 } as const
+
+export type DableWidgetType =
+  | 'related' // 你可能也想看 (PC/Mobile)
+  | 'articleBottomPC' // 其他人都在看 (PC only)
+  | 'articleBottomMO1' // 最新新聞 (Mobile only)
+  | 'articleBottomMO2' // 熱門新聞 (Mobile only)
+
+export type DableCommand =
+  | 'setService'
+  | 'sendLogOnce'
+  | 'renderWidget'
+  | 'renderWidgetByWidth'
+
+export type DableWidgetConfig = {
+  widgetId: string
+  pcWidgetId?: string
+  moWidgetId?: string
+  renderType: DableCommand
+  device: 'pc' | 'mobile' | 'both'
+}
+
+export const DABLE_PROD_WIDGET_CONFIG: Record<
+  DableWidgetType,
+  DableWidgetConfig
+> = {
+  related: {
+    widgetId: '3703Za2o_1XDgJMMl',
+    pcWidgetId: '3703Za2o',
+    moWidgetId: '1XDgJMMl',
+    renderType: 'renderWidgetByWidth',
+    device: 'both',
+  },
+  articleBottomPC: {
+    widgetId: 'goB9q42X',
+    renderType: 'renderWidget',
+    device: 'pc',
+  },
+  articleBottomMO1: {
+    widgetId: 'GlGgR5gl',
+    renderType: 'renderWidget',
+    device: 'mobile',
+  },
+  articleBottomMO2: {
+    widgetId: 'zlvm4217',
+    renderType: 'renderWidget',
+    device: 'mobile',
+  },
+}
+
+export const DABLE_DEV_WIDGET_CONFIG: Record<
+  DableWidgetType,
+  DableWidgetConfig
+> = {
+  related: {
+    widgetId: '3703Za2o_1XDgJMMl',
+    pcWidgetId: '3703Za2o',
+    moWidgetId: '1XDgJMMl',
+    renderType: 'renderWidgetByWidth',
+    device: 'both',
+  },
+  articleBottomPC: {
+    widgetId: 'goB9q42X',
+    renderType: 'renderWidget',
+    device: 'pc',
+  },
+  articleBottomMO1: {
+    widgetId: 'GlGgR5gl',
+    renderType: 'renderWidget',
+    device: 'mobile',
+  },
+  articleBottomMO2: {
+    widgetId: 'zlvm4217',
+    renderType: 'renderWidget',
+    device: 'mobile',
+  },
+}
