@@ -163,6 +163,16 @@ export const shortsDataSchema = z.object({
   ),
 })
 
+export const latestVideosSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  uploader: z.string(),
+  youtubeUrl: z.string().nullish(),
+  videoSrc: z.string().nullish(),
+  heroImage: heroImageSchema.nullable(),
+  updatedAt: z.string(),
+})
+
 export const headerSchema = z.array(
   z.union([
     sectionSchema,

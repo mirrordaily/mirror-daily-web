@@ -1,12 +1,18 @@
 'use server'
 
-import type { HeaderData, PopularNews, Shorts } from '@/types/common'
-import { SHORTS_TYPE } from '@/types/common'
+import type {
+  HeaderData,
+  LatestVideos,
+  PopularNews,
+  Shorts,
+} from '@/types/common'
+import { LATEST_VIDEOS_TYPE, SHORTS_TYPE } from '@/types/common'
 import { z } from 'zod'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import {
   createDataFetchingChain,
   transformLatestShorts,
+  transformLatestVideos,
 } from '@/utils/data-process'
 import { fetchGQLData, updateGQLData } from '@/utils/graphql'
 import {
@@ -14,9 +20,11 @@ import {
   rawPopularPostSchema,
   rawLatestPostSchema,
   headerSchema,
+  latestVideosSchema,
 } from '@/utils/data-schema'
 import {
   URL_STATIC_LATEST_SHORTS,
+  URL_STATIC_LATEST_VIDEOS,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_HEADER,
@@ -25,6 +33,7 @@ import {
   CreateCreativityShortsDocument,
   CreateShortsPreviewDocument,
   GetLatestShortsDocument,
+  GetLatestVideosDocument,
 } from '@/graphql/__generated__/graphql'
 import type { LatestPost } from '@/types/common'
 import {
@@ -128,9 +137,47 @@ export const fetchLatestShorts = async (
       return result
     }
   )
-
   const matchedData = data[type].slice(start, amount)
   return matchedData.map(transformLatestShorts)
+}
+
+export const fetchLatestVideos = async (
+  type: LATEST_VIDEOS_TYPE,
+  amount: number = 10,
+  start: number = 0
+): Promise<LatestVideos[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching latest videos',
+    getTraceObject()
+  )
+
+  const original = z.object({
+    [LATEST_VIDEOS_TYPE.NEWS]: z.array(latestVideosSchema),
+    [LATEST_VIDEOS_TYPE.DERIVATIVE]: z.array(latestVideosSchema),
+  })
+
+  const schema = z.promise(original)
+
+  const data = await createDataFetchingChain<z.infer<typeof original>>(
+    errorLogger,
+    {
+      [LATEST_VIDEOS_TYPE.NEWS]: [],
+      [LATEST_VIDEOS_TYPE.DERIVATIVE]: [],
+    },
+    async () => {
+      const resp = await fetch(URL_STATIC_LATEST_VIDEOS)
+      const result = await schema.parse(resp.json())
+      return result
+    },
+    async () => {
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetLatestVideosDocument, { amount, start })
+      )
+      return result
+    }
+  )
+  const matchedData = data[type].slice(start, amount)
+  return matchedData.map(transformLatestVideos)
 }
 
 export const createCreativityShorts = async (
