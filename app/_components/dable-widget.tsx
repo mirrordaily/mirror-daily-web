@@ -33,13 +33,13 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
   const isMobile = useMemo(() => width <= 768, [width])
 
   useEffect(() => {
-    if (config.device === 'both') setShouldRender(true)
     if (!width) setShouldRender(false)
     if (isMobile) {
       setShouldRender(config.device === 'mobile')
     } else {
       setShouldRender(config.device === 'pc')
     }
+    if (config.device === 'both') setShouldRender(true)
   }, [isMobile])
 
   return (
