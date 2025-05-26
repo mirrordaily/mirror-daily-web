@@ -13,6 +13,7 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/app/_components/miso-pageview'
 import DableWidget from '@/app/_components/dable-widget'
+import { ENV } from '@/constants/config'
 type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
@@ -85,7 +86,7 @@ export default async function Page({ params }: PageProps) {
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
           <RelatedNewsList posts={relatedPosts} />
-          {adType === 'popIn' && (
+          {(adType === 'popIn' || ENV === 'prod') && (
             <>
               <div id="_popIn_recommend_word" className="mt-6"></div>
               <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
