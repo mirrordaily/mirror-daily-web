@@ -94,7 +94,9 @@ export default async function Page({ params }: PageProps) {
           )}
           {adType === 'dable' && ENV !== 'prod' && (
             <>
+              dable: related
               <DableWidget type="related" />
+              dable: articleBottomPC
               <DableWidget type="articleBottomPC" />
             </>
           )}

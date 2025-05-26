@@ -55,7 +55,9 @@ export default async function ArticleSection({
           )}
           {ENV !== 'prod' && adType === 'dable' && (
             <>
+              dable: related
               <DableWidget type="related" />
+              dable: articleBottomPC
               <DableWidget type="articleBottomPC" />
             </>
           )}
