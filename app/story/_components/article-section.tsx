@@ -47,7 +47,7 @@ export default async function ArticleSection({
           {relatedPosts.length > 0 && (
             <RelatedNewsSection posts={relatedPosts} />
           )}
-          {ENV !== 'prod' && adType === 'popIn' && (
+          {adType === 'popIn' && (
             <>
               <div id="_popIn_recommend_word" className="mt-6"></div>
               <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>

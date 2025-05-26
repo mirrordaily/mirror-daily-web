@@ -12,7 +12,6 @@ import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/app/_components/miso-pageview'
-import { ENV } from '@/constants/config'
 import DableWidget from '@/app/_components/dable-widget'
 type PageProps = { params: { id: string } }
 
@@ -86,13 +85,13 @@ export default async function Page({ params }: PageProps) {
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
           <RelatedNewsList posts={relatedPosts} />
-          {ENV !== 'prod' && adType === 'popIn' && (
+          {adType === 'popIn' && (
             <>
               <div id="_popIn_recommend_word" className="mt-6"></div>
               <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
             </>
           )}
-          {ENV !== 'prod' && adType === 'dable' && (
+          {adType === 'dable' && ENV !== 'prod' && (
             <>
               <DableWidget type="related" />
               <DableWidget type="articleBottomPC" />
