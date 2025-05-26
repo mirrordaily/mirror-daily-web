@@ -19,9 +19,9 @@ export default function FeatureNewsList({ title, posts }: Props) {
         {/* {title === '最新新聞' && (
           <div id="_popIn_recommend" className="hidden md:block"></div>
         )} */}
-        {title === '熱門新聞' && (
+        {/* {title === '熱門新聞' && (
           <div id="_popIn_recommend_nd" className="hidden md:block"></div>
-        )}
+        )} */}
       </div>
     </section>
   )
