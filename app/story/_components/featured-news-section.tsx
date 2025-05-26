@@ -4,7 +4,7 @@ import type { LatestPost } from '@/types/common'
 type Props<T> = {
   title: string
   posts: T
-  type: 'latest' | 'popular'
+  type?: 'latest' | 'popular'
 }
 
 export default function FeaturedNewsSection<

@@ -76,11 +76,7 @@ export default async function ArticleSection({
               slotKey="mirrordaily_article_300x600_1"
               customClasses="mb-[-20px]"
             />
-            <FeaturedNewsSection
-              title="最新新聞"
-              posts={latestPosts}
-              type="latest"
-            />
+            <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
           </>
         )}
         {popularPosts.length > 0 && (
@@ -90,11 +86,7 @@ export default async function ArticleSection({
               customClasses="mt-[-28px]"
             />
             <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
-            <FeaturedNewsSection
-              title="熱門新聞"
-              posts={popularPosts}
-              type="popular"
-            />
+            <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
           </>
         )}
       </div>
