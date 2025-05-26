@@ -19,9 +19,9 @@ export default function FeaturedNewsSection<
         {posts.map((item) => (
           <FeaturedNewsCard {...item} key={item.postId} />
         ))}
-        {type === 'latest' && (
+        {/* {type === 'latest' && (
           <div id="_popIn_recommend" className="hidden md:block"></div>
-        )}
+        )} */}
         {type === 'popular' && (
           <div id="_popIn_recommend_nd" className="hidden md:block"></div>
         )}
