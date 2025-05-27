@@ -134,7 +134,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'statics-dev.mirrordaily.news',
+        hostname: 'img.youtube.com',
       },
     ],
   },

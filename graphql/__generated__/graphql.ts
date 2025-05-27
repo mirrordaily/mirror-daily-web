@@ -691,6 +691,7 @@ export type External = {
   tags?: Maybe<Array<Tag>>
   tagsCount?: Maybe<Scalars['Int']['output']>
   thumb?: Maybe<Scalars['String']['output']>
+  thumbCaption?: Maybe<Scalars['String']['output']>
   title?: Maybe<Scalars['String']['output']>
   topics?: Maybe<Topic>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
@@ -777,6 +778,7 @@ export type ExternalCreateInput = {
   state?: InputMaybe<Scalars['String']['input']>
   tags?: InputMaybe<TagRelateToManyForCreateInput>
   thumb?: InputMaybe<Scalars['String']['input']>
+  thumbCaption?: InputMaybe<Scalars['String']['input']>
   title?: InputMaybe<Scalars['String']['input']>
   topics?: InputMaybe<TopicRelateToOneForCreateInput>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
@@ -800,6 +802,7 @@ export type ExternalOrderByInput = {
   source?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   thumb?: InputMaybe<OrderDirection>
+  thumbCaption?: InputMaybe<OrderDirection>
   title?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
 }
@@ -852,6 +855,7 @@ export type ExternalUpdateInput = {
   state?: InputMaybe<Scalars['String']['input']>
   tags?: InputMaybe<TagRelateToManyForUpdateInput>
   thumb?: InputMaybe<Scalars['String']['input']>
+  thumbCaption?: InputMaybe<Scalars['String']['input']>
   title?: InputMaybe<Scalars['String']['input']>
   topics?: InputMaybe<TopicRelateToOneForUpdateInput>
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
@@ -879,6 +883,7 @@ export type ExternalWhereInput = {
   state?: InputMaybe<StringNullableFilter>
   tags?: InputMaybe<TagManyRelationFilter>
   thumb?: InputMaybe<StringFilter>
+  thumbCaption?: InputMaybe<StringFilter>
   title?: InputMaybe<StringFilter>
   topics?: InputMaybe<TopicWhereInput>
   updatedAt?: InputMaybe<DateTimeNullableFilter>
