@@ -26,24 +26,28 @@ export default function LatestVideoList({
       {latestVideos
         .filter((video) => isYoutubeUrl(video.fileUrl))
         .map((video) => (
-          <div key={video.id} className="flex gap-5">
-            <a href={video.fileUrl}>
-              <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow lg:h-[100px] lg:w-[180px]">
-                <Image
-                  src={
-                    getThumbnailByVideoId(getYoutubeId(video.fileUrl) ?? '') ||
-                    '/images-next/default-image.png'
-                  }
-                  fill
-                  alt={`${video.title}`}
-                />
-              </div>
-            </a>
+          <a
+            key={video.id}
+            href={video.fileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex gap-5"
+          >
+            <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow lg:h-[100px] lg:w-[180px]">
+              <Image
+                src={
+                  getThumbnailByVideoId(getYoutubeId(video.fileUrl) ?? '') ||
+                  '/images-next/default-image.png'
+                }
+                fill
+                alt={`${video.title}`}
+              />
+            </div>
             <div className="flex flex-col gap-1">
               <p className="line-clamp-2">{video.title}</p>
               <p className="text-sm font-normal leading-4">{video.updatedAt}</p>
             </div>
-          </div>
+          </a>
         ))}
     </div>
   )
