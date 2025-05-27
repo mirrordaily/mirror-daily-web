@@ -22,7 +22,7 @@ export default function LatestVideoList({
   }
 
   return (
-    <div className="flex grow cursor-pointer flex-col items-center lg:items-start lg:justify-end lg:gap-8">
+    <div className="flex grow flex-col items-center lg:items-start lg:justify-end lg:gap-8">
       {latestVideos
         .filter((video) => isYoutubeUrl(video.fileUrl))
         .map((video) => (
@@ -31,7 +31,7 @@ export default function LatestVideoList({
             href={video.fileUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex gap-5"
+            className="flex cursor-pointer gap-5"
           >
             <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow lg:h-[100px] lg:w-[180px]">
               <Image
