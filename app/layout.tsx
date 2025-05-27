@@ -62,7 +62,7 @@ export default function RootLayout({
         {/* <!-- Begin Dable Script / For inquiries, visit http://dable.io --> */}
         <Script
           type="text/javascript"
-          id="dable"
+          id="dable-script"
           dangerouslySetInnerHTML={{
             __html: `
             (function(d,a,b,l,e,r) {

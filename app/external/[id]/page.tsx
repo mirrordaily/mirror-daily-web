@@ -58,8 +58,10 @@ export default async function Page({ params }: PageProps) {
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
-  const adType = Math.random() < 0.5 ? 'popIn' : 'dable'
-  console.log('adType:', adType)
+  const adTypeRelated =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
+  const adTypeBottom =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
 
   if (!externalPost) notFound()
 
@@ -86,17 +88,15 @@ export default async function Page({ params }: PageProps) {
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
           <RelatedNewsList posts={relatedPosts} />
-          {(adType === 'popIn' || ENV === 'prod') && (
-            <>
-              <div id="_popIn_recommend_word" className="mt-6"></div>
-              <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
-            </>
+          {adTypeRelated === 'dable' ? (
+            <DableWidget type="related" />
+          ) : (
+            <div id="_popIn_recommend_word" className="mt-6"></div>
           )}
-          {adType === 'dable' && ENV !== 'prod' && (
-            <>
-              <DableWidget type="related" />
-              <DableWidget type="articleBottomPC" />
-            </>
+          {adTypeBottom === 'dable' ? (
+            <DableWidget type="articleBottomPC" />
+          ) : (
+            <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
           )}
         </div>
         <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />

@@ -21,8 +21,10 @@ export default async function ArticleSection({
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
-  const adType = Math.random() < 0.5 ? 'popIn' : 'dable'
-  console.log('adType:', adType)
+  const adTypeRelated =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
+  const adTypeBottom =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
@@ -47,17 +49,15 @@ export default async function ArticleSection({
           {relatedPosts.length > 0 && (
             <RelatedNewsSection posts={relatedPosts} />
           )}
-          {(adType === 'popIn' || ENV === 'prod') && (
-            <>
-              <div id="_popIn_recommend_word" className="mt-6"></div>
-              <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
-            </>
+          {adTypeRelated === 'dable' ? (
+            <DableWidget type="related" />
+          ) : (
+            <div id="_popIn_recommend_word" className="mt-6"></div>
           )}
-          {ENV !== 'prod' && adType === 'dable' && (
-            <>
-              <DableWidget type="related" />
-              <DableWidget type="articleBottomPC" />
-            </>
+          {adTypeBottom === 'dable' ? (
+            <DableWidget type="articleBottomPC" />
+          ) : (
+            <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
           )}
         </div>
       </div>
