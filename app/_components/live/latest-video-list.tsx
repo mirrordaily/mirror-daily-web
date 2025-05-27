@@ -8,10 +8,6 @@ export default function LatestVideoList({
 }: {
   latestVideos: LatestVideos[]
 }) {
-  const isYoutubeUrl = (url: string): boolean => {
-    return matchYoutubeUrl(url) !== null
-  }
-
   const getYoutubeId = (url: string): string | null => {
     return matchYoutubeUrl(url)
   }
@@ -23,32 +19,30 @@ export default function LatestVideoList({
 
   return (
     <div className="flex grow flex-col items-center lg:items-start lg:justify-end lg:gap-8">
-      {latestVideos
-        .filter((video) => isYoutubeUrl(video.fileUrl))
-        .map((video) => (
-          <a
-            key={video.id}
-            href={video.fileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex cursor-pointer gap-5"
-          >
-            <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow lg:h-[100px] lg:w-[180px]">
-              <Image
-                src={
-                  getThumbnailByVideoId(getYoutubeId(video.fileUrl) ?? '') ||
-                  '/images-next/default-image.png'
-                }
-                fill
-                alt={`${video.title}`}
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="line-clamp-2">{video.title}</p>
-              <p className="text-sm font-normal leading-4">{video.updatedAt}</p>
-            </div>
-          </a>
-        ))}
+      {latestVideos.map((video) => (
+        <a
+          key={video.id}
+          href={video.fileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex cursor-pointer gap-5"
+        >
+          <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow lg:h-[100px] lg:w-[180px]">
+            <Image
+              src={
+                getThumbnailByVideoId(getYoutubeId(video.fileUrl) ?? '') ||
+                '/images-next/default-image.png'
+              }
+              fill
+              alt={`${video.title}`}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="line-clamp-2">{video.title}</p>
+            <p className="text-sm font-normal leading-4">{video.updatedAt}</p>
+          </div>
+        </a>
+      ))}
     </div>
   )
 }

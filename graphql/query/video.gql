@@ -34,6 +34,7 @@ query GetLatestVideos($amount: Int!, $start: Int!) {
       state: { equals: "published" }
       isShorts: { equals: false }
       videoSection: { equals: "news" }
+      youtubeUrl: { not: { equals: "" } }
     }
   ) {
     ...LatestVideos
@@ -46,6 +47,7 @@ query GetLatestVideos($amount: Int!, $start: Int!) {
       state: { equals: "published" }
       isShorts: { equals: false }
       videoSection: { equals: "creativity" }
+      youtubeUrl: { not: { equals: "" } }
     }
   ) {
     ...LatestVideos
