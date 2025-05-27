@@ -153,7 +153,7 @@ export const fetchLatestVideos = async (
 
   const original = z.object({
     [LATEST_VIDEOS_TYPE.NEWS]: z.array(latestVideosSchema),
-    [LATEST_VIDEOS_TYPE.DERIVATIVE]: z.array(latestVideosSchema),
+    [LATEST_VIDEOS_TYPE.CREATIVITY]: z.array(latestVideosSchema),
   })
 
   const schema = z.promise(original)
@@ -162,7 +162,7 @@ export const fetchLatestVideos = async (
     errorLogger,
     {
       [LATEST_VIDEOS_TYPE.NEWS]: [],
-      [LATEST_VIDEOS_TYPE.DERIVATIVE]: [],
+      [LATEST_VIDEOS_TYPE.CREATIVITY]: [],
     },
     async () => {
       const resp = await fetch(URL_STATIC_LATEST_VIDEOS)
