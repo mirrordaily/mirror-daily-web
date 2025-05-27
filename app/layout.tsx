@@ -95,15 +95,11 @@ export default function RootLayout({
             `,
           }}
         />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            //@ts-expect-error: meta pixel default
-            style="display: 'none'"
-            src="https://www.facebook.com/tr?id=1223816476113313&ev=PageView&noscript=1"
-          />
-        </noscript>
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<img height="1" width="1" style="display: 'none'" src="https://www.facebook.com/tr?id=1223816476113313&ev=PageView&noscript=1" />`,
+          }}
+        />
         {/* End Meta Pixel Code */}
         <noscript
           dangerouslySetInnerHTML={{
