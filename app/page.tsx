@@ -61,7 +61,7 @@ export default async function Home() {
           <SectionDivider customClasses="lg:hidden" />
           {/* 直播區 */}
           <LiveSection />
-          <SectionDivider customClasses="lg:hidden" />
+          <SectionDivider />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection headerData={headerData} />
           <SectionDivider />
