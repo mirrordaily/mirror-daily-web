@@ -16,9 +16,14 @@ import type {
   latestShortsSchema,
   ImageKeys,
   resizedImageSchema,
+  sectionPostSchema,
 } from './data-schema'
 import type { z } from 'zod'
-import { getShortsPageUrl, getStoryPageUrl } from './site-urls'
+import {
+  getShortsPageUrl,
+  getStoryPageUrl,
+  getExternalPageUrl,
+} from './site-urls'
 import type { SectionPost } from '@/types/section'
 import type { CategoryPost } from '@/types/category'
 import type { AuthorPost } from '@/types/author'
@@ -181,31 +186,58 @@ const getFirstParagraphFromApiData = (apiData: any): string | undefined => {
   return apiData?.[0]?.content?.[0]
 }
 
-type RawPost = NonNullable<
-  GetPostsByCategorySlugQuery['posts'] | GetPostsBySectionSlugQuery['posts']
->[0]
+type RawPost =
+  | NonNullable<
+      GetPostsByCategorySlugQuery['posts'] | GetPostsBySectionSlugQuery['posts']
+    >[0]
+  | z.infer<typeof sectionPostSchema>
 
 export type PostData = CategoryPost | SectionPost
 
 const transformRawPost = (rawPost: RawPost): PostData => {
+  const isGQLPostFromGQL =
+    '__typename' in rawPost && rawPost.__typename === 'Post'
+  const isPostFromJSON = 'type' in rawPost && rawPost.type === 'story'
+  const isExternalFromJSON = 'type' in rawPost && rawPost.type === 'external'
+
   const id = rawPost.id
   const title = rawPost.title ?? ''
-  const link = getStoryPageUrl(id)
-  const publishedDate = dateFormatter(rawPost.publishedDate)
-  const heroImage = getHeroImage(rawPost.heroImage)
-  const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
-  const content = getFirstParagraphFromApiData(rawPost.apiData) ?? ''
-  const ogImage = getHeroImage(rawPost.og_image)
-  const postMainImage = selectMainImage(heroImage, ogImage)
-  const textContent = removeHtmlTags(brief || content)
+  const formattedDate = dateFormatter(rawPost.publishedDate)
 
-  return {
-    id,
-    title,
-    link,
-    publishedDate,
-    textContent,
-    postMainImage,
+  if (isGQLPostFromGQL || isPostFromJSON) {
+    const link = getStoryPageUrl(id)
+    const heroImage = getHeroImage(rawPost.heroImage)
+    const ogImage = getHeroImage(rawPost.og_image)
+    const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
+    const content = getFirstParagraphFromApiData(rawPost.apiData) ?? ''
+    const textContent = removeHtmlTags(brief || content)
+    const postMainImage = selectMainImage(heroImage, ogImage)
+
+    return {
+      id,
+      title,
+      link,
+      formattedDate,
+      textContent,
+      postMainImage,
+    }
+  } else if (isExternalFromJSON) {
+    const link = getExternalPageUrl(id)
+    const brief = rawPost.brief
+    const content = rawPost.content
+    const textContent = removeHtmlTags(brief || content)
+    const postMainImage = rawPost.thumb
+
+    return {
+      id,
+      title,
+      link,
+      formattedDate,
+      textContent,
+      postMainImage,
+    }
+  } else {
+    throw new Error('unexpected rawPost type')
   }
 }
 

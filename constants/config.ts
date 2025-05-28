@@ -79,6 +79,11 @@ const URL_STATIC_WEATHER = `${JSON_FILE_PATH}/weather.json`
 const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
 const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
 
+// section page
+const URL_STATIC_SECTION_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section`
+// category page
+const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category`
+
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
 export {
@@ -94,6 +99,8 @@ export {
   URL_STATIC_WEATHER,
   URL_STATIC_NEWS_SHORTSPAGE,
   URL_STATIC_CREATIVTY_SHORTPAGE,
+  URL_STATIC_SECTION_NEWS,
+  URL_STATIC_CATEGORY_NEWS,
   GCP_PROJECT_ID,
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_API_KEY,

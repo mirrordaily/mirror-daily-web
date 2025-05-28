@@ -166,3 +166,34 @@ export const headerSchema = z.array(
       }),
   ])
 )
+
+const baseSectionPostSchema = rawLatestPostSchema.pick({
+  id: true,
+  title: true,
+  publishedDate: true,
+})
+
+const sectionStorySchema = baseSectionPostSchema.extend({
+  type: z.literal('story'),
+  heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
+  og_image: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
+  apiData: z.unknown(),
+  apiDataBrief: z.unknown(),
+})
+
+const sectionExternalSchema = baseSectionPostSchema.extend({
+  type: z.literal('external'),
+  thumb: z.string(),
+  content: z.string(),
+  brief: z.string(),
+})
+
+export const countsSchema = z.object({
+  posts: z.number(),
+  externals: z.number(),
+})
+
+export const sectionPostSchema = z.union([
+  sectionStorySchema,
+  sectionExternalSchema,
+])

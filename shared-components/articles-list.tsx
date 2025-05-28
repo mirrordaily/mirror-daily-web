@@ -5,6 +5,7 @@ import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { notFound } from 'next/navigation'
 import type { PostData } from '@/utils/data-process'
+import { PAGE_SIZE } from '@/constants/section'
 
 type Props<T> = {
   initialPosts: T[]
@@ -13,8 +14,6 @@ type Props<T> = {
   totalAmount: number
   fetchMorePosts: (page: number) => Promise<T[]>
 }
-
-const PAGE_SIZE = 12
 
 export default function ArticlesList<T extends PostData>({
   initialPosts,
