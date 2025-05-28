@@ -1,7 +1,6 @@
 'use client'
 import type { LatestVideos } from '@/types/common'
 import { matchYoutubeUrl } from '@/utils/common'
-import dayjs from 'dayjs'
 import Image from 'next/image'
 
 export default function LatestVideoList({
@@ -42,9 +41,9 @@ export default function LatestVideoList({
           </div>
           <div className="flex flex-col gap-1">
             <p className="line-clamp-2">{video.title}</p>
-            <p className="text-sm font-normal leading-4">
-              {dayjs(video.updatedAt).format('YYYY-MM-DD')}
-            </p>
+            {video.updatedAt && (
+              <p className="text-sm font-normal leading-4">{video.updatedAt}</p>
+            )}
           </div>
         </a>
       ))}
