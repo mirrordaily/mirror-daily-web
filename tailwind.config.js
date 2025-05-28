@@ -14,15 +14,6 @@ module.exports = {
       lg: '1200px',
     },
     extend: {
-      colors: {
-        mirror: {
-          blue: {
-            600: '#896fcc',
-            700: '#674ab1',
-            800: '#3b1e86',
-          },
-        },
-      },
       backgroundColor: {
         mirror: {
           blue: {

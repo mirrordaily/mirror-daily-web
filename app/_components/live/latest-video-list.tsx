@@ -30,10 +30,12 @@ export default function LatestVideoList({
         >
           <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow lg:h-[100px] lg:w-[180px]">
             <Image
-              src={
-                getThumbnailByVideoId(getYoutubeId(video.fileUrl) ?? '') ||
-                '/images-next/default-image.png'
-              }
+              src={(() => {
+                const videoId = getYoutubeId(video.fileUrl)
+                return videoId
+                  ? getThumbnailByVideoId(videoId)
+                  : '/images-next/default-image.png'
+              })()}
               fill
               alt={`${video.title}`}
             />
