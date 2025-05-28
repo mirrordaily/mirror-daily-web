@@ -71,7 +71,7 @@ export enum SHORTS_TYPE {
 
 export enum LATEST_VIDEOS_TYPE {
   NEWS = 'news',
-  DERIVATIVE = 'creativity',
+  CREATIVITY = 'creativity',
 }
 
 export type Shorts = {
