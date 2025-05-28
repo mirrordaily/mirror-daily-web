@@ -191,7 +191,9 @@ const transformLatestVideos = (
     poster: getPosterFromShorts(rawData.heroImage),
     link: getShortsPageUrl(rawData.id),
     contributor: rawData.uploader,
-    updatedAt: dateFormatter(rawData.updatedAt),
+    updatedAt: rawData.updatedAt
+      ? dayjs(rawData.updatedAt).format('YYYY-MM-DD')
+      : '',
   }
 }
 
