@@ -62,7 +62,7 @@ export default function RootLayout({
         {/* <!-- Begin Dable Script / For inquiries, visit http://dable.io --> */}
         <Script
           type="text/javascript"
-          id="dable"
+          id="dable-script"
           dangerouslySetInnerHTML={{
             __html: `
             (function(d,a,b,l,e,r) {
@@ -77,6 +77,30 @@ export default function RootLayout({
         />
 
         {/* <!-- End Dable Script / For inquiries, visit http://dable.io --> */}
+        {/* Meta Pixel Code */}
+        <Script
+          type="text/javascript"
+          id="facebook"
+          dangerouslySetInnerHTML={{
+            __html: `!function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1223816476113313');
+            fbq('track', 'PageView');
+            `,
+          }}
+        />
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<img height="1" width="1" style="display: 'none'" src="https://www.facebook.com/tr?id=1223816476113313&ev=PageView&noscript=1" />`,
+          }}
+        />
+        {/* End Meta Pixel Code */}
         <noscript
           dangerouslySetInnerHTML={{
             __html: `<img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=24318560&amp;cv=3.9.1&amp;cj=1">`,

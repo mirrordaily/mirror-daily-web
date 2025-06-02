@@ -34,7 +34,6 @@ export default function ShortsItem({
   useEffect(() => {
     setIsClientSide(true)
   }, [])
-
   return (
     <a className="w-full select-none" href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
