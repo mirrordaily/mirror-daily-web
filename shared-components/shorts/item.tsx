@@ -1,10 +1,11 @@
 'use client'
 
 import type { Shorts } from '@/types/common'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import ReactPlayer from 'react-player/lazy'
 import SocialShareBar from '../social-share-bar'
 import useVideoViewLogger from '@/hooks/use-video-logger'
+import { ENV } from '@/constants/config'
 
 type Props = Shorts & {
   isActive: boolean
@@ -28,6 +29,10 @@ export default function ShortsItem({
   const [hasLoaded, setHasLoaded] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
   const [playedSeconds, setPlayedSeconds] = useState(0)
+  const [showMask, setShowMask] = useState(true)
+  const [maskTimeoutId, setMaskTimeoutId] = useState<NodeJS.Timeout | null>(
+    null
+  )
   const { sendVideoLog } = useVideoViewLogger({
     isActive,
     title,
@@ -46,9 +51,39 @@ export default function ShortsItem({
     }
   }, [readyToLoad, hasLoaded])
 
+  const startShowMaskTimer = useCallback(() => {
+    if (maskTimeoutId) {
+      clearTimeout(maskTimeoutId)
+    }
+    const newTimeoutId = setTimeout(() => {
+      setShowMask(true)
+    }, 3000)
+    setMaskTimeoutId(newTimeoutId)
+  }, [maskTimeoutId])
+
+  const handleMaskClick = () => {
+    setShowMask(false)
+    startShowMaskTimer()
+  }
+
+  useEffect(() => {
+    return () => {
+      if (maskTimeoutId) {
+        clearTimeout(maskTimeoutId)
+      }
+    }
+  }, [maskTimeoutId])
+
   return (
     <div className="relative h-full">
-      <div className="shorts-container">
+      <div className="shorts-container relative">
+        {showMask && ENV === 'dev' && (
+          <div
+            className="absolute inset-0 z-[10000] border border-red-500"
+            style={{ zIndex: 10000, backgroundColor: 'rgba(0, 0, 0, 0)' }}
+            onClick={handleMaskClick}
+          />
+        )}
         {isClientSide && hasLoaded && (
           <ReactPlayer
             url={fileUrl}
