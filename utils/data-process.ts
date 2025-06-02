@@ -195,8 +195,7 @@ type RawPost =
 export type PostData = CategoryPost | SectionPost
 
 const transformRawPost = (rawPost: RawPost): PostData => {
-  const isGQLPostFromGQL =
-    '__typename' in rawPost && rawPost.__typename === 'Post'
+  const isPostFromGQL = '__typename' in rawPost && rawPost.__typename === 'Post'
   const isPostFromJSON = 'type' in rawPost && rawPost.type === 'story'
   const isExternalFromJSON = 'type' in rawPost && rawPost.type === 'external'
 
@@ -204,7 +203,7 @@ const transformRawPost = (rawPost: RawPost): PostData => {
   const title = rawPost.title ?? ''
   const formattedDate = dateFormatter(rawPost.publishedDate)
 
-  if (isGQLPostFromGQL || isPostFromJSON) {
+  if (isPostFromGQL || isPostFromJSON) {
     const link = getStoryPageUrl(id)
     const heroImage = getHeroImage(rawPost.heroImage)
     const ogImage = getHeroImage(rawPost.og_image)
