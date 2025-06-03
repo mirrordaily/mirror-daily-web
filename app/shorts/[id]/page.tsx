@@ -1,7 +1,7 @@
 import ShortsLayout from '@/shared-components/shorts/layout'
 import { notFound } from 'next/navigation'
 import { LATEST_SHORT_PAGES, SITE_NAME } from '@/constants/misc'
-import { fetchShortsByTagAndVideoSection, fetchShortsData } from './action'
+import { fetchShortsRandom, fetchShortsData } from './action'
 import type { Metadata } from 'next'
 import { getDefaultMetadata } from '@/utils/common'
 import { getShortsPageUrl } from '@/utils/site-urls'
@@ -47,29 +47,14 @@ export default async function Page({ params }: PageProps) {
 
   if (!shortsData) notFound()
 
-  const data = await fetchShortsByTagAndVideoSection(
-    videoId,
-    shortsData.tagId,
-    shortsData.videoSection
-  )
+  const data = await fetchShortsRandom(videoId, 20, shortsData.videoSection)
 
   return (
     <ShortsLayout
       tabLinks={LATEST_SHORT_PAGES}
       activeTab={shortsData.videoSection}
     >
-      <VideoBlock
-        items={data}
-        fetchMore={async (page: number) => {
-          'use server'
-          return await fetchShortsByTagAndVideoSection(
-            videoId,
-            shortsData.tagId,
-            shortsData.videoSection,
-            page
-          )
-        }}
-      />
+      <VideoBlock items={data} />
     </ShortsLayout>
   )
 }
