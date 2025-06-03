@@ -79,8 +79,8 @@ export default function ShortsItem({
       <div className="shorts-container relative">
         {showMask && ENV === 'dev' && (
           <div
-            className="absolute inset-0 z-[10000] border border-red-500"
-            style={{ zIndex: 10000, backgroundColor: 'rgba(0, 0, 0, 0)' }}
+            className="absolute inset-0"
+            style={{ zIndex: 10000 }}
             onClick={handleMaskClick}
           />
         )}
@@ -91,7 +91,6 @@ export default function ShortsItem({
             height="100%"
             controls={true}
             loop={true}
-            playing={isActive}
             playsinline={true}
             config={{
               file: {
