@@ -7,7 +7,8 @@ import { fetchRelatedPosts } from '../actions'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
-
+import { ENV } from '@/constants/config'
+import DableWidget from '@/app/_components/dable-widget'
 type Props = Post
 
 export default async function ArticleSection({
@@ -20,6 +21,10 @@ export default async function ArticleSection({
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const adTypeRelated =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
+  const adTypeBottom =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
@@ -44,8 +49,16 @@ export default async function ArticleSection({
           {relatedPosts.length > 0 && (
             <RelatedNewsSection posts={relatedPosts} />
           )}
-          <div id="_popIn_recommend_word"></div>
-          <div id="_popIn_recommend"></div>
+          {adTypeRelated === 'dable' ? (
+            <DableWidget type="related" />
+          ) : (
+            <div id="_popIn_recommend_word" className="mt-6"></div>
+          )}
+          {adTypeBottom === 'dable' ? (
+            <DableWidget type="articleBottomPC" />
+          ) : (
+            <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+          )}
         </div>
       </div>
 
@@ -63,11 +76,7 @@ export default async function ArticleSection({
               slotKey="mirrordaily_article_300x600_1"
               customClasses="mb-[-20px]"
             />
-            <FeaturedNewsSection
-              title="最新新聞"
-              posts={latestPosts}
-              type="latest"
-            />
+            <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
           </>
         )}
         {popularPosts.length > 0 && (
@@ -77,11 +86,7 @@ export default async function ArticleSection({
               customClasses="mt-[-28px]"
             />
             <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
-            <FeaturedNewsSection
-              title="熱門新聞"
-              posts={popularPosts}
-              type="popular"
-            />
+            <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
           </>
         )}
       </div>

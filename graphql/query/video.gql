@@ -25,6 +25,35 @@ query GetLatestShorts($amount: Int!, $start: Int!) {
   }
 }
 
+query GetLatestVideos($amount: Int!, $start: Int!) {
+  news: videos(
+    skip: $start
+    take: $amount
+    orderBy: [{ publishedDate: desc }]
+    where: {
+      state: { equals: "published" }
+      isShorts: { equals: false }
+      videoSection: { equals: "news" }
+      youtubeUrl: { not: { equals: "" } }
+    }
+  ) {
+    ...LatestVideos
+  }
+  creativity: videos(
+    skip: $start
+    take: $amount
+    orderBy: [{ publishedDate: desc }]
+    where: {
+      state: { equals: "published" }
+      isShorts: { equals: false }
+      videoSection: { equals: "creativity" }
+      youtubeUrl: { not: { equals: "" } }
+    }
+  ) {
+    ...LatestVideos
+  }
+}
+
 query GetShortsData($id: ID!) {
   video(where: { id: $id }) {
     ...ShortsData

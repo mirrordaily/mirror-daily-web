@@ -39,22 +39,18 @@ export default function TopNewsSection({ headerData }: Props) {
   const postData: PostData = useMemo(() => {
     let latestList: PostData['Latest'] = [undefined]
 
-    if (liveEvent) {
-      latestList = [liveEvent, ...latestPosts.slice(0, 9)]
-    } else {
-      const first = latestPosts[0]
+    const first = latestPosts[0]
 
-      if (first) {
-        latestList = [
-          {
-            postName: first.postName,
-            postBrief: first.postBrief,
-            heroImage: first.heroImage,
-            link: first.link,
-          },
-          ...latestPosts.slice(1, 10),
-        ]
-      }
+    if (first) {
+      latestList = [
+        {
+          postName: first.postName,
+          postBrief: first.postBrief,
+          heroImage: first.heroImage,
+          link: first.link,
+        },
+        ...latestPosts.slice(1, 10),
+      ]
     }
 
     let hotList: PostData['Hot'] = [undefined]

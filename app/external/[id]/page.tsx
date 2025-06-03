@@ -12,7 +12,8 @@ import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/app/_components/miso-pageview'
-
+import DableWidget from '@/app/_components/dable-widget'
+import { ENV } from '@/constants/config'
 type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
@@ -57,6 +58,10 @@ export default async function Page({ params }: PageProps) {
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const adTypeRelated =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
+  const adTypeBottom =
+    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
 
   if (!externalPost) notFound()
 
@@ -83,6 +88,16 @@ export default async function Page({ params }: PageProps) {
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
           <RelatedNewsList posts={relatedPosts} />
+          {adTypeRelated === 'dable' ? (
+            <DableWidget type="related" />
+          ) : (
+            <div id="_popIn_recommend_word" className="mt-6"></div>
+          )}
+          {adTypeBottom === 'dable' ? (
+            <DableWidget type="articleBottomPC" />
+          ) : (
+            <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+          )}
         </div>
         <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />
         <div className="flex flex-col gap-y-[46px] md:gap-y-12 lg:gap-y-[60px]">

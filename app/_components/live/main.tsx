@@ -1,0 +1,29 @@
+'use client'
+import type { PickupItemInTopNewsSection } from '@/types/homepage'
+import ReactPlayer from 'react-player/lazy'
+import Loading from '../loading'
+
+export default function LiveSectionMain({ link }: PickupItemInTopNewsSection) {
+  return (
+    <div className="flex grow flex-col items-center lg:size-full lg:grow-0 lg:items-start">
+      <div className="md:tablet-live-video aspect-[330/220] w-full shrink-0 grow lg:aspect-video lg:w-full">
+        <ReactPlayer
+          url={link}
+          width="100%"
+          height="100%"
+          muted={false}
+          playing={false}
+          playsinline={true}
+          fallback={<Loading />}
+          config={{
+            file: {
+              attributes: {
+                preload: 'none',
+              },
+            },
+          }}
+        />
+      </div>
+    </div>
+  )
+}

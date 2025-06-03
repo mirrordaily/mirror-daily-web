@@ -7,7 +7,12 @@ import type {
   GetRelatedPostsByIdQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
-import type { HeaderData, HeroImage, Shorts } from '@/types/common'
+import type {
+  HeaderData,
+  HeroImage,
+  LatestVideos,
+  Shorts,
+} from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
@@ -17,6 +22,7 @@ import type {
   ImageKeys,
   resizedImageSchema,
   sectionPostSchema,
+  latestVideosSchema,
 } from './data-schema'
 import type { z } from 'zod'
 import {
@@ -178,6 +184,21 @@ const transformLatestShorts = (
     poster: getPosterFromShorts(rawData.heroImage),
     link: getShortsPageUrl(rawData.id),
     contributor: rawData.uploader,
+  }
+}
+const transformLatestVideos = (
+  rawData: z.infer<typeof latestVideosSchema>
+): LatestVideos => {
+  return {
+    id: rawData.id,
+    title: rawData.name,
+    fileUrl: rawData.youtubeUrl || rawData.videoSrc || '',
+    poster: getPosterFromShorts(rawData.heroImage),
+    link: getShortsPageUrl(rawData.id),
+    contributor: rawData.uploader,
+    updatedAt: rawData.updatedAt
+      ? dayjs(rawData.updatedAt).format('YYYY-MM-DD')
+      : '',
   }
 }
 
@@ -356,6 +377,7 @@ export {
   createDataFetchingChain,
   selectMainImage,
   transformLatestShorts,
+  transformLatestVideos,
   getFirstParagraphFromApiData,
   transformRawPost,
   transformRawPostWithSection,
