@@ -682,6 +682,7 @@ export type External = {
   publishedDateString?: Maybe<Scalars['String']['output']>
   relateds?: Maybe<Array<Post>>
   relatedsCount?: Maybe<Scalars['Int']['output']>
+  relation_display?: Maybe<Scalars['String']['output']>
   sections?: Maybe<Array<Section>>
   sectionsCount?: Maybe<Scalars['Int']['output']>
   sectionsInInputOrder?: Maybe<Array<Maybe<Section>>>
@@ -2386,6 +2387,7 @@ export type Post = {
   relateds?: Maybe<Array<Post>>
   relatedsCount?: Maybe<Scalars['Int']['output']>
   relatedsInInputOrder?: Maybe<Array<Maybe<Post>>>
+  relation_display?: Maybe<Scalars['String']['output']>
   sections?: Maybe<Array<Section>>
   sectionsCount?: Maybe<Scalars['Int']['output']>
   sectionsInInputOrder?: Maybe<Array<Maybe<Section>>>
