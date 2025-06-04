@@ -8,6 +8,7 @@ import { getTagPageUrl } from '@/utils/site-urls'
 export default function ArticleIntro({
   title,
   thumb,
+  thumbCaption,
   partner,
   externalsLink,
   publishedTime,
@@ -17,14 +18,19 @@ export default function ArticleIntro({
 }: PostIntro) {
   return (
     <section className="flex max-w-screen-sm flex-col items-center md:w-[600px] md:max-w-none lg:w-[720px]">
-      <figure className="relative order-1 mb-6 aspect-[3/2] w-full lg:order-2">
-        <Image
-          src={thumb || IMAGE_PATH}
-          alt={title}
-          fill
-          style={{ objectFit: 'cover' }}
-          unoptimized
-        />
+      <figure className="order-1 mb-6 w-full md:mb-2 lg:order-2 lg:mb-4">
+        <div className="relative aspect-[3/2] w-full">
+          <Image
+            src={thumb || IMAGE_PATH}
+            alt={title}
+            fill
+            style={{ objectFit: 'cover' }}
+            unoptimized
+          />
+        </div>
+        <figcaption className="mt-2 flex justify-center px-5 text-[13px] font-normal leading-normal text-[#7F8493] md:px-0 lg:mt-4">
+          {thumbCaption}
+        </figcaption>
       </figure>
       <div className="order-2 w-full px-5 md:px-0 lg:order-1">
         <p className="mb-1 text-[#ff800A] lg:mb-4">{`｜${sectionName}`}</p>
