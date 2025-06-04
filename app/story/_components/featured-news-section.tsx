@@ -1,16 +1,15 @@
 import FeaturedNewsCard from '@/shared-components/featured-news-card'
 import type { PopularNews } from '@/types/common'
 import type { LatestPost } from '@/types/common'
-import { ENV } from '@/constants/config'
 type Props<T> = {
   title: string
   posts: T
-  type: 'latest' | 'popular'
+  type?: 'latest' | 'popular'
 }
 
 export default function FeaturedNewsSection<
   T extends PopularNews[] | LatestPost[],
->({ title, posts, type }: Props<T>) {
+>({ title, posts }: Props<T>) {
   return (
     <section className="flex flex-col items-center gap-y-8 pl-12 pr-[47px] md:px-0 lg:gap-y-5">
       <h3 className="text-lg font-bold leading-normal text-[#674ab1]">
@@ -20,12 +19,12 @@ export default function FeaturedNewsSection<
         {posts.map((item) => (
           <FeaturedNewsCard {...item} key={item.postId} />
         ))}
-        {type === 'latest' && ENV !== 'prod' && (
+        {/* {type === 'latest' && (
           <div id="_popIn_recommend" className="hidden md:block"></div>
-        )}
-        {type === 'popular' && ENV !== 'prod' && (
+        )} */}
+        {/* {type === 'popular' && (
           <div id="_popIn_recommend_nd" className="hidden md:block"></div>
-        )}
+        )} */}
       </div>
     </section>
   )

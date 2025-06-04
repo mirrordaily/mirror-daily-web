@@ -76,6 +76,10 @@
     @apply inline-block self-start rounded-xl bg-[#FF5457] px-4 py-1 text-base font-bold text-white;
   }
 
+  .tablet-live-video {
+    @apply max-w-[504px] lg:max-w-[600px];
+  }
+
   .shorts-swiper-in-homepage .swiper-slide {
     @apply w-[225px];
   }

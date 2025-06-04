@@ -1,5 +1,4 @@
 import FeaturedNewsCard from '@/shared-components/featured-news-card'
-import { ENV } from '@/constants/config'
 type Props = {
   title: string
   posts: Parameters<typeof FeaturedNewsCard>[0][]
@@ -17,12 +16,12 @@ export default function FeatureNewsList({ title, posts }: Props) {
         {posts.map((item) => (
           <FeaturedNewsCard {...item} key={item.postId} />
         ))}
-        {title === '最新新聞' && ENV !== 'prod' && (
+        {/* {title === '最新新聞' && (
           <div id="_popIn_recommend" className="hidden md:block"></div>
-        )}
-        {title === '熱門新聞' && ENV !== 'prod' && (
+        )} */}
+        {/* {title === '熱門新聞' && (
           <div id="_popIn_recommend_nd" className="hidden md:block"></div>
-        )}
+        )} */}
       </div>
     </section>
   )
