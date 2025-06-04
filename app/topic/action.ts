@@ -72,12 +72,12 @@ async function fetchListTypeTopicPostBySlug({
 
     if (typeof result.topic.postsCount === 'number') {
       return {
-        items,
+        items: items as TopicPostData[],
         totalAmount: result.topic.postsCount,
       }
     } else {
       return {
-        items,
+        items: items as TopicPostData[],
       }
     }
   } else {
