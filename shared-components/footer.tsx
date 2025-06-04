@@ -52,7 +52,7 @@ export default function Footer(): ReactElement {
           />
         </a>
         <section className="mb-9 mt-4 tracking-[0.5px] md:mb-12 md:mt-[14px] lg:my-0 lg:ml-8 lg:mr-auto">
-          <div className="text-center text-sm font-normal leading-[20px] lg:space-x-2">
+          <div className="text-sm font-normal leading-[20px] lg:space-x-2">
             {CONTACT_LINKS.map(({ name, href, text }) => (
               <Fragment key={name}>
                 <p className="text-[#a6a6a6] lg:inline-block">{name}</p>
@@ -61,6 +61,37 @@ export default function Footer(): ReactElement {
                 </a>
               </Fragment>
             ))}
+          </div>
+          <div className="mt-1 text-xs font-normal leading-[28px]">
+            <p className="text-[#ffffff]">
+              本網頁使用{' '}
+              <a
+                className="text-[#1C7CED]"
+                href="https://developers.google.com/youtube/terms/developer-policies?hl=zh-tw#definition-youtube-api-services"
+                target="_blank"
+              >
+                YouTube API 服務
+              </a>
+              ，詳見{' '}
+              <a
+                className="text-[#1C7CED]"
+                href="https://www.youtube.com/t/terms?hl=zh-tw"
+                target="_blank"
+              >
+                YouTube 服務條款
+              </a>
+              、{' '}
+              <a
+                className="text-[#1C7CED]"
+                href="https://policies.google.com/privacy"
+                target="_blank"
+              >
+                Google 隱私權與條款
+              </a>
+            </p>
+            <p className="text-[#9a82da]">
+              氣象資料提供：交通部中央氣象署［臺灣各鄉鎮市區預報資料-臺灣各鄉鎮市區未來1週天氣預報］
+            </p>
           </div>
           <div className="hidden flex-row items-center gap-x-3 lg:mt-2 lg:flex">
             {ExtendedSocialLinks.map(({ name, href, icon }) => (

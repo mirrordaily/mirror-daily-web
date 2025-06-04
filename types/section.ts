@@ -3,8 +3,8 @@ import type { HeroImage } from './common'
 export type SectionPost = {
   id: string
   title: string
-  publishedDate: string
+  formattedDate: string
   link: string
-  postMainImage: HeroImage
+  postMainImage: HeroImage | string
   textContent: string
 }

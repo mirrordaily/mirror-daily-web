@@ -3,6 +3,7 @@ query GetExternalById($id: ID!) {
     id
     title
     thumb
+    thumbCaption
     publishedDate
     brief
     content
