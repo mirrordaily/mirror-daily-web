@@ -5,6 +5,8 @@ import Link from 'next/link'
 import SocialShareBar from '@/shared-components/social-share-bar'
 import type { Contact } from '@/types/story'
 import { getTagPageUrl } from '@/utils/site-urls'
+import IconMirrorDaily from '@/public/icons/logos/mirror-daily-black.svg'
+import NextImage from 'next/image'
 
 export default function HeroSection({
   title,
@@ -70,6 +72,10 @@ export default function HeroSection({
         <h2 className="mb-3 text-xl font-bold leading-[1.4] text-[#212944] lg:mb-4">
           {subtitle}
         </h2>
+
+        <div className="relative mb-3 h-7 w-[100px] lg:mb-4 lg:h-[42px] lg:w-[150px]">
+          <NextImage src={IconMirrorDaily} fill alt="mirror-daily-logo" />
+        </div>
 
         <div className="mb-4 flex flex-col gap-y-1 text-[13px] font-normal leading-normal text-[#7F8493] md:mb-3 lg:mb-4">
           <p>{publishedTime}</p>
