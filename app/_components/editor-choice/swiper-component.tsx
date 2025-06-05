@@ -9,7 +9,6 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import type { EditorChoice } from '@/types/homepage'
 import Image from 'next/image'
-import { useState } from 'react'
 
 type Props = {
   list: EditorChoice[]
@@ -17,8 +16,6 @@ type Props = {
 
 export default function SwiperComponent({ list }: Props) {
   const swiperNavigationButtonSize = { width: 48, height: 48 }
-  const [isSwiperBeginning, setIsBeginning] = useState(true)
-  const [isSwiperEnd, setIsSwiperEnd] = useState(false)
 
   return (
     <div className="relative">
@@ -43,16 +40,7 @@ export default function SwiperComponent({ list }: Props) {
           delay: 5000,
         }}
         keyboard={true}
-        onReachBeginning={() => {
-          setIsBeginning(true)
-        }}
-        onReachEnd={() => {
-          setIsSwiperEnd(true)
-        }}
-        onTransitionEnd={(swiper) => {
-          setIsBeginning(swiper.isBeginning)
-          setIsSwiperEnd(swiper.isEnd)
-        }}
+        loop={true}
         className="relative w-full md:rounded lg:rounded-none"
       >
         {list.map((item) => {
@@ -79,9 +67,7 @@ export default function SwiperComponent({ list }: Props) {
           )
         })}
         <div className="custom-swiper-pagination" />
-        <button
-          className={`custom-swiper-navigation-prev ${isSwiperBeginning ? 'first' : ''}`}
-        >
+        <button className="custom-swiper-navigation-prev">
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Previous Slide</span>
           <Image
@@ -90,9 +76,7 @@ export default function SwiperComponent({ list }: Props) {
             {...swiperNavigationButtonSize}
           />
         </button>
-        <button
-          className={`custom-swiper-navigation-next ${isSwiperEnd ? 'last' : ''}`}
-        >
+        <button className="custom-swiper-navigation-next">
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Next Slide</span>
           <Image

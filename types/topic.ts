@@ -1,4 +1,3 @@
-import type { PostData } from '@/utils/data-process'
 import type { HeroImage } from './common'
 
 export enum TOPIC_LEADING {
@@ -12,10 +11,13 @@ export enum TOPIC_LIST_TYPE {
   GROUP = 'group',
 }
 
-export type TopicPostData = Pick<
-  PostData,
-  'title' | 'id' | 'link' | 'textContent' | 'postMainImage'
->
+export type TopicPostData = {
+  id: string
+  title: string
+  link: string
+  textContent: string
+  postMainImage: HeroImage
+}
 
 export type PostDataWithTags = {
   id: string

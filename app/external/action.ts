@@ -18,6 +18,7 @@ function transformExternal(
   if (!rawData) return null
   const title = rawData.title ?? ''
   const thumb = rawData.thumb ?? ''
+  const thumbCaption = rawData.thumbCaption ?? ''
   const partner = rawData.partner?.name ?? ''
   const partnerSlug = rawData.partner?.slug ?? ''
   const externalsLink = getExternalsPageUrl(partnerSlug)
@@ -35,6 +36,7 @@ function transformExternal(
   return {
     title,
     thumb,
+    thumbCaption,
     partner,
     externalsLink,
     publishedTime,

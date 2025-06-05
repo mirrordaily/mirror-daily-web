@@ -3,7 +3,7 @@ import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
-import IconSearch from '@/public/icons/search.svg'
+import IconSearch from '@/public/icons/miso-search-white.svg'
 import IconLogo from '@/public/icons/logos/mirror-daily.svg'
 import IconFacebook from '@/public/icons/logos/facebook-black.svg'
 import IconInstagram from '@/public/icons/logos/instagram-black.svg'
@@ -72,10 +72,7 @@ export default function UiHeader({
 
           <div className="flex w-full justify-end">
             <div className="ml-auto mr-[16px] mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
-              <a
-                className="relative inline-block h-[22.15px] w-[22.29px] md:h-5 md:w-[18.57px] lg:mt-[3px] lg:h-[16.7px] lg:w-[14.86px]"
-                href="/search"
-              >
+              <a className="relative inline-block size-6" href="/search">
                 <NextImage src={IconSearch} fill={true} alt="搜尋" />
               </a>
             </div>
