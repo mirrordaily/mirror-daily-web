@@ -62,7 +62,7 @@ export default function Footer(): ReactElement {
               </Fragment>
             ))}
           </div>
-          <div className="mt-[10px] flex flex-col items-center text-center text-xs font-normal leading-[28px]">
+          <div className="mt-[10px] flex flex-col items-center text-center text-xs font-normal leading-[28px] md:items-start">
             <p className="max-w-[247px] text-[#ffffff] md:max-w-none">
               本網頁使用{' '}
               <a
