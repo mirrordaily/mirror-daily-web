@@ -26,7 +26,7 @@ export default function VideoBlock({
   if (items.length === 1) {
     const item = items?.[0] as Shorts
     return (
-      <div className="shorts-swiper-in-shorts-page">
+      <div className="shorts-swiper-in-shorts-page touch-none">
         <ShortsItem
           {...item}
           readyToLoad={true}

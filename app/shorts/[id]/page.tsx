@@ -53,6 +53,7 @@ export default async function Page({ params }: PageProps) {
     <ShortsLayout
       tabLinks={LATEST_SHORT_PAGES}
       activeTab={shortsData.videoSection}
+      className="touch-none"
     >
       <VideoBlock items={data} />
     </ShortsLayout>
