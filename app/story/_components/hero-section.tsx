@@ -73,7 +73,7 @@ export default function HeroSection({
           {subtitle}
         </h2>
 
-        <div className="relative mb-3 h-7 w-[100px] lg:mb-4 lg:h-[42px] lg:w-[150px]">
+        <div className="relative mb-3 h-7 w-[58px] lg:mb-4 lg:h-[42px] lg:w-[88px]">
           <NextImage src={IconMirrorDaily} fill alt="mirror-daily-logo" />
         </div>
 
