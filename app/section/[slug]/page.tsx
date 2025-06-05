@@ -103,17 +103,14 @@ export default async function Page({
           customClasses="my-9 mx-auto"
         />
       </div>
-      <main className="mb-10 flex w-full flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
-        <div className="flex w-full flex-col">
-          <ArticlesList
-            initialPosts={initialPosts}
-            totalAmount={totalAmount}
-            color={color}
-            name={name}
-            fetchMorePosts={fetchMorePosts}
-          />
-        </div>
-
+      <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
+        <ArticlesList
+          initialPosts={initialPosts}
+          totalAmount={totalAmount}
+          color={color}
+          name={name}
+          fetchMorePosts={fetchMorePosts}
+        />
         <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
         <PopularNewsSection />
         {/* <MobileGptAd
