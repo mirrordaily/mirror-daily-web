@@ -2,84 +2,130 @@
 import DateSwitcher from './date-switcher'
 import GameInfoCard from './game-info-card'
 import SelectMenu from './select-menu'
-import type { z } from 'zod'
-import type {
-  gameSchema,
-  sportsEventsApiResponseSchema,
-} from '@/utils/data-schema' // Adjust path as needed
 import { useMemo, useState } from 'react'
+import type { SportsGameData } from '@/types/homepage'
+import { useWindowSize } from 'usehooks-ts'
+import { createPortal } from 'react-dom'
 
-type DailyScheduleSports = z.infer<typeof sportsEventsApiResponseSchema>
 type SportsMainProps = {
-  scheduleData: DailyScheduleSports | undefined
+  scheduleData: SportsGameData[] | undefined
 }
-type GameType = z.infer<typeof gameSchema>
+
 enum SportsEvents {
   ALL = 'ALL',
   CPBL = 'CPBL',
   TPBL = 'TPBL',
 }
 
-enum DateChangeType {
-  PREVIOUS = 'previous',
-  NEXT = 'next',
-}
-const groupGamesByStatus = (games: GameType[]) => {
+// TODO: dayjs可以使用
+const groupGamesByStatus = (
+  games: SportsGameData[],
+  date: Date,
+  selectedSport: SportsEvents
+) => {
   const now = new Date()
+  const filterSelectedSports = (league: SportsEvents) => {
+    if (selectedSport === SportsEvents.ALL) return true
+    return selectedSport === league.toUpperCase()
+  }
   return {
     ongoing: games.filter(
-      (game) => game.present_status !== 1 && new Date(game.datetime) <= now
+      (game) =>
+        filterSelectedSports(game.league as SportsEvents) &&
+        game.presentStatus !== 1 &&
+        new Date(game.startTime) <= now &&
+        new Date(game.startTime).toDateString() === date.toDateString()
     ),
+    // TODO: 如果當天沒有就會取最新兩場
     upcoming: games.filter(
-      (game) => game.present_status !== 1 && new Date(game.datetime) > now
+      (game) =>
+        filterSelectedSports(game.league as SportsEvents) &&
+        game.presentStatus !== 1 &&
+        new Date(game.startTime) > now &&
+        new Date(game.startTime).toDateString() === date.toDateString()
     ),
-    finished: games.filter((game) => game.present_status === 1),
+    finished: games.filter(
+      (game) =>
+        filterSelectedSports(game.league as SportsEvents) &&
+        game.presentStatus === 1 &&
+        new Date(game.startTime).toDateString() === date.toDateString()
+    ),
   }
 }
 
 export default function SportsMain({ scheduleData }: SportsMainProps) {
+  const { width } = useWindowSize()
+  const isDesktop = width >= 1200
   const [selectedSport, setSelectedSport] = useState<SportsEvents>(
     SportsEvents.ALL
   )
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(
+    new Date('2025-05-18T17:05:00')
+  )
+
   //TODO: props should be passed to DateSwitcher
   const sportOptions = useMemo(
     () => [
       { value: SportsEvents.ALL, label: '全部賽事' },
       { value: SportsEvents.CPBL, label: 'CPBL' },
       { value: SportsEvents.TPBL, label: 'TPBL' },
-      // Add more sports as they become available from scheduleData
     ],
     []
   )
-  const cpblDailySchedules = scheduleData?.cpbl // Assuming scheduleData.cpbl is Array<{date: string, games: GameType[]}>
-  const allCpblGames: GameType[] = cpblDailySchedules
-    ? cpblDailySchedules.flatMap((schedule) => schedule.games)
-    : []
+
   console.log({
     scheduleData,
     selectedSport,
-    games: groupGamesByStatus(allCpblGames),
     selectedDate,
   })
-  return (
+  return createPortal(
     <div>
-      <section className="flex">
+      <section className="flex justify-between">
         <SelectMenu
           options={sportOptions}
           selectedValue={selectedSport}
           onSelectChange={(value) => setSelectedSport(value as SportsEvents)}
         />
         <DateSwitcher
-          onSelectChange={(value) => setSelectedDate(value as DateChangeType)}
+          date={selectedDate}
+          onSelectChange={(value) => setSelectedDate(value as Date)}
         />
       </section>
-      <p>進行中</p>
-      <GameInfoCard />
-      <p>即將到來</p>
-      <GameInfoCard />
-      <p>已結束</p>
-      <GameInfoCard />
-    </div>
+      <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
+        進行中
+      </p>
+      {groupGamesByStatus(
+        scheduleData ?? [],
+        selectedDate,
+        selectedSport
+      ).ongoing.map((game) => (
+        <GameInfoCard key={game.id} gameData={game} />
+      ))}
+      <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
+        即將到來
+      </p>
+      {groupGamesByStatus(
+        scheduleData ?? [],
+        selectedDate,
+        selectedSport
+      ).upcoming.map((game) => (
+        <GameInfoCard key={game.id} gameData={game} />
+      ))}
+      <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
+        已結束
+      </p>
+      <section className="flex flex-col gap-2">
+        {groupGamesByStatus(
+          scheduleData ?? [],
+          selectedDate,
+          selectedSport
+        ).finished.map((game) => (
+          <GameInfoCard key={game.id} gameData={game} />
+        ))}
+      </section>
+    </div>,
+    document.querySelector(
+      isDesktop ? '#sports-section-desktop-slug' : '#sports-section-mobile-slug'
+    ) ?? document.body
   )
 }

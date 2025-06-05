@@ -14,12 +14,22 @@ module.exports = {
       lg: '1200px',
     },
     extend: {
+      borderRadius: {
+        '2xs': '4px',
+      },
       colors: {
         mirror: {
           blue: {
             600: '#896fcc',
             700: '#674ab1',
             800: '#3b1e86',
+          },
+          red: '#FF5457',
+        },
+        black: {
+          primary: {
+            300: '#CCCED4',
+            500: '#7F8493',
           },
         },
       },
@@ -39,6 +49,7 @@ module.exports = {
           'linear-gradient(to bottom, rgba(255, 255, 255, 0) 648px, rgba(255, 255, 255, 1) 906px)',
       },
       zIndex: {
+        'sports-event-select-menu': 10,
         'over-editor-choice': 10,
         'over-shorts': 10,
         'over-slides': 10,

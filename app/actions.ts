@@ -1,11 +1,12 @@
 'use server'
 
-import type {
-  PickupItemInTopNewsSection,
-  FlashNews,
-  EditorChoice,
-  TopicPost,
-  CityAndWeather,
+import {
+  type PickupItemInTopNewsSection,
+  type FlashNews,
+  type EditorChoice,
+  type TopicPost,
+  type CityAndWeather,
+  type SportsGameData,
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
@@ -338,8 +339,43 @@ export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
   }
 }
 
+const transformSportsEvents = (
+  rawData: z.infer<typeof sportsEventsApiResponseSchema> | undefined
+): SportsGameData[] => {
+  if (!rawData) return []
+
+  const allGames: SportsGameData[] = []
+
+  for (const leagueName of Object.keys(rawData) as Array<
+    keyof typeof rawData
+  >) {
+    const leagueData = rawData[leagueName]
+
+    if (!Array.isArray(leagueData)) return []
+    leagueData.forEach((dailySchedule) => {
+      if (!dailySchedule || !Array.isArray(dailySchedule.games)) return []
+      dailySchedule.games.forEach((game) => {
+        allGames.push({
+          id: `${leagueName}-${game.game_sno}`,
+          league: leagueName,
+          startTime: game.datetime,
+          presentStatus: game.present_status,
+          homeTeamName: game.home_team,
+          homeTeamScore: game.home_score,
+          homeTeamLogo: game.home_logo,
+          visitingTeamName: game.visiting_team,
+          visitingTeamScore: game.visiting_score,
+          visitingTeamLogo: game.visiting_logo,
+        })
+      })
+    })
+  }
+
+  return allGames
+}
+
 export const fetchSportsEvents = async (): Promise<
-  z.infer<typeof sportsEventsApiResponseSchema> | undefined
+  SportsGameData[] | undefined
 > => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching sports events',
@@ -349,7 +385,7 @@ export const fetchSportsEvents = async (): Promise<
   try {
     const resp = await fetch(URL_STATIC_SPORTS_EVENTS)
     const rawSportsEventsData = await schema.parse(resp.json())
-    return rawSportsEventsData
+    return transformSportsEvents(rawSportsEventsData)
   } catch (e) {
     errorLogger(e)
   }

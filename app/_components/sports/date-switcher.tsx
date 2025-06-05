@@ -1,20 +1,30 @@
 import Image from 'next/image'
-import { useState } from 'react'
 
 enum DateChangeType {
   PREVIOUS = 'previous',
   NEXT = 'next',
 }
-export default function DateSwitcher() {
-  const [date, setDate] = useState(new Date())
+type DateSwitcherProps = {
+  date: Date
+  onSelectChange: (value: Date) => void
+}
+export default function DateSwitcher({
+  date,
+  onSelectChange,
+}: DateSwitcherProps) {
   const handleDateChange = (type: DateChangeType) => {
     const changedDate = new Date(date)
-    if (type === DateChangeType.PREVIOUS) {
-      changedDate.setDate(changedDate.getDate() - 1)
-    } else {
-      changedDate.setDate(changedDate.getDate() + 1)
+    switch (type) {
+      case DateChangeType.PREVIOUS:
+        changedDate.setDate(changedDate.getDate() - 1)
+        break
+      case DateChangeType.NEXT:
+        changedDate.setDate(changedDate.getDate() + 1)
+        break
+      default:
+        break
     }
-    setDate(changedDate)
+    onSelectChange(changedDate)
   }
   return (
     <div className="flex items-center gap-3">

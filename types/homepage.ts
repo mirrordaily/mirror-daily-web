@@ -44,3 +44,16 @@ export type CityAndWeather = {
     fetchTime: string
   }
 }
+
+export type SportsGameData = {
+  id: string
+  league: string
+  startTime: string
+  presentStatus: number
+  homeTeamName: string
+  homeTeamScore: number
+  homeTeamLogo: string
+  visitingTeamName: string
+  visitingTeamScore: number
+  visitingTeamLogo: string
+}

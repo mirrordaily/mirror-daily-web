@@ -5,7 +5,7 @@ export default async function SportsSection() {
   const result = await fetchSportsEvents()
   console.log({ result })
   return (
-    <div className="section-in-homepage flex flex-col bg-[#F6F6FB]">
+    <div className="section-in-homepage flex flex-col bg-[#F6F6FB] py-4">
       <SportsMain scheduleData={result}></SportsMain>
     </div>
   )

@@ -13,7 +13,7 @@ export default function TopicItem({
   return (
     <div
       className={`group/card relative flex w-full flex-col gap-y-2 ${
-        isFirst ? '' : 'md:w-[204px] lg:w-[456px] lg:flex-row lg:gap-x-4'
+        isFirst ? '' : 'md:w-[204px] lg:gap-x-4'
       } `}
     >
       <a

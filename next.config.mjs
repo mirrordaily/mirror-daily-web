@@ -132,6 +132,10 @@ const nextConfig = {
         hostname: 'storage.googleapis.com',
         pathname: '/statics-dev.mirrordaily.news/ads_image/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.cpbl.com.tw',
+      },
     ],
   },
 }

@@ -78,11 +78,13 @@ const URL_STATIC_SPORTS_EVENTS =
 // shorts listing page
 const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
 const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
+const CPBL_SITE_URL = 'https://www.cpbl.com.tw'
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
 export {
   ENV,
+  CPBL_SITE_URL,
   API_ENDPOINT,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,

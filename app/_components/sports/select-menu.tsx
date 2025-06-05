@@ -94,7 +94,7 @@ export default function SelectMenu({
       {isOpen && (
         <div
           id="custom-options-list"
-          className="absolute top-full mt-1 w-full min-w-max bg-white px-6 py-3 shadow-sportsEventsSelect focus:outline-none"
+          className="absolute top-full z-sports-event-select-menu mt-1 w-full min-w-max bg-white px-6 py-3 shadow-sportsEventsSelect focus:outline-none"
           role="listbox"
         >
           {options.map((option) => (
