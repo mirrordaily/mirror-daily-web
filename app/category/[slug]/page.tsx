@@ -1,5 +1,9 @@
 import { notFound } from 'next/navigation'
-import { fetchCategoryPosts, fetchCategoryInformation } from '../actions'
+import {
+  fetchCategoryPosts,
+  fetchCategoryPostsFromJSON,
+  fetchCategoryInformation,
+} from '../actions'
 import ArticlesList from '../../../shared-components/articles-list'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import type { Metadata } from 'next'
@@ -8,6 +12,7 @@ import { getCategoryPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/category'
 
 type PageProps = { params: { slug: string } }
 
@@ -41,32 +46,46 @@ export async function generateMetadata({
   return metaData
 }
 
-const PAGE_SIZE = 12
-
 export default async function Page({ params }: PageProps) {
   const slug = params.slug
 
   const categoryInfo = await fetchCategoryInformation(slug)
-  const { posts, totalAmount = 0 } = await fetchCategoryPosts({
+  if (!categoryInfo) notFound()
+  const color = categoryInfo.color
+  const name = categoryInfo.name
+
+  const { postsData: initialPosts, jsonPostsCount } =
+    await fetchCategoryPostsFromJSON({ slug })
+
+  const fetchMorePosts = async (page: number) => {
+    'use server'
+
+    const JSON_PAGE_LIMIT = Math.ceil(jsonPostsCount / JSON_ITEMS_COUNT)
+
+    if (page <= JSON_PAGE_LIMIT) {
+      const { postsData } = await fetchCategoryPostsFromJSON({ slug, page })
+      if (postsData.length) return postsData
+    }
+
+    const gqlPage = page - JSON_PAGE_LIMIT
+    if (gqlPage < 1) return []
+
+    const { posts } = await fetchCategoryPosts({
+      slug,
+      take: PAGE_SIZE,
+      skip: PAGE_SIZE * (gqlPage - 1),
+    })
+    return posts
+  }
+
+  const { amount: postsCount = 0 } = await fetchCategoryPosts({
     take: PAGE_SIZE,
     skip: 0,
     slug,
     withAmount: true,
   })
-  if (!categoryInfo) notFound()
 
-  const color = categoryInfo.color
-  const name = categoryInfo.name
-
-  const fetchMorePosts = async (page: number) => {
-    'use server'
-    const { posts } = await fetchCategoryPosts({
-      slug,
-      take: PAGE_SIZE,
-      skip: PAGE_SIZE * (page - 1),
-    })
-    return posts
-  }
+  const totalAmount = jsonPostsCount + postsCount
 
   return (
     <>
@@ -84,7 +103,7 @@ export default async function Page({ params }: PageProps) {
       </div>
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList
-          initialPosts={posts}
+          initialPosts={initialPosts}
           color={color}
           name={name}
           fetchMorePosts={fetchMorePosts}

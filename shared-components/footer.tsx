@@ -62,6 +62,37 @@ export default function Footer(): ReactElement {
               </Fragment>
             ))}
           </div>
+          <div className="mt-[10px] flex flex-col items-center text-center text-xs font-normal leading-[28px] md:items-start">
+            <p className="max-w-[247px] text-[#ffffff] md:max-w-none">
+              本網頁使用{' '}
+              <a
+                className="text-[#1C7CED]"
+                href="https://developers.google.com/youtube/terms/developer-policies?hl=zh-tw#definition-youtube-api-services"
+                target="_blank"
+              >
+                YouTube API 服務
+              </a>
+              ，詳見{' '}
+              <a
+                className="text-[#1C7CED]"
+                href="https://www.youtube.com/t/terms?hl=zh-tw"
+                target="_blank"
+              >
+                YouTube 服務條款
+              </a>
+              、{' '}
+              <a
+                className="text-[#1C7CED]"
+                href="https://policies.google.com/privacy"
+                target="_blank"
+              >
+                Google 隱私權與條款
+              </a>
+            </p>
+            <p className="max-w-[294px] text-[#9a82da] md:max-w-none">
+              氣象資料提供：交通部中央氣象署［臺灣各鄉鎮市區預報資料-臺灣各鄉鎮市區未來1週天氣預報］
+            </p>
+          </div>
           <div className="hidden flex-row items-center gap-x-3 lg:mt-2 lg:flex">
             {ExtendedSocialLinks.map(({ name, href, icon }) => (
               <a key={name} href={href} target="_blank">

@@ -7,15 +7,19 @@ import type { PropsWithChildren } from 'react'
 type Props = {
   tabLinks: Record<SHORTS_TYPE, string>
   activeTab: SHORTS_TYPE
+  className?: string
 }
 
 export default function ShortsLayout({
   tabLinks,
   activeTab,
   children,
+  className,
 }: PropsWithChildren<Props>) {
   return (
-    <div className="relative flex h-screen max-h-screen w-full max-w-screen-sm flex-col md:max-w-screen-lg">
+    <div
+      className={`relative flex h-screen max-h-screen w-full max-w-screen-sm flex-col md:max-w-screen-lg ${className}`}
+    >
       <ShortsHeader />
       <div className="flex grow flex-col overflow-hidden md:flex-row md:px-5 md:pt-[var(--shorts-body-padding)]">
         <Navbar tabs={tabLinks} activeTab={activeTab} />

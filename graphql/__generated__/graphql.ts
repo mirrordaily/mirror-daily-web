@@ -4705,6 +4705,7 @@ export type GetExternalByIdQuery = {
     id: string
     title?: string | null
     thumb?: string | null
+    thumbCaption?: string | null
     publishedDate?: any | null
     brief?: string | null
     content?: string | null
@@ -7462,6 +7463,10 @@ export const GetExternalByIdDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'thumb' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'thumbCaption' },
+                },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'publishedDate' },

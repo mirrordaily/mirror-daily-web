@@ -11,6 +11,9 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { transformRawPost } from '@/utils/data-process'
 import type { SectionPost } from '@/types/section'
+import { URL_STATIC_SECTION_NEWS } from '@/constants/config'
+import { sectionPostSchema, countsSchema } from '@/utils/data-schema'
+import { z } from 'zod'
 
 function transformSectionPost(
   rawData: GetPostsBySectionSlugQuery['posts']
@@ -31,7 +34,7 @@ async function fetchSectionPosts({
   withAmount?: boolean
 }): Promise<{
   posts: SectionPost[]
-  totalAmount?: number
+  amount?: number
 }> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching section posts on section page',
@@ -50,18 +53,62 @@ async function fetchSectionPosts({
   if (!result) {
     return {
       posts: [],
-      totalAmount: 0,
+      amount: 0,
     }
   }
   const posts = transformSectionPost(result.posts)
   if (typeof result.postsCount === 'number') {
     return {
       posts,
-      totalAmount: result.postsCount,
+      amount: result.postsCount,
     }
   } else {
     return {
       posts,
+    }
+  }
+}
+
+async function fetchSectionPostsFromJSON({
+  slug,
+  page = 1,
+}: {
+  slug: string
+  page?: number
+}): Promise<{ postsData: SectionPost[]; jsonPostsCount: number }> {
+  const errorLogger = createErrorLogger(
+    `Error occurs while fetching section posts, section slug: ${slug}`,
+    getTraceObject()
+  )
+
+  const schema = z.object({
+    items: z.array(sectionPostSchema),
+    counts: countsSchema,
+  })
+
+  try {
+    const resp = await fetch(`${URL_STATIC_SECTION_NEWS}_${slug}_${page}.json`)
+    if (!resp.ok) {
+      return {
+        postsData: [],
+        jsonPostsCount: 0,
+      }
+    }
+    const rawData = await resp.json()
+    const data = schema.parse(rawData?.section)
+    const { posts, externals } = data.counts
+    const postsData = data.items.map((post) => transformRawPost(post))
+    const jsonPostsCount = posts + externals
+
+    return {
+      postsData,
+      jsonPostsCount,
+    }
+  } catch (e) {
+    errorLogger(e)
+    return {
+      postsData: [],
+      jsonPostsCount: 0,
     }
   }
 }
@@ -105,4 +152,4 @@ async function fetchSectionInformation(slug: string) {
   }
 }
 
-export { fetchSectionPosts, fetchSectionInformation }
+export { fetchSectionPosts, fetchSectionPostsFromJSON, fetchSectionInformation }

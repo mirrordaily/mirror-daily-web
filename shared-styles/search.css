@@ -50,7 +50,7 @@
           display: block;
           width: 32px;
           height: 32px;
-          background: url('/images-next/search-logo.svg');
+          background: url('/icons/miso-search-gray.svg');
           margin-left: 12px;
         }
 
@@ -70,7 +70,7 @@
             content: '';
             width: 30px;
             height: 27px;
-            background: url('/images-next/search-button.svg');
+            background: url('/icons/search-button.svg');
           }
           svg {
             display: none;
