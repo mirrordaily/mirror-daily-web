@@ -38,7 +38,7 @@ export default function ArticleIntro({
         <h1 className="mb-3 text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
           {title}
         </h1>
-        <div className="relative mb-3 h-7 w-[100px] lg:mb-4 lg:h-[42px] lg:w-[150px]">
+        <div className="relative mb-3 h-7 w-[58px] lg:mb-4 lg:h-[42px] lg:w-[88px]">
           <Image src={IconMirrorDaily} fill alt="mirror-daily-logo" />
         </div>
         <div className="mb-4 flex flex-col gap-y-1 text-[13px] font-normal leading-normal text-[#7F8493] md:mb-3 lg:mb-4">
