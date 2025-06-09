@@ -5733,6 +5733,8 @@ export type GetShortsDataQuery = {
   __typename?: 'Query'
   video?: {
     __typename?: 'Video'
+    youtubeUrl?: string | null
+    videoSrc?: string | null
     id: string
     name?: string | null
     state?: string | null
@@ -12383,6 +12385,8 @@ export const GetShortsDataDocument = {
                   kind: 'FragmentSpread',
                   name: { kind: 'Name', value: 'ShortsData' },
                 },
+                { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
               ],
             },
           },

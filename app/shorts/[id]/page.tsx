@@ -47,7 +47,17 @@ export default async function Page({ params }: PageProps) {
 
   if (!shortsData) notFound()
 
-  const data = await fetchShortsRandom(videoId, 20, shortsData.videoSection)
+  const data = await fetchShortsRandom(videoId, 19, shortsData.videoSection)
+
+  const { id, name, videoSrc, youtubeUrl } = shortsData
+  data.unshift({
+    id,
+    title: name,
+    fileUrl: videoSrc ?? youtubeUrl ?? '',
+    poster: '',
+    link: `/shorts/${id}`,
+    contributor: '',
+  })
 
   return (
     <ShortsLayout

@@ -145,6 +145,8 @@ export const shortsDataSchema = z.object({
   isShorts: z.boolean(),
   uploader: z.string(),
   videoSection: z.nativeEnum(SHORTS_TYPE),
+  youtubeUrl: z.string().nullish(),
+  videoSrc: z.string().nullish(),
   state: z.enum(['draft', 'scheduled', 'published']),
   tags: z.array(
     z.object({

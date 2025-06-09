@@ -46,6 +46,8 @@ export const fetchShortsData = async (
       contributor: data.uploader,
       videoSection: data.videoSection,
       tagId: data.tags[0]?.id,
+      youtubeUrl: data.youtubeUrl || '',
+      videoSrc: data.videoSrc || '',
     }
   }
 

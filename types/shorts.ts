@@ -6,6 +6,8 @@ export type ShortsData = {
   state: string
   contributor: string
   videoSection: SHORTS_TYPE
+  youtubeUrl?: string
+  videoSrc?: string
   tagId?: string
 }
 

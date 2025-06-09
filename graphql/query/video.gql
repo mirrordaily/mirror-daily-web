@@ -57,6 +57,8 @@ query GetLatestVideos($amount: Int!, $start: Int!) {
 query GetShortsData($id: ID!) {
   video(where: { id: $id }) {
     ...ShortsData
+    youtubeUrl
+    videoSrc
   }
 }
 
