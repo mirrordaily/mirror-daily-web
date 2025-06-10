@@ -6,6 +6,7 @@ import type { Metadata } from 'next'
 import { getDefaultMetadata } from '@/utils/common'
 import { getShortsPageUrl } from '@/utils/site-urls'
 import VideoBlock from '@/shared-components/shorts/video-block'
+import { IMAGE_PATH } from '@/constants/default-path'
 
 type PageProps = {
   params: { id?: string }
@@ -24,6 +25,7 @@ export async function generateMetadata({
   const defaultMetadata = getDefaultMetadata()
 
   const title = `${shortsData.name} - ${SITE_NAME}`
+  const image = shortsData.heroImage?.resized?.original || IMAGE_PATH
 
   const metaData = Object.assign(
     {},
@@ -34,6 +36,7 @@ export async function generateMetadata({
         ...(defaultMetadata.openGraph ?? {}),
         title,
         url: getShortsPageUrl(id),
+        images: image,
       },
     }
   )

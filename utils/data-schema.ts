@@ -153,6 +153,7 @@ export const shortsDataSchema = z.object({
       id: z.string(),
     })
   ),
+  heroImage: heroImageSchema.nullable(),
 })
 
 export const latestVideosSchema = z.object({

@@ -1,4 +1,4 @@
-import type { SHORTS_TYPE } from './common'
+import type { HeroImage, SHORTS_TYPE } from './common'
 
 export type ShortsData = {
   id: string
@@ -9,6 +9,7 @@ export type ShortsData = {
   youtubeUrl?: string
   videoSrc?: string
   tagId?: string
+  heroImage: HeroImage
 }
 
 export enum FormState {
