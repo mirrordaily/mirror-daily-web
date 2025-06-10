@@ -6,6 +6,7 @@ import { latestShortsSchema, shortsDataSchema } from '@/utils/data-schema'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import {
   createDataFetchingChain,
+  getHeroImage,
   transformLatestShorts,
 } from '@/utils/data-process'
 import {
@@ -46,6 +47,9 @@ export const fetchShortsData = async (
       contributor: data.uploader,
       videoSection: data.videoSection,
       tagId: data.tags[0]?.id,
+      youtubeUrl: data.youtubeUrl || '',
+      videoSrc: data.videoSrc || '',
+      heroImage: getHeroImage(data.heroImage),
     }
   }
 
