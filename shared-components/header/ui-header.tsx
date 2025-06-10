@@ -71,9 +71,16 @@ export default function UiHeader({
           </a>
 
           <div className="flex w-full justify-end">
-            <div className="ml-auto mr-[16px] mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
-              <a className="relative inline-block size-6" href="/search">
-                <NextImage src={IconSearch} fill={true} alt="搜尋" />
+            <div className="ml-auto mr-4 mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
+              <a
+                className="flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px]"
+                href="/search"
+              >
+                <span className="md:hidden">AI 搜尋</span>
+                <span className="hidden md:block">AI 智慧搜尋</span>
+                <span className="relative inline-block size-5">
+                  <NextImage src={IconSearch} fill={true} alt="搜尋" />
+                </span>
               </a>
             </div>
             {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
