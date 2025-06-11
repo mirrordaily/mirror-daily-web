@@ -26,6 +26,16 @@ type ContactLink = SocialLinks & {
 // TODO: update url values
 export const PAGE_LINKS: PageLink[] = [
   {
+    name: '新聞自律',
+    href: '/',
+    isExternal: true,
+  },
+  {
+    name: 'AI使用規範',
+    href: 'https://www.mirrordaily.news/story/4764',
+    isExternal: true,
+  },
+  {
     name: '廣告業務',
     href: '/',
     isExternal: true,
@@ -35,16 +45,16 @@ export const PAGE_LINKS: PageLink[] = [
     href: '/',
     isExternal: true,
   },
+  {
+    name: '隱私權政策',
+    href: 'https://www.mirrordaily.news/story/4936',
+    isExternal: true,
+  },
   // {
   //   name: '下載APP',
   //   href: '/',
   //   isExternal: true,
   // },
-  {
-    name: '新聞自律',
-    href: '/',
-    isExternal: true,
-  },
 ]
 
 export const CONTACT_LINKS: ContactLink[] = [

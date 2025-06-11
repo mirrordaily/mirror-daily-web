@@ -127,7 +127,7 @@ export default function Footer(): ReactElement {
             />
           </a>
         </section>
-        <hr className="mb-4 mt-7 block h-px w-[200px] bg-[#a6a6a6] lg:ml-6 lg:h-[76px] lg:w-px lg:bg-white" />
+        <hr className="mb-4 mt-7 block h-px w-[200px] bg-[#a6a6a6] lg:my-[38px] lg:ml-6 lg:h-24 lg:w-px lg:bg-white" />
         <section
           className={`relative text-center text-sm font-normal leading-[20px] text-white lg:my-[38px] lg:ml-[10.5px] lg:mr-[27.5px]`}
         >
