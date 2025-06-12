@@ -1,30 +1,31 @@
 import Image from 'next/image'
+import dayjs, { type Dayjs } from 'dayjs'
+import 'dayjs/locale/zh-tw'
 
 enum DateChangeType {
   PREVIOUS = 'previous',
   NEXT = 'next',
 }
 type DateSwitcherProps = {
-  date: Date
-  onSelectChange: (value: Date) => void
+  date: Dayjs
+  onSelectChange: (value: Dayjs) => void
 }
 export default function DateSwitcher({
   date,
   onSelectChange,
 }: DateSwitcherProps) {
   const handleDateChange = (type: DateChangeType) => {
-    const changedDate = new Date(date)
+    const changedDate = dayjs(date).startOf('day')
     switch (type) {
       case DateChangeType.PREVIOUS:
-        changedDate.setDate(changedDate.getDate() - 1)
+        onSelectChange(changedDate.subtract(1, 'day'))
         break
       case DateChangeType.NEXT:
-        changedDate.setDate(changedDate.getDate() + 1)
+        onSelectChange(changedDate.add(1, 'day'))
         break
       default:
         break
     }
-    onSelectChange(changedDate)
   }
   return (
     <div className="flex items-center gap-3">
@@ -39,11 +40,7 @@ export default function DateSwitcher({
           alt="previous date"
         />
       </button>
-      {date.toLocaleDateString('zh-TW', {
-        weekday: 'short',
-        month: '2-digit',
-        day: '2-digit',
-      })}
+      {dayjs(date).locale('zh-tw').format('MM/DD (ddd)')}
       <button
         className="relative size-5"
         onClick={() => handleDateChange(DateChangeType.NEXT)}

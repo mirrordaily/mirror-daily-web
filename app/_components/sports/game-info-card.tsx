@@ -1,16 +1,22 @@
 import { CPBL_SITE_URL } from '@/constants/config'
-import type { SportsGameData } from '@/types/homepage'
+import dayjs, { type Dayjs } from 'dayjs'
 import Image from 'next/image'
+import GlowingDot from './glowing-dot'
+import { type GameNode } from './game-node'
 
 type GameInfoCardProps = {
-  gameData: SportsGameData
+  gameData: GameNode
+  selectedDate: Dayjs
 }
 
 const TriganleTag = () => (
   <div className="absolute -right-5 top-[6px] w-2 border-y-8 border-r-[12px] border-y-transparent border-r-mirror-red"></div>
 )
 
-export default function GameInfoCard({ gameData }: GameInfoCardProps) {
+export default function GameInfoCard({
+  gameData,
+  selectedDate,
+}: GameInfoCardProps) {
   const {
     homeTeamLogo,
     visitingTeamLogo,
@@ -19,13 +25,60 @@ export default function GameInfoCard({ gameData }: GameInfoCardProps) {
     homeTeamName,
     visitingTeamName,
     league,
+    startTime,
+    endTime,
+    currentPlay,
+    status,
   } = gameData
-  console.log({ gameData })
+  const getDisplayScore = (teamType: 'home' | 'visiting'): number | string => {
+    if (status === 'ONGOING' && currentPlay) {
+      if (teamType === 'home') {
+        return currentPlay.home_score
+      }
+      if (teamType === 'visiting') {
+        return currentPlay.visiting_score
+      }
+    }
+    if (status === 'FINISHED') {
+      return teamType === 'home' ? homeTeamScore : visitingTeamScore
+    }
+    return '-'
+  }
+  const formatGameTime = (time: Dayjs) => {
+    const isSameDay = selectedDate.date() === time.date()
+    const weekday = time.format('M/D （dddd）').replace('星期', '週')
+    const hour = time.hour()
+    const period = hour < 12 ? '上午' : '下午'
+    const formattedLocalTime = time.format('HH:mm')
+    if (!isSameDay) return `${weekday}${period}${formattedLocalTime}`
+    return `${period}${formattedLocalTime}`
+  }
+  const gameStatus = () => {
+    if (endTime) return '終場'
+    // TODO: 籃球棒球要分開考慮
+    if (dayjs(startTime) < dayjs(Date.now())) {
+      switch (league) {
+        case 'cpbl':
+          return `${currentPlay?.inning}局`
+        case 'tpbl':
+          return `第${currentPlay?.inning}節`
+        default:
+          break
+      }
+    }
+    return formatGameTime(startTime)
+  }
+
   return (
     <div className="flex flex-col rounded-2xs border-[0.5px] border-black-primary-300 bg-white px-5 py-3 text-black-primary-500">
       <section className="mb-3 flex justify-between">
         {/* TODO: 找出如何實作第幾節、時間更新模式 */}
-        <p>終場</p>
+        <p
+          className={`flex items-center gap-2 text-xs leading-[18px] ${currentPlay ? 'text-mirror-blue-700' : 'text-black-primary-500'}`}
+        >
+          <span>{currentPlay && <GlowingDot />}</span>
+          {gameStatus()}
+        </p>
         <p>{league.toUpperCase()}</p>
       </section>
       <ul className="flex flex-col gap-2">
@@ -39,10 +92,10 @@ export default function GameInfoCard({ gameData }: GameInfoCardProps) {
           </div>
           <div className="relative flex grow justify-between">
             <div>
-              <p>{homeTeamName}</p>
+              <p className="font-bold text-black-primary-800">{homeTeamName}</p>
               <span>主隊</span>
             </div>
-            <p className="text-xl font-bold">{homeTeamScore}</p>
+            <p className="text-xl font-bold">{getDisplayScore('home')}</p>
             {homeTeamScore > visitingTeamScore ? <TriganleTag /> : <></>}
           </div>
         </li>
@@ -56,10 +109,12 @@ export default function GameInfoCard({ gameData }: GameInfoCardProps) {
           </div>
           <div className="relative flex grow justify-between">
             <div>
-              <p>{visitingTeamName}</p>
+              <p className="font-bold text-black-primary-800">
+                {visitingTeamName}
+              </p>
               <span>客隊</span>
             </div>
-            <p className="text-xl font-bold">{visitingTeamScore}</p>
+            <p className="text-xl font-bold">{getDisplayScore('visiting')}</p>
             {visitingTeamScore > homeTeamScore ? <TriganleTag /> : <></>}
           </div>
         </li>

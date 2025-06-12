@@ -49,6 +49,9 @@ export type SportsGameData = {
   id: string
   league: string
   startTime: string
+  endTime: string
+  result: string
+  isGameStop: boolean
   presentStatus: number
   homeTeamName: string
   homeTeamScore: number
@@ -56,4 +59,9 @@ export type SportsGameData = {
   visitingTeamName: string
   visitingTeamScore: number
   visitingTeamLogo: string
+  currentPlay?: {
+    home_score: number
+    inning: number
+    visiting_score: number
+  }
 }

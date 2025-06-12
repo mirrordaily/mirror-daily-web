@@ -176,11 +176,26 @@ export const headerSchema = z.array(
       }),
   ])
 )
+const currentPlaySchema = z.object({
+  home_score: z.number(),
+  inning: z.number(),
+  visiting_score: z.number(),
+})
 
 export const gameSchema = z.object({
+  // only when playing willl show this field
+  currentPlay: currentPlaySchema.optional(),
   datetime: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: 'Invalid datetime string',
   }),
+  end_datetime: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: 'Invalid datetime string',
+    })
+    .nullish(),
+  game_result: z.string(),
+  is_game_stop: z.string(),
   game_sno: z.number(),
   home_logo: z.string(),
   home_score: z.number(),

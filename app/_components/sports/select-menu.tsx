@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 
 interface Option {
@@ -53,11 +53,6 @@ export default function SelectMenu({
       toggleDropdown()
     }
   }
-  useEffect(() => {
-    console.log({
-      selectedValue,
-    })
-  })
   return (
     <div
       ref={wrapperRef}

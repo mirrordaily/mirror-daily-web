@@ -91,7 +91,6 @@ export default async function Home() {
               </div>
             }
           >
-            <div id="sports-section-mobile-slug"></div>
             <SportsSection />
           </Suspense>
           <SectionDivider />
