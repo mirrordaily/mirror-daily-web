@@ -43,13 +43,11 @@ export default function Footer(): ReactElement {
   return (
     <footer className="flex w-full flex-col bg-mirror-blue-800">
       <div className="flex w-full max-w-screen-lg flex-col items-center self-center lg:flex-row">
-        <a href="/" className="mt-5 md:mt-7 lg:ml-5 lg:mt-0">
-          <NextImage
-            src={IconMirrorDaily}
-            alt="Mirror Daily"
-            width={120}
-            height={32}
-          />
+        <a
+          href="/"
+          className="relative mt-5 h-8 w-[70px] md:mt-7 lg:ml-5 lg:mt-0 lg:h-9 lg:w-20"
+        >
+          <NextImage src={IconMirrorDaily} alt="Mirror Daily" fill />
         </a>
         <section className="mb-9 mt-4 tracking-[0.5px] md:mb-12 md:mt-[14px] lg:my-0 lg:ml-8 lg:mr-auto">
           <div className="text-center text-sm font-normal leading-[20px] lg:space-x-2">
