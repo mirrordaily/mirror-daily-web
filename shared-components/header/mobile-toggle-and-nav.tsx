@@ -18,23 +18,23 @@ import { isSectionItem } from '@/utils/common'
 const ExtendedSocialLinks = [
   {
     ...SOCIAL_LINKS[0],
-    icon: IconFacebook,
+    icon: IconLine,
   },
   {
     ...SOCIAL_LINKS[1],
-    icon: IconInstagram,
+    icon: IconFacebook,
   },
   {
     ...SOCIAL_LINKS[2],
-    icon: IconThreads,
+    icon: IconInstagram,
   },
   {
     ...SOCIAL_LINKS[3],
-    icon: IconYouTube,
+    icon: IconThreads,
   },
   {
     ...SOCIAL_LINKS[4],
-    icon: IconLine,
+    icon: IconYouTube,
   },
 ] as const
 
@@ -50,7 +50,7 @@ export default function MobileToggleAndNav({ data }: Props) {
   }
 
   return (
-    <div className="ml-auto mt-[22px] max-w-screen-sm shrink-0 md:mt-10 lg:hidden">
+    <div className="ml-auto mt-5 max-w-screen-sm shrink-0 md:mt-10 lg:hidden">
       <button
         className="relative flex h-6 w-[26px] md:size-5"
         onClick={toggleOpen}
