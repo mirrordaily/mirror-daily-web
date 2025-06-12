@@ -1,3 +1,3 @@
 export default function GlowingDot() {
-  return <div className="animate-glowing-red size-2 rounded-full bg-red-500" />
+  return <div className="size-2 animate-glowing-red rounded-full bg-red-500" />
 }

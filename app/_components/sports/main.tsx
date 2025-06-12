@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react'
 import type { SportsGameData } from '@/types/homepage'
 import dayjs, { type Dayjs } from 'dayjs'
 import 'dayjs/locale/zh-tw'
+import { hasGamesOnDate } from './utils'
 import { eventGameMap } from './game-map'
 
 dayjs.locale('zh-tw')
