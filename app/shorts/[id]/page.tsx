@@ -56,7 +56,7 @@ export default async function Page({ params }: PageProps) {
   data.unshift({
     id,
     title: name,
-    fileUrl: videoSrc ?? youtubeUrl ?? '',
+    fileUrl: videoSrc || youtubeUrl || '',
     poster: '',
     link: `/shorts/${id}`,
     contributor: '',
