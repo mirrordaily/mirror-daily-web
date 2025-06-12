@@ -11,31 +11,31 @@ import IconFacebook from '@/public/icons/logos/facebook-white.svg'
 import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
-// import IconLine from '@/public/icons/logos/line-white.svg'
+import IconLine from '@/public/icons/logos/line-white.svg'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
 
 const ExtendedSocialLinks = [
   {
     ...SOCIAL_LINKS[0],
-    icon: IconFacebook,
+    icon: IconLine,
   },
   {
     ...SOCIAL_LINKS[1],
-    icon: IconInstagram,
+    icon: IconFacebook,
   },
   {
     ...SOCIAL_LINKS[2],
-    icon: IconThreads,
+    icon: IconInstagram,
   },
   {
     ...SOCIAL_LINKS[3],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[4],
     icon: IconYouTube,
   },
-  // {
-  //   ...SOCIAL_LINKS[4],
-  //   icon: IconLine,
-  // },
 ] as const
 
 type Props = {
@@ -50,7 +50,7 @@ export default function MobileToggleAndNav({ data }: Props) {
   }
 
   return (
-    <div className="ml-auto mt-[22px] max-w-screen-sm shrink-0 md:mt-10 lg:hidden">
+    <div className="ml-auto mt-5 max-w-screen-sm shrink-0 md:mt-10 lg:hidden">
       <button
         className="relative flex h-6 w-[26px] md:size-5"
         onClick={toggleOpen}

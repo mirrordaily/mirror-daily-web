@@ -10,7 +10,7 @@ import IconFacebook from '@/public/icons/logos/facebook-white.svg'
 import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
-// import IconLine from '@/public/icons/logos/line-white.svg'
+import IconLine from '@/public/icons/logos/line-white.svg'
 import { Fragment, type ReactElement } from 'react'
 import IconMirrorMedia from '@/public/icons/logos/mirror-media-white.svg'
 import IconMirrorFiction from '@/public/icons/logos/mirror-fiction-white.svg'
@@ -19,37 +19,35 @@ import IconMirrorNews from '@/public/icons/logos/mirror-news-white.svg'
 const ExtendedSocialLinks = [
   {
     ...SOCIAL_LINKS[0],
-    icon: IconFacebook,
+    icon: IconLine,
   },
   {
     ...SOCIAL_LINKS[1],
-    icon: IconInstagram,
+    icon: IconFacebook,
   },
   {
     ...SOCIAL_LINKS[2],
-    icon: IconThreads,
+    icon: IconInstagram,
   },
   {
     ...SOCIAL_LINKS[3],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[4],
     icon: IconYouTube,
   },
-  // {
-  //   ...SOCIAL_LINKS[4],
-  //   icon: IconLine,
-  // },
 ] as const
 
 export default function Footer(): ReactElement {
   return (
     <footer className="flex w-full flex-col bg-mirror-blue-800">
       <div className="flex w-full max-w-screen-lg flex-col items-center self-center lg:flex-row">
-        <a href="/" className="mt-5 md:mt-7 lg:ml-5 lg:mt-0">
-          <NextImage
-            src={IconMirrorDaily}
-            alt="Mirror Daily"
-            width={120}
-            height={32}
-          />
+        <a
+          href="/"
+          className="relative mt-5 h-8 w-[70px] md:mt-7 lg:ml-5 lg:mt-0 lg:h-9 lg:w-20"
+        >
+          <NextImage src={IconMirrorDaily} alt="Mirror Daily" fill />
         </a>
         <section className="mb-9 mt-4 tracking-[0.5px] md:mb-12 md:mt-[14px] lg:my-0 lg:ml-8 lg:mr-auto">
           <div className="text-center text-sm font-normal leading-[20px] lg:space-x-2">
@@ -127,9 +125,9 @@ export default function Footer(): ReactElement {
             />
           </a>
         </section>
-        <hr className="mb-4 mt-7 block h-px w-[200px] bg-[#a6a6a6] lg:ml-6 lg:h-[76px] lg:w-px lg:bg-white" />
+        <hr className="mb-4 mt-7 block h-px w-[200px] bg-[#a6a6a6] lg:my-[38px] lg:ml-6 lg:h-24 lg:w-px lg:bg-white" />
         <section
-          className={`relative text-center text-sm font-normal leading-[20px] text-white lg:my-[38px] lg:ml-[10.5px] lg:mr-[27.5px]`}
+          className={`relative text-left text-sm font-normal leading-[20px] text-white lg:my-[38px] lg:ml-[10.5px] lg:mr-[27.5px]`}
         >
           {PAGE_LINKS.map(({ name, href, isExternal }) => (
             <a
