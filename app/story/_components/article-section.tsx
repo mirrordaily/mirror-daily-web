@@ -57,7 +57,10 @@ export default async function ArticleSection({
           {adTypeBottom === 'dable' ? (
             <DableWidget type="articleBottomPC" />
           ) : (
-            <div id="_popIn_recommend" className="mt-6 hidden md:block"></div>
+            <div
+              id="_popIn_recommend"
+              className={`mt-6 ${ENV === 'prod' ? 'hidden' : ''} md:block`}
+            ></div>
           )}
         </div>
       </div>
