@@ -29,7 +29,9 @@ module.exports = {
         black: {
           primary: {
             300: '#CCCED4',
+            400: '#B2B5BE',
             500: '#7F8493',
+            800: '#2B2B2B',
           },
         },
       },
@@ -85,9 +87,14 @@ module.exports = {
             opacity: 1,
           },
         },
+        'glowing-red': {
+          '0%': { boxShadow: '0 0 0px #FF0000' },
+          '100%': { boxShadow: '0 0 8px #FF0000' },
+        },
       },
       animation: {
         popup: 'popup 1s ease-in-out',
+        'glowing-red': 'glowing-red 1250ms infinite alternate',
       },
     },
   },
