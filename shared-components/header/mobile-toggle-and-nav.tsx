@@ -18,23 +18,23 @@ import { isSectionItem } from '@/utils/common'
 const ExtendedSocialLinks = [
   {
     ...SOCIAL_LINKS[0],
-    icon: IconFacebook,
+    icon: IconLine,
   },
   {
     ...SOCIAL_LINKS[1],
-    icon: IconInstagram,
+    icon: IconFacebook,
   },
   {
     ...SOCIAL_LINKS[2],
-    icon: IconThreads,
+    icon: IconInstagram,
   },
   {
     ...SOCIAL_LINKS[3],
-    icon: IconYouTube,
+    icon: IconThreads,
   },
   {
     ...SOCIAL_LINKS[4],
-    icon: IconLine,
+    icon: IconYouTube,
   },
 ] as const
 

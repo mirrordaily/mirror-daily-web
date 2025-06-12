@@ -84,6 +84,10 @@ export const CONTACT_LINKS_WITHOUT_FIRST = CONTACT_LINKS.filter(
 
 export const SOCIAL_LINKS = [
   {
+    name: 'LINE',
+    href: 'https://page.line.me/mirrordaily',
+  },
+  {
     name: 'Facebook',
     href: 'https://www.facebook.com/mirrordailytw/',
   },
@@ -98,10 +102,6 @@ export const SOCIAL_LINKS = [
   {
     name: 'YouTube',
     href: 'https://www.youtube.com/@%E9%8F%A1%E6%95%A2%E7%88%86',
-  },
-  {
-    name: 'LINE',
-    href: 'https://page.line.me/mirrordaily',
   },
 ] as const satisfies SocialLinks[]
 
