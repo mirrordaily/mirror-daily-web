@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import shortsUploadReducer from './shorts-upload/slice'
 import homepageReducer from './homepage/slice'
 import referrerReducer from './referrer/slice'
+import { sportsEventsApi } from './sports-events/api'
 import { listenerMiddleware } from './listener-middleware'
 
 export const makeStore = () => {
@@ -10,9 +11,12 @@ export const makeStore = () => {
       shortsUpload: shortsUploadReducer,
       homepage: homepageReducer,
       referrer: referrerReducer,
+      [sportsEventsApi.reducerPath]: sportsEventsApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+      getDefaultMiddleware()
+        .concat(sportsEventsApi.middleware)
+        .prepend(listenerMiddleware.middleware),
   })
 }
 

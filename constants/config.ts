@@ -73,8 +73,8 @@ const URL_STATIC_EDITOR_CHOICE = `${JSON_FILE_PATH}/editor-choice.json`
 const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json`
 const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/latest-shorts.json`
 const URL_STATIC_WEATHER = `${JSON_FILE_PATH}/weather.json`
-const URL_STATIC_SPORTS_EVENTS =
-  'https://storage.googleapis.com/statics-dev.mirrordaily.news/json/sports_schedule.json'
+const URL_STATIC_LATEST_SPORTS_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category_sport_1.json`
+const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/sports_schedule.json`
 // shorts listing page
 const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
 const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
@@ -97,6 +97,7 @@ export {
   URL_STATIC_NEWS_SHORTSPAGE,
   URL_STATIC_CREATIVTY_SHORTPAGE,
   URL_STATIC_SPORTS_EVENTS,
+  URL_STATIC_LATEST_SPORTS_NEWS,
   GCP_PROJECT_ID,
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_API_KEY,
