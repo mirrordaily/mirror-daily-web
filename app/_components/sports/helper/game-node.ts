@@ -1,13 +1,6 @@
 import type { SportsGameData } from '@/types/homepage'
 import dayjs from 'dayjs'
-
-// This enum should match the SportsEvents enum used in your project,
-// typically for filtering or identifying league types.
-export enum SportsEvents {
-  ALL = 'ALL', // Usually for filtering, not a direct league type of a game
-  CPBL = 'CPBL',
-  TPBL = 'TPBL',
-}
+import { SportsEvents } from '../main'
 
 export type GameDisplayStatus = 'UPCOMING' | 'ONGOING' | 'FINISHED'
 // --- End of Type Definitions ---
@@ -91,56 +84,8 @@ export class GameNode {
   }
 
   private calculateGameStatus(): GameDisplayStatus {
-    // This logic mirrors what's often seen in components like game-info-card:
-    // A game is FINISHED if it has a valid endTime.
-    // A game is ONGOING if it's not finished and has currentPlay data.
-    // Otherwise, it's UPCOMING.
-
-    if (this.endTime) {
-      // this.endTime is a valid Dayjs object if endTimeRaw was valid
-      return 'FINISHED'
-    }
-    if (this.currentPlay) {
-      // Game has live play data and is not finished
-      return 'ONGOING'
-    }
-    // No valid endTime and no currentPlay data
+    if (this.endTime) return 'FINISHED'
+    if (this.currentPlay) return 'ONGOING'
     return 'UPCOMING'
-  }
-
-  /**
-   * Generates a display string for the game's status (e.g., "終場", "進行中", "上午10:00").
-   * This is similar to the gameStatus() logic in your GameInfoCard.
-   */
-  public getFormattedStatusDisplay(): string {
-    switch (this.status) {
-      case 'FINISHED':
-        return '終場'
-      case 'ONGOING':
-        if (this.currentPlay) {
-          // Customize based on league rules if needed
-          if (this.normalizedLeague === SportsEvents.CPBL) {
-            return `${this.currentPlay.inning}局`
-          }
-          if (this.normalizedLeague === SportsEvents.TPBL) {
-            return `第${this.currentPlay.inning}節`
-          }
-          return '進行中' // Default for other ongoing games
-        }
-        return '進行中' // Fallback if status is ONGOING but no currentPlay
-      case 'UPCOMING': {
-        // Format start time, e.g., "上午10:30" or "下午02:00"
-        // Ensure dayjs locale is set correctly in your project for "上午/下午"
-        const hour = this.startTime.hour()
-        const period = hour < 12 ? '上午' : '下午'
-        return `${period}${this.startTime.format('HH:mm')}`
-      }
-      default: {
-        // Should not happen if status is correctly typed and calculated
-        const exhaustiveCheck: never = this.status
-        console.error(`Unexpected game status: ${exhaustiveCheck}`)
-        return '未知狀態'
-      }
-    }
   }
 }

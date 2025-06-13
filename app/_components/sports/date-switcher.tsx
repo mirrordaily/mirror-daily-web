@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import dayjs, { type Dayjs } from 'dayjs'
 import 'dayjs/locale/zh-tw'
-
+dayjs.locale('zh-tw')
 enum DateChangeType {
   PREVIOUS = 'previous',
   NEXT = 'next',
@@ -10,6 +10,7 @@ type DateSwitcherProps = {
   date: Dayjs
   onSelectChange: (value: Dayjs) => void
 }
+
 export default function DateSwitcher({
   date,
   onSelectChange,
@@ -40,8 +41,9 @@ export default function DateSwitcher({
           alt="previous date"
         />
       </button>
-      {dayjs(date).locale('zh-tw').format('MM/DD (ddd)')}
+      {dayjs(date).format('MM/DD (ddd)')}
       <button
+        aria-label="next day button"
         className="relative size-5"
         onClick={() => handleDateChange(DateChangeType.NEXT)}
       >

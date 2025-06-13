@@ -5,9 +5,8 @@ import SelectMenu from './select-menu'
 import { useMemo, useState } from 'react'
 import type { SportsGameData } from '@/types/homepage'
 import dayjs, { type Dayjs } from 'dayjs'
+import { eventGameMap } from './helper/game-map'
 import 'dayjs/locale/zh-tw'
-import { hasGamesOnDate } from './utils'
-import { eventGameMap } from './game-map'
 
 dayjs.locale('zh-tw')
 type SportsMainProps = {
@@ -29,6 +28,7 @@ export default function SportsMain({ scheduleData }: SportsMainProps) {
     return eventGameMap(scheduleData)
   }, [scheduleData])
 
+  // 計算日期的邊界
   const { overallEarliestStartTime, overallLatestStartTime } = useMemo(() => {
     const allGamesByDateMap = processedGameMap.get(SportsEvents.ALL)
     if (!allGamesByDateMap)
@@ -46,7 +46,13 @@ export default function SportsMain({ scheduleData }: SportsMainProps) {
     }
   }, [processedGameMap])
 
-  //TODO: props should be passed to DateSwitcher
+  const selectedSchedule = useMemo(
+    () =>
+      processedGameMap
+        .get(selectedSport)
+        ?.get(dayjs(selectedDate).format('YYYY-MM-DD')),
+    [processedGameMap, selectedSport, selectedDate]
+  )
   const sportOptions = useMemo(
     () => [
       { value: SportsEvents.ALL, label: '全部賽事' },
@@ -71,36 +77,27 @@ export default function SportsMain({ scheduleData }: SportsMainProps) {
               value.isAfter(overallLatestStartTime)
             )
               return
-
             setSelectedDate(value)
           }}
         />
       </section>
-      {!processedGameMap
-        .get(selectedSport)
-        ?.get(dayjs(selectedDate).format('YYYY-MM-DD'))
-        // NOTE: add this because upcoming will add 2 future games.
-        ?.filter(
-          (game) => game.date === dayjs(selectedDate).format('YYYY-MM-DD')
-        ).length && (
+      {/* NOTE: add this because upcoming will add 2 future games. */}
+      {!selectedSchedule?.filter(
+        (game) => game.date === dayjs(selectedDate).format('YYYY-MM-DD')
+      ).length && (
         <section className="flex h-full items-center justify-center text-black-primary-400">
           {`CPBL 及 TPBL 於${dayjs(selectedDate)
             .format('M/D （dddd）')
             .replace('星期', '週')}沒有賽事`}
         </section>
       )}
-      {processedGameMap
-        .get(selectedSport)
-        ?.get(dayjs(selectedDate).format('YYYY-MM-DD'))
-        ?.filter((game) => game.status === 'ONGOING').length ? (
+      {selectedSchedule?.filter((game) => game.status === 'ONGOING').length ? (
         <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
           進行中
         </p>
       ) : null}
       <div className="flex flex-col lg:gap-3">
-        {processedGameMap
-          .get(selectedSport)
-          ?.get(dayjs(selectedDate).format('YYYY-MM-DD'))
+        {selectedSchedule
           ?.filter((game) => game.status === 'ONGOING')
           ?.map((node) => (
             <GameInfoCard
@@ -110,18 +107,13 @@ export default function SportsMain({ scheduleData }: SportsMainProps) {
             />
           ))}
       </div>
-      {processedGameMap
-        .get(selectedSport)
-        ?.get(dayjs(selectedDate).format('YYYY-MM-DD'))
-        ?.filter((game) => game.status === 'UPCOMING').length ? (
+      {selectedSchedule?.filter((game) => game.status === 'UPCOMING').length ? (
         <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
           即將到來
         </p>
       ) : null}
       <div className="flex flex-col lg:gap-3">
-        {processedGameMap
-          .get(selectedSport)
-          ?.get(dayjs(selectedDate).format('YYYY-MM-DD'))
+        {selectedSchedule
           ?.filter((game) => game.status === 'UPCOMING')
           ?.map((node) => (
             <GameInfoCard
@@ -131,18 +123,13 @@ export default function SportsMain({ scheduleData }: SportsMainProps) {
             />
           ))}
       </div>
-      {processedGameMap
-        .get(selectedSport)
-        ?.get(dayjs(selectedDate).format('YYYY-MM-DD'))
-        ?.filter((game) => game.status === 'FINISHED').length ? (
+      {selectedSchedule?.filter((game) => game.status === 'FINISHED').length ? (
         <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
           已結束
         </p>
       ) : null}
       <div className="flex flex-col gap-2 lg:gap-3">
-        {processedGameMap
-          .get(selectedSport)
-          ?.get(dayjs(selectedDate).format('YYYY-MM-DD'))
+        {selectedSchedule
           ?.filter((game) => game.status === 'FINISHED')
           ?.map((node) => (
             <GameInfoCard

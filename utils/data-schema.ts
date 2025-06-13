@@ -217,3 +217,39 @@ export const sportsEventsApiResponseSchema = z.object({
   tpbl: z.array(dailyScheduleSchema).optional(),
 })
 export const sportsEventsSchema = dailyScheduleSchema
+
+const apiDataContentSchema = z.object({
+  id: z.string(),
+  type: z.string(), // e.g., "unstyled"
+  styles: z.record(z.unknown()).optional(),
+  content: z.array(z.string()),
+  alignment: z.string().optional(),
+})
+
+// Sports news article schema - reuses heroImageSchema for consistency
+const sportsNewsItemSchema = z.object({
+  type: z.literal('story'),
+  id: z.string(),
+  title: z.string(),
+  publishedDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid publishedDate string',
+  }),
+  heroImage: heroImageSchema.nullable(),
+  og_image: heroImageSchema.nullable(),
+  apiData: z.array(z.unknown()), // Generic array for any additional API data
+  apiDataBrief: z.array(apiDataContentSchema),
+})
+
+const sportsNewsCounts = z.object({
+  posts: z.number(),
+  externals: z.number(),
+})
+
+export const latestSportsNewsSchema = z.object({
+  category: z.object({
+    items: z.array(sportsNewsItemSchema),
+    counts: sportsNewsCounts,
+  }),
+})
+
+export { sportsNewsItemSchema, sportsNewsCounts }

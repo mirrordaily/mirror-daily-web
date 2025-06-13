@@ -1,8 +1,7 @@
 import { CPBL_SITE_URL } from '@/constants/config'
 import dayjs, { type Dayjs } from 'dayjs'
 import Image from 'next/image'
-import GlowingDot from './glowing-dot'
-import { type GameNode } from './game-node'
+import { type GameNode } from './helper/game-node'
 
 type GameInfoCardProps = {
   gameData: GameNode
@@ -11,6 +10,9 @@ type GameInfoCardProps = {
 
 const TriganleTag = () => (
   <div className="absolute -right-5 top-[6px] w-2 border-y-8 border-r-[12px] border-y-transparent border-r-mirror-red"></div>
+)
+const GlowingDot = () => (
+  <div className="size-2 animate-glowing-red rounded-full bg-red-500" />
 )
 
 export default function GameInfoCard({
@@ -45,7 +47,7 @@ export default function GameInfoCard({
     return '-'
   }
   const formatGameTime = (time: Dayjs) => {
-    const isSameDay = selectedDate.date() === time.date()
+    const isSameDay = selectedDate.isSame(time, 'day')
     const weekday = time.format('M/D （dddd）').replace('星期', '週')
     const hour = time.hour()
     const period = hour < 12 ? '上午' : '下午'

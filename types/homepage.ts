@@ -65,3 +65,28 @@ export type SportsGameData = {
     visiting_score: number
   }
 }
+
+export type LatestSportsNewsData = {
+  type: string
+  id: string
+  title: string
+  publishedDate: string
+  heroImage: {
+    resized: {
+      original: string
+      w480: string
+      w800: string
+      w1200: string
+      w1600: string
+      w2400: string
+    }
+    resizedWebp: {
+      original: string
+      w480: string
+      w800: string
+      w1200: string
+      w1600: string
+      w2400: string
+    }
+  }
+}
