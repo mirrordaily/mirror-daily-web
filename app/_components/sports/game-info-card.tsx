@@ -61,14 +61,14 @@ export default function GameInfoCard({
     if (dayjs(startTime) < dayjs(Date.now())) {
       switch (league) {
         case 'cpbl':
-          return `${currentPlay?.inning}局`
+          return currentPlay?.inning ? `${currentPlay.inning}局` : '比賽中'
         case 'tpbl':
-          return `第${currentPlay?.inning}節`
+          return currentPlay?.inning ? `第${currentPlay.inning}節` : '比賽中'
         default:
           break
       }
     }
-    return formatGameTime(startTime)
+    return formatGameTime(dayjs(startTime))
   }
 
   return (

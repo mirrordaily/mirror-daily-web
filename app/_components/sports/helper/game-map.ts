@@ -1,6 +1,7 @@
 import type { SportsGameData } from '@/types/homepage'
-import { GameNode, SportsEvents } from './game-node'
-import dayjs from 'dayjs' // Import dayjs for date comparisons
+import { GameNode } from './game-node'
+import dayjs from 'dayjs'
+import { SportsEvents } from '../main'
 
 export type EventGameMapType = Map<
   SportsEvents | string,
@@ -8,7 +9,7 @@ export type EventGameMapType = Map<
 >
 
 /**
- * Example output structure (after augmentation):
+ * Example output structure:
  * {
  *   'CPBL': Map {
  *     "2025-06-07" => [GameNode (original), GameNode (from 2025-06-08 if needed), ...],
@@ -34,8 +35,7 @@ export const eventGameMap = (
     return resultMap
   }
 
-  // 1. Create and sort all GameNode instances from the entire scheduleData
-  // This list will be used to find future upcoming games.
+  // 變成節點，降序排列
   const allGameNodesSorted: GameNode[] = scheduleData
     .map((singleGameData) => new GameNode(singleGameData))
     .sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf())
@@ -43,7 +43,7 @@ export const eventGameMap = (
   // 2. Initial population of resultMap (league-specific and 'ALL')
   allGameNodesSorted.forEach((gameNode) => {
     const leagueKey = gameNode.normalizedLeague
-    const dateKey = gameNode.date // YYYY-MM-DD string from GameNode
+    const dateKey = gameNode.date
 
     // Populate league-specific map
     if (!resultMap.has(leagueKey)) {
@@ -53,7 +53,7 @@ export const eventGameMap = (
     if (!leagueDateMap.has(dateKey)) {
       leagueDateMap.set(dateKey, [])
     }
-    leagueDateMap.get(dateKey)!.push(gameNode) // Games are added in sorted order due to allGameNodesSorted
+    leagueDateMap.get(dateKey)!.push(gameNode)
 
     // Populate 'ALL' category map
     const allEventsKey = SportsEvents.ALL
@@ -64,27 +64,23 @@ export const eventGameMap = (
     if (!allEventsDateMap.has(dateKey)) {
       allEventsDateMap.set(dateKey, [])
     }
-    allEventsDateMap.get(dateKey)!.push(gameNode) // Games are added in sorted order
+    allEventsDateMap.get(dateKey)!.push(gameNode)
   })
-  // At this point, games within each date array are already sorted by startTime
-  // because we iterated through `allGameNodesSorted`.
 
-  // 2.5. Ensure contiguous date keys for each league (including 'ALL')
+  // 因為按照日期排列，所以需要確保每個key都是連續的日期，如果沒有的要補空陣列
   for (const leagueMap of Array.from(resultMap.values())) {
     const dateKeysInLeague = Array.from(leagueMap.keys())
     if (dateKeysInLeague.length < 2) {
-      // Need at least two dates to define a range for filling gaps
       continue
     }
 
-    // Sort date keys to reliably find min and max for this specific league
     dateKeysInLeague.sort((a, b) => dayjs(a).valueOf() - dayjs(b).valueOf())
 
     const minDateStr = dateKeysInLeague[0]
     const maxDateStr = dateKeysInLeague[dateKeysInLeague.length - 1]
 
     let currentDate = dayjs(minDateStr)
-    const endDateLoop = dayjs(maxDateStr) // Loop up to and including the max date
+    const endDateLoop = dayjs(maxDateStr)
 
     while (
       currentDate.isBefore(endDateLoop) ||
@@ -92,19 +88,15 @@ export const eventGameMap = (
     ) {
       const currentDateFormattedStr = currentDate.format('YYYY-MM-DD')
       if (!leagueMap.has(currentDateFormattedStr)) {
-        leagueMap.set(currentDateFormattedStr, []) // Add missing date with empty array
+        leagueMap.set(currentDateFormattedStr, [])
       }
       currentDate = currentDate.add(1, 'day')
     }
   }
 
-  // 3. Augmentation Step: Ensure each date list has up to 2 upcoming games
-  // by adding future ones if necessary.
+  // 如果當天沒有比賽，要加入兩個未來的比賽
   for (const leagueMap of Array.from(resultMap.values())) {
-    // Iterates through CPBL map, TPBL map, ALL map
     for (const [dateKey, gamesOnDateList] of Array.from(leagueMap.entries())) {
-      // Use .entries() to get key-value pairs
-      // Iterates through each date's game list
       const currentUpcomingGames = gamesOnDateList.filter(
         (game) => game.status === 'UPCOMING'
       )
@@ -112,29 +104,25 @@ export const eventGameMap = (
 
       if (neededUpcomingCount > 0) {
         const gamesToAdd: GameNode[] = []
-        // Keep track of IDs already in this specific gamesOnDateList to avoid duplicates from future additions
-        const existingIdsInList = new Set(gamesOnDateList.map((g) => g.id))
+        const existingIdsInList = new Set(
+          gamesOnDateList.map((game) => game.id)
+        )
 
-        // Iterate through all sorted games to find suitable future upcoming games
         for (const candidateGame of allGameNodesSorted) {
-          if (neededUpcomingCount <= 0) break // Stop if we've found enough
-
-          // Check if candidate is UPCOMING, chronologically AFTER the current dateKey,
-          // and not already in the current list (either originally or already added from future)
+          if (neededUpcomingCount <= 0) break
           if (
             candidateGame.status === 'UPCOMING' &&
-            candidateGame.startTime.isAfter(dayjs(dateKey).endOf('day')) && // Ensure it's from a future point
+            candidateGame.startTime.isAfter(dayjs(dateKey).endOf('day')) &&
             !existingIdsInList.has(candidateGame.id)
           ) {
             gamesToAdd.push(candidateGame)
-            existingIdsInList.add(candidateGame.id) // Add to set to prevent re-adding during this fill operation
+            existingIdsInList.add(candidateGame.id)
             neededUpcomingCount--
           }
         }
 
         if (gamesToAdd.length > 0) {
           gamesOnDateList.push(...gamesToAdd)
-          // Re-sort the list for this specific date, as we've added new games
           gamesOnDateList.sort(
             (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
           )
