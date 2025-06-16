@@ -44,3 +44,7 @@ certificates
 
 # ts-import
 .cache
+
+# editor
+.cursor/
+.vscode/
