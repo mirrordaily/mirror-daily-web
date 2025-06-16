@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import { SportsEvents } from '../main'
 
 // Constants
-const MIN_UPCOMING_GAMES_PER_DATE = 2
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 export type EventGameMapType = Map<
@@ -22,67 +21,17 @@ const createSortedGameNodes = (scheduleData: SportsGameData[]): GameNode[] => {
 }
 
 /**
- * Group games by date for backfill processing
+ * Get future games for a specific category
  */
-const groupGamesByDate = (gameNodes: GameNode[]): Map<string, GameNode[]> => {
-  const gamesByDate = new Map<string, GameNode[]>()
-
-  gameNodes.forEach((game) => {
-    const dateKey = game.date
-    if (!gamesByDate.has(dateKey)) {
-      gamesByDate.set(dateKey, [])
-    }
-    gamesByDate.get(dateKey)!.push(game)
-  })
-
-  return gamesByDate
-}
-
-/**
- * Process backfill logic on flat array before nesting - OPTIMIZED VERSION
- */
-const preprocessGamesWithBackfill = (allGameNodes: GameNode[]): GameNode[] => {
-  if (allGameNodes.length === 0) return []
-
-  // 1. Group games by date (still flat structure)
-  const gamesByDate = groupGamesByDate(allGameNodes)
-
-  // 2. Track all games and used IDs
-  const processedGames: GameNode[] = [...allGameNodes]
-  const usedGameIds = new Set<string | number>(allGameNodes.map((g) => g.id))
-
-  // 3. Process each date for backfill needs
-  gamesByDate.forEach((gamesOnDate, dateKey) => {
-    const currentUpcomingGames = gamesOnDate.filter(
-      (g) => g.status === 'UPCOMING'
-    )
-    const neededCount =
-      MIN_UPCOMING_GAMES_PER_DATE - currentUpcomingGames.length
-
-    if (neededCount <= 0) return
-
-    // 4. Find candidates directly from flat array - MUCH SIMPLER!
-    const dateEnd = dayjs(dateKey).endOf('day')
-    const candidates = allGameNodes
-      .filter(
-        (game) =>
-          game.status === 'UPCOMING' &&
-          game.startTime.isAfter(dateEnd) &&
-          !usedGameIds.has(game.id)
-      )
-      .slice(0, neededCount)
-
-    // 5. Add candidates to processed games and mark as used
-    candidates.forEach((game) => {
-      processedGames.push(game)
-      usedGameIds.add(game.id)
-    })
-  })
-
-  // 6. Sort all processed games by start time
-  return processedGames.sort(
-    (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
-  )
+const getFutureGames = (
+  games: GameNode[],
+  maxCount: number = 2
+): GameNode[] => {
+  const now = dayjs()
+  const futureGames = games
+    .filter((game) => game.startTime.isAfter(now))
+    .slice(0, maxCount)
+  return futureGames
 }
 
 /**
@@ -105,12 +54,13 @@ const ensureNestedMapExists = (
 }
 
 /**
- * Populate game map from preprocessed games (includes backfilled games)
+ * Populate game map and add futureGames for each league
  */
-const populateGameMap = (processedGames: GameNode[]): EventGameMapType => {
+const populateGameMap = (allGames: GameNode[]): EventGameMapType => {
   const resultMap: EventGameMapType = new Map()
 
-  processedGames.forEach((gameNode) => {
+  // First, populate regular date-based games
+  allGames.forEach((gameNode) => {
     const leagueKey = gameNode.normalizedLeague
     const dateKey = gameNode.date
 
@@ -123,6 +73,25 @@ const populateGameMap = (processedGames: GameNode[]): EventGameMapType => {
     allGames.push(gameNode)
   })
 
+  // Then, add futureGames for each league
+  const leagueSet = new Set<string>()
+  allGames.forEach((game) => leagueSet.add(game.normalizedLeague))
+
+  // Add futureGames for each individual league
+  leagueSet.forEach((leagueKey) => {
+    const leagueGames = allGames.filter(
+      (game) => game.normalizedLeague === leagueKey
+    )
+    const futureGames = getFutureGames(leagueGames, 2)
+    ensureNestedMapExists(resultMap, leagueKey, 'futureGames')
+    resultMap.get(leagueKey)!.set('futureGames', futureGames)
+  })
+
+  // Add futureGames for 'ALL' category
+  const allFutureGames = getFutureGames(allGames, 2)
+  ensureNestedMapExists(resultMap, SportsEvents.ALL, 'futureGames')
+  resultMap.get(SportsEvents.ALL)!.set('futureGames', allFutureGames)
+
   return resultMap
 }
 
@@ -133,24 +102,26 @@ const fillDateGaps = (resultMap: EventGameMapType): EventGameMapType => {
   const filledMap: EventGameMapType = new Map()
 
   resultMap.forEach((leagueMap, leagueKey) => {
-    const dates = Array.from(leagueMap.keys()).sort()
-    if (dates.length === 0) {
-      filledMap.set(leagueKey, new Map())
-      return
-    }
+    // Separate date keys from special keys like 'futureGames'
+    const allKeys = Array.from(leagueMap.keys())
+    const dateKeys = allKeys.filter((key) => key !== 'futureGames').sort()
+    const specialKeys = allKeys.filter((key) => key === 'futureGames')
 
     const sortedLeagueMap = new Map<string, GameNode[]>()
 
-    if (dates.length === 1) {
+    // Handle date keys
+    if (dateKeys.length === 0) {
+      // No date keys, just preserve special keys
+    } else if (dateKeys.length === 1) {
       // Single date - just preserve it
-      const dateKey = dates[0]
+      const dateKey = dateKeys[0]
       if (dateKey) {
         sortedLeagueMap.set(dateKey, leagueMap.get(dateKey) || [])
       }
-    } else if (dates.length > 1) {
+    } else if (dateKeys.length > 1) {
       // Multiple dates - fill gaps and sort
-      const firstDate = dates[0]
-      const lastDate = dates[dates.length - 1]
+      const firstDate = dateKeys[0]
+      const lastDate = dateKeys[dateKeys.length - 1]
 
       if (firstDate && lastDate) {
         const startDate = dayjs(firstDate)
@@ -173,6 +144,11 @@ const fillDateGaps = (resultMap: EventGameMapType): EventGameMapType => {
       }
     }
 
+    // Preserve special keys like 'futureGames'
+    specialKeys.forEach((key) => {
+      sortedLeagueMap.set(key, leagueMap.get(key) || [])
+    })
+
     filledMap.set(leagueKey, sortedLeagueMap)
   })
 
@@ -180,15 +156,13 @@ const fillDateGaps = (resultMap: EventGameMapType): EventGameMapType => {
 }
 /**
  * Transforms sports game data into a structured map for efficient date-based lookups.
- * OPTIMIZED VERSION - processes backfill on flat array before nesting for better performance.
- *
  * @param scheduleData - Array of sports game data
- * @returns Map structure: League -> Date -> GameNode[]
+ * @returns Map structure: League -> Date | 'futureGames' -> GameNode[]
  *
  * Features:
  * - Groups games by league and date
  * - Fills date gaps between min/max dates with empty arrays
- * - Backfills dates with insufficient upcoming games (OPTIMIZED)
+ * - Adds 'futureGames' key with future games for each league
  * - Includes 'ALL' category aggregating all leagues
  */
 export const eventGameMap = (
@@ -201,11 +175,8 @@ export const eventGameMap = (
   // 1. Create sorted game nodes (flat array)
   const allGameNodes = createSortedGameNodes(scheduleData)
 
-  // 2. Process backfill on flat array - MUCH SIMPLER!
-  const processedGames = preprocessGamesWithBackfill(allGameNodes)
-
-  // 3. Populate nested map structure from processed games
-  const gameMap = populateGameMap(processedGames)
+  // 2. Populate nested map structure with futureGames
+  const gameMap = populateGameMap(allGameNodes)
 
   // 4. Fill date gaps and ensure proper sorting
   return fillDateGaps(gameMap)

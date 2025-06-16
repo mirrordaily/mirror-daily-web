@@ -121,19 +121,36 @@ export default function SportsMain({
     [processedGameMap, selectedSport, selectedDate]
   )
 
+  const futureGames = useMemo(
+    () => processedGameMap.get(selectedSport)?.get('futureGames') || [],
+    [processedGameMap, selectedSport]
+  )
+
   const shouldShowSportsNews = useMemo(() => {
-    if (!selectedSchedule) return true
+    // 檢查該日期是否有任何狀態的賽事
+    const hasAnyScheduledGames = selectedSchedule && selectedSchedule.length > 0
 
-    const ongoingGames = getOngoingGames(selectedSchedule)
-    const upcomingGames = getUpcomingGames(selectedSchedule)
-    const finishedGames = getFinishedGames(selectedSchedule)
+    if (hasAnyScheduledGames) {
+      const ongoingGames = getOngoingGames(selectedSchedule)
+      const upcomingGames = getUpcomingGames(selectedSchedule)
+      const finishedGames = getFinishedGames(selectedSchedule)
+      const postponedGames = getPostponedGames(selectedSchedule)
 
-    return (
-      ongoingGames.length === 0 &&
-      upcomingGames.length === 0 &&
-      finishedGames.length === 0
-    )
-  }, [selectedSchedule])
+      // 如果有任何狀態的賽事，不顯示相關報導
+      return (
+        ongoingGames.length === 0 &&
+        upcomingGames.length === 0 &&
+        finishedGames.length === 0 &&
+        postponedGames.length === 0
+      )
+    }
+
+    // 如果該日期沒有賽事，檢查是否有 futureGames
+    const hasFutureGames = futureGames.length > 0
+
+    // 只有當該日期沒有任何賽事且沒有 futureGames 時，才顯示相關報導
+    return !hasFutureGames
+  }, [selectedSchedule, futureGames])
   const sportOptions = useMemo(
     () => [
       { value: SportsEvents.ALL, label: '全部賽事' },
@@ -201,19 +218,28 @@ export default function SportsMain({
           />
         ))}
       </div>
-      {hasGamesWithStatus(selectedSchedule, 'UPCOMING') ? (
+      {hasGamesWithStatus(selectedSchedule, 'UPCOMING') ||
+      (!selectedSchedule?.length && futureGames.length > 0) ? (
         <p className="mb-2 mt-5 text-base font-medium text-primary-500">
           即將到來
         </p>
       ) : null}
       <div className="flex flex-col lg:gap-3">
-        {getUpcomingGames(selectedSchedule).map((node) => (
-          <GameInfoCard
-            key={node.id}
-            gameData={node}
-            selectedDate={selectedDate}
-          />
-        ))}
+        {selectedSchedule?.length
+          ? getUpcomingGames(selectedSchedule).map((node) => (
+              <GameInfoCard
+                key={node.id}
+                gameData={node}
+                selectedDate={selectedDate}
+              />
+            ))
+          : futureGames.map((node) => (
+              <GameInfoCard
+                key={node.id}
+                gameData={node}
+                selectedDate={selectedDate}
+              />
+            ))}
       </div>
       {hasGamesWithStatus(selectedSchedule, 'FINISHED') ? (
         <p className="mb-2 mt-5 text-base font-medium text-primary-500">
