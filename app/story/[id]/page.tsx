@@ -12,6 +12,7 @@ import AdultWarning from '../_components/adult-warning'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/app/_components/miso-pageview'
+import { ENV } from '@/constants/config'
 
 type PageProps = { params: { id: string } }
 
@@ -30,6 +31,19 @@ export async function generateMetadata({
   const title = `${postData.title} - ${SITE_NAME}`
   const description = getFirstParagraphFromApiData(postData.apiDataBrief) || ''
   const image = postData.postMainImage?.resized?.original || IMAGE_PATH
+  const other: Record<string, string> = {
+    'article:published_time': new Date(postData.publishedTime).toISOString(),
+    'article:section': postData.sectionName || 'UnCategorized',
+    'dable:author': postData.writers?.[0]
+      ? postData.writers[0].name
+      : 'Unknown Author',
+    'dable:item_id': postData.id,
+    'section:color': postData.sectionColor,
+  }
+
+  if (ENV !== 'prod') {
+    other['product:availability'] = 'oos'
+  }
 
   const metaData = Object.assign(
     {},
@@ -45,18 +59,7 @@ export async function generateMetadata({
         images: image,
         type: 'website',
       },
-      other: {
-        'product:availability': 'oos',
-        'article:published_time': new Date(
-          postData.publishedTime
-        ).toISOString(),
-        'article:section': postData.sectionName || 'UnCategorized',
-        'dable:author': postData.writers?.[0]
-          ? postData.writers[0].name
-          : 'Unknown Author',
-        'dable:item_id': postData.id,
-        'section:color': postData.sectionColor,
-      },
+      other,
     }
   )
 

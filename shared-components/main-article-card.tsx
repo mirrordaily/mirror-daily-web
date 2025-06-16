@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
 import type { PostData } from '@/utils/data-process'
+import NextImage from 'next/image'
 
 type Props = {
   postItem: PostData
@@ -8,6 +9,8 @@ type Props = {
 }
 
 export default function MainArticleCard({ postItem, color }: Props) {
+  const { title, postMainImage } = postItem
+
   return (
     <Link
       prefetch={false}
@@ -16,12 +19,25 @@ export default function MainArticleCard({ postItem, color }: Props) {
       rel="noopener noreferrer"
       className="flex w-full flex-col gap-y-5 md:gap-y-[30px] lg:gap-y-7"
     >
-      <figure className="aspect-[375/250] w-full overflow-hidden md:h-[446px] md:rounded lg:h-[492px]">
-        <CustomImage
-          images={postItem.postMainImage.resized}
-          imagesWebP={postItem.postMainImage.resizedWebp}
-          alt={postItem.title}
-        />
+      <figure className="relative aspect-[375/250] w-full overflow-hidden md:h-[446px] md:rounded lg:h-[492px]">
+        {/* external post */}
+        {typeof postMainImage === 'string' && (
+          <NextImage
+            src={postMainImage}
+            unoptimized
+            fill
+            alt={title}
+            className="object-cover"
+          />
+        )}
+        {/* story post */}
+        {typeof postMainImage === 'object' && (
+          <CustomImage
+            images={postMainImage.resized}
+            imagesWebP={postMainImage?.resizedWebp}
+            alt={title}
+          />
+        )}
       </figure>
       <div className="flex w-full flex-row gap-x-2 pl-[23px] pr-[22px] md:gap-x-3 md:px-0">
         <div
@@ -29,7 +45,7 @@ export default function MainArticleCard({ postItem, color }: Props) {
           className={`h-20 w-7 shrink-0 md:h-12`}
         />
         <figcaption className="line-clamp-3 max-w-[294px] text-xl font-bold leading-[1.3] text-[#000928] md:line-clamp-2 md:max-w-[506px]">
-          {postItem.title}
+          {title}
         </figcaption>
       </div>
     </Link>

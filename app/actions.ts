@@ -207,6 +207,7 @@ const transformEditorChoices = (
 export const fetchEditorChoices = async (): Promise<
   ParameterOfComponent<typeof EditorChoiceMain>
 > => {
+  const param = String(Date.now()).slice(0, 8)
   const errorLogger = createErrorLogger(
     'Error occurs while fetching editor choices',
     getTraceObject()
@@ -221,7 +222,7 @@ export const fetchEditorChoices = async (): Promise<
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_EDITOR_CHOICE)
+      const resp = await fetch(`${URL_STATIC_EDITOR_CHOICE}?param=${param}`)
 
       const result = await schema.parse(resp.json())
       return result.editorChoices

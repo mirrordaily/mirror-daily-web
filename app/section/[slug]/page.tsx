@@ -1,6 +1,10 @@
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '../../../shared-components/articles-list'
-import { fetchSectionPosts, fetchSectionInformation } from '../actions'
+import {
+  fetchSectionPosts,
+  fetchSectionInformation,
+  fetchSectionPostsFromJSON,
+} from '../actions'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
@@ -8,6 +12,7 @@ import { getSectionPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 
 type PageProps = { params: { slug: string } }
 
@@ -41,34 +46,48 @@ export async function generateMetadata({
   return metaData
 }
 
-const PAGE_SIZE = 12
-
 export default async function Page({
   params,
 }: PageProps): Promise<JSX.Element> {
   const slug = params.slug
 
   const sectionInfo = await fetchSectionInformation(slug)
-  const { posts, totalAmount = 0 } = await fetchSectionPosts({
+  if (!sectionInfo) notFound()
+  const color = sectionInfo.color
+  const name = sectionInfo.name
+
+  const { postsData: initialPosts, jsonPostsCount } =
+    await fetchSectionPostsFromJSON({ slug })
+
+  const fetchMorePosts = async (page: number) => {
+    'use server'
+
+    const JSON_PAGE_LIMIT = Math.ceil(jsonPostsCount / JSON_ITEMS_COUNT)
+
+    if (page <= JSON_PAGE_LIMIT) {
+      const { postsData } = await fetchSectionPostsFromJSON({ slug, page })
+      if (postsData.length) return postsData
+    }
+
+    const gqlPage = page - JSON_PAGE_LIMIT
+    if (gqlPage < 1) return []
+
+    const { posts } = await fetchSectionPosts({
+      slug,
+      take: PAGE_SIZE,
+      skip: PAGE_SIZE * (gqlPage - 1),
+    })
+    return posts
+  }
+
+  const { amount: postsCount = 0 } = await fetchSectionPosts({
     take: PAGE_SIZE,
     skip: 0,
     slug,
     withAmount: true,
   })
-  if (!sectionInfo) notFound()
 
-  const color = sectionInfo.color
-  const name = sectionInfo.name
-
-  const fetchMorePosts = async (page: number) => {
-    'use server'
-    const { posts } = await fetchSectionPosts({
-      slug,
-      take: PAGE_SIZE,
-      skip: PAGE_SIZE * (page - 1),
-    })
-    return posts
-  }
+  const totalAmount = jsonPostsCount + postsCount
 
   return (
     <>
@@ -84,9 +103,9 @@ export default async function Page({
           customClasses="my-9 mx-auto"
         />
       </div>
-      <main className="mb-10 flex w-full flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
+      <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList
-          initialPosts={posts}
+          initialPosts={initialPosts}
           totalAmount={totalAmount}
           color={color}
           name={name}

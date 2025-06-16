@@ -82,18 +82,8 @@ export const rawPopularPostSchema = z.object({
 
 export const rawHotNewsSchema = z.object({
   outlink: z.string(),
-  hotnews: z
-    .object({
-      id: z.string(),
-      title: z.string(),
-    })
-    .nullish(),
-  hotexternal: z
-    .object({
-      id: z.string(),
-      title: z.string(),
-    })
-    .nullish(),
+  hotnews: rawLatestPostSchema.pick({ id: true, title: true }).nullish(),
+  hotexternal: rawLatestPostSchema.pick({ id: true, title: true }).nullish(),
 })
 
 export const editorChoiceSchenma = z.object({
@@ -155,12 +145,25 @@ export const shortsDataSchema = z.object({
   isShorts: z.boolean(),
   uploader: z.string(),
   videoSection: z.nativeEnum(SHORTS_TYPE),
+  youtubeUrl: z.string().nullish(),
+  videoSrc: z.string().nullish(),
   state: z.enum(['draft', 'scheduled', 'published']),
   tags: z.array(
     z.object({
       id: z.string(),
     })
   ),
+  heroImage: heroImageSchema.nullable(),
+})
+
+export const latestVideosSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  uploader: z.string(),
+  youtubeUrl: z.string().nullish(),
+  videoSrc: z.string().nullish(),
+  heroImage: heroImageSchema.nullable(),
+  updatedAt: z.string().nullable(),
 })
 
 export const headerSchema = z.array(
@@ -240,6 +243,27 @@ const sportsNewsItemSchema = z.object({
   apiDataBrief: z.array(apiDataContentSchema),
 })
 
+const baseSectionPostSchema = rawLatestPostSchema.pick({
+  id: true,
+  title: true,
+  publishedDate: true,
+})
+
+const sectionStorySchema = baseSectionPostSchema.extend({
+  type: z.literal('story'),
+  heroImage: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
+  og_image: z.union([heroImageSchema, z.string(), z.null(), z.undefined()]),
+  apiData: z.unknown(),
+  apiDataBrief: z.unknown(),
+})
+
+const sectionExternalSchema = baseSectionPostSchema.extend({
+  type: z.literal('external'),
+  thumb: z.string(),
+  content: z.string(),
+  brief: z.string(),
+})
+
 const sportsNewsCounts = z.object({
   posts: z.number(),
   externals: z.number(),
@@ -253,3 +277,7 @@ export const latestSportsNewsSchema = z.object({
 })
 
 export { sportsNewsItemSchema, sportsNewsCounts }
+export const sectionPostSchema = z.union([
+  sectionStorySchema,
+  sectionExternalSchema,
+])

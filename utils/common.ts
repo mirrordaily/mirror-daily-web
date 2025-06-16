@@ -83,6 +83,16 @@ const updateMetadataOnClientSide = ({
   }
 }
 
+const matchYoutubeUrl = (url: string): string | null => {
+  if (!url) {
+    return null
+  }
+  const youtubePattern =
+    /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+  const match = url.match(youtubePattern)
+  return match?.[1] ?? null
+}
+
 export {
   isServer,
   isValidUrl,
@@ -91,4 +101,5 @@ export {
   isSectionItem,
   getDefaultMetadata,
   updateMetadataOnClientSide,
+  matchYoutubeUrl,
 }

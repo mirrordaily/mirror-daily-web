@@ -26,13 +26,28 @@ type ContactLink = SocialLinks & {
 // TODO: update url values
 export const PAGE_LINKS: PageLink[] = [
   {
-    name: '廣告業務',
+    name: '新聞自律',
     href: '/',
     isExternal: true,
   },
   {
+    name: 'AI使用規範',
+    href: 'https://www.mirrordaily.news/story/4764',
+    isExternal: true,
+  },
+  {
+    name: '廣告業務',
+    href: 'https://www.mirrordaily.news/story/5836',
+    isExternal: true,
+  },
+  {
     name: '內容授權',
-    href: '/',
+    href: 'https://www.mirrordaily.news/story/5853',
+    isExternal: true,
+  },
+  {
+    name: '隱私權政策',
+    href: 'https://www.mirrordaily.news/story/4936',
     isExternal: true,
   },
   // {
@@ -40,11 +55,6 @@ export const PAGE_LINKS: PageLink[] = [
   //   href: '/',
   //   isExternal: true,
   // },
-  {
-    name: '新聞自律',
-    href: '/',
-    isExternal: true,
-  },
 ]
 
 export const CONTACT_LINKS: ContactLink[] = [
@@ -57,8 +67,8 @@ export const CONTACT_LINKS: ContactLink[] = [
   {
     name: '爆料信箱',
     headerSubmitButtonName: '我要爆料',
-    href: 'mailto:service@mirrordaily.news',
-    text: 'service@mirrordaily.news',
+    href: 'mailto:119@mirrordaily.news',
+    text: '119@mirrordaily.news',
   },
   {
     name: '投書信箱',
@@ -73,6 +83,10 @@ export const CONTACT_LINKS_WITHOUT_FIRST = CONTACT_LINKS.filter(
 )
 
 export const SOCIAL_LINKS = [
+  {
+    name: 'LINE',
+    href: 'https://page.line.me/mirrordaily',
+  },
   {
     name: 'Facebook',
     href: 'https://www.facebook.com/mirrordailytw/',
@@ -89,10 +103,6 @@ export const SOCIAL_LINKS = [
     name: 'YouTube',
     href: 'https://www.youtube.com/@%E9%8F%A1%E6%95%A2%E7%88%86',
   },
-  // {
-  //   name: 'LINE',
-  //   href: '/',
-  // },
 ] as const satisfies SocialLinks[]
 
 export const SITE_LINKS = [

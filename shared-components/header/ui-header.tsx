@@ -3,13 +3,13 @@ import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
-import IconSearch from '@/public/icons/search.svg'
+import IconSearch from '@/public/icons/miso-search-white.svg'
 import IconLogo from '@/public/icons/logos/mirror-daily.svg'
 import IconFacebook from '@/public/icons/logos/facebook-black.svg'
 import IconInstagram from '@/public/icons/logos/instagram-black.svg'
 import IconThreads from '@/public/icons/logos/threads-black.svg'
 import IconYouTube from '@/public/icons/logos/youtube-black.svg'
-// import IconLine from '@/public/icons/logos/line-black.svg'
+import IconLine from '@/public/icons/logos/line-black.svg'
 import type { HeaderData } from '@/types/common'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
@@ -18,24 +18,24 @@ import type { FlashNews } from '@/types/homepage'
 const ExtendedSocialLinks = [
   {
     ...SOCIAL_LINKS[0],
-    icon: IconFacebook,
+    icon: IconLine,
   },
   {
     ...SOCIAL_LINKS[1],
-    icon: IconInstagram,
+    icon: IconFacebook,
   },
   {
     ...SOCIAL_LINKS[2],
-    icon: IconThreads,
+    icon: IconInstagram,
   },
   {
     ...SOCIAL_LINKS[3],
+    icon: IconThreads,
+  },
+  {
+    ...SOCIAL_LINKS[4],
     icon: IconYouTube,
   },
-  // {
-  //   ...SOCIAL_LINKS[4],
-  //   icon: IconLine,
-  // },
 ] as const
 
 const iconSizes: Record<(typeof ExtendedSocialLinks)[number]['name'], number> =
@@ -44,7 +44,7 @@ const iconSizes: Record<(typeof ExtendedSocialLinks)[number]['name'], number> =
     Threads: 22,
     Instagram: 24,
     YouTube: 32,
-    // LINE: 24,
+    LINE: 24,
   }
 
 export default function UiHeader({
@@ -55,28 +55,32 @@ export default function UiHeader({
   flashNews: FlashNews[]
 }) {
   return (
-    <header className="flex h-[150px] w-full shrink-0 flex-col items-center md:h-[134px] lg:h-[202px]">
-      <div className="flex h-[68px] w-full justify-center bg-mirror-blue-700 md:h-[95px] lg:h-[80px]">
+    <header className="flex w-full shrink-0 flex-col items-center">
+      <div className="flex h-[64px] w-full justify-center bg-mirror-blue-700 md:h-[95px] lg:h-[80px]">
         <div className="flex w-full max-w-screen-sm pl-4 pr-6 md:max-w-screen-md md:pl-5 lg:max-w-screen-lg lg:px-9">
           <a
             href="/"
-            className="relative mt-4 h-[42px] w-[150px] md:mt-5 md:h-[55.74px] md:w-[200px] lg:mt-3 lg:h-[56px] lg:w-[200px] lg:shrink-0"
+            className="relative mt-2 h-12 w-[100px] md:mt-5 md:h-[58px] md:w-[120px] lg:mt-3 lg:shrink-0"
           >
             <NextImage
               src={IconLogo}
-              fill={true}
+              fill
               alt="Logo"
               className="aspect-[150/42] md:aspect-auto"
             />
           </a>
 
           <div className="flex w-full justify-end">
-            <div className="ml-auto mr-[16px] mt-[23px] flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
+            <div className="ml-auto mr-4 mt-5 flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
               <a
-                className="relative inline-block h-[22.15px] w-[22.29px] md:h-5 md:w-[18.57px] lg:mt-[3px] lg:h-[16.7px] lg:w-[14.86px]"
+                className="flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px]"
                 href="/search"
               >
-                <NextImage src={IconSearch} fill={true} alt="搜尋" />
+                <span className="md:hidden">AI 搜尋</span>
+                <span className="hidden md:block">AI 智慧搜尋</span>
+                <span className="relative inline-block size-5">
+                  <NextImage src={IconSearch} fill={true} alt="搜尋" />
+                </span>
               </a>
             </div>
             {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {

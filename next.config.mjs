@@ -135,6 +135,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.cpbl.com.tw',
+        hostname: 'img.youtube.com',
       },
     ],
   },

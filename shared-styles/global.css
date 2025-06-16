@@ -50,7 +50,7 @@
   .swiper {
     .custom-swiper-navigation-next,
     .custom-swiper-navigation-prev {
-      @apply absolute top-1/2 z-10 hidden size-10 -translate-y-1/2 items-center justify-center lg:flex;
+      @apply absolute top-1/2 z-10 hidden size-[72px] -translate-y-1/2 items-center justify-center lg:flex;
     }
 
     .custom-swiper-navigation-next {
@@ -60,13 +60,6 @@
     .custom-swiper-navigation-prev {
       @apply left-3 lg:left-6;
     }
-
-    .custom-swiper-navigation-prev.first {
-      @apply invisible;
-    }
-    .custom-swiper-navigation-next.last {
-      @apply invisible;
-    }
   }
   .header-submit-button {
     @apply mt-8 hidden h-6 w-20 items-center justify-center rounded-[29px] bg-[#ff5457] text-[15px] font-normal leading-none text-white first:ml-0 lg:flex;
@@ -74,6 +67,10 @@
 
   .mobile-toggle-and-nav-submit-button {
     @apply inline-block self-start rounded-xl bg-[#FF5457] px-4 py-1 text-base font-bold text-white;
+  }
+
+  .tablet-live-video {
+    @apply max-w-[504px] lg:max-w-[600px];
   }
 
   .shorts-swiper-in-homepage .swiper-slide {

@@ -16,6 +16,7 @@ import PageLogger from './_components/page-logger'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import SportsSection from './_components/sports/section'
+import LiveSection from './_components/live/section'
 
 // add segment config to prevent data fetch during build
 export const dynamic = 'force-dynamic'
@@ -59,6 +60,9 @@ export default async function Home() {
             customClasses="my-7"
           />
           <SectionDivider customClasses="lg:hidden" />
+          {/* 直播區 */}
+          <LiveSection />
+          <SectionDivider />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection headerData={headerData} />
           <SectionDivider />

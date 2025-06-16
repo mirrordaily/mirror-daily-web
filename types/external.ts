@@ -1,6 +1,7 @@
 export type ExternalPost = {
   title: string
   thumb: string
+  thumbCaption: string
   partner: string
   externalsLink: string
   publishedTime: string

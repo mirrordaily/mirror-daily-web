@@ -7,7 +7,12 @@ import type {
   GetRelatedPostsByIdQuery,
   ImageDataFragment,
 } from '@/graphql/__generated__/graphql'
-import type { HeaderData, HeroImage, Shorts } from '@/types/common'
+import type {
+  HeaderData,
+  HeroImage,
+  LatestVideos,
+  Shorts,
+} from '@/types/common'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
@@ -16,9 +21,15 @@ import type {
   latestShortsSchema,
   ImageKeys,
   resizedImageSchema,
+  sectionPostSchema,
+  latestVideosSchema,
 } from './data-schema'
 import type { z } from 'zod'
-import { getShortsPageUrl, getStoryPageUrl } from './site-urls'
+import {
+  getShortsPageUrl,
+  getStoryPageUrl,
+  getExternalPageUrl,
+} from './site-urls'
 import type { SectionPost } from '@/types/section'
 import type { CategoryPost } from '@/types/category'
 import type { AuthorPost } from '@/types/author'
@@ -175,37 +186,78 @@ const transformLatestShorts = (
     contributor: rawData.uploader,
   }
 }
+const transformLatestVideos = (
+  rawData: z.infer<typeof latestVideosSchema>
+): LatestVideos => {
+  return {
+    id: rawData.id,
+    title: rawData.name,
+    fileUrl: rawData.youtubeUrl || rawData.videoSrc || '',
+    poster: getPosterFromShorts(rawData.heroImage),
+    link: getShortsPageUrl(rawData.id),
+    contributor: rawData.uploader,
+    updatedAt: rawData.updatedAt
+      ? dayjs(rawData.updatedAt).format('YYYY-MM-DD')
+      : '',
+  }
+}
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const getFirstParagraphFromApiData = (apiData: any): string | undefined => {
   return apiData?.[0]?.content?.[0]
 }
 
-type RawPost = NonNullable<
-  GetPostsByCategorySlugQuery['posts'] | GetPostsBySectionSlugQuery['posts']
->[0]
+type RawPost =
+  | NonNullable<
+      GetPostsByCategorySlugQuery['posts'] | GetPostsBySectionSlugQuery['posts']
+    >[0]
+  | z.infer<typeof sectionPostSchema>
 
 export type PostData = CategoryPost | SectionPost
 
 const transformRawPost = (rawPost: RawPost): PostData => {
+  const isPostFromGQL = '__typename' in rawPost && rawPost.__typename === 'Post'
+  const isPostFromJSON = 'type' in rawPost && rawPost.type === 'story'
+  const isExternalFromJSON = 'type' in rawPost && rawPost.type === 'external'
+
   const id = rawPost.id
   const title = rawPost.title ?? ''
-  const link = getStoryPageUrl(id)
-  const publishedDate = dateFormatter(rawPost.publishedDate)
-  const heroImage = getHeroImage(rawPost.heroImage)
-  const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
-  const content = getFirstParagraphFromApiData(rawPost.apiData) ?? ''
-  const ogImage = getHeroImage(rawPost.og_image)
-  const postMainImage = selectMainImage(heroImage, ogImage)
-  const textContent = removeHtmlTags(brief || content)
+  const formattedDate = dateFormatter(rawPost.publishedDate)
 
-  return {
-    id,
-    title,
-    link,
-    publishedDate,
-    textContent,
-    postMainImage,
+  if (isPostFromGQL || isPostFromJSON) {
+    const link = getStoryPageUrl(id)
+    const heroImage = getHeroImage(rawPost.heroImage)
+    const ogImage = getHeroImage(rawPost.og_image)
+    const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
+    const content = getFirstParagraphFromApiData(rawPost.apiData) ?? ''
+    const textContent = removeHtmlTags(brief || content)
+    const postMainImage = selectMainImage(heroImage, ogImage)
+
+    return {
+      id,
+      title,
+      link,
+      formattedDate,
+      textContent,
+      postMainImage,
+    }
+  } else if (isExternalFromJSON) {
+    const link = getExternalPageUrl(id)
+    const brief = rawPost.brief
+    const content = rawPost.content
+    const textContent = removeHtmlTags(brief || content)
+    const postMainImage = rawPost.thumb
+
+    return {
+      id,
+      title,
+      link,
+      formattedDate,
+      textContent,
+      postMainImage,
+    }
+  } else {
+    throw new Error('unexpected rawPost type')
   }
 }
 
@@ -325,6 +377,7 @@ export {
   createDataFetchingChain,
   selectMainImage,
   transformLatestShorts,
+  transformLatestVideos,
   getFirstParagraphFromApiData,
   transformRawPost,
   transformRawPostWithSection,

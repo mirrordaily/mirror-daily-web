@@ -1,11 +1,12 @@
 import ShortsLayout from '@/shared-components/shorts/layout'
 import { notFound } from 'next/navigation'
 import { LATEST_SHORT_PAGES, SITE_NAME } from '@/constants/misc'
-import { fetchShortsByTagAndVideoSection, fetchShortsData } from './action'
+import { fetchShortsRandom, fetchShortsData } from './action'
 import type { Metadata } from 'next'
 import { getDefaultMetadata } from '@/utils/common'
 import { getShortsPageUrl } from '@/utils/site-urls'
 import VideoBlock from '@/shared-components/shorts/video-block'
+import { IMAGE_PATH } from '@/constants/default-path'
 
 type PageProps = {
   params: { id?: string }
@@ -24,6 +25,7 @@ export async function generateMetadata({
   const defaultMetadata = getDefaultMetadata()
 
   const title = `${shortsData.name} - ${SITE_NAME}`
+  const image = shortsData.heroImage?.resized?.original || IMAGE_PATH
 
   const metaData = Object.assign(
     {},
@@ -34,6 +36,7 @@ export async function generateMetadata({
         ...(defaultMetadata.openGraph ?? {}),
         title,
         url: getShortsPageUrl(id),
+        images: image,
       },
     }
   )
@@ -47,29 +50,25 @@ export default async function Page({ params }: PageProps) {
 
   if (!shortsData) notFound()
 
-  const data = await fetchShortsByTagAndVideoSection(
-    videoId,
-    shortsData.tagId,
-    shortsData.videoSection
-  )
+  const data = await fetchShortsRandom(videoId, 19, shortsData.videoSection)
+
+  const { id, name, videoSrc, youtubeUrl } = shortsData
+  data.unshift({
+    id,
+    title: name,
+    fileUrl: videoSrc || youtubeUrl || '',
+    poster: '',
+    link: `/shorts/${id}`,
+    contributor: '',
+  })
 
   return (
     <ShortsLayout
       tabLinks={LATEST_SHORT_PAGES}
       activeTab={shortsData.videoSection}
+      className="touch-none"
     >
-      <VideoBlock
-        items={data}
-        fetchMore={async (page: number) => {
-          'use server'
-          return await fetchShortsByTagAndVideoSection(
-            videoId,
-            shortsData.tagId,
-            shortsData.videoSection,
-            page
-          )
-        }}
-      />
+      <VideoBlock items={data} />
     </ShortsLayout>
   )
 }
