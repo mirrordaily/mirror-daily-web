@@ -2,7 +2,7 @@
 import NextImage from 'next/image'
 import arrowUp from '@/public/icons/weather/arrow-up.svg'
 import arrowDown from '@/public/icons/weather/arrow-down.svg'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import IconSunny from '@/public/icons/weather/sunny.svg'
 import IconCloudy from '@/public/icons/weather/cloudy.svg'
 import IconOvercast from '@/public/icons/weather/overcast.svg'
@@ -44,9 +44,6 @@ export default function WeatherMain({ data }: Props) {
   }
 
   const info = data[selectedCity]
-  useEffect(() => {
-    console.log({ isDropdownOpen })
-  }, [isDropdownOpen])
   if (!info) return null
 
   return (
