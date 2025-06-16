@@ -155,7 +155,7 @@ export default function SportsMain({
     }
   }, [selectedSport])
   return (
-    <div className="flex min-h-fit w-[344px] flex-col">
+    <div className="flex min-h-fit w-[344px] flex-col md:w-full">
       <section className="flex justify-between">
         <SelectMenu
           options={sportOptions}
@@ -182,7 +182,7 @@ export default function SportsMain({
       {!selectedSchedule?.filter(
         (game) => game.date === dayjs(selectedDate).format('YYYY-MM-DD')
       ).length && (
-        <section className="flex h-full items-center justify-center text-black-primary-400 lg:max-h-[285px]">
+        <section className="flex h-full items-center justify-center text-black-primary-400 md:h-16 lg:h-[285px] lg:max-h-[285px]">
           {`${selectedSportDisplayName} 於${formatChineseDate(selectedDate)}沒有賽事`}
         </section>
       )}
