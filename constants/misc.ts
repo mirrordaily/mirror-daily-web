@@ -37,12 +37,12 @@ export const PAGE_LINKS: PageLink[] = [
   },
   {
     name: '廣告業務',
-    href: '/',
+    href: 'https://www.mirrordaily.news/story/5836',
     isExternal: true,
   },
   {
     name: '內容授權',
-    href: '/',
+    href: 'https://www.mirrordaily.news/story/5853',
     isExternal: true,
   },
   {
