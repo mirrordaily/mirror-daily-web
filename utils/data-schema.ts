@@ -198,6 +198,7 @@ export const gameSchema = z.object({
     })
     .nullish(),
   game_result: z.string(),
+  game_result_name: z.string().optional(),
   is_game_stop: z.string(),
   game_sno: z.number(),
   home_logo: z.string(),

@@ -18,6 +18,7 @@ import {
   getOngoingGames,
   getUpcomingGames,
   getFinishedGames,
+  getPostponedGames,
   hasGamesWithStatus,
 } from './helper/utils/game-utils'
 
@@ -228,6 +229,18 @@ export default function SportsMain({
           />
         ))}
       </div>
+      {hasGamesWithStatus(selectedSchedule, 'POSTPONED') ? (
+        <p className="mb-2 mt-5 text-base font-medium text-primary-500">延賽</p>
+      ) : null}
+      <div className="flex flex-col gap-2 lg:gap-3">
+        {getPostponedGames(selectedSchedule).map((node) => (
+          <GameInfoCard
+            key={node.id}
+            gameData={node}
+            selectedDate={selectedDate}
+          />
+        ))}
+      </div>
       {shouldShowSportsNews && (
         <div>
           <p className="mb-2 mt-5 text-base font-medium text-primary-500">
@@ -235,10 +248,6 @@ export default function SportsMain({
           </p>
           <div className="flex flex-col rounded-2xs border-[0.5px] border-primary-300 bg-white lg:gap-3 lg:p-4">
             {latestSportsNewsData?.map((news) => {
-              console.log({
-                images: news.heroImage.resized,
-                imagesWebP: news.heroImage.resizedWebp,
-              })
               return (
                 <Link
                   href={getStoryPageUrl(news.id)}
