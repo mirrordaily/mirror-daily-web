@@ -71,24 +71,46 @@ const populateInitialGameMap = (
 }
 
 /**
- * Fill gaps between min and max dates with empty arrays
+ * Fill gaps between min and max dates with empty arrays and ensure dates are sorted
  */
 const fillDateGaps = (resultMap: EventGameMapType): void => {
-  resultMap.forEach((leagueMap) => {
+  resultMap.forEach((leagueMap, leagueKey) => {
     const dates = Array.from(leagueMap.keys()).sort()
-    if (dates.length < 2) return
+    if (dates.length === 0) return
 
-    const startDate = dayjs(dates[0])
-    const endDate = dayjs(dates[dates.length - 1])
+    // Create a new map with sorted dates
+    const sortedLeagueMap = new Map<string, GameNode[]>()
 
-    for (
-      let current = startDate;
-      current.isBefore(endDate, 'day') || current.isSame(endDate, 'day');
-      current = current.add(1, 'day')
-    ) {
-      const dateKey = current.format(DATE_FORMAT)
-      ensureDateArrayExists(leagueMap, dateKey)
+    if (dates.length === 1) {
+      // Single date - just preserve it
+      const dateKey = dates[0]
+      if (dateKey) {
+        sortedLeagueMap.set(dateKey, leagueMap.get(dateKey) || [])
+      }
+    } else if (dates.length > 1) {
+      // Multiple dates - fill gaps and sort
+      const firstDate = dates[0]
+      const lastDate = dates[dates.length - 1]
+
+      if (firstDate && lastDate) {
+        const startDate = dayjs(firstDate)
+        const endDate = dayjs(lastDate)
+
+        // Add all dates in chronological order
+        for (
+          let current = startDate;
+          current.isBefore(endDate, 'day') || current.isSame(endDate, 'day');
+          current = current.add(1, 'day')
+        ) {
+          const dateKey = current.format(DATE_FORMAT)
+          const existingGames = leagueMap.get(dateKey) || []
+          sortedLeagueMap.set(dateKey, existingGames)
+        }
+      }
     }
+
+    // Replace the original map with the sorted one
+    resultMap.set(leagueKey, sortedLeagueMap)
   })
 }
 
