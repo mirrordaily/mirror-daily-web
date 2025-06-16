@@ -26,7 +26,7 @@ export default async function TopicSection() {
             />
           </span>
         </div>
-        <div className="hidden lg:order-2 lg:block lg:h-full lg:w-px lg:border lg:border-r-black-primary-800"></div>
+        <div className="hidden lg:order-2 lg:block lg:h-full lg:w-px lg:border lg:border-r-primary-800"></div>
         {topicData && <TopicMain data={topicData} />}
       </div>
     </section>

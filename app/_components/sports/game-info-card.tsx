@@ -73,11 +73,11 @@ export default function GameInfoCard({
   }
 
   return (
-    <div className="flex flex-col rounded-2xs border-[0.5px] border-black-primary-300 bg-white px-5 py-3 text-black-primary-500">
+    <div className="flex flex-col rounded-2xs border-[0.5px] border-primary-300 bg-white px-5 py-3 text-primary-500">
       <section className="mb-3 flex justify-between">
         {/* TODO: 找出如何實作第幾節、時間更新模式 */}
         <p
-          className={`flex items-center gap-2 text-xs leading-[18px] ${currentPlay ? 'text-mirror-blue-700' : 'text-black-primary-500'}`}
+          className={`flex items-center gap-2 text-xs leading-[18px] ${currentPlay ? 'text-mirror-blue-700' : 'text-primary-500'}`}
         >
           <span>{currentPlay && <GlowingDot />}</span>
           {gameStatus()}
@@ -95,7 +95,7 @@ export default function GameInfoCard({
           </div>
           <div className="relative flex grow justify-between">
             <div>
-              <p className="font-bold text-black-primary-800">{homeTeamName}</p>
+              <p className="font-bold text-primary-800">{homeTeamName}</p>
               <span>主隊</span>
             </div>
             <p className="text-xl font-bold">{getDisplayScore('home')}</p>
@@ -112,9 +112,7 @@ export default function GameInfoCard({
           </div>
           <div className="relative flex grow justify-between">
             <div>
-              <p className="font-bold text-black-primary-800">
-                {visitingTeamName}
-              </p>
+              <p className="font-bold text-primary-800">{visitingTeamName}</p>
               <span>客隊</span>
             </div>
             <p className="text-xl font-bold">{getDisplayScore('visiting')}</p>

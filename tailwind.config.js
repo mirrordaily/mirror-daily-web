@@ -26,13 +26,11 @@ module.exports = {
           },
           red: '#FF5457',
         },
-        black: {
-          primary: {
-            300: '#CCCED4',
-            400: '#B2B5BE',
-            500: '#7F8493',
-            800: '#2B2B2B',
-          },
+        primary: {
+          300: '#CCCED4',
+          400: '#B2B5BE',
+          500: '#7F8493',
+          800: '#2B2B2B',
         },
       },
       backgroundColor: {

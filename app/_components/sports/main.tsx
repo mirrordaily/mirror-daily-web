@@ -182,12 +182,12 @@ export default function SportsMain({
       {!selectedSchedule?.filter(
         (game) => game.date === dayjs(selectedDate).format('YYYY-MM-DD')
       ).length && (
-        <section className="flex h-full items-center justify-center text-black-primary-400 md:h-16 lg:h-[285px] lg:max-h-[285px]">
+        <section className="flex h-full items-center justify-center text-primary-400 md:h-16 lg:h-[285px] lg:max-h-[285px]">
           {`${selectedSportDisplayName} 於${formatChineseDate(selectedDate)}沒有賽事`}
         </section>
       )}
       {hasGamesWithStatus(selectedSchedule, 'ONGOING') ? (
-        <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
+        <p className="mb-2 mt-5 text-base font-medium text-primary-500">
           進行中
         </p>
       ) : null}
@@ -201,7 +201,7 @@ export default function SportsMain({
         ))}
       </div>
       {hasGamesWithStatus(selectedSchedule, 'UPCOMING') ? (
-        <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
+        <p className="mb-2 mt-5 text-base font-medium text-primary-500">
           即將到來
         </p>
       ) : null}
@@ -215,7 +215,7 @@ export default function SportsMain({
         ))}
       </div>
       {hasGamesWithStatus(selectedSchedule, 'FINISHED') ? (
-        <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
+        <p className="mb-2 mt-5 text-base font-medium text-primary-500">
           已結束
         </p>
       ) : null}
@@ -230,10 +230,10 @@ export default function SportsMain({
       </div>
       {shouldShowSportsNews && (
         <div>
-          <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
+          <p className="mb-2 mt-5 text-base font-medium text-primary-500">
             相關報導
           </p>
-          <div className="flex flex-col rounded-2xs border-[0.5px] border-black-primary-300 bg-white lg:gap-3 lg:p-4">
+          <div className="flex flex-col rounded-2xs border-[0.5px] border-primary-300 bg-white lg:gap-3 lg:p-4">
             {latestSportsNewsData?.map((news) => {
               console.log({
                 images: news.heroImage.resized,
@@ -262,7 +262,7 @@ export default function SportsMain({
                         }}
                       />
                     </div>
-                    <p className="text-sm leading-6 text-black-primary-800 lg:line-clamp-3">
+                    <p className="text-sm leading-6 text-primary-800 lg:line-clamp-3">
                       {news.title}
                     </p>
                   </section>

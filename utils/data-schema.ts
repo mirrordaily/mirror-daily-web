@@ -281,3 +281,7 @@ export const sectionPostSchema = z.union([
   sectionStorySchema,
   sectionExternalSchema,
 ])
+export const countsSchema = z.object({
+  posts: z.number(),
+  externals: z.number(),
+})
