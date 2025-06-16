@@ -365,6 +365,7 @@ const transformSportsEvents = (
           startTime: game.datetime,
           endTime: game.end_datetime ?? '',
           result: game.game_result,
+          gameResultName: game.game_result_name,
           isGameStop: game.is_game_stop === '0',
           presentStatus: game.present_status,
           homeTeamName: game.home_team,

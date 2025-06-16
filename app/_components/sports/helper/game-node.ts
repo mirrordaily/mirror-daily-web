@@ -2,7 +2,11 @@ import type { SportsGameData } from '@/types/homepage'
 import dayjs from 'dayjs'
 import { SportsEvents } from '../main'
 
-export type GameDisplayStatus = 'UPCOMING' | 'ONGOING' | 'FINISHED'
+export type GameDisplayStatus =
+  | 'UPCOMING'
+  | 'ONGOING'
+  | 'FINISHED'
+  | 'POSTPONED'
 // --- End of Type Definitions ---
 
 export class GameNode {
@@ -12,6 +16,7 @@ export class GameNode {
   public readonly startTimeRaw: string // Raw startTime string
   public readonly endTimeRaw?: string | null // Raw endTime string
   public readonly result?: string
+  public readonly gameResultName?: string // New field from API
   public readonly isGameStop?: boolean
   public readonly presentStatus?: number
   public readonly homeTeamName: string
@@ -36,6 +41,7 @@ export class GameNode {
     this.startTimeRaw = gameData.startTime
     this.endTimeRaw = gameData.endTime
     this.result = gameData.result
+    this.gameResultName = gameData.gameResultName
     this.isGameStop = gameData.isGameStop
     this.presentStatus = gameData.presentStatus
     this.homeTeamName = gameData.homeTeamName
@@ -84,6 +90,7 @@ export class GameNode {
   }
 
   private calculateGameStatus(): GameDisplayStatus {
+    if (this.gameResultName === '延賽') return 'POSTPONED'
     if (this.endTime) return 'FINISHED'
     if (this.currentPlay) return 'ONGOING'
     return 'UPCOMING'

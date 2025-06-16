@@ -41,6 +41,17 @@ export const getFinishedGames = (games: GameNode[] | undefined): GameNode[] => {
 }
 
 /**
+ * Get games that are postponed
+ * @param games - Array of games to filter
+ * @returns Array of postponed games
+ */
+export const getPostponedGames = (
+  games: GameNode[] | undefined
+): GameNode[] => {
+  return filterGamesByStatus(games, 'POSTPONED')
+}
+
+/**
  * Check if there are any games with a specific status
  * @param games - Array of games to check
  * @param status - The status to check for

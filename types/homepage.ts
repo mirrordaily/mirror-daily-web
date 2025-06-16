@@ -51,6 +51,7 @@ export type SportsGameData = {
   startTime: string
   endTime: string
   result: string
+  gameResultName?: string
   isGameStop: boolean
   presentStatus: number
   homeTeamName: string
