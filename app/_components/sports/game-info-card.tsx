@@ -2,6 +2,7 @@ import { CPBL_SITE_URL } from '@/constants/config'
 import dayjs, { type Dayjs } from 'dayjs'
 import Image from 'next/image'
 import { type GameNode } from './helper/game-node'
+import { formatChineseDate } from './helper/utils/date-utils'
 
 type GameInfoCardProps = {
   gameData: GameNode
@@ -48,7 +49,7 @@ export default function GameInfoCard({
   }
   const formatGameTime = (time: Dayjs) => {
     const isSameDay = selectedDate.isSame(time, 'day')
-    const weekday = time.format('M/D （dddd）').replace('星期', '週')
+    const weekday = formatChineseDate(time)
     const hour = time.hour()
     const period = hour < 12 ? '上午' : '下午'
     const formattedLocalTime = time.format('HH:mm')

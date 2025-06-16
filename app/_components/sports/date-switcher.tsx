@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import dayjs, { type Dayjs } from 'dayjs'
-import 'dayjs/locale/zh-tw'
-dayjs.locale('zh-tw')
+import { setupChineseLocale } from './helper/utils/date-utils'
+
+setupChineseLocale()
 enum DateChangeType {
   PREVIOUS = 'previous',
   NEXT = 'next',
