@@ -109,7 +109,8 @@ export default function SportsMain({
     const dateKeys = Array.from(allGamesByDateMap.keys())
     return {
       overallEarliestStartTime: dayjs(dateKeys.at(0)).startOf('day'),
-      overallLatestStartTime: dayjs(dateKeys.at(-1)).startOf('day'),
+      // 因為最後一個是"futureGames"
+      overallLatestStartTime: dayjs(dateKeys.at(-2)).startOf('day'),
     }
   }, [processedGameMap])
 
@@ -209,7 +210,7 @@ export default function SportsMain({
           進行中
         </p>
       ) : null}
-      <div className="flex flex-col lg:gap-3">
+      <div className="flex flex-col gap-2 lg:gap-3">
         {getOngoingGames(selectedSchedule).map((node) => (
           <GameInfoCard
             key={node.id}
@@ -224,7 +225,7 @@ export default function SportsMain({
           即將到來
         </p>
       ) : null}
-      <div className="flex flex-col lg:gap-3">
+      <div className="flex flex-col gap-2 lg:gap-3">
         {selectedSchedule?.length
           ? getUpcomingGames(selectedSchedule).map((node) => (
               <GameInfoCard
