@@ -22,7 +22,7 @@ export default function TopicMain({ data }: Props) {
           <div>
             <TopicItem {...topicData[0]} isFirst key={topicData[0].postId} />
           </div>
-          <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-[34px] lg:flex-row lg:gap-y-5">
+          <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-[34px] lg:grid lg:grid-cols-3 lg:gap-x-3 lg:gap-y-5">
             {/* TODO: turn image up and text bottom for only this block */}
             {topicData.slice(1, 4).map((data) => (
               <TopicItem {...data} key={data.postId} />
