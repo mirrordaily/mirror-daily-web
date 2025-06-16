@@ -8,11 +8,20 @@ import dayjs, { type Dayjs } from 'dayjs'
 import { eventGameMap } from './helper/game-map'
 import { useSportsEventsRTK } from '@/hooks/use-sports-events-rtk-query'
 import CustomImage from '@readr-media/react-image'
-import 'dayjs/locale/zh-tw'
 import Link from 'next/link'
 import { getStoryPageUrl } from '@/utils/site-urls'
+import {
+  formatChineseDate,
+  setupChineseLocale,
+} from './helper/utils/date-utils'
+import {
+  getOngoingGames,
+  getUpcomingGames,
+  getFinishedGames,
+  hasGamesWithStatus,
+} from './helper/utils/game-utils'
 
-dayjs.locale('zh-tw')
+setupChineseLocale()
 type SportsMainProps = {
   scheduleData?: SportsGameData[]
   latestSportsNewsData?: LatestSportsNewsData[]
@@ -57,18 +66,14 @@ export default function SportsMain({
         return today
       }
 
-      const sortedDateKeys = Array.from(sportGameMap.keys()).sort(
-        (a, b) => dayjs(a).valueOf() - dayjs(b).valueOf()
-      )
+      const dateKeys = Array.from(sportGameMap.keys())
 
-      if (sortedDateKeys.length === 0) {
+      if (dateKeys.length === 0) {
         return today
       }
 
-      const firstDate = dayjs(sortedDateKeys[0]).startOf('day')
-      const lastDate = dayjs(sortedDateKeys[sortedDateKeys.length - 1]).startOf(
-        'day'
-      )
+      const firstDate = dayjs(dateKeys[0]).startOf('day')
+      const lastDate = dayjs(dateKeys[dateKeys.length - 1]).startOf('day')
 
       // Rule 1: Default use today
       // Rule 2: If today is later than processedGameMap's last day, use last day
@@ -100,12 +105,10 @@ export default function SportsMain({
         overallLatestStartTime: null,
       }
 
-    const sortedDateKeys = Array.from(allGamesByDateMap.keys()).sort(
-      (a, b) => dayjs(a).valueOf() - dayjs(b).valueOf()
-    )
+    const dateKeys = Array.from(allGamesByDateMap.keys())
     return {
-      overallEarliestStartTime: dayjs(sortedDateKeys.at(0)).startOf('day'),
-      overallLatestStartTime: dayjs(sortedDateKeys.at(-1)).startOf('day'),
+      overallEarliestStartTime: dayjs(dateKeys.at(0)).startOf('day'),
+      overallLatestStartTime: dayjs(dateKeys.at(-1)).startOf('day'),
     }
   }, [processedGameMap])
 
@@ -120,15 +123,9 @@ export default function SportsMain({
   const shouldShowSportsNews = useMemo(() => {
     if (!selectedSchedule) return true
 
-    const ongoingGames = selectedSchedule.filter(
-      (game) => game.status === 'ONGOING'
-    )
-    const upcomingGames = selectedSchedule.filter(
-      (game) => game.status === 'UPCOMING'
-    )
-    const finishedGames = selectedSchedule.filter(
-      (game) => game.status === 'FINISHED'
-    )
+    const ongoingGames = getOngoingGames(selectedSchedule)
+    const upcomingGames = getUpcomingGames(selectedSchedule)
+    const finishedGames = getFinishedGames(selectedSchedule)
 
     return (
       ongoingGames.length === 0 &&
@@ -186,58 +183,50 @@ export default function SportsMain({
         (game) => game.date === dayjs(selectedDate).format('YYYY-MM-DD')
       ).length && (
         <section className="flex h-full items-center justify-center text-black-primary-400 lg:max-h-[285px]">
-          {`${selectedSportDisplayName} 於${dayjs(selectedDate)
-            .format('M/D （dddd）')
-            .replace('星期', '週')}沒有賽事`}
+          {`${selectedSportDisplayName} 於${formatChineseDate(selectedDate)}沒有賽事`}
         </section>
       )}
-      {selectedSchedule?.filter((game) => game.status === 'ONGOING').length ? (
+      {hasGamesWithStatus(selectedSchedule, 'ONGOING') ? (
         <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
           進行中
         </p>
       ) : null}
       <div className="flex flex-col lg:gap-3">
-        {selectedSchedule
-          ?.filter((game) => game.status === 'ONGOING')
-          ?.map((node) => (
-            <GameInfoCard
-              key={node.id}
-              gameData={node}
-              selectedDate={selectedDate}
-            />
-          ))}
+        {getOngoingGames(selectedSchedule).map((node) => (
+          <GameInfoCard
+            key={node.id}
+            gameData={node}
+            selectedDate={selectedDate}
+          />
+        ))}
       </div>
-      {selectedSchedule?.filter((game) => game.status === 'UPCOMING').length ? (
+      {hasGamesWithStatus(selectedSchedule, 'UPCOMING') ? (
         <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
           即將到來
         </p>
       ) : null}
       <div className="flex flex-col lg:gap-3">
-        {selectedSchedule
-          ?.filter((game) => game.status === 'UPCOMING')
-          ?.map((node) => (
-            <GameInfoCard
-              key={node.id}
-              gameData={node}
-              selectedDate={selectedDate}
-            />
-          ))}
+        {getUpcomingGames(selectedSchedule).map((node) => (
+          <GameInfoCard
+            key={node.id}
+            gameData={node}
+            selectedDate={selectedDate}
+          />
+        ))}
       </div>
-      {selectedSchedule?.filter((game) => game.status === 'FINISHED').length ? (
+      {hasGamesWithStatus(selectedSchedule, 'FINISHED') ? (
         <p className="mb-2 mt-5 text-base font-medium text-black-primary-500">
           已結束
         </p>
       ) : null}
       <div className="flex flex-col gap-2 lg:gap-3">
-        {selectedSchedule
-          ?.filter((game) => game.status === 'FINISHED')
-          ?.map((node) => (
-            <GameInfoCard
-              key={node.id}
-              gameData={node}
-              selectedDate={selectedDate}
-            />
-          ))}
+        {getFinishedGames(selectedSchedule).map((node) => (
+          <GameInfoCard
+            key={node.id}
+            gameData={node}
+            selectedDate={selectedDate}
+          />
+        ))}
       </div>
       {shouldShowSportsNews && (
         <div>
