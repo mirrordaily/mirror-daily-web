@@ -1,17 +1,21 @@
 'use server'
 
-import type {
-  PickupItemInTopNewsSection,
-  FlashNews,
-  EditorChoice,
-  TopicPost,
-  CityAndWeather,
+import {
+  type PickupItemInTopNewsSection,
+  type FlashNews,
+  type EditorChoice,
+  type TopicPost,
+  type CityAndWeather,
+  type SportsGameData,
+  type LatestSportsNewsData,
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
   URL_STATIC_HOT_NEWS,
+  URL_STATIC_SPORTS_EVENTS,
   URL_STATIC_TOPIC,
   URL_STATIC_WEATHER,
+  URL_STATIC_LATEST_SPORTS_NEWS,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
@@ -32,7 +36,7 @@ import {
   getTopicPageUrl,
 } from '@/utils/site-urls'
 import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
-import type { ParameterOfComponent } from '@/types/common'
+import type { ParameterOfComponent, HeroImage } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
 import type TopicMain from './_components/topic/topic-main'
 import type { ZodArray } from 'zod'
@@ -42,6 +46,8 @@ import {
   editorChoiceSchenma,
   topicsSchema,
   cityWeatherSchema,
+  sportsEventsApiResponseSchema,
+  latestSportsNewsSchema,
 } from '@/utils/data-schema'
 
 const transformRawLiveEvents = (
@@ -332,6 +338,138 @@ export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
     const rawWeatherData = await z.promise(cityWeatherSchema).parse(resp.json())
 
     return transformWeather(rawWeatherData)
+  } catch (e) {
+    errorLogger(e)
+  }
+}
+
+const transformSportsEvents = (
+  rawData: z.infer<typeof sportsEventsApiResponseSchema> | undefined
+): SportsGameData[] => {
+  if (!rawData) return []
+
+  const allGames: SportsGameData[] = []
+
+  for (const leagueName of Object.keys(rawData) as Array<
+    keyof typeof rawData
+  >) {
+    const leagueData = rawData[leagueName]
+
+    if (!Array.isArray(leagueData)) return []
+    leagueData.forEach((dailySchedule) => {
+      if (!dailySchedule || !Array.isArray(dailySchedule.games)) return []
+      dailySchedule.games.forEach((game) => {
+        allGames.push({
+          id: `${leagueName}-${game.game_sno}`,
+          league: leagueName,
+          startTime: game.datetime,
+          endTime: game.end_datetime ?? '',
+          result: game.game_result,
+          gameResultName: game.game_result_name,
+          isGameStop: game.is_game_stop === '0',
+          presentStatus: game.present_status,
+          homeTeamName: game.home_team,
+          homeTeamScore: game.home_score,
+          homeTeamLogo: game.home_logo,
+          visitingTeamName: game.visiting_team,
+          visitingTeamScore: game.visiting_score,
+          visitingTeamLogo: game.visiting_logo,
+          currentPlay: game.currentPlay ? game.currentPlay : undefined,
+        })
+      })
+    })
+  }
+
+  return allGames
+}
+
+export const fetchSportsEvents = async (): Promise<
+  SportsGameData[] | undefined
+> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching sports events',
+    getTraceObject()
+  )
+  const schema = z.promise(sportsEventsApiResponseSchema)
+  try {
+    const resp = await fetch(URL_STATIC_SPORTS_EVENTS)
+    const rawSportsEventsData = await schema.parse(resp.json())
+    return transformSportsEvents(rawSportsEventsData)
+  } catch (e) {
+    errorLogger(e)
+  }
+}
+
+type ImageSizeVariants = {
+  original: string
+  w480: string
+  w800: string
+  w1200: string
+  w1600: string
+  w2400: string
+}
+
+type SchemaImageData = z.infer<
+  typeof latestSportsNewsSchema
+>['category']['items'][0]['heroImage']
+
+const createImageSizeVariants = (
+  primaryImage: HeroImage,
+  fallbackImage: SchemaImageData,
+  isWebp = false
+): ImageSizeVariants => {
+  const imageType = isWebp ? 'resizedWebp' : 'resized'
+  const sizes = ['original', 'w480', 'w800', 'w1200', 'w1600', 'w2400'] as const
+
+  return sizes.reduce((variants, size) => {
+    variants[size] =
+      primaryImage?.[imageType]?.[size] ??
+      fallbackImage?.[imageType]?.[size] ??
+      ''
+    return variants
+  }, {} as ImageSizeVariants)
+}
+
+const transformSportsNewsImage = (
+  heroImage: SchemaImageData,
+  ogImage: SchemaImageData
+): LatestSportsNewsData['heroImage'] => {
+  const transformedHeroImage = getHeroImage(heroImage)
+
+  return {
+    resized: createImageSizeVariants(transformedHeroImage, ogImage, false),
+    resizedWebp: createImageSizeVariants(transformedHeroImage, ogImage, true),
+  }
+}
+
+const transformLatestSportsNews = (
+  rawData: z.infer<typeof latestSportsNewsSchema> | undefined
+): LatestSportsNewsData[] => {
+  if (!rawData) return []
+
+  return rawData.category.items.map(
+    ({ id, type, title, publishedDate, heroImage, og_image }) => ({
+      id,
+      type,
+      title,
+      publishedDate,
+      heroImage: transformSportsNewsImage(heroImage, og_image),
+    })
+  )
+}
+
+export const fetchLatestSportsNews = async (): Promise<
+  LatestSportsNewsData[] | undefined
+> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching latest sports news',
+    getTraceObject()
+  )
+  const schema = z.promise(latestSportsNewsSchema)
+  try {
+    const resp = await fetch(URL_STATIC_LATEST_SPORTS_NEWS)
+    const rawSportsEventsData = await schema.parse(resp.json())
+    return transformLatestSportsNews(rawSportsEventsData)
   } catch (e) {
     errorLogger(e)
   }

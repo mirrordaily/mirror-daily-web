@@ -14,6 +14,9 @@ module.exports = {
       lg: '1200px',
     },
     extend: {
+      borderRadius: {
+        '2xs': '4px',
+      },
       colors: {
         mirror: {
           blue: {
@@ -21,6 +24,13 @@ module.exports = {
             700: '#674ab1',
             800: '#3b1e86',
           },
+          red: '#FF5457',
+        },
+        primary: {
+          300: '#CCCED4',
+          400: '#B2B5BE',
+          500: '#7F8493',
+          800: '#2B2B2B',
         },
       },
       backgroundColor: {
@@ -39,6 +49,7 @@ module.exports = {
           'linear-gradient(to bottom, rgba(255, 255, 255, 0) 648px, rgba(255, 255, 255, 1) 906px)',
       },
       zIndex: {
+        'sports-event-select-menu': 10,
         'over-editor-choice': 10,
         'over-shorts': 10,
         'over-slides': 10,
@@ -59,6 +70,7 @@ module.exports = {
       boxShadow: {
         input: ['2px 2px 2px 0px rgba(0,0,0,0.05)'],
         modal: ['0px 4px 4px 0px rgba(0, 0, 0, 0.25)'],
+        sportsEventsSelect: ['0px 2px 2px rgba(0,0,0,0.15)'],
       },
       keyframes: {
         popup: {
@@ -73,9 +85,14 @@ module.exports = {
             opacity: 1,
           },
         },
+        'glowing-red': {
+          '0%': { boxShadow: '0 0 0px #FF0000' },
+          '100%': { boxShadow: '0 0 8px #FF0000' },
+        },
       },
       animation: {
         popup: 'popup 1s ease-in-out',
+        'glowing-red': 'glowing-red 1250ms infinite alternate',
       },
     },
   },

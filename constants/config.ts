@@ -65,7 +65,6 @@ switch (ENV) {
     GTM_ID = 'GTM-MG9V2TJC'
     break
 }
-
 const URL_STATIC_POPULAR_NEWS = `${JSON_FILE_PATH}/popular.json`
 const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/latest_posts`
 const URL_STATIC_HEADER = `${JSON_FILE_PATH}/header.json`
@@ -75,10 +74,12 @@ const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json`
 const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/latest-shorts.json`
 const URL_STATIC_LATEST_VIDEOS = `${JSON_FILE_PATH}/latest-videos.json`
 const URL_STATIC_WEATHER = `${JSON_FILE_PATH}/weather.json`
-
+const URL_STATIC_LATEST_SPORTS_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category_sport_1.json`
+const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/sports_schedule.json`
 // shorts listing page
 const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
 const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
+const CPBL_SITE_URL = 'https://www.cpbl.com.tw'
 
 // section page
 const URL_STATIC_SECTION_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section`
@@ -89,6 +90,7 @@ const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
 export {
   ENV,
+  CPBL_SITE_URL,
   API_ENDPOINT,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
@@ -101,6 +103,8 @@ export {
   URL_STATIC_WEATHER,
   URL_STATIC_NEWS_SHORTSPAGE,
   URL_STATIC_CREATIVTY_SHORTPAGE,
+  URL_STATIC_SPORTS_EVENTS,
+  URL_STATIC_LATEST_SPORTS_NEWS,
   URL_STATIC_SECTION_NEWS,
   URL_STATIC_CATEGORY_NEWS,
   GCP_PROJECT_ID,
