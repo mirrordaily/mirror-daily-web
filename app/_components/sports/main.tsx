@@ -183,7 +183,7 @@ export default function SportsMain({
       {!selectedSchedule?.filter(
         (game) => game.date === dayjs(selectedDate).format('YYYY-MM-DD')
       ).length && (
-        <section className="flex h-full items-center justify-center text-primary-400 md:h-16 lg:h-[285px] lg:max-h-[285px]">
+        <section className="flex h-full min-h-16 items-center justify-center text-primary-400 md:h-16 lg:h-[285px] lg:max-h-[285px]">
           {`${selectedSportDisplayName} 於${formatChineseDate(selectedDate)}沒有賽事`}
         </section>
       )}
@@ -242,7 +242,7 @@ export default function SportsMain({
         ))}
       </div>
       {shouldShowSportsNews && (
-        <div>
+        <div className="hidden lg:flex lg:flex-col">
           <p className="mb-2 mt-5 text-base font-medium text-primary-500">
             相關報導
           </p>
