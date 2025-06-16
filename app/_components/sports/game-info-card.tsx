@@ -57,6 +57,7 @@ export default function GameInfoCard({
     return `${period}${formattedLocalTime}`
   }
   const gameStatus = () => {
+    if (status === 'POSTPONED') return '延賽'
     if (endTime) return '終場'
     // TODO: 籃球棒球要分開考慮
     if (dayjs(startTime) < dayjs(Date.now())) {
