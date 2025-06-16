@@ -3,132 +3,165 @@ import { GameNode } from './game-node'
 import dayjs from 'dayjs'
 import { SportsEvents } from '../main'
 
+// Constants
+const MIN_UPCOMING_GAMES_PER_DATE = 2
+const DATE_FORMAT = 'YYYY-MM-DD'
+
 export type EventGameMapType = Map<
   SportsEvents | string,
   Map<string, GameNode[]>
 >
 
 /**
- * Example output structure:
- * {
- *   'CPBL': Map {
- *     "2025-06-07" => [GameNode (original), GameNode (from 2025-06-08 if needed), ...],
- *     "2025-06-08" => [GameNode (possibly from future if original was empty/missing) ...], // Now guaranteed to exist
- *     "2025-06-09" => [GameNode, ...]
- *   },
- *   'TPBL': Map {
- *     "2025-06-07" => [GameNode, ...],
- *     "2025-06-08" => [GameNode, ...]
- *   },
- *   'ALL': Map {  // Aggregates all games for the date
- *     "2025-06-07" => [CPBLGame1, CPBLGame2, TPBLGame1, ...],
- *     "2025-06-08" => [CPBLGame3, ...]
- *   }
- * }
+ * Helper function to create and sort game nodes from raw data
+ */
+const createSortedGameNodes = (scheduleData: SportsGameData[]): GameNode[] => {
+  return scheduleData
+    .map((gameData) => new GameNode(gameData))
+    .sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf())
+}
+
+/**
+ * Helper function to ensure a league map exists in the result map
+ */
+const ensureLeagueMapExists = (
+  resultMap: EventGameMapType,
+  leagueKey: string
+): Map<string, GameNode[]> => {
+  if (!resultMap.has(leagueKey)) {
+    resultMap.set(leagueKey, new Map<string, GameNode[]>())
+  }
+  return resultMap.get(leagueKey)!
+}
+
+/**
+ * Helper function to ensure a date array exists in a league map
+ */
+const ensureDateArrayExists = (
+  leagueMap: Map<string, GameNode[]>,
+  dateKey: string
+): GameNode[] => {
+  if (!leagueMap.has(dateKey)) {
+    leagueMap.set(dateKey, [])
+  }
+  return leagueMap.get(dateKey)!
+}
+
+/**
+ * Populate the initial game map with games grouped by league and date
+ */
+const populateInitialGameMap = (
+  resultMap: EventGameMapType,
+  gameNodes: GameNode[]
+): void => {
+  gameNodes.forEach((gameNode) => {
+    const leagueKey = gameNode.normalizedLeague
+    const dateKey = gameNode.date
+
+    // Add to league-specific map
+    const leagueMap = ensureLeagueMapExists(resultMap, leagueKey)
+    const leagueGames = ensureDateArrayExists(leagueMap, dateKey)
+    leagueGames.push(gameNode)
+
+    // Add to 'ALL' category
+    const allEventsMap = ensureLeagueMapExists(resultMap, SportsEvents.ALL)
+    const allGames = ensureDateArrayExists(allEventsMap, dateKey)
+    allGames.push(gameNode)
+  })
+}
+
+/**
+ * Fill gaps between min and max dates with empty arrays
+ */
+const fillDateGaps = (resultMap: EventGameMapType): void => {
+  resultMap.forEach((leagueMap) => {
+    const dates = Array.from(leagueMap.keys()).sort()
+    if (dates.length < 2) return
+
+    const startDate = dayjs(dates[0])
+    const endDate = dayjs(dates[dates.length - 1])
+
+    for (
+      let current = startDate;
+      current.isBefore(endDate, 'day') || current.isSame(endDate, 'day');
+      current = current.add(1, 'day')
+    ) {
+      const dateKey = current.format(DATE_FORMAT)
+      ensureDateArrayExists(leagueMap, dateKey)
+    }
+  })
+}
+
+/**
+ * Backfill dates with insufficient upcoming games
+ */
+const backfillUpcomingGames = (
+  resultMap: EventGameMapType,
+  allGameNodes: GameNode[]
+): void => {
+  resultMap.forEach((leagueMap) => {
+    leagueMap.forEach((gamesOnDate, dateKey) => {
+      const currentUpcomingGames = gamesOnDate.filter(
+        (game) => game.status === 'UPCOMING'
+      )
+      let neededCount =
+        MIN_UPCOMING_GAMES_PER_DATE - currentUpcomingGames.length
+
+      if (neededCount <= 0) return
+
+      const existingIds = new Set(gamesOnDate.map((game) => game.id))
+      const gamesToAdd: GameNode[] = []
+      const dateEnd = dayjs(dateKey).endOf('day')
+
+      for (const candidateGame of allGameNodes) {
+        if (neededCount <= 0) break
+
+        if (
+          candidateGame.status === 'UPCOMING' &&
+          candidateGame.startTime.isAfter(dateEnd) &&
+          !existingIds.has(candidateGame.id)
+        ) {
+          gamesToAdd.push(candidateGame)
+          existingIds.add(candidateGame.id)
+          neededCount--
+        }
+      }
+
+      if (gamesToAdd.length > 0) {
+        gamesOnDate.push(...gamesToAdd)
+        gamesOnDate.sort(
+          (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
+        )
+      }
+    })
+  })
+}
+/**
+ * Transforms sports game data into a structured map for efficient date-based lookups.
+ *
+ * @param scheduleData - Array of sports game data
+ * @returns Map structure: League -> Date -> GameNode[]
+ *
+ * Features:
+ * - Groups games by league and date
+ * - Fills date gaps between min/max dates with empty arrays
+ * - Backfills dates with insufficient upcoming games
+ * - Includes 'ALL' category aggregating all leagues
  */
 export const eventGameMap = (
   scheduleData: SportsGameData[] | undefined = []
 ): EventGameMapType => {
   const resultMap: EventGameMapType = new Map()
 
-  if (!scheduleData || scheduleData.length === 0) {
+  if (!scheduleData?.length) {
     return resultMap
   }
 
-  // 變成節點，降序排列
-  const allGameNodesSorted: GameNode[] = scheduleData
-    .map((singleGameData) => new GameNode(singleGameData))
-    .sort((a, b) => a.startTime.valueOf() - b.startTime.valueOf())
+  const allGameNodes = createSortedGameNodes(scheduleData)
 
-  // 2. Initial population of resultMap (league-specific and 'ALL')
-  allGameNodesSorted.forEach((gameNode) => {
-    const leagueKey = gameNode.normalizedLeague
-    const dateKey = gameNode.date
+  populateInitialGameMap(resultMap, allGameNodes)
+  fillDateGaps(resultMap)
+  backfillUpcomingGames(resultMap, allGameNodes)
 
-    // Populate league-specific map
-    if (!resultMap.has(leagueKey)) {
-      resultMap.set(leagueKey, new Map<string, GameNode[]>())
-    }
-    const leagueDateMap = resultMap.get(leagueKey)!
-    if (!leagueDateMap.has(dateKey)) {
-      leagueDateMap.set(dateKey, [])
-    }
-    leagueDateMap.get(dateKey)!.push(gameNode)
-
-    // Populate 'ALL' category map
-    const allEventsKey = SportsEvents.ALL
-    if (!resultMap.has(allEventsKey)) {
-      resultMap.set(allEventsKey, new Map<string, GameNode[]>())
-    }
-    const allEventsDateMap = resultMap.get(allEventsKey)!
-    if (!allEventsDateMap.has(dateKey)) {
-      allEventsDateMap.set(dateKey, [])
-    }
-    allEventsDateMap.get(dateKey)!.push(gameNode)
-  })
-
-  // 因為按照日期排列，所以需要確保每個key都是連續的日期，如果沒有的要補空陣列
-  for (const leagueMap of Array.from(resultMap.values())) {
-    const dateKeysInLeague = Array.from(leagueMap.keys())
-    if (dateKeysInLeague.length < 2) {
-      continue
-    }
-
-    dateKeysInLeague.sort((a, b) => dayjs(a).valueOf() - dayjs(b).valueOf())
-
-    const minDateStr = dateKeysInLeague[0]
-    const maxDateStr = dateKeysInLeague[dateKeysInLeague.length - 1]
-
-    let currentDate = dayjs(minDateStr)
-    const endDateLoop = dayjs(maxDateStr)
-
-    while (
-      currentDate.isBefore(endDateLoop) ||
-      currentDate.isSame(endDateLoop, 'day')
-    ) {
-      const currentDateFormattedStr = currentDate.format('YYYY-MM-DD')
-      if (!leagueMap.has(currentDateFormattedStr)) {
-        leagueMap.set(currentDateFormattedStr, [])
-      }
-      currentDate = currentDate.add(1, 'day')
-    }
-  }
-
-  // 如果當天沒有比賽，要加入兩個未來的比賽
-  for (const leagueMap of Array.from(resultMap.values())) {
-    for (const [dateKey, gamesOnDateList] of Array.from(leagueMap.entries())) {
-      const currentUpcomingGames = gamesOnDateList.filter(
-        (game) => game.status === 'UPCOMING'
-      )
-      let neededUpcomingCount = 2 - currentUpcomingGames.length
-
-      if (neededUpcomingCount > 0) {
-        const gamesToAdd: GameNode[] = []
-        const existingIdsInList = new Set(
-          gamesOnDateList.map((game) => game.id)
-        )
-
-        for (const candidateGame of allGameNodesSorted) {
-          if (neededUpcomingCount <= 0) break
-          if (
-            candidateGame.status === 'UPCOMING' &&
-            candidateGame.startTime.isAfter(dayjs(dateKey).endOf('day')) &&
-            !existingIdsInList.has(candidateGame.id)
-          ) {
-            gamesToAdd.push(candidateGame)
-            existingIdsInList.add(candidateGame.id)
-            neededUpcomingCount--
-          }
-        }
-
-        if (gamesToAdd.length > 0) {
-          gamesOnDateList.push(...gamesToAdd)
-          gamesOnDateList.sort(
-            (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
-          )
-        }
-      }
-    }
-  }
   return resultMap
 }

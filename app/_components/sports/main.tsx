@@ -2,7 +2,7 @@
 import DateSwitcher from './date-switcher'
 import GameInfoCard from './game-info-card'
 import SelectMenu from './select-menu'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import type { LatestSportsNewsData, SportsGameData } from '@/types/homepage'
 import dayjs, { type Dayjs } from 'dayjs'
 import { eventGameMap } from './helper/game-map'
@@ -28,7 +28,6 @@ export default function SportsMain({
   scheduleData,
   latestSportsNewsData,
 }: SportsMainProps) {
-  console.log({ latestSportsNewsData })
   const POLLING_INTERVAL_TIME = 180000
   // RTK Query approach for polling
   const { data } = useSportsEventsRTK({
@@ -43,10 +42,54 @@ export default function SportsMain({
   const [selectedSport, setSelectedSport] = useState<SportsEvents>(
     SportsEvents.ALL
   )
-  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
+
   const processedGameMap = useMemo(() => {
     return eventGameMap(activeScheduleData)
   }, [activeScheduleData])
+
+  // Helper function to calculate appropriate date for a sport
+  const calculateDateForSport = useCallback(
+    (sport: SportsEvents): Dayjs => {
+      const today = dayjs().startOf('day')
+      const sportGameMap = processedGameMap.get(sport)
+
+      if (!sportGameMap || sportGameMap.size === 0) {
+        return today
+      }
+
+      const sortedDateKeys = Array.from(sportGameMap.keys()).sort(
+        (a, b) => dayjs(a).valueOf() - dayjs(b).valueOf()
+      )
+
+      if (sortedDateKeys.length === 0) {
+        return today
+      }
+
+      const firstDate = dayjs(sortedDateKeys[0]).startOf('day')
+      const lastDate = dayjs(sortedDateKeys[sortedDateKeys.length - 1]).startOf(
+        'day'
+      )
+
+      // Rule 1: Default use today
+      // Rule 2: If today is later than processedGameMap's last day, use last day
+      if (today.isAfter(lastDate)) {
+        return lastDate
+      }
+
+      // Rule 3: If today is before processedGameMap's first day, use first day
+      if (today.isBefore(firstDate)) {
+        return firstDate
+      }
+
+      // Rule 1: Default use today (within range)
+      return today
+    },
+    [processedGameMap]
+  )
+
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(() =>
+    calculateDateForSport(selectedSport)
+  )
 
   // 計算日期的邊界
   const { overallEarliestStartTime, overallLatestStartTime } = useMemo(() => {
@@ -120,7 +163,11 @@ export default function SportsMain({
         <SelectMenu
           options={sportOptions}
           selectedValue={selectedSport}
-          onSelectChange={(value) => setSelectedSport(value as SportsEvents)}
+          onSelectChange={(value) => {
+            const newSport = value as SportsEvents
+            setSelectedSport(newSport)
+            setSelectedDate(calculateDateForSport(newSport))
+          }}
         />
         <DateSwitcher
           date={selectedDate}
