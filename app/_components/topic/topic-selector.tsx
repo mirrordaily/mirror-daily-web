@@ -11,7 +11,8 @@ function getWidthOfText(text: string, styles: unknown): number {
     return !!obj && typeof obj === 'object' && !Array.isArray(obj)
   }
 
-  const element = document.createElement('div')
+  const element = document.createElement('button')
+  element.className = 'whitespace-nowrap lg:rounded-lg lg:px-2 lg:py-1'
 
   if (isObjectJSON(styles)) {
     const styleKeys = Object.keys(styles)
@@ -37,16 +38,20 @@ function getMaxmimumDisplayTopics(
 ): string[] {
   const amount = topics.length
 
-  let i = 1
-  for (; i <= amount; i++) {
-    const text = topics.slice(0, i).join('')
-    const width = getWidthOfText(text, style) + (i - 1) * itemGap
+  let totalWidth = 0
+  let i = 0
 
-    if (width > areaWidth) {
-      i -= 1
+  for (i = 0; i < amount; i++) {
+    const topicWidth = getWidthOfText(topics[i]!, style)
+    const gapWidth = i > 0 ? itemGap : 0
+
+    if (totalWidth + gapWidth + topicWidth > areaWidth) {
       break
     }
+
+    totalWidth += gapWidth + topicWidth
   }
+
   return topics.slice(0, i)
 }
 
@@ -89,7 +94,8 @@ export default function TopicSelector({
     switch (true) {
       case width >= desktopLowerBound: {
         itemGap.current = 20
-        areaWidth = 760 - 36 - itemGap.current
+        // 預留「更多」按鈕的空間 (約 40px)
+        areaWidth = 744 - 36 - itemGap.current - 40
         customStyle.current = {
           fontSize: '18px',
           fontWeight: '500',
@@ -98,7 +104,8 @@ export default function TopicSelector({
       }
       case width >= tabletLowerBound: {
         itemGap.current = 12
-        areaWidth = 680 - 39 - itemGap.current
+        // 預留「更多」按鈕的空間 (約 40px)
+        areaWidth = 680 - 39 - itemGap.current - 40
         customStyle.current = {
           fontSize: '18px',
           fontWeight: '500',
@@ -107,7 +114,8 @@ export default function TopicSelector({
       }
       default: {
         itemGap.current = 12
-        areaWidth = Math.min(width - 23 * 2, 329) - 32 - itemGap.current
+        // 預留「更多」按鈕的空間 (約 30px)
+        areaWidth = Math.min(width - 23 * 2, 329) - 32 - itemGap.current - 30
         customStyle.current = {
           fontSize: '16px',
           fontWeight: '500',
