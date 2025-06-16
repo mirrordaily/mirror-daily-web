@@ -96,7 +96,10 @@ export default async function Page({ params }: PageProps) {
           {adTypeBottom === 'dable' ? (
             <DableWidget type="articleBottomPC" />
           ) : (
-            <div id="_popIn_recommend" className="mt-6 md:block"></div>
+            <div
+              id="_popIn_recommend"
+              className={`mt-6 ${ENV === 'prod' ? 'hidden' : ''} md:block`}
+            ></div>
           )}
         </div>
         <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />
