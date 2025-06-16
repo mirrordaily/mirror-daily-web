@@ -179,6 +179,69 @@ export const headerSchema = z.array(
       }),
   ])
 )
+const currentPlaySchema = z.object({
+  home_score: z.number(),
+  inning: z.number(),
+  visiting_score: z.number(),
+})
+
+export const gameSchema = z.object({
+  // only when playing willl show this field
+  currentPlay: currentPlaySchema.optional(),
+  datetime: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid datetime string',
+  }),
+  end_datetime: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: 'Invalid datetime string',
+    })
+    .nullish(),
+  game_result: z.string(),
+  is_game_stop: z.string(),
+  game_sno: z.number(),
+  home_logo: z.string(),
+  home_score: z.number(),
+  home_team: z.string(),
+  present_status: z.number(),
+  visiting_logo: z.string(),
+  visiting_score: z.number(),
+  visiting_team: z.string(),
+})
+
+export const dailyScheduleSchema = z.object({
+  // Changed field name from 'datetime' to 'date' and ensured ISO 8601 format
+  date: z.string(),
+  games: z.array(gameSchema),
+})
+
+export const sportsEventsApiResponseSchema = z.object({
+  cpbl: z.array(dailyScheduleSchema).optional(),
+  tpbl: z.array(dailyScheduleSchema).optional(),
+})
+export const sportsEventsSchema = dailyScheduleSchema
+
+const apiDataContentSchema = z.object({
+  id: z.string(),
+  type: z.string(), // e.g., "unstyled"
+  styles: z.record(z.unknown()).optional(),
+  content: z.array(z.string()),
+  alignment: z.string().optional(),
+})
+
+// Sports news article schema - reuses heroImageSchema for consistency
+const sportsNewsItemSchema = z.object({
+  type: z.literal('story'),
+  id: z.string(),
+  title: z.string(),
+  publishedDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid publishedDate string',
+  }),
+  heroImage: heroImageSchema.nullable(),
+  og_image: heroImageSchema.nullable(),
+  apiData: z.array(z.unknown()), // Generic array for any additional API data
+  apiDataBrief: z.array(apiDataContentSchema),
+})
 
 const baseSectionPostSchema = rawLatestPostSchema.pick({
   id: true,
@@ -201,12 +264,24 @@ const sectionExternalSchema = baseSectionPostSchema.extend({
   brief: z.string(),
 })
 
-export const countsSchema = z.object({
+const sportsNewsCounts = z.object({
   posts: z.number(),
   externals: z.number(),
 })
 
+export const latestSportsNewsSchema = z.object({
+  category: z.object({
+    items: z.array(sportsNewsItemSchema),
+    counts: sportsNewsCounts,
+  }),
+})
+
+export { sportsNewsItemSchema, sportsNewsCounts }
 export const sectionPostSchema = z.union([
   sectionStorySchema,
   sectionExternalSchema,
 ])
+export const countsSchema = z.object({
+  posts: z.number(),
+  externals: z.number(),
+})

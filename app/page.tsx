@@ -15,6 +15,7 @@ import { Suspense } from 'react'
 import PageLogger from './_components/page-logger'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 
 // add segment config to prevent data fetch during build
@@ -85,6 +86,16 @@ export default async function Home() {
             }
           >
             <TopicSection />
+          </Suspense>
+          {/* 職棒、職籃 */}
+          <Suspense
+            fallback={
+              <div className="h-[80vh] w-full">
+                <Loading />
+              </div>
+            }
+          >
+            <SportsSection />
           </Suspense>
           <SectionDivider />
           {/* 短影音．投稿 */}

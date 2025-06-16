@@ -44,17 +44,16 @@ export default function WeatherMain({ data }: Props) {
   }
 
   const info = data[selectedCity]
-
   if (!info) return null
 
   return (
     <div className="flex w-full justify-center">
-      <div className="relative flex h-[50px] w-full max-w-[304px] items-center bg-[#f6f6fb] leading-none shadow-[0_2px_2px_0_rgba(0,0,0,0.1)] md:max-w-[680px]">
-        <p className="ml-[7px] mr-5 text-base font-medium text-[#7f8493] md:ml-5 md:mr-[318px]">
+      <div className="relative flex h-[50px] w-full items-center bg-[#f6f6fb] px-2 leading-none shadow-[0_2px_2px_0_rgba(0,0,0,0.1)] md:max-w-[680px] lg:px-4">
+        <p className="mr-5 flex text-base font-medium text-[#7f8493]">
           今日天氣
         </p>
         <button
-          className={`group mr-4 flex gap-x-4 text-base font-bold hover-or-active:text-[#674ab1] md:mr-[33px] md:gap-x-3 lg:mr-10 ${
+          className={`group mr-4 flex grow gap-x-4 text-base font-bold hover-or-active:text-[#674ab1] md:gap-x-3 lg:ml-[37px] ${
             isDropdownOpen ? 'text-[#674ab1]' : 'text-[#2b2b2b]'
           }`}
           onClick={toggleDropdown}
@@ -75,7 +74,6 @@ export default function WeatherMain({ data }: Props) {
             className={`block ${isDropdownOpen ? '' : 'hidden'} group-hover:block`}
           />
         </button>
-        {/* mobile */}
         <NextImage
           src={
             weatherToImage[info.weather as keyof typeof weatherToImage] ||
@@ -84,25 +82,16 @@ export default function WeatherMain({ data }: Props) {
           width={18}
           height={18}
           alt="天氣圖示"
-          className="mr-4 md:hidden"
+          className="mr-4 h-[18px] lg:mr-5"
         />
-        {/* tablet and desktop */}
-        <NextImage
-          src={
-            weatherToImage[info.weather as keyof typeof weatherToImage] ||
-            IconWeatherUnknown
-          }
-          width={34}
-          height={34}
-          alt="天氣圖示"
-          className="hidden md:mr-[33px] md:block lg:mr-[25px]"
-        />
-        <p className="mr-4 text-2xl font-bold text-[#2b2b2b] md:mr-5">
+        <p className="mr-4 h-9 w-[39px] text-2xl font-bold text-[#2b2b2b] lg:mr-5">
           {info.maxTemp}º
         </p>
-        <p className="text-base font-bold text-[#7f8493]">{info.minTemp}º</p>
+        <p className="h-6 text-base font-bold text-[#7f8493]">
+          {info.minTemp}º
+        </p>
         {isDropdownOpen && (
-          <ul className="absolute left-[68px] top-full z-city-selection-box h-[91px] w-[100px] cursor-pointer overflow-y-auto bg-[#f6f6fb] px-[26px] pt-[11px] md:left-[378px] md:h-[196px]">
+          <ul className="absolute left-0 top-full z-city-selection-box h-[91px] w-[100px] cursor-pointer overflow-y-auto bg-[#f6f6fb] px-[26px] pt-[11px] md:h-[196px] lg:left-20">
             {cities.map((city) => (
               <li
                 className="whitespace-nowrap pb-4 text-base font-medium hover-or-active:text-[#674ab1]"
