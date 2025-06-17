@@ -6,7 +6,6 @@ type Props = TopicPost & { isFirst?: boolean }
 export default function TopicItem({
   postName,
   link,
-  topicLink,
   heroImage,
   isFirst = false,
 }: Props) {
@@ -17,7 +16,7 @@ export default function TopicItem({
       } `}
     >
       <a
-        href={topicLink}
+        href={link}
         className={`relative aspect-[330/220] w-full shrink-0 overflow-hidden rounded ${
           isFirst
             ? 'md:aspect-[680/453] lg:aspect-[650/434] lg:w-full'
