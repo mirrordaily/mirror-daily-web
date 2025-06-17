@@ -51,11 +51,10 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
           data-widget_id-pc={config.pcWidgetId}
           data-widget_id-mo={config.moWidgetId}
           className={className}
-        />
-        <script />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        >
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
               (function(d,a,b,l,e,r) {
                 if(d[b] && d[b].q)return;d[b]=d[b]||function(){(d[b].q=d[b].q||[]).push(arguments)};e=a.createElement(l);
                 e.async=1;e.charset='utf-8';e.src='//static.dable.io/dist/plugin.min.js';
@@ -65,8 +64,9 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
               ${isProd ? "dable('sendLogOnce');" : ''}
               dable('${config.renderType}', 'dablewidget_${config.widgetId}');
             `,
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
     )
   )

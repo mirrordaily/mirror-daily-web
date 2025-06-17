@@ -59,7 +59,6 @@ export default function GameInfoCard({
   const gameStatus = () => {
     if (status === 'POSTPONED') return '延賽'
     if (endTime) return '終場'
-    // TODO: 籃球棒球要分開考慮
     if (dayjs(startTime) < dayjs(Date.now())) {
       switch (league) {
         case 'cpbl':
@@ -76,7 +75,6 @@ export default function GameInfoCard({
   return (
     <div className="flex flex-col rounded-2xs border-[0.5px] border-primary-300 bg-white px-5 py-3 text-primary-500">
       <section className="mb-3 flex justify-between">
-        {/* TODO: 找出如何實作第幾節、時間更新模式 */}
         <p
           className={`flex items-center gap-2 text-xs leading-[18px] ${currentPlay ? 'text-mirror-blue-700' : 'text-primary-500'}`}
         >
@@ -92,6 +90,7 @@ export default function GameInfoCard({
               src={`${CPBL_SITE_URL}/${homeTeamLogo}`}
               fill
               alt="home team logo"
+              unoptimized // remote圖片需要關閉最佳化
             />
           </div>
           <div className="relative flex grow justify-between">
@@ -109,6 +108,7 @@ export default function GameInfoCard({
               src={`${CPBL_SITE_URL}/${visitingTeamLogo}`}
               fill
               alt="visiting team logo"
+              unoptimized // remote圖片需要關閉最佳化
             />
           </div>
           <div className="relative flex grow justify-between">
