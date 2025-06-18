@@ -15,8 +15,12 @@ import {
   GetShortsDataDocument,
 } from '@/graphql/__generated__/graphql'
 import { fetchGQLData } from '@/utils/graphql'
-import type { Shorts, SHORTS_TYPE } from '@/types/common'
-import { URL_STATIC_NEWS_SHORTSPAGE } from '@/constants/config'
+import type { Shorts } from '@/types/common'
+import { SHORTS_TYPE } from '@/types/common'
+import {
+  URL_STATIC_NEWS_SHORTSPAGE,
+  URL_STATIC_CREATIVTY_SHORTPAGE,
+} from '@/constants/config'
 
 export const fetchShortsData = async (
   videoId: string
@@ -67,13 +71,18 @@ export const fetchShortsRandom = async (
   )
   const schema = z.promise(z.object({ videos: z.array(latestShortsSchema) }))
 
+  const SHORTS_JSON_URL = {
+    [SHORTS_TYPE.NEWS]: URL_STATIC_NEWS_SHORTSPAGE,
+    [SHORTS_TYPE.DERIVATIVE]: URL_STATIC_CREATIVTY_SHORTPAGE,
+  }
+
   const data = await createDataFetchingChain<
     z.infer<z.ZodArray<typeof latestShortsSchema>>
   >(
     errorLogger,
     [],
     async () => {
-      const baseUrl = URL_STATIC_NEWS_SHORTSPAGE
+      const baseUrl = SHORTS_JSON_URL[section]
       const jsonUrl = `${baseUrl}01.json`
       const resp = await fetch(jsonUrl)
 
