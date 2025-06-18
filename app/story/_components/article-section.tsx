@@ -21,10 +21,8 @@ export default async function ArticleSection({
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
-  const adTypeRelated =
-    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
-  const adTypeBottom =
-    ENV === 'prod' ? 'popIn' : Math.random() < 0.5 ? 'popIn' : 'dable'
+  const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
+  const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
