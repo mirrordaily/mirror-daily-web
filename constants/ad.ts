@@ -150,6 +150,8 @@ export const DABLE_DEV_WIDGET_CONFIG: Record<
   },
   articleBottomPC: {
     widgetId: 'goB9q42X_wXQ2PDRo',
+    pcWidgetId: 'goB9q42X',
+    moWidgetId: 'wXQ2PDRo',
     renderType: 'renderWidget',
     device: 'pc',
   },
