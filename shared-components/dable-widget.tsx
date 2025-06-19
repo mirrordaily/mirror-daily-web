@@ -48,7 +48,7 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
       <div key={`dable-widget-${type}-${config.widgetId}`}>
         <div
           id={`dablewidget_${config.widgetId}`}
-          data-widget_id={config.widgetId}
+          // data-widget_id={config.widgetId}
           data-widget_id-pc={config.pcWidgetId}
           data-widget_id-mo={config.moWidgetId}
           className={className}
