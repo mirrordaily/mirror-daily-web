@@ -7,11 +7,11 @@ import { getFirstParagraphFromApiData } from '@/utils/data-process'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata } from '@/utils/common'
 import { Suspense } from 'react'
-import PageLogger from '@/app/_components/page-logger'
+import PageLogger from '@/shared-components/page-logger'
 import AdultWarning from '../_components/adult-warning'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
-import MisoPageView from '@/app/_components/miso-pageview'
+import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV } from '@/constants/config'
 
 type PageProps = { params: { id: string } }
