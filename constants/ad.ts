@@ -131,7 +131,7 @@ export const DABLE_PROD_WIDGET_CONFIG: Record<
   },
   // 其他人都在看
   articleBottomPC: {
-    widgetId: 'goB9q42X',
+    widgetId: 'goB9q42X_wXQ2PDRo',
     renderType: 'renderWidget',
     device: 'pc',
   },
@@ -149,7 +149,7 @@ export const DABLE_DEV_WIDGET_CONFIG: Record<
     device: 'both',
   },
   articleBottomPC: {
-    widgetId: 'goB9q42X',
+    widgetId: 'goB9q42X_wXQ2PDRo',
     renderType: 'renderWidget',
     device: 'pc',
   },
