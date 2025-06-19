@@ -55,6 +55,7 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
         >
           <Script
             id="dable"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
               (function(d,a,b,l,e,r) {
