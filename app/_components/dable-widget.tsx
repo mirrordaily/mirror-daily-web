@@ -9,6 +9,7 @@ import {
 import { ENV } from '@/constants/config'
 import { useEffect, useState, useMemo } from 'react'
 import { useWindowSize } from 'usehooks-ts'
+import Script from 'next/script'
 
 declare global {
   interface Window {
@@ -52,7 +53,9 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
           data-widget_id-mo={config.moWidgetId}
           className={className}
         >
-          <script
+          <Script
+            id="dable"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
               (function(d,a,b,l,e,r) {
