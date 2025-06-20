@@ -9,7 +9,7 @@ import {
 import { ENV } from '@/constants/config'
 import { useEffect, useState, useMemo } from 'react'
 import { useWindowSize } from 'usehooks-ts'
-import Script from 'next/script'
+// import Script from 'next/script'
 
 declare global {
   interface Window {
@@ -43,6 +43,11 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
     if (config.device === 'both') setShouldRender(true)
   }, [isMobile])
 
+  useEffect(() => {
+    if (!shouldRender || typeof window.dable !== 'function') return
+    window.dable(config.renderType, `dablewidget_${config.widgetId}`)
+  }, [config, shouldRender])
+
   return (
     shouldRender && (
       <div key={`dable-widget-${type}-${config.widgetId}`}>
@@ -53,7 +58,7 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
           data-widget_id-mo={config.moWidgetId}
           className={className}
         >
-          <Script
+          {/* <Script
             id="dable"
             strategy="lazyOnload"
             dangerouslySetInnerHTML={{
@@ -68,7 +73,7 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
               dable('${config.renderType}', 'dablewidget_${config.widgetId}');
             `,
             }}
-          />
+          /> */}
         </div>
       </div>
     )
