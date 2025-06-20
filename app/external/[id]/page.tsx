@@ -87,7 +87,8 @@ export default async function Page({ params }: PageProps) {
           <Article brief={brief} content={content} />
           <RelatedNewsList posts={relatedPosts} />
           {adTypeRelated === 'dable' ? (
-            <DableWidget type="related" />
+            // <DableWidget type="related" />
+            <></>
           ) : (
             <div id="_popIn_recommend_word" className="mt-6"></div>
           )}
