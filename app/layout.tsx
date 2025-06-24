@@ -78,6 +78,10 @@ export default function RootLayout({
 
         {/* <!-- End Dable Script / For inquiries, visit http://dable.io --> */}
         {/* Meta Pixel Code */}
+        <meta
+          name="facebook-domain-verification"
+          content="14el8rbhe3j0flnirt7k17yl9mqevy"
+        />
         <Script
           type="text/javascript"
           id="facebook"
