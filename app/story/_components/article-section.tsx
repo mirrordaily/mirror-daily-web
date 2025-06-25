@@ -8,7 +8,7 @@ import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { ENV } from '@/constants/config'
-import DableWidget from '@/app/_components/dable-widget'
+import DableWidget from '@/shared-components/dable-widget'
 type Props = Post
 
 export default async function ArticleSection({

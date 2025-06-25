@@ -11,8 +11,8 @@ import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
-import MisoPageView from '@/app/_components/miso-pageview'
-import DableWidget from '@/app/_components/dable-widget'
+import MisoPageView from '@/shared-components/miso-pageview'
+import DableWidget from '@/shared-components/dable-widget'
 import { ENV } from '@/constants/config'
 type PageProps = { params: { id: string } }
 
