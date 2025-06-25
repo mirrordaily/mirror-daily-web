@@ -40,33 +40,22 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
       setShouldRender(config.device === 'pc')
     }
     if (config.device === 'both') setShouldRender(true)
-  }, [isMobile])
+  }, [isMobile, config, width])
+
+  useEffect(() => {
+    if (!shouldRender || typeof window.dable !== 'function') return
+    window.dable(config.renderType, `dablewidget_${config.widgetId}`)
+  }, [config, shouldRender])
 
   return (
     shouldRender && (
       <div key={`dable-widget-${type}-${config.widgetId}`}>
         <div
           id={`dablewidget_${config.widgetId}`}
-          data-widget_id={config.widgetId}
           data-widget_id-pc={config.pcWidgetId}
           data-widget_id-mo={config.moWidgetId}
           className={className}
-        >
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              (function(d,a,b,l,e,r) {
-                if(d[b] && d[b].q)return;d[b]=d[b]||function(){(d[b].q=d[b].q||[]).push(arguments)};e=a.createElement(l);
-                e.async=1;e.charset='utf-8';e.src='//static.dable.io/dist/plugin.min.js';
-                r=a.getElementsByTagName(l)[0];r.parentNode.insertBefore(e,r);
-              })(window,document,'dable','script');
-              dable('setService', 'mirrordaily.news');
-              ${isProd ? "dable('sendLogOnce');" : ''}
-              dable('${config.renderType}', 'dablewidget_${config.widgetId}');
-            `,
-            }}
-          />
-        </div>
+        />
       </div>
     )
   )
