@@ -59,7 +59,7 @@ export default function MobileNavList({ data }: Props) {
               <div className="flex items-center justify-between">
                 <a
                   href={link}
-                  className="grow text-base font-bold leading-[175%] tracking-[0.5px]"
+                  className="grow text-xl font-bold tracking-normal"
                   style={{
                     color: color,
                   }}

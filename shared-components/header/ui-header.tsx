@@ -60,7 +60,7 @@ export default function UiHeader({
         <div className="flex w-full max-w-screen-sm pl-4 pr-6 md:max-w-screen-md md:pl-5 lg:max-w-screen-lg lg:px-9">
           <a
             href="/"
-            className="relative mt-2 h-12 w-[100px] md:mt-5 md:h-[58px] md:w-[120px] lg:mt-3 lg:shrink-0"
+            className="relative mt-2 h-12 w-[161px] md:mt-5 md:h-[58px] md:w-[120px] lg:mt-3 lg:shrink-0"
           >
             <NextImage
               src={IconLogo}
@@ -130,7 +130,7 @@ export default function UiHeader({
         <div className="mt-[14px] hidden lg:flex">
           <DesktopNavList data={data} />
         </div>
-        <div className="flex w-full grow items-start text-sm lg:mt-[9px] lg:text-base">
+        <div className="flex w-full grow items-start text-lg lg:mt-[9px] lg:text-base">
           <p className="mr-[18px] mt-1 shrink-0 font-bold leading-none text-[#FF5457] md:mr-[7px] lg:mr-3">
             快訊
           </p>
