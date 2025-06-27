@@ -130,7 +130,7 @@ export default function UiHeader({
         <div className="mt-[14px] hidden lg:flex">
           <DesktopNavList data={data} />
         </div>
-        <div className="flex w-full grow items-start text-lg lg:mt-[9px] lg:text-base">
+        <div className="flex w-full grow items-start text-lg md:text-base lg:mt-[9px]">
           <p className="mr-[18px] mt-1 shrink-0 font-bold leading-none text-[#FF5457] md:mr-[7px] lg:mr-3">
             快訊
           </p>
