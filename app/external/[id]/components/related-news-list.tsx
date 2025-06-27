@@ -1,12 +1,7 @@
 import RelatedNewsCard from '@/app/story/_components/related-news-card'
-import type { PopularNews, RelatedPost } from '@/types/common'
 
-type PickedPopularNews = Pick<
-  PopularNews,
-  'postName' | 'link' | 'sectionColor' | 'sectionName' | 'heroImage'
->
 type Props = {
-  posts: Array<RelatedPost | PickedPopularNews>
+  posts: Parameters<typeof RelatedNewsCard>[0][]
 }
 
 export default function RelatedNewsList({ posts }: Props) {
