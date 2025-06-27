@@ -1,3 +1,5 @@
+import type { GetRelatedPostsByExternalIdQuery } from '@/graphql/__generated__/graphql'
+
 export type ExternalPost = {
   title: string
   thumb: string
@@ -16,3 +18,7 @@ export type ExternalPost = {
 }
 
 export type PostIntro = Omit<ExternalPost, 'brief' | 'content'>
+
+export type RawRelatedFromExternal = NonNullable<
+  GetRelatedPostsByExternalIdQuery['external']
+>['relateds']

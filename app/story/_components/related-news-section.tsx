@@ -13,7 +13,7 @@ export default function RelatedNewsSection({ posts }: Props) {
       </h3>
       <div className="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:gap-y-12">
         {posts.map((item) => (
-          <RelatedNewsCard {...item} key={item.title} />
+          <RelatedNewsCard {...item} key={item.postName} />
         ))}
       </div>
     </section>

@@ -8,7 +8,7 @@ import FeatureNewsList from './components/feature-news-list'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
-import { getDefaultMetadata } from '@/utils/common'
+import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
@@ -56,7 +56,11 @@ export default async function Page({ params }: PageProps) {
   const id = params.id
   const externalPost = await fetchExternal(id)
   const relatedPosts = await fetchRelatedPosts(id)
-  const popularPosts = await fetchPopularPost(6)
+  const popularPosts = await fetchPopularPost(20)
+  const popularPostsTopSix = popularPosts.slice(0, 6)
+  const remainingPopularPosts = popularPosts.slice(6)
+  const threeRandomPopularPosts = getRandomItems(remainingPopularPosts, 3)
+  const combinedPosts = [...relatedPosts, ...threeRandomPopularPosts]
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
   const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
   const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
@@ -85,7 +89,7 @@ export default async function Page({ params }: PageProps) {
         <div>
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
-          <RelatedNewsList posts={relatedPosts} />
+          <RelatedNewsList posts={combinedPosts} />
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />
           ) : (
@@ -108,7 +112,7 @@ export default async function Page({ params }: PageProps) {
             slotKey="mirrordaily_article_PC_300x600_R2"
             customClasses="mt-[-28px]"
           />
-          <FeatureNewsList title="熱門新聞" posts={popularPosts} />
+          <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
         </div>
       </section>
       {/* <MobileGptAd

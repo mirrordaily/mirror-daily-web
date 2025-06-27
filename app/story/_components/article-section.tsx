@@ -4,6 +4,7 @@ import RelatedNewsSection from '../_components/related-news-section'
 import Article from '../_components/article'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import { fetchRelatedPosts } from '../actions'
+import { getRandomItems } from '@/utils/common'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
@@ -21,6 +22,10 @@ export default async function ArticleSection({
   const relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const popularPostsTopSix = popularPosts.slice(0, 6)
+  const remainingPopularPosts = popularPosts.slice(6)
+  const threeRandomPopularPosts = getRandomItems(remainingPopularPosts, 3)
+  const combinedPosts = [...relatedPosts, ...threeRandomPopularPosts]
   const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
   const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
 
@@ -45,7 +50,7 @@ export default async function ArticleSection({
             ))}
           </div>
           {relatedPosts.length > 0 && (
-            <RelatedNewsSection posts={relatedPosts} />
+            <RelatedNewsSection posts={combinedPosts} />
           )}
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />
@@ -84,7 +89,7 @@ export default async function ArticleSection({
               customClasses="mt-[-28px]"
             />
             <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
-            <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
+            <FeaturedNewsSection title="熱門新聞" posts={popularPostsTopSix} />
           </>
         )}
       </div>
