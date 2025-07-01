@@ -327,8 +327,9 @@ const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
       'relatedsTwo',
       'relatedsThree',
     ] as const) {
-      if (rawData[key]) {
-        combinedRelatedData.push(rawData[key])
+      const data = rawData[key]
+      if (data) {
+        combinedRelatedData.push(data)
       }
     }
   }
