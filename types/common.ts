@@ -107,11 +107,11 @@ export type LatestPost = {
 }
 
 export type RelatedPost = {
-  title: string
+  postName: string
   link: string
   sectionColor: string
   sectionName: string
-  postMainImage: HeroImage
+  heroImage: HeroImage
 }
 
 export type SectionData = Pick<HeaderSection, 'slug' | 'color'>[]

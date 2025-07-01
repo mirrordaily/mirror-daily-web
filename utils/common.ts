@@ -93,6 +93,10 @@ const matchYoutubeUrl = (url: string): string | null => {
   return match?.[1] ?? null
 }
 
+const getRandomItems = <T>(arr: T[], count: number): T[] => {
+  return arr.sort(() => Math.random() - 0.5).slice(0, count)
+}
+
 export {
   isServer,
   isValidUrl,
@@ -102,4 +106,5 @@ export {
   getDefaultMetadata,
   updateMetadataOnClientSide,
   matchYoutubeUrl,
+  getRandomItems,
 }
