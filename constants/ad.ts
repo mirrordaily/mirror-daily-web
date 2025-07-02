@@ -1,22 +1,108 @@
 // [GPT] Error in googletag.defineSlot: Cannot create slot /230117403/mirrordaily_970x250_1. Div element "div-gpt-ad-1744279281118-0" is already associated with another slot: /230117403/mirrordaily_970x250_1.
 
 export const adSlots = {
-  mirrordaily_home_PC_970x250_1: {
-    slotId: '/7682122/mirrordaily_970x250_1',
-    size: [970, 250],
-    adDivId: 'div-gpt-ad-1745289656550-0',
+  mirrordaily_home_PC_970x250_top: {
+    slotId: '/23304347674/mirrordaily_pc/homepage/top',
+    size: [
+      [970, 250],
+      [970, 90],
+      [728, 90],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749701557246-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_PC_970x90_b1: {
+    slotId: '/23304347674/mirrordaily_pc/homepage/b1',
+    size: [
+      [970, 90],
+      [728, 90],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749701595336-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_PC_970x90_b2: {
+    slotId: '/23304347674/mirrordaily_pc/homepage/b2',
+    size: [
+      [970, 90],
+      [728, 90],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749701620320-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_PC_970x90_b3: {
+    slotId: '/23304347674/mirrordaily_pc/homepage/b3',
+    size: [
+      [970, 90],
+      [728, 90],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749701652065-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_MW_300x250_top: {
+    slotId: '/23304347674/mirrordaily_mweb/homepage/top',
+    size: [
+      [300, 250],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749702072995-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_MW_300x250_b1: {
+    slotId: '/23304347674/mirrordaily_mweb/homepage/b1',
+    size: [
+      [300, 250],
+      [336, 280],
+      [320, 100],
+      [320, 50],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749702102110-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_MW_300x250_b2: {
+    slotId: '/23304347674/mirrordaily_mweb/homepage/b2',
+    size: [
+      [300, 250],
+      [336, 280],
+      [320, 100],
+      [320, 50],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749702133364-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_MW_300x250_b3: {
+    slotId: '/23304347674/mirrordaily_mweb/homepage/b3',
+    size: [
+      [300, 250],
+      [336, 280],
+      [320, 100],
+      [320, 50],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749702157659-0',
+    collapseEmptyDivs: true,
+  },
+  mirrordaily_home_MW_300x250_b4: {
+    slotId: '/23304347674/mirrordaily_mweb/homepage/b4',
+    size: [
+      [300, 250],
+      [336, 280],
+      [320, 100],
+      [320, 50],
+      [1, 1],
+    ],
+    adDivId: 'div-gpt-ad-1749702185287-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_list_970x250: {
     slotId: '/7682122/mirrordaily_970x250_2',
     size: [970, 250],
     adDivId: 'div-gpt-ad-1745289682647-0',
-    collapseEmptyDivs: true,
-  },
-  mirrordaily_home_PC_728x90_1: {
-    slotId: '/7682122/mirrordaily_728x90',
-    size: [728, 90],
-    adDivId: 'div-gpt-ad-1745289708049-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_300x600_1: {
@@ -35,12 +121,6 @@ export const adSlots = {
     slotId: '/7682122/mirrordaily_640x390',
     size: [640, 390],
     adDivId: 'div-gpt-ad-1745289773435-0',
-    collapseEmptyDivs: true,
-  },
-  mirrordaily_home_MW_336x280_HD: {
-    slotId: '/7682122/mirrordaily_336x280_1',
-    size: [336, 280],
-    adDivId: 'div-gpt-ad-1745289793308-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_list_MW_336x280_HD: {

@@ -60,8 +60,8 @@ export default function BaseGptAd({
       <div
         id={adDivId}
         style={{
-          width: size[0],
-          minHeight: size[1],
+          width: size[0][0],
+          minHeight: size[0][1],
         }}
         className={twMerge(
           `${isDebugMode ? `relative flex items-center justify-center border-2 border-dashed border-red-500` : 'flex items-center justify-center'}`,
