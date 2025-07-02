@@ -9,8 +9,8 @@ import { getDefaultMetadata } from '@/utils/common'
 import { Suspense } from 'react'
 import PageLogger from '@/shared-components/page-logger'
 import AdultWarning from '../_components/adult-warning'
-import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+// import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+// import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV } from '@/constants/config'
 
@@ -89,7 +89,7 @@ export default async function Page({ params }: PageProps) {
         <PageLogger extra={extra} />
       </Suspense>
       <main className="flex flex-col items-center">
-        <div className="hidden min-h-[306px] lg:block">
+        {/* <div className="hidden min-h-[306px] lg:block">
           <DesktopGptAd
             slotKey="mirrordaily_home_PC_970x250_1"
             customClasses="mt-5 mb-9"
@@ -100,7 +100,7 @@ export default async function Page({ params }: PageProps) {
             slotKey="mirrordaily_list_MW_336x280_HD"
             customClasses="my-9"
           />
-        </div>
+        </div> */}
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
