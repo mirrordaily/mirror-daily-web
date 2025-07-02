@@ -10,7 +10,7 @@ import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 // import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+// import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import { ENV } from '@/constants/config'
@@ -79,10 +79,10 @@ export default async function Page({ params }: PageProps) {
         /> */}
       </div>
       <div className="block min-h-[352px] md:hidden">
-        <MobileGptAd
+        {/* <MobileGptAd
           slotKey="mirrordaily_list_MW_336x280_HD"
           customClasses="my-9"
-        />
+        /> */}
       </div>
       <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
       <section className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
