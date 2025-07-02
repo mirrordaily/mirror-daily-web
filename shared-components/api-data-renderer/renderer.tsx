@@ -20,8 +20,8 @@ import VideoBlock from './block-renderer/video-block'
 import YoutubeBlock from './block-renderer/youtube-block'
 import { ApiDataBlockType } from './types'
 import { getOrganizationFromSourceCustomId } from './utils'
-import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
+// import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
+// import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
 
 export type { ApiData } from './block-renderer/types'
 
@@ -164,24 +164,24 @@ export default function ApiDataRenderer({
         const apiDataBlockJsx = getApiDataBlockJsx(apiDataBlock)
         return (
           <React.Fragment key={i}>
-            {!isBrief && i === 1 && (
+            {/* {!isBrief && i === 1 && (
               <MobileGptAd
                 slotKey="mirrordaily_article_MW_336x280_AT1"
                 customClasses="mx-auto"
               />
-            )}
-            {!isBrief && i === 3 && (
+            )} */}
+            {/* {!isBrief && i === 3 && (
               <DesktopGptAd
                 slotKey="mirrordaily_article_PC_640x390_AT1"
                 customClasses="mx-auto"
               />
-            )}
-            {!isBrief && i === 5 && (
+            )} */}
+            {/* {!isBrief && i === 5 && (
               <MobileGptAd
                 slotKey="mirrordaily_article_MW_336x280_AT2"
                 customClasses="mx-auto"
               />
-            )}
+            )} */}
             {apiDataBlockJsx}
           </React.Fragment>
         )

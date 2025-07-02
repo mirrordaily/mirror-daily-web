@@ -10,8 +10,8 @@ import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { getSectionPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
-import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+// import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+// import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 
 type PageProps = { params: { slug: string } }
@@ -91,7 +91,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="hidden min-h-[306px] lg:block">
+      {/* <div className="hidden min-h-[306px] lg:block">
         <DesktopGptAd
           slotKey="mirrordaily_home_PC_970x250_1"
           customClasses="mt-5 mb-9 mx-auto"
@@ -102,7 +102,7 @@ export default async function Page({
           slotKey="mirrordaily_list_MW_336x280_HD"
           customClasses="my-9 mx-auto"
         />
-      </div>
+      </div> */}
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList
           initialPosts={initialPosts}
@@ -118,14 +118,14 @@ export default async function Page({
           customClasses="fixed bottom-0 auto z-[9999]"
         /> */}
       </main>
-      <DesktopGptAd
+      {/* <DesktopGptAd
         slotKey="mirrordaily_list_970x250"
         customClasses="my-[80px] mx-auto"
       />
       <MobileGptAd
         slotKey="mirrordaily_list_MW_336x280_FT"
         customClasses="mt-8 mb-9 mx-auto z-[5]"
-      />
+      /> */}
     </>
   )
 }

@@ -6,8 +6,8 @@ import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import { fetchRelatedPosts } from '../actions'
 import { getRandomItems } from '@/utils/common'
 import type { Post } from '@/types/story'
-import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+// import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+// import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { ENV } from '@/constants/config'
 import DableWidget from '@/shared-components/dable-widget'
 type Props = Post
@@ -73,24 +73,24 @@ export default async function ArticleSection({
         </div>
       </div>
 
-      <MobileGptAd
+      {/* <MobileGptAd
         slotKey="mirrordaily_article_MW_336x280_AT3"
         customClasses="mt-8"
-      />
+      /> */}
 
       <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
       <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12">
-        <DesktopGptAd
+        {/* <DesktopGptAd
           slotKey="mirrordaily_article_300x600_1"
           customClasses="mb-[-20px]"
-        />
+        /> */}
         <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
-        <DesktopGptAd
+        {/* <DesktopGptAd
           slotKey="mirrordaily_article_PC_300x600_R2"
           customClasses="mt-[-28px]"
         />
-        <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
+        <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" /> */}
         <FeaturedNewsSection title="熱門新聞" posts={popularPostsTopSix} />
       </div>
     </section>
