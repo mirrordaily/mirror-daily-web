@@ -5,7 +5,7 @@ type Props = {
 }
 
 export default function FeatureNewsList({ title, posts }: Props) {
-  if (posts.length === 0) return null
+  if (!posts.length) return null
 
   return (
     <section className="flex flex-col items-center gap-y-8 lg:gap-y-5">

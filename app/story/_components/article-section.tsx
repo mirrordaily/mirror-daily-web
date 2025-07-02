@@ -59,9 +59,7 @@ export default async function ArticleSection({
               </p>
             ))}
           </div>
-          {relatedPosts.length > 0 && (
-            <RelatedNewsSection posts={relatedPosts} />
-          )}
+          <RelatedNewsSection posts={relatedPosts} />
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />
           ) : (
@@ -83,25 +81,17 @@ export default async function ArticleSection({
       <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
       <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12">
-        {latestPosts.length > 0 && (
-          <>
-            <DesktopGptAd
-              slotKey="mirrordaily_article_300x600_1"
-              customClasses="mb-[-20px]"
-            />
-            <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
-          </>
-        )}
-        {popularPosts.length > 0 && (
-          <>
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_R2"
-              customClasses="mt-[-28px]"
-            />
-            <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
-            <FeaturedNewsSection title="熱門新聞" posts={popularPostsTopSix} />
-          </>
-        )}
+        <DesktopGptAd
+          slotKey="mirrordaily_article_300x600_1"
+          customClasses="mb-[-20px]"
+        />
+        <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
+        <DesktopGptAd
+          slotKey="mirrordaily_article_PC_300x600_R2"
+          customClasses="mt-[-28px]"
+        />
+        <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
+        <FeaturedNewsSection title="熱門新聞" posts={popularPostsTopSix} />
       </div>
     </section>
   )
