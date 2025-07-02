@@ -2,7 +2,7 @@
 
 export const adSlots = {
   mirrordaily_home_PC_970x250_top: {
-    slotId: '/23304347674/mirrordaily_pc/homepage/top',
+    slotId: '/23304347674/mirrordaily_pc//homepage//top',
     size: [
       [970, 250],
       [970, 90],
@@ -13,7 +13,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_PC_970x90_b1: {
-    slotId: '/23304347674/mirrordaily_pc/homepage/b1',
+    slotId: '/23304347674/mirrordaily_pc//homepage//b1',
     size: [
       [970, 90],
       [728, 90],
@@ -23,7 +23,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_PC_970x90_b2: {
-    slotId: '/23304347674/mirrordaily_pc/homepage/b2',
+    slotId: '/23304347674/mirrordaily_pc//homepage//b2',
     size: [
       [970, 90],
       [728, 90],
@@ -33,7 +33,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_PC_970x90_b3: {
-    slotId: '/23304347674/mirrordaily_pc/homepage/b3',
+    slotId: '/23304347674/mirrordaily_pc//homepage//b3',
     size: [
       [970, 90],
       [728, 90],
@@ -43,7 +43,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_top: {
-    slotId: '/23304347674/mirrordaily_mweb/homepage/top',
+    slotId: '/23304347674/mirrordaily_mweb//homepage//top',
     size: [
       [300, 250],
       [1, 1],
@@ -52,7 +52,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b1: {
-    slotId: '/23304347674/mirrordaily_mweb/homepage/b1',
+    slotId: '/23304347674/mirrordaily_mweb//homepage//b1',
     size: [
       [300, 250],
       [336, 280],
@@ -64,7 +64,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b2: {
-    slotId: '/23304347674/mirrordaily_mweb/homepage/b2',
+    slotId: '/23304347674/mirrordaily_mweb//homepage//b2',
     size: [
       [300, 250],
       [336, 280],
@@ -76,7 +76,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b3: {
-    slotId: '/23304347674/mirrordaily_mweb/homepage/b3',
+    slotId: '/23304347674/mirrordaily_mweb//homepage//b3',
     size: [
       [300, 250],
       [336, 280],
@@ -88,7 +88,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b4: {
-    slotId: '/23304347674/mirrordaily_mweb/homepage/b4',
+    slotId: '/23304347674/mirrordaily_mweb//homepage//b4',
     size: [
       [300, 250],
       [336, 280],
@@ -100,7 +100,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_970x250_top: {
-    slotId: '/23304347674/mirrordaily_pc/section/top',
+    slotId: '/23304347674/mirrordaily_pc//section//top',
     size: [
       [970, 250],
       [970, 90],
@@ -111,7 +111,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_300x250_r1: {
-    slotId: '/23304347674/mirrordaily_pc/section/r1',
+    slotId: '/23304347674/mirrordaily_pc//section//r1',
     size: [
       [300, 250],
       [1, 1],
@@ -120,7 +120,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_300x600_r2: {
-    slotId: '/23304347674/mirrordaily_pc/section/r2',
+    slotId: '/23304347674/mirrordaily_pc//section//r2',
     size: [
       [300, 600],
       [300, 250],
@@ -130,7 +130,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_300x600_r3: {
-    slotId: '/23304347674/mirrordaily_pc/section/r3',
+    slotId: '/23304347674/mirrordaily_pc//section//r3',
     size: [
       [300, 600],
       [300, 250],
@@ -140,25 +140,25 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list1: {
-    slotId: '/23304347674/mirrordaily_pc/section/list1',
+    slotId: '/23304347674/mirrordaily_pc//section//list1',
     size: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     adDivId: 'div-gpt-ad-1749701805301-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list2: {
-    slotId: '/23304347674/mirrordaily_pc/section/list1',
+    slotId: '/23304347674/mirrordaily_pc//section//list1',
     size: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     adDivId: 'div-gpt-ad-1749701837384-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list3: {
-    slotId: '/23304347674/mirrordaily_pc/section/list1',
+    slotId: '/23304347674/mirrordaily_pc//section//list1',
     size: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     adDivId: 'div-gpt-ad-1749701870611-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_top: {
-    slotId: '/23304347674/mirrordaily_mweb/section/top',
+    slotId: '/23304347674/mirrordaily_mweb//section//top',
     size: [
       [300, 250],
       [1, 1],
@@ -167,7 +167,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list1: {
-    slotId: '/23304347674/mirrordaily_mweb/section/list1',
+    slotId: '/23304347674/mirrordaily_mweb//section//list1',
     size: [
       [336, 280],
       [320, 100],
@@ -179,7 +179,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list2: {
-    slotId: '/23304347674/mirrordaily_mweb/section/list2',
+    slotId: '/23304347674/mirrordaily_mweb//section//list2',
     size: [
       [336, 280],
       [320, 100],
@@ -191,7 +191,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list3: {
-    slotId: '/23304347674/mirrordaily_mweb/section/list3',
+    slotId: '/23304347674/mirrordaily_mweb//section//list3',
     size: [
       [336, 280],
       [320, 100],
@@ -203,7 +203,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list4: {
-    slotId: '/23304347674/mirrordaily_mweb/section/list4',
+    slotId: '/23304347674/mirrordaily_mweb//section//list4',
     size: [
       [336, 280],
       [320, 100],
@@ -215,7 +215,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_970x250_top: {
-    slotId: '/23304347674/mirrordaily_pc/article/top',
+    slotId: '/23304347674/mirrordaily_pc//article//top',
     size: [
       [970, 250],
       [970, 90],
@@ -226,7 +226,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_300x250_r1: {
-    slotId: '/23304347674/mirrordaily_pc/article/r1',
+    slotId: '/23304347674/mirrordaily_pc//article//r1',
     size: [
       [300, 250],
       [1, 1],
@@ -235,7 +235,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_300x600_r2: {
-    slotId: '/23304347674/mirrordaily_pc/article/r2',
+    slotId: '/23304347674/mirrordaily_pc//article//r2',
     size: [
       [300, 600],
       [300, 250],
@@ -245,7 +245,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_300x600_r3: {
-    slotId: '/23304347674/mirrordaily_pc/article/r3',
+    slotId: '/23304347674/mirrordaily_pc//article//r3',
     size: [
       [300, 600],
       [300, 250],
@@ -255,7 +255,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_728x90_in1: {
-    slotId: '/23304347674/mirrordaily_pc/article/in1',
+    slotId: '/23304347674/mirrordaily_pc//article//in1',
     size: [
       [728, 90],
       [640, 360],
@@ -267,7 +267,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_728x90_in2: {
-    slotId: '/23304347674/mirrordaily_pc/article/in2',
+    slotId: '/23304347674/mirrordaily_pc//article//in2',
     size: [
       [728, 90],
       [640, 360],
@@ -279,7 +279,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_MW_300x250_top: {
-    slotId: '/23304347674/mirrordaily_mweb/article/top',
+    slotId: '/23304347674/mirrordaily_mweb//article//top',
     size: [
       [300, 250],
       [1, 1],
@@ -288,7 +288,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_MW_300x250_in1: {
-    slotId: '/23304347674/mirrordaily_mweb/article/in1',
+    slotId: '/23304347674/mirrordaily_mweb//article//in1',
     size: [
       [300, 250],
       [320, 480],
@@ -298,7 +298,7 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_article_MW_300x250_in2: {
-    slotId: '/23304347674/mirrordaily_mweb/article/in2',
+    slotId: '/23304347674/mirrordaily_mweb//article//in2',
     size: [
       [300, 250],
       [336, 280],
