@@ -341,6 +341,7 @@ const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
      */
     if (!rawPost) {
       return {
+        postId: '',
         postName: '',
         link: '',
         heroImage: {
@@ -351,6 +352,7 @@ const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
       }
     }
 
+    const postId = rawPost.id
     const postName = rawPost.title ?? ''
     const link = getStoryPageUrl(rawPost.id)
     const rawHeroImage = getHeroImage(rawPost.heroImage)
@@ -360,6 +362,7 @@ const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
     const sectionColor = rawPost.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
 
     return {
+      postId,
       postName,
       link,
       heroImage,

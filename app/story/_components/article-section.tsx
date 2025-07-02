@@ -12,6 +12,8 @@ import DableWidget from '@/shared-components/dable-widget'
 
 type Props = Post
 
+const MIN_RELATED_POSTS = 6
+
 export default async function ArticleSection({
   warnings,
   apiData,
@@ -19,15 +21,23 @@ export default async function ArticleSection({
   id,
   ...heroContent
 }: Props) {
-  const relatedPosts = await fetchRelatedPosts(id)
+  let relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
   const popularPostsTopSix = popularPosts.slice(0, 6)
-  const remainingPopularPosts = popularPosts.slice(6)
-  const threeRandomPopularPosts = getRandomItems(remainingPopularPosts, 3)
-  const combinedPosts = [...relatedPosts, ...threeRandomPopularPosts]
+
   const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
   const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
+
+  if (relatedPosts.length < MIN_RELATED_POSTS) {
+    const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
+    const relatedIds = new Set(relatedPosts.map((post) => post.postId))
+    const remainingPopularPosts = popularPosts
+      .slice(6)
+      .filter((post) => !relatedIds.has(post.postId))
+    const randomPopularPosts = getRandomItems(remainingPopularPosts, postsToAdd)
+    relatedPosts = [...relatedPosts, ...randomPopularPosts]
+  }
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
@@ -56,7 +66,7 @@ export default async function ArticleSection({
             customClasses="mb-9"
           />
 
-          <RelatedNewsSection posts={combinedPosts} />
+          <RelatedNewsSection posts={relatedPosts} />
 
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />

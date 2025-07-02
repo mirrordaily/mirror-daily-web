@@ -52,20 +52,30 @@ export async function generateMetadata({
   return metaData
 }
 
+const MIN_RELATED_POSTS = 6
+
 export default async function Page({ params }: PageProps) {
   const id = params.id
   const externalPost = await fetchExternal(id)
-  const relatedPosts = await fetchRelatedPosts(id)
+  if (!externalPost) notFound()
+
+  let relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(20)
   const popularPostsTopSix = popularPosts.slice(0, 6)
-  const remainingPopularPosts = popularPosts.slice(6)
-  const threeRandomPopularPosts = getRandomItems(remainingPopularPosts, 3)
-  const combinedPosts = [...relatedPosts, ...threeRandomPopularPosts]
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+
   const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
   const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
 
-  if (!externalPost) notFound()
+  if (relatedPosts.length < MIN_RELATED_POSTS) {
+    const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
+    const relatedIds = new Set(relatedPosts.map((post) => post.postId))
+    const remainingPopularPosts = popularPosts
+      .slice(6)
+      .filter((post) => !relatedIds.has(post.postId))
+    const randomPopularPosts = getRandomItems(remainingPopularPosts, postsToAdd)
+    relatedPosts = [...relatedPosts, ...randomPopularPosts]
+  }
 
   const { brief, content, ...intro } = externalPost
 
@@ -95,7 +105,7 @@ export default async function Page({ params }: PageProps) {
             customClasses="mt-9"
           />
 
-          <RelatedNewsList posts={combinedPosts} />
+          <RelatedNewsList posts={relatedPosts} />
 
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />

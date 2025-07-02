@@ -7,8 +7,8 @@ type Props = {
   type?: 'latest' | 'popular'
 }
 
-export default function FeatureNewsList({ title, posts, type }: Props) {
-  if (posts.length === 0) return null
+export default function FeatureNewsList({ title, posts }: Props) {
+  if (!posts.length) return null
 
   return (
     <section className="flex flex-col items-center gap-y-8 lg:gap-y-5">
