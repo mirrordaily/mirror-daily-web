@@ -1,4 +1,3 @@
-import React from 'react'
 import AudioBlock from './block-renderer/audio-block'
 import BackgroundImageBlock from './block-renderer/background-image-block'
 import BackgroundVideoBlock from './block-renderer/background-video-block'
@@ -20,8 +19,9 @@ import VideoBlock from './block-renderer/video-block'
 import YoutubeBlock from './block-renderer/youtube-block'
 import { ApiDataBlockType } from './types'
 import { getOrganizationFromSourceCustomId } from './utils'
-// import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
-// import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
+import { Fragment } from 'react'
+import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
+import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
 
 export type { ApiData } from './block-renderer/types'
 
@@ -163,27 +163,15 @@ export default function ApiDataRenderer({
       {apiData.map((apiDataBlock, i) => {
         const apiDataBlockJsx = getApiDataBlockJsx(apiDataBlock)
         return (
-          <React.Fragment key={i}>
-            {/* {!isBrief && i === 1 && (
-              <MobileGptAd
-                slotKey="mirrordaily_article_MW_336x280_AT1"
-                customClasses="mx-auto"
-              />
-            )} */}
-            {/* {!isBrief && i === 3 && (
-              <DesktopGptAd
-                slotKey="mirrordaily_article_PC_640x390_AT1"
-                customClasses="mx-auto"
-              />
-            )} */}
-            {/* {!isBrief && i === 5 && (
-              <MobileGptAd
-                slotKey="mirrordaily_article_MW_336x280_AT2"
-                customClasses="mx-auto"
-              />
-            )} */}
+          <Fragment key={i}>
             {apiDataBlockJsx}
-          </React.Fragment>
+            {!isBrief && i === 0 && (
+              <>
+                <DesktopGptAd slotKey="mirrordaily_article_PC_728x90_in1" />
+                <MobileGptAd slotKey="mirrordaily_article_MW_300x250_in1" />
+              </>
+            )}
+          </Fragment>
         )
       })}
     </article>

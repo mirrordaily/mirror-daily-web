@@ -20,9 +20,11 @@ const isDebugMode = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 export default function BaseGptAd({
   slotKey,
   customClasses,
+  pageKey,
 }: {
   slotKey: AdSlotKey
   customClasses: string
+  pageKey?: string
 }) {
   const isInitialed = useRef(false)
   const { slotId, size, adDivId, collapseEmptyDivs } = adSlots[slotKey]
@@ -42,6 +44,10 @@ export default function BaseGptAd({
       window.googletag
         .defineSlot(slotId, size, adDivId)
         .addService(window.googletag.pubads())
+
+      if (pageKey) {
+        window.googletag.setTargeting('cid', pageKey)
+      }
 
       window.googletag.pubads().enableSingleRequest()
 
