@@ -1,12 +1,11 @@
 import RelatedNewsCard from '@/app/story/_components/related-news-card'
-import type { RelatedPost } from '@/types/common'
 
 type Props = {
-  posts: RelatedPost[]
+  posts: Parameters<typeof RelatedNewsCard>[0][]
 }
 
 export default function RelatedNewsList({ posts }: Props) {
-  if (posts.length === 0) return null
+  if (!posts.length) return null
 
   return (
     <section className="mb-[92px] mt-7 flex flex-col items-center gap-y-8 px-[22.5px] md:mb-0 md:mt-9 md:px-0 lg:items-start lg:gap-y-7">
@@ -15,7 +14,7 @@ export default function RelatedNewsList({ posts }: Props) {
       </h3>
       <div className="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:gap-y-12">
         {posts.map((item) => (
-          <RelatedNewsCard {...item} key={item.title} />
+          <RelatedNewsCard {...item} key={item.postId} />
         ))}
       </div>
     </section>

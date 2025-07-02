@@ -8,7 +8,7 @@ import FeatureNewsList from './components/feature-news-list'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
-import { getDefaultMetadata } from '@/utils/common'
+import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
@@ -52,16 +52,30 @@ export async function generateMetadata({
   return metaData
 }
 
+const MIN_RELATED_POSTS = 6
+
 export default async function Page({ params }: PageProps) {
   const id = params.id
   const externalPost = await fetchExternal(id)
-  const relatedPosts = await fetchRelatedPosts(id)
-  const popularPosts = await fetchPopularPost(6)
+  if (!externalPost) notFound()
+
+  let relatedPosts = await fetchRelatedPosts(id)
+  const popularPosts = await fetchPopularPost(20)
+  const popularPostsTopSix = popularPosts.slice(0, 6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+
   const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
   const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
 
-  if (!externalPost) notFound()
+  if (relatedPosts.length < MIN_RELATED_POSTS) {
+    const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
+    const relatedIds = new Set(relatedPosts.map((post) => post.postId))
+    const remainingPopularPosts = popularPosts
+      .slice(6)
+      .filter((post) => !relatedIds.has(post.postId))
+    const randomPopularPosts = getRandomItems(remainingPopularPosts, postsToAdd)
+    relatedPosts = [...relatedPosts, ...randomPopularPosts]
+  }
 
   const { brief, content, ...intro } = externalPost
 
@@ -108,7 +122,7 @@ export default async function Page({ params }: PageProps) {
             slotKey="mirrordaily_article_PC_300x600_R2"
             customClasses="mt-[-28px]"
           />
-          <FeatureNewsList title="熱門新聞" posts={popularPosts} />
+          <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
         </div>
       </section>
       {/* <MobileGptAd

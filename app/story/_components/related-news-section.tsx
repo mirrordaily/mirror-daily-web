@@ -1,10 +1,8 @@
 import RelatedNewsCard from './related-news-card'
-import type { RelatedPost } from '@/types/common'
 
 type Props = {
-  posts: RelatedPost[]
+  posts: Parameters<typeof RelatedNewsCard>[0][]
 }
-
 export default function RelatedNewsSection({ posts }: Props) {
   return (
     <section className="flex flex-col items-center gap-y-8 pl-[23px] pr-[22px] md:px-0 lg:items-start lg:gap-y-7">
@@ -13,7 +11,7 @@ export default function RelatedNewsSection({ posts }: Props) {
       </h3>
       <div className="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:gap-y-12">
         {posts.map((item) => (
-          <RelatedNewsCard {...item} key={item.title} />
+          <RelatedNewsCard {...item} key={item.postId} />
         ))}
       </div>
     </section>
