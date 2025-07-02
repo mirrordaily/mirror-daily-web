@@ -1,5 +1,6 @@
 import FeaturedNewsCard from './featured-news-card'
 import { fetchPopularPost } from '@/app/actions-general'
+import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
 
 export default async function PopularNewsSection(): Promise<JSX.Element | null> {
   const articles = await fetchPopularPost()
@@ -10,10 +11,21 @@ export default async function PopularNewsSection(): Promise<JSX.Element | null> 
       <p className="text-lg font-bold leading-normal text-[#674ab1]">
         熱門新聞
       </p>
-      <div className="grid md:grid-cols-2 md:gap-7 lg:grid-cols-1 lg:gap-y-5">
+      <div className="grid justify-items-center md:grid-cols-2 md:gap-7 lg:grid-cols-1 lg:gap-y-5">
         {articles &&
-          articles.map((item) => (
-            <FeaturedNewsCard {...item} key={item.postId} />
+          articles.map((item, i) => (
+            <>
+              <FeaturedNewsCard {...item} key={item.postId} />
+              {i === 0 && (
+                <DesktopGptAd slotKey="mirrordaily_section_PC_300x250_r1" />
+              )}
+              {i === 2 && (
+                <DesktopGptAd slotKey="mirrordaily_section_PC_300x600_r2" />
+              )}
+              {i === 5 && (
+                <DesktopGptAd slotKey="mirrordaily_section_PC_300x600_r3" />
+              )}
+            </>
           ))}
       </div>
     </section>
