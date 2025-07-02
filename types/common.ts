@@ -107,6 +107,7 @@ export type LatestPost = {
 }
 
 export type RelatedPost = {
+  postId: string
   postName: string
   link: string
   sectionColor: string
