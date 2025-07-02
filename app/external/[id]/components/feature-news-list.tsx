@@ -7,7 +7,7 @@ type Props = {
   type?: 'latest' | 'popular'
 }
 
-export default function FeatureNewsList({ title, posts }: Props) {
+export default function FeatureNewsList({ title, posts, type }: Props) {
   if (!posts.length) return null
 
   return (
