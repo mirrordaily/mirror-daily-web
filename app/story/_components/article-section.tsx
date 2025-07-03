@@ -4,12 +4,15 @@ import RelatedNewsSection from '../_components/related-news-section'
 import Article from '../_components/article'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import { fetchRelatedPosts } from '../actions'
+import { getRandomItems } from '@/utils/common'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { ENV } from '@/constants/config'
 import DableWidget from '@/shared-components/dable-widget'
+
 type Props = Post
+
+const MIN_RELATED_POSTS = 6
 
 export default async function ArticleSection({
   warnings,
@@ -18,17 +21,30 @@ export default async function ArticleSection({
   id,
   ...heroContent
 }: Props) {
-  const relatedPosts = await fetchRelatedPosts(id)
+  let relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const popularPostsTopSix = popularPosts.slice(0, 6)
+
   const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
   const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
+
+  if (relatedPosts.length < MIN_RELATED_POSTS) {
+    const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
+    const relatedIds = new Set(relatedPosts.map((post) => post.postId))
+    const remainingPopularPosts = popularPosts
+      .slice(6)
+      .filter((post) => !relatedIds.has(post.postId))
+    const randomPopularPosts = getRandomItems(remainingPopularPosts, postsToAdd)
+    relatedPosts = [...relatedPosts, ...randomPopularPosts]
+  }
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
       <div>
         <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
           <HeroSection {...heroContent} />
+
           <div className="mb-12">
             <Article content={apiDataBrief} isBrief={true} />
             {/* for dable */}
@@ -44,9 +60,14 @@ export default async function ArticleSection({
               </p>
             ))}
           </div>
-          {relatedPosts.length > 0 && (
-            <RelatedNewsSection posts={relatedPosts} />
-          )}
+
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_728x90_in2"
+            customClasses="mb-9"
+          />
+
+          <RelatedNewsSection posts={relatedPosts} />
+
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />
           ) : (
@@ -60,33 +81,27 @@ export default async function ArticleSection({
         </div>
       </div>
 
-      <MobileGptAd
-        slotKey="mirrordaily_article_MW_336x280_AT3"
-        customClasses="mt-8"
-      />
-
       <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
       <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12">
-        {latestPosts.length > 0 && (
-          <>
-            <DesktopGptAd
-              slotKey="mirrordaily_article_300x600_1"
-              customClasses="mb-[-20px]"
-            />
-            <FeaturedNewsSection title="最新新聞" posts={latestPosts} />
-          </>
-        )}
-        {popularPosts.length > 0 && (
-          <>
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_R2"
-              customClasses="mt-[-28px]"
-            />
-            <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
-            <FeaturedNewsSection title="熱門新聞" posts={popularPosts} />
-          </>
-        )}
+        <div>
+          <FeaturedNewsSection
+            title="最新新聞"
+            posts={latestPosts}
+            type="latest"
+          />
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_300x600_r2"
+            customClasses="mt-5"
+          />
+        </div>
+        <div>
+          <FeaturedNewsSection title="熱門新聞" posts={popularPostsTopSix} />
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_300x600_r3"
+            customClasses="mt-5"
+          />
+        </div>
       </div>
     </section>
   )

@@ -20,9 +20,11 @@ const isDebugMode = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 export default function BaseGptAd({
   slotKey,
   customClasses,
+  pageKey,
 }: {
   slotKey: AdSlotKey
   customClasses: string
+  pageKey?: string
 }) {
   const isInitialed = useRef(false)
   const { slotId, size, adDivId, collapseEmptyDivs } = adSlots[slotKey]
@@ -43,6 +45,10 @@ export default function BaseGptAd({
         .defineSlot(slotId, size, adDivId)
         .addService(window.googletag.pubads())
 
+      if (pageKey) {
+        window.googletag.setTargeting('cid', pageKey)
+      }
+
       window.googletag.pubads().enableSingleRequest()
 
       if (collapseEmptyDivs && !isDebugMode) {
@@ -60,8 +66,8 @@ export default function BaseGptAd({
       <div
         id={adDivId}
         style={{
-          width: size[0],
-          minHeight: size[1],
+          width: size[0][0],
+          minHeight: size[0][1],
         }}
         className={twMerge(
           `${isDebugMode ? `relative flex items-center justify-center border-2 border-dashed border-red-500` : 'flex items-center justify-center'}`,

@@ -91,14 +91,14 @@ export default async function Page({ params }: PageProps) {
     <>
       <div className="hidden min-h-[306px] lg:block">
         <DesktopGptAd
-          slotKey="mirrordaily_home_PC_970x250_1"
+          slotKey="mirrordaily_section_PC_970x250_top"
           customClasses="mt-5 mb-9 mx-auto"
         />
       </div>
-      <div className="block min-h-[352px] md:hidden">
+      <div className="block min-h-[286px] md:hidden">
         <MobileGptAd
-          slotKey="mirrordaily_list_MW_336x280_HD"
-          customClasses="my-9 mx-auto"
+          slotKey="mirrordaily_section_MW_300x250_top"
+          customClasses="mb-9 mx-auto"
         />
       </div>
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
@@ -111,17 +111,9 @@ export default async function Page({ params }: PageProps) {
         />
         <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
         <PopularNewsSection />
-        {/* <MobileGptAd
-          slotKey="mirrordaily_list_MW_320x100_FIX"
-          customClasses="fixed bottom-0 auto z-[9999]"
-        /> */}
       </main>
-      <DesktopGptAd
-        slotKey="mirrordaily_list_970x250"
-        customClasses="mb-[80px] mx-auto"
-      />
       <MobileGptAd
-        slotKey="mirrordaily_list_MW_336x280_FT"
+        slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto z-[5]"
       />
     </>

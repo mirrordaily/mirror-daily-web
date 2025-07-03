@@ -182,5 +182,14 @@ query GetRelatedPostsById($id: ID!) {
     relatedsInInputOrder {
       ...RelatedPost
     }
+    relatedsOne {
+      ...RelatedPost
+    }
+    relatedsTwo {
+      ...RelatedPost
+    }
+    relatedsThree {
+      ...RelatedPost
+    }
   }
 }

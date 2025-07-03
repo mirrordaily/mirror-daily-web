@@ -30,6 +30,8 @@ import {
   getStoryPageUrl,
   getExternalPageUrl,
 } from './site-urls'
+import type { RawRelatedFromPost } from '@/types/story'
+import type { RawRelatedFromExternal } from '@/types/external'
 import type { SectionPost } from '@/types/section'
 import type { CategoryPost } from '@/types/category'
 import type { AuthorPost } from '@/types/author'
@@ -304,29 +306,45 @@ const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
 
   /**
    * NOTE:
-   * 相關文章因為排序問題，改成使用relatedsInInputOrder
+   * 舊有的相關文章因為排序問題，使用relatedsInInputOrder(CMS上已經隱藏)，後來改為透過relatedsOne、relatedsTwo、relatedsThree三個欄位進行排序
    * 外部相關文章仍然使用relateds
-   * 結論：相關文章來源有兩種可能，所以增加型別判斷。
    */
-  const hasRelatedsInInputOrder = 'relatedsInInputOrder' in rawData
-  const hasRelateds = 'relateds' in rawData
-  const relatedData =
-    (hasRelatedsInInputOrder && rawData.relatedsInInputOrder) ||
-    (hasRelateds && rawData.relateds) ||
-    null
+  const relatedFromPost = rawData.__typename === 'Post'
+  const relatedFromExternal = rawData.__typename === 'External'
 
-  if (!relatedData) return []
+  let combinedRelatedData: RawRelatedFromExternal | RawRelatedFromPost = []
 
-  return relatedData.map((rawPost) => {
+  if (relatedFromExternal) {
+    if (rawData.relateds) {
+      combinedRelatedData = rawData.relateds
+    }
+  } else if (relatedFromPost) {
+    if (rawData.relatedsInInputOrder) {
+      combinedRelatedData = [...rawData.relatedsInInputOrder]
+    }
+    for (const key of [
+      'relatedsOne',
+      'relatedsTwo',
+      'relatedsThree',
+    ] as const) {
+      const data = rawData[key]
+      if (data) {
+        combinedRelatedData.push(data)
+      }
+    }
+  }
+
+  return combinedRelatedData.map((rawPost) => {
     /**
      * rawPost是null的時候給預設值
      * 這個問題發生在有判斷之後TS型別推斷
      */
     if (!rawPost) {
       return {
-        title: '',
+        postId: '',
+        postName: '',
         link: '',
-        postMainImage: {
+        heroImage: {
           resized: { original: '' },
         },
         sectionColor: DEFAULT_SECTION_COLOR,
@@ -334,18 +352,20 @@ const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
       }
     }
 
-    const title = rawPost.title ?? ''
+    const postId = rawPost.id
+    const postName = rawPost.title ?? ''
     const link = getStoryPageUrl(rawPost.id)
-    const heroImage = getHeroImage(rawPost.heroImage)
+    const rawHeroImage = getHeroImage(rawPost.heroImage)
     const ogImage = getHeroImage(rawPost.og_image)
-    const postMainImage = selectMainImage(heroImage, ogImage)
+    const heroImage = selectMainImage(rawHeroImage, ogImage)
     const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
     const sectionColor = rawPost.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
 
     return {
-      title,
+      postId,
+      postName,
       link,
-      postMainImage,
+      heroImage,
       sectionColor,
       sectionName,
     }

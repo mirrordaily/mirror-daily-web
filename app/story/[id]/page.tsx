@@ -91,24 +91,24 @@ export default async function Page({ params }: PageProps) {
       <main className="flex flex-col items-center">
         <div className="hidden min-h-[306px] lg:block">
           <DesktopGptAd
-            slotKey="mirrordaily_home_PC_970x250_1"
+            slotKey="mirrordaily_article_PC_970x250_top"
             customClasses="mt-5 mb-9"
           />
         </div>
-        <div className="block min-h-[352px] md:hidden">
+        <div className="block min-h-[286px] md:hidden">
           <MobileGptAd
-            slotKey="mirrordaily_list_MW_336x280_HD"
-            customClasses="my-9"
+            slotKey="mirrordaily_article_MW_300x250_top"
+            customClasses="mb-9"
           />
         </div>
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        {/* <MobileGptAd
-          slotKey="mirrordaily_article_MW_320x100_ST"
+        <MobileGptAd
+          slotKey="mirrordaily_article_MW_300x250_in2"
           customClasses="fixed bottom-0 z-10"
-        /> */}
+        />
       </main>
     </>
   )
