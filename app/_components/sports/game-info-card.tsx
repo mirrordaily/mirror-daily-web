@@ -1,8 +1,9 @@
-import { CPBL_SITE_URL } from '@/constants/config'
+import { CPBL_SITE_URL, TPBL_SITE_URL } from '@/constants/config'
 import dayjs, { type Dayjs } from 'dayjs'
 import Image from 'next/image'
 import { type GameNode } from './helper/game-node'
 import { formatChineseDate } from './helper/utils/date-utils'
+import Link from 'next/link'
 
 type GameInfoCardProps = {
   gameData: GameNode
@@ -71,9 +72,16 @@ export default function GameInfoCard({
     }
     return formatGameTime(dayjs(startTime))
   }
+  const leagueSiteUrl = league === 'cpbl' ? CPBL_SITE_URL : TPBL_SITE_URL
 
   return (
-    <div className="flex flex-col rounded-2xs border-[0.5px] border-primary-300 bg-white px-5 py-3 text-primary-500">
+    <Link
+      prefetch={false}
+      href={leagueSiteUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex cursor-pointer flex-col rounded-2xs border-[0.5px] border-primary-300 bg-white px-5 py-3 text-primary-500 transition hover:shadow-md"
+    >
       <section className="mb-3 flex justify-between">
         <p
           className={`flex items-center gap-2 text-xs leading-[18px] ${currentPlay ? 'text-mirror-blue-700' : 'text-primary-500'}`}
@@ -121,6 +129,6 @@ export default function GameInfoCard({
           </div>
         </li>
       </ul>
-    </div>
+    </Link>
   )
 }
