@@ -22,7 +22,7 @@ export default async function ArticleSection({
   ...heroContent
 }: Props) {
   let relatedPosts = await fetchRelatedPosts(id)
-  const popularPosts = await fetchPopularPost(6)
+  const popularPosts = await fetchPopularPost(20)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
   const popularPostsTopSix = popularPosts.slice(0, 6)
 
