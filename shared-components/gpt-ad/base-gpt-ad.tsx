@@ -65,7 +65,7 @@ export default function BaseGptAd({
   return (
     <>
       <div
-        id={adDivId}
+        id={`div-gpt-ad-${adDivId}`}
         style={{
           width: minSize[0],
           minHeight: minSize[1],
