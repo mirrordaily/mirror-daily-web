@@ -72,7 +72,8 @@ export default function GameInfoCard({
     }
     return formatGameTime(dayjs(startTime))
   }
-  const leagueSiteUrl = league === 'cpbl' ? CPBL_SITE_URL : TPBL_SITE_URL
+  const leagueSiteUrl =
+    league === 'cpbl' ? `${CPBL_SITE_URL}/schedule` : `${TPBL_SITE_URL}`
 
   return (
     <Link
