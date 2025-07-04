@@ -1,6 +1,7 @@
 // [GPT] Error in googletag.defineSlot: Cannot create slot /230117403/mirrordaily_970x250_1. Div element "div-gpt-ad-1744279281118-0" is already associated with another slot: /230117403/mirrordaily_970x250_1.
 
 export const adSlots = {
+  // 首頁桌機版
   mirrordaily_home_PC_970x250_top: {
     slotId: '/23304347674/mirrordaily_pc//homepage//top',
     sizes: [
@@ -10,7 +11,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [728, 90],
-    adDivId: 'div-gpt-ad-1749701557246-0',
+    adDivId: '1749701557246-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_home_PC_970x90_b1: {
@@ -32,7 +33,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [728, 90],
-    adDivId: 'div-gpt-ad-1749701620320-0',
+    adDivId: '1749701620320-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_home_PC_970x90_b3: {
@@ -43,9 +44,10 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [728, 90],
-    adDivId: 'div-gpt-ad-1749701652065-0',
+    adDivId: '1749701652065-0',
     collapseEmptyDivs: true,
   },
+  // 首頁手機版
   mirrordaily_home_MW_300x250_top: {
     slotId: '/23304347674/mirrordaily_mweb//homepage//top',
     sizes: [
@@ -53,7 +55,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749702072995-0',
+    adDivId: '1749702072995-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b1: {
@@ -66,7 +68,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702102110-0',
+    adDivId: '1749702102110-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b2: {
@@ -79,7 +81,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702133364-0',
+    adDivId: '1749702133364-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b3: {
@@ -92,7 +94,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702157659-0',
+    adDivId: '1749702157659-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_home_MW_300x250_b4: {
@@ -105,9 +107,10 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702185287-0',
+    adDivId: '1749702185287-0',
     collapseEmptyDivs: true,
   },
+  // 分類頁(section、category)桌機版
   mirrordaily_section_PC_970x250_top: {
     slotId: '/23304347674/mirrordaily_pc//section//top',
     sizes: [
@@ -117,7 +120,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [728, 90],
-    adDivId: 'div-gpt-ad-1749701683775-0',
+    adDivId: '1749701683775-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_300x250_r1: {
@@ -127,7 +130,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749701708805-0',
+    adDivId: '1749701708805-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_300x600_r2: {
@@ -138,7 +141,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749701738541-0',
+    adDivId: '1749701738541-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_300x600_r3: {
@@ -149,30 +152,31 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749701764606-0',
+    adDivId: '1749701764606-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list1: {
     slotId: '/23304347674/mirrordaily_pc//section//list1',
     sizes: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     minSize: [720, 90],
-    adDivId: 'div-gpt-ad-1749701805301-0',
+    adDivId: '1749701805301-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list2: {
-    slotId: '/23304347674/mirrordaily_pc//section//list1',
+    slotId: '/23304347674/mirrordaily_pc//section//list2',
     sizes: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     minSize: [720, 90],
-    adDivId: 'div-gpt-ad-1749701837384-0',
+    adDivId: '1749701837384-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list3: {
-    slotId: '/23304347674/mirrordaily_pc//section//list1',
+    slotId: '/23304347674/mirrordaily_pc//section//list3',
     sizes: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     minSize: [720, 90],
-    adDivId: 'div-gpt-ad-1749701870611-0',
+    adDivId: '1749701870611-0',
     collapseEmptyDivs: true,
   },
+  // 分類頁(section、category)手機版
   mirrordaily_section_MW_300x250_top: {
     slotId: '/23304347674/mirrordaily_mweb//section//top',
     sizes: [
@@ -180,7 +184,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749702207602-0',
+    adDivId: '1749702207602-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list1: {
@@ -193,7 +197,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702231271-0',
+    adDivId: '1749702231271-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list2: {
@@ -206,7 +210,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702254638-0',
+    adDivId: '1749702254638-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list3: {
@@ -219,7 +223,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702279225-0',
+    adDivId: '1749702279225-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_MW_300x250_list4: {
@@ -232,9 +236,10 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 50],
-    adDivId: 'div-gpt-ad-1749702301885-0',
+    adDivId: '1749702301885-0',
     collapseEmptyDivs: true,
   },
+  // 文章頁桌機版
   mirrordaily_article_PC_970x250_top: {
     slotId: '/23304347674/mirrordaily_pc//article//top',
     sizes: [
@@ -244,7 +249,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [728, 90],
-    adDivId: 'div-gpt-ad-1749701899417-0',
+    adDivId: '1749701899417-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_300x250_r1: {
@@ -254,7 +259,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749701925038-0',
+    adDivId: '1749701925038-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_300x600_r2: {
@@ -265,7 +270,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749701958885-0',
+    adDivId: '1749701958885-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_300x600_r3: {
@@ -276,7 +281,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749701986513-0',
+    adDivId: '1749701986513-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_728x90_in1: {
@@ -289,7 +294,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 90],
-    adDivId: 'div-gpt-ad-1749702013879-0',
+    adDivId: '1749702013879-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_PC_728x90_in2: {
@@ -302,9 +307,10 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 90],
-    adDivId: 'div-gpt-ad-1749702047887-0',
+    adDivId: '1749702047887-0',
     collapseEmptyDivs: true,
   },
+  // 文章頁手機版
   mirrordaily_article_MW_300x250_top: {
     slotId: '/23304347674/mirrordaily_mweb//article//top',
     sizes: [
@@ -312,7 +318,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749702341482-0',
+    adDivId: '1749702341482-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_MW_300x250_in1: {
@@ -323,7 +329,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 250],
-    adDivId: 'div-gpt-ad-1749702381517-0',
+    adDivId: '1749702381517-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_article_MW_300x250_in2: {
@@ -335,7 +341,7 @@ export const adSlots = {
       [1, 1],
     ],
     minSize: [300, 100],
-    adDivId: 'div-gpt-ad-1749702406430-0',
+    adDivId: '1749702406430-0',
     collapseEmptyDivs: true,
   },
 } as const
