@@ -27,7 +27,8 @@ export default function BaseGptAd({
   pageKey?: string
 }) {
   const isInitialed = useRef(false)
-  const { slotId, size, adDivId, collapseEmptyDivs } = adSlots[slotKey]
+  const { slotId, sizes, adDivId, collapseEmptyDivs, minSize } =
+    adSlots[slotKey]
 
   useEffect(() => {
     if (typeof window === 'undefined' || isInitialed.current) return
@@ -42,7 +43,7 @@ export default function BaseGptAd({
       }
 
       window.googletag
-        .defineSlot(slotId, size, adDivId)
+        .defineSlot(slotId, sizes, adDivId)
         .addService(window.googletag.pubads())
 
       if (pageKey) {
@@ -59,15 +60,15 @@ export default function BaseGptAd({
       window.googletag.display(adDivId)
     })
     isInitialed.current = true
-  }, [slotId, adDivId, size, collapseEmptyDivs])
+  }, [slotId, adDivId, sizes, collapseEmptyDivs, pageKey])
 
   return (
     <>
       <div
         id={adDivId}
         style={{
-          width: size[0][0],
-          minHeight: size[0][1],
+          width: minSize[0],
+          minHeight: minSize[1],
         }}
         className={twMerge(
           `${isDebugMode ? `relative flex items-center justify-center border-2 border-dashed border-red-500` : 'flex items-center justify-center'}`,
