@@ -102,7 +102,7 @@ export default async function Page({ params }: PageProps) {
 
           <DesktopGptAd
             slotKey="mirrordaily_article_PC_728x90_in2"
-            customClasses="mt-9"
+            customClasses="mt-9 mx-auto"
           />
 
           <RelatedNewsList posts={relatedPosts} />
