@@ -167,8 +167,14 @@ export default function ApiDataRenderer({
             {apiDataBlockJsx}
             {!isBrief && i === 0 && (
               <>
-                <DesktopGptAd slotKey="mirrordaily_article_PC_728x90_in1" />
-                <MobileGptAd slotKey="mirrordaily_article_MW_300x250_in1" />
+                <DesktopGptAd
+                  slotKey="mirrordaily_article_PC_728x90_in1"
+                  customClasses="mx-auto"
+                />
+                <MobileGptAd
+                  slotKey="mirrordaily_article_MW_300x250_in1"
+                  customClasses="mx-auto"
+                />
               </>
             )}
           </Fragment>

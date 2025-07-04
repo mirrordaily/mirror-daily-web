@@ -91,7 +91,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="hidden min-h-[306px] lg:block">
+      <div className="hidden min-h-[306px] lg:flex lg:items-center">
         <DesktopGptAd
           slotKey="mirrordaily_section_PC_970x250_top"
           customClasses="mt-5 mb-9 mx-auto"

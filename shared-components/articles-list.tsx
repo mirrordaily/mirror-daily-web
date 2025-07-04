@@ -74,7 +74,10 @@ export default function ArticlesList<T extends PostData>({
                         <>
                           <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list1" />
                           <div className="md:hidden">
-                            <MobileGptAd slotKey="mirrordaily_section_MW_300x250_list1" />
+                            <MobileGptAd
+                              slotKey="mirrordaily_section_MW_300x250_list1"
+                              customClasses="mx-auto"
+                            />
                           </div>
                         </>
                       )}
@@ -82,7 +85,10 @@ export default function ArticlesList<T extends PostData>({
                         <>
                           <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list2" />
                           <div className="md:hidden">
-                            <MobileGptAd slotKey="mirrordaily_section_MW_300x250_list2" />
+                            <MobileGptAd
+                              slotKey="mirrordaily_section_MW_300x250_list2"
+                              customClasses="mx-auto"
+                            />
                           </div>
                         </>
                       )}
@@ -90,7 +96,10 @@ export default function ArticlesList<T extends PostData>({
                         <>
                           <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list3" />
                           <div className="md:hidden">
-                            <MobileGptAd slotKey="mirrordaily_section_MW_300x250_list3" />
+                            <MobileGptAd
+                              slotKey="mirrordaily_section_MW_300x250_list3"
+                              customClasses="mx-auto"
+                            />
                           </div>
                         </>
                       )}
