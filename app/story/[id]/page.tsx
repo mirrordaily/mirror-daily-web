@@ -105,10 +105,6 @@ export default async function Page({ params }: PageProps) {
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        <MobileGptAd
-          slotKey="mirrordaily_article_MW_300x250_in2"
-          customClasses="fixed bottom-0 z-10"
-        />
       </main>
     </>
   )

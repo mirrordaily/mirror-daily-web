@@ -104,6 +104,10 @@ export default async function Page({ params }: PageProps) {
             slotKey="mirrordaily_article_PC_728x90_in2"
             customClasses="mt-9 mx-auto"
           />
+          <MobileGptAd
+            slotKey="mirrordaily_article_MW_300x250_in2"
+            customClasses="mt-8 mx-auto"
+          />
 
           <RelatedNewsList posts={relatedPosts} />
 
@@ -141,10 +145,6 @@ export default async function Page({ params }: PageProps) {
           </div>
         </div>
       </section>
-      <MobileGptAd
-        slotKey="mirrordaily_article_MW_300x250_in2"
-        customClasses="fixed bottom-0 z-10"
-      />
     </main>
   )
 }
