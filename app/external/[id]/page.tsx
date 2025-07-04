@@ -82,7 +82,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="flex flex-col items-center">
       <MisoPageView productIds={`external_${id}`} />
-      <div className="hidden min-h-[306px] lg:block">
+      <div className="hidden min-h-[306px] lg:flex lg:items-center">
         <DesktopGptAd
           slotKey="mirrordaily_article_PC_970x250_top"
           customClasses="mt-5 mb-9"
@@ -141,6 +141,10 @@ export default async function Page({ params }: PageProps) {
           </div>
         </div>
       </section>
+      <MobileGptAd
+        slotKey="mirrordaily_article_MW_300x250_in2"
+        customClasses="fixed bottom-0 z-10"
+      />
     </main>
   )
 }

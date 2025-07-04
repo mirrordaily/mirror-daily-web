@@ -32,7 +32,7 @@ export default async function Home() {
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
-          <div className="hidden min-h-[306px] lg:block">
+          <div className="hidden min-h-[306px] lg:flex lg:items-center">
             <DesktopGptAd
               slotKey="mirrordaily_home_PC_970x250_top"
               customClasses="mt-5 mb-9"

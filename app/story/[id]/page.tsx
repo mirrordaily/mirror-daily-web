@@ -89,7 +89,7 @@ export default async function Page({ params }: PageProps) {
         <PageLogger extra={extra} />
       </Suspense>
       <main className="flex flex-col items-center">
-        <div className="hidden min-h-[306px] lg:block">
+        <div className="hidden min-h-[306px] lg:flex lg:items-center">
           <DesktopGptAd
             slotKey="mirrordaily_article_PC_970x250_top"
             customClasses="mt-5 mb-9"

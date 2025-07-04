@@ -63,7 +63,7 @@ export default async function ArticleSection({
 
           <DesktopGptAd
             slotKey="mirrordaily_article_PC_728x90_in2"
-            customClasses="mb-9"
+            customClasses="mb-9 mx-auto"
           />
 
           <RelatedNewsSection posts={relatedPosts} />
