@@ -7,6 +7,7 @@ import { fetchRelatedPosts } from '../actions'
 import { getRandomItems } from '@/utils/common'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { ENV } from '@/constants/config'
 import DableWidget from '@/shared-components/dable-widget'
 
@@ -45,25 +46,27 @@ export default async function ArticleSection({
         <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
           <HeroSection {...heroContent} />
 
-          <div className="mb-12">
-            <Article content={apiDataBrief} isBrief={true} />
-            {/* for dable */}
-            <div itemProp="articleBody">
-              <Article content={apiData} isBrief={false} />
-            </div>
-            {warnings.map(({ id, content }) => (
-              <p
-                key={id}
-                className="mt-3 whitespace-pre-wrap px-5 text-lg font-bold leading-loose text-[#212944] md:mt-8 md:px-0"
-              >
-                {content}
-              </p>
-            ))}
+          <Article content={apiDataBrief} isBrief={true} />
+          {/* for dable */}
+          <div itemProp="articleBody">
+            <Article content={apiData} isBrief={false} />
           </div>
+          {warnings.map(({ id, content }) => (
+            <p
+              key={id}
+              className="mt-3 whitespace-pre-wrap px-5 text-lg font-bold leading-loose text-[#212944] md:mt-8 md:px-0"
+            >
+              {content}
+            </p>
+          ))}
 
           <DesktopGptAd
             slotKey="mirrordaily_article_PC_728x90_in2"
-            customClasses="mb-9 mx-auto"
+            customClasses="my-9 mx-auto"
+          />
+          <MobileGptAd
+            slotKey="mirrordaily_article_MW_300x250_in2"
+            customClasses="mx-auto my-8"
           />
 
           <RelatedNewsSection posts={relatedPosts} />
