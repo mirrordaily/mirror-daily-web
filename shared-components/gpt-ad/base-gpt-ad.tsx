@@ -27,8 +27,8 @@ export default function BaseGptAd({
   pageKey?: string
 }) {
   const isInitialed = useRef(false)
-  const { slotId, sizes, adDivId, collapseEmptyDivs, minSize } =
-    adSlots[slotKey]
+  const { slotId, sizes, adId, collapseEmptyDivs, minSize } = adSlots[slotKey]
+  const adDivId = `div-gpt-ad-${adId}`
 
   useEffect(() => {
     if (typeof window === 'undefined' || isInitialed.current) return
@@ -65,7 +65,7 @@ export default function BaseGptAd({
   return (
     <>
       <div
-        id={`div-gpt-ad-${adDivId}`}
+        id={adDivId}
         style={{
           width: minSize[0],
           minHeight: minSize[1],
