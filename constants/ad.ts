@@ -1,6 +1,7 @@
 // [GPT] Error in googletag.defineSlot: Cannot create slot /230117403/mirrordaily_970x250_1. Div element "div-gpt-ad-1744279281118-0" is already associated with another slot: /230117403/mirrordaily_970x250_1.
 
 export const adSlots = {
+  // 首頁桌機版
   mirrordaily_home_PC_970x250_top: {
     slotId: '/23304347674/mirrordaily_pc//homepage//top',
     sizes: [
@@ -46,6 +47,7 @@ export const adSlots = {
     adDivId: '1749701652065-0',
     collapseEmptyDivs: true,
   },
+  // 首頁手機版
   mirrordaily_home_MW_300x250_top: {
     slotId: '/23304347674/mirrordaily_mweb//homepage//top',
     sizes: [
@@ -108,6 +110,7 @@ export const adSlots = {
     adDivId: '1749702185287-0',
     collapseEmptyDivs: true,
   },
+  // 分類頁(section、category)桌機版
   mirrordaily_section_PC_970x250_top: {
     slotId: '/23304347674/mirrordaily_pc//section//top',
     sizes: [
@@ -160,19 +163,20 @@ export const adSlots = {
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list2: {
-    slotId: '/23304347674/mirrordaily_pc//section//list1',
+    slotId: '/23304347674/mirrordaily_pc//section//list2',
     sizes: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     minSize: [720, 90],
     adDivId: '1749701837384-0',
     collapseEmptyDivs: true,
   },
   mirrordaily_section_PC_728x90_list3: {
-    slotId: '/23304347674/mirrordaily_pc//section//list1',
+    slotId: '/23304347674/mirrordaily_pc//section//list3',
     sizes: [[728, 90], [720, 90], [725, 134], [750, 100], 'fluid', [1, 1]],
     minSize: [720, 90],
     adDivId: '1749701870611-0',
     collapseEmptyDivs: true,
   },
+  // 分類頁(section、category)手機版
   mirrordaily_section_MW_300x250_top: {
     slotId: '/23304347674/mirrordaily_mweb//section//top',
     sizes: [
@@ -235,6 +239,7 @@ export const adSlots = {
     adDivId: '1749702301885-0',
     collapseEmptyDivs: true,
   },
+  // 文章頁桌機版
   mirrordaily_article_PC_970x250_top: {
     slotId: '/23304347674/mirrordaily_pc//article//top',
     sizes: [
@@ -305,6 +310,7 @@ export const adSlots = {
     adDivId: '1749702047887-0',
     collapseEmptyDivs: true,
   },
+  // 文章頁手機版
   mirrordaily_article_MW_300x250_top: {
     slotId: '/23304347674/mirrordaily_mweb//article//top',
     sizes: [
