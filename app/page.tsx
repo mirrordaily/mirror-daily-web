@@ -32,16 +32,16 @@ export default async function Home() {
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
-          <div className="hidden min-h-[306px] lg:block">
+          <div className="hidden min-h-[306px] lg:flex lg:items-center">
             <DesktopGptAd
-              slotKey="mirrordaily_home_PC_970x250_1"
+              slotKey="mirrordaily_home_PC_970x250_top"
               customClasses="mt-5 mb-9"
             />
           </div>
-          <div className="block min-h-[352px] md:hidden">
+          <div className="block min-h-[286px] md:hidden">
             <MobileGptAd
-              slotKey="mirrordaily_list_MW_336x280_HD"
-              customClasses="my-9 mx-auto"
+              slotKey="mirrordaily_home_MW_300x250_top"
+              customClasses="mb-9 mx-auto"
             />
           </div>
           <SectionDivider customClasses="hidden md:block lg:hidden" />
@@ -56,7 +56,7 @@ export default async function Home() {
             <EditorChoiceSection />
           </Suspense>
           <DesktopGptAd
-            slotKey="mirrordaily_home_PC_728x90_1"
+            slotKey="mirrordaily_home_PC_970x90_b1"
             customClasses="my-7"
           />
           <SectionDivider customClasses="lg:hidden" />
@@ -65,7 +65,17 @@ export default async function Home() {
           <SectionDivider />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection headerData={headerData} />
+          <DesktopGptAd
+            slotKey="mirrordaily_home_PC_970x90_b2"
+            customClasses="mb-9"
+          />
           <SectionDivider />
+          <div className="block md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_home_MW_300x250_b1"
+              customClasses="mt-9 mx-auto"
+            />
+          </div>
           {/* 短影音新聞 */}
           <Suspense
             fallback={
@@ -77,6 +87,12 @@ export default async function Home() {
             <ShortsNewsSection />
           </Suspense>
           <SectionDivider />
+          <div className="block md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_home_MW_300x250_b2"
+              customClasses="mt-9 mb-3 mx-auto"
+            />
+          </div>
           {/* Topic（4則）+ 天氣 */}
           <Suspense
             fallback={
@@ -97,6 +113,16 @@ export default async function Home() {
           >
             <SportsSection />
           </Suspense>
+          <DesktopGptAd
+            slotKey="mirrordaily_home_PC_970x90_b3"
+            customClasses="mb-9"
+          />
+          <div className="block md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_home_MW_300x250_b3"
+              customClasses="mb-9 mt-2 mx-auto"
+            />
+          </div>
           <SectionDivider />
           {/* 短影音．投稿 */}
           <Suspense
@@ -108,6 +134,12 @@ export default async function Home() {
           >
             <ShortsDerivativeSection />
           </Suspense>
+          <div className="block md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_home_MW_300x250_b4"
+              customClasses="mb-9 mx-auto"
+            />
+          </div>
           <SectionDivider />
           {/* 最新新聞 */}
           <LatestNewsSection />

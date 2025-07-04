@@ -6,6 +6,8 @@ import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { notFound } from 'next/navigation'
 import type { PostData } from '@/utils/data-process'
 import { PAGE_SIZE } from '@/constants/section'
+import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
+import { MobileGptAd } from './gpt-ad/mobile-gpt-ad'
 
 type Props<T> = {
   initialPosts: T[]
@@ -61,12 +63,47 @@ export default function ArticlesList<T extends PostData>({
                 }
               >
                 {(posts) =>
-                  posts.map((post) => (
-                    <SecondaryArticleCard
-                      key={post.id}
-                      color={color}
-                      postItem={post}
-                    />
+                  posts.map((post, i) => (
+                    <>
+                      <SecondaryArticleCard
+                        key={post.id}
+                        color={color}
+                        postItem={post}
+                      />
+                      {i === 0 && (
+                        <>
+                          <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list1" />
+                          <div className="md:hidden">
+                            <MobileGptAd
+                              slotKey="mirrordaily_section_MW_300x250_list1"
+                              customClasses="mx-auto"
+                            />
+                          </div>
+                        </>
+                      )}
+                      {i === 3 && (
+                        <>
+                          <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list2" />
+                          <div className="md:hidden">
+                            <MobileGptAd
+                              slotKey="mirrordaily_section_MW_300x250_list2"
+                              customClasses="mx-auto"
+                            />
+                          </div>
+                        </>
+                      )}
+                      {i === 6 && (
+                        <>
+                          <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list3" />
+                          <div className="md:hidden">
+                            <MobileGptAd
+                              slotKey="mirrordaily_section_MW_300x250_list3"
+                              customClasses="mx-auto"
+                            />
+                          </div>
+                        </>
+                      )}
+                    </>
                   ))
                 }
               </InfiniteScrollList>
