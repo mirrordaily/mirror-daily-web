@@ -49,6 +49,10 @@
     @apply bg-[#b04ee9];
   }
 
+  .topic-name {
+    @apply mt-[20px] mb-[-28px] text-center text-lg font-bold leading-[100%] text-black md:text-xl;
+  }
+
   /* listing */
   .topic-list {
     @apply my-[60px] px-12 w-full max-w-[375px] md:px-0 md:mx-auto md:max-w-none md:w-[592px] lg:w-[1068px];
