@@ -8,9 +8,11 @@ import { getTailwindConfigBreakpointNumber } from '@/utils/tailwind'
 export function DesktopGptAd({
   slotKey,
   customClasses = '',
+  pageKey = '',
 }: {
   slotKey: AdSlotKey
   customClasses?: string
+  pageKey?: string
 }) {
   const [show, setShow] = useState(false)
 
@@ -24,6 +26,10 @@ export function DesktopGptAd({
   }, [])
 
   return show ? (
-    <BaseGptAd slotKey={slotKey} customClasses={customClasses} />
+    <BaseGptAd
+      slotKey={slotKey}
+      customClasses={customClasses}
+      pageKey={pageKey}
+    />
   ) : null
 }
