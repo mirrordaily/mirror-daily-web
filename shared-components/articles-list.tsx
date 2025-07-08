@@ -15,6 +15,7 @@ type Props<T> = {
   name: string
   totalAmount: number
   fetchMorePosts: (page: number) => Promise<T[]>
+  slug: string
 }
 
 export default function ArticlesList<T extends PostData>({
@@ -23,6 +24,7 @@ export default function ArticlesList<T extends PostData>({
   name,
   totalAmount,
   fetchMorePosts,
+  slug,
 }: Props<T>): ReactElement {
   const [firstPost, ...otherPosts] = initialPosts
   if (!firstPost) notFound()
@@ -72,33 +74,45 @@ export default function ArticlesList<T extends PostData>({
                       />
                       {i === 0 && (
                         <>
-                          <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list1" />
+                          <DesktopGptAd
+                            slotKey="mirrordaily_section_PC_728x90_list1"
+                            pageKey={slug}
+                          />
                           <div className="md:hidden">
                             <MobileGptAd
                               slotKey="mirrordaily_section_MW_300x250_list1"
                               customClasses="mx-auto"
+                              pageKey={slug}
                             />
                           </div>
                         </>
                       )}
                       {i === 3 && (
                         <>
-                          <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list2" />
+                          <DesktopGptAd
+                            slotKey="mirrordaily_section_PC_728x90_list2"
+                            pageKey={slug}
+                          />
                           <div className="md:hidden">
                             <MobileGptAd
                               slotKey="mirrordaily_section_MW_300x250_list2"
                               customClasses="mx-auto"
+                              pageKey={slug}
                             />
                           </div>
                         </>
                       )}
                       {i === 6 && (
                         <>
-                          <DesktopGptAd slotKey="mirrordaily_section_PC_728x90_list3" />
+                          <DesktopGptAd
+                            slotKey="mirrordaily_section_PC_728x90_list3"
+                            pageKey={slug}
+                          />
                           <div className="md:hidden">
                             <MobileGptAd
                               slotKey="mirrordaily_section_MW_300x250_list3"
                               customClasses="mx-auto"
+                              pageKey={slug}
                             />
                           </div>
                         </>
