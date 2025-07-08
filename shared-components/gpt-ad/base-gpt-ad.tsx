@@ -24,7 +24,7 @@ export default function BaseGptAd({
 }: {
   slotKey: AdSlotKey
   customClasses: string
-  pageKey?: string
+  pageKey: string
 }) {
   const isInitialed = useRef(false)
   const { slotId, sizes, adId, collapseEmptyDivs, minSize } = adSlots[slotKey]
