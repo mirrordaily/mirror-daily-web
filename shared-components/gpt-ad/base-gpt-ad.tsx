@@ -42,12 +42,12 @@ export default function BaseGptAd({
         )
       }
 
-      window.googletag
+      const slot = window.googletag
         .defineSlot(slotId, sizes, adDivId)
         .addService(window.googletag.pubads())
 
       if (pageKey) {
-        window.googletag.setTargeting('cid', pageKey)
+        slot.setTargeting('cid', pageKey)
       }
 
       window.googletag.pubads().enableSingleRequest()
