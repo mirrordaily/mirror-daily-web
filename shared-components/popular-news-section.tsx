@@ -3,7 +3,7 @@ import { fetchPopularPost } from '@/app/actions-general'
 import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
 
 type Props = {
-  slug: string
+  slug?: string
 }
 export default async function PopularNewsSection({
   slug,
