@@ -115,7 +115,7 @@ export default async function Page({
           slug={slug}
         />
         <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
-        <PopularNewsSection />
+        <PopularNewsSection slug={slug} />
       </main>
       <MobileGptAd
         slotKey="mirrordaily_section_MW_300x250_list4"

@@ -2,7 +2,12 @@ import FeaturedNewsCard from './featured-news-card'
 import { fetchPopularPost } from '@/app/actions-general'
 import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
 
-export default async function PopularNewsSection(): Promise<JSX.Element | null> {
+type Props = {
+  slug: string
+}
+export default async function PopularNewsSection({
+  slug,
+}: Props): Promise<JSX.Element | null> {
   const articles = await fetchPopularPost()
   if (!articles.length) return null
 
@@ -17,13 +22,22 @@ export default async function PopularNewsSection(): Promise<JSX.Element | null> 
             <>
               <FeaturedNewsCard {...item} key={item.postId} />
               {i === 0 && (
-                <DesktopGptAd slotKey="mirrordaily_section_PC_300x250_r1" />
+                <DesktopGptAd
+                  slotKey="mirrordaily_section_PC_300x250_r1"
+                  pageKey={slug}
+                />
               )}
               {i === 2 && (
-                <DesktopGptAd slotKey="mirrordaily_section_PC_300x600_r2" />
+                <DesktopGptAd
+                  slotKey="mirrordaily_section_PC_300x600_r2"
+                  pageKey={slug}
+                />
               )}
               {i === 5 && (
-                <DesktopGptAd slotKey="mirrordaily_section_PC_300x600_r3" />
+                <DesktopGptAd
+                  slotKey="mirrordaily_section_PC_300x600_r3"
+                  pageKey={slug}
+                />
               )}
             </>
           ))}
