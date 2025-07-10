@@ -80,14 +80,12 @@ export default async function Home() {
           >
             <EditorChoiceSection />
           </Suspense>
-          <DesktopGptAd
-            slotKey={
-              isStagingOrProd
-                ? 'mirrordaily_home_PC_728x90_1'
-                : 'mirrordaily_home_PC_970x90_b1'
-            }
-            customClasses="my-7"
-          />
+          {!isStagingOrProd && (
+            <DesktopGptAd
+              slotKey="mirrordaily_home_PC_970x90_b1"
+              customClasses="my-7"
+            />
+          )}
           <SectionDivider customClasses="lg:hidden" />
           {/* 直播區 */}
           <LiveSection />
