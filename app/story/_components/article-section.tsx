@@ -103,6 +103,12 @@ export default async function ArticleSection({
 
       <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12">
         <div>
+          {isStagingOrProd && (
+            <DesktopGptAd
+              slotKey="mirrordaily_article_300x600_1"
+              customClasses="mb-[-20px]"
+            />
+          )}
           <FeaturedNewsSection
             title="最新新聞"
             posts={latestPosts}

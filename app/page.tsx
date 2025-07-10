@@ -80,6 +80,12 @@ export default async function Home() {
           >
             <EditorChoiceSection />
           </Suspense>
+          {isStagingOrProd && (
+            <DesktopGptAd
+              slotKey="mirrordaily_home_PC_728x90_1"
+              customClasses="my-7"
+            />
+          )}
           {!isStagingOrProd && (
             <DesktopGptAd
               slotKey="mirrordaily_home_PC_970x90_b1"
