@@ -167,7 +167,10 @@ export default async function Page({ params }: PageProps) {
               type="latest"
             />
             {isStagingOrProd && (
-              <DesktopGptAd slotKey="mirrordaily_article_PC_300x600_R2" />
+              <DesktopGptAd
+                slotKey="mirrordaily_article_PC_300x600_R2"
+                customClasses="mt-5"
+              />
             )}
             {isStagingOrProd && (
               <MobileGptAd
@@ -178,7 +181,7 @@ export default async function Page({ params }: PageProps) {
             {!isStagingOrProd && (
               <DesktopGptAd
                 slotKey="mirrordaily_article_PC_300x600_r2"
-                customClasses="mt-8"
+                customClasses="mt-5"
               />
             )}
           </div>
