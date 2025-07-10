@@ -8,6 +8,11 @@ import type { PostData } from '@/utils/data-process'
 import { PAGE_SIZE } from '@/constants/section'
 import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from './gpt-ad/mobile-gpt-ad'
+import { ENV } from '@/constants/config'
+import { ENVIRONMENT } from '@/constants/misc'
+
+const isStagingOrProd =
+  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 type Props<T> = {
   initialPosts: T[]
@@ -72,7 +77,7 @@ export default function ArticlesList<T extends PostData>({
                         color={color}
                         postItem={post}
                       />
-                      {i === 0 && (
+                      {i === 0 && !isStagingOrProd && (
                         <>
                           <DesktopGptAd
                             slotKey="mirrordaily_section_PC_728x90_list1"
@@ -87,7 +92,7 @@ export default function ArticlesList<T extends PostData>({
                           </div>
                         </>
                       )}
-                      {i === 3 && (
+                      {i === 3 && !isStagingOrProd && (
                         <>
                           <DesktopGptAd
                             slotKey="mirrordaily_section_PC_728x90_list2"
@@ -102,7 +107,7 @@ export default function ArticlesList<T extends PostData>({
                           </div>
                         </>
                       )}
-                      {i === 6 && (
+                      {i === 6 && !isStagingOrProd && (
                         <>
                           <DesktopGptAd
                             slotKey="mirrordaily_section_PC_728x90_list3"
