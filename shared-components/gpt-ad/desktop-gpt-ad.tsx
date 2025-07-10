@@ -2,15 +2,22 @@
 
 import { useEffect, useState } from 'react'
 import type { AdSlotKey } from './base-gpt-ad'
+import type { TestAdSlotKey } from './test-base-gpt-ad'
 import BaseGptAd from './base-gpt-ad'
 import { getTailwindConfigBreakpointNumber } from '@/utils/tailwind'
+import { ENV } from '@/constants/config'
+import { ENVIRONMENT } from '@/constants/misc'
+import TestBaseGptAd from './test-base-gpt-ad'
+
+const isStagingOrProd =
+  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 export function DesktopGptAd({
   slotKey,
   customClasses = '',
   pageKey = '',
 }: {
-  slotKey: AdSlotKey
+  slotKey: AdSlotKey | TestAdSlotKey
   customClasses?: string
   pageKey?: string
 }) {
@@ -25,11 +32,19 @@ export function DesktopGptAd({
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  return show ? (
-    <BaseGptAd
-      slotKey={slotKey}
+  if (!show) return null
+
+  return isStagingOrProd ? (
+    <TestBaseGptAd
+      slotKey={slotKey as TestAdSlotKey}
       customClasses={customClasses}
       pageKey={pageKey}
     />
-  ) : null
+  ) : (
+    <BaseGptAd
+      slotKey={slotKey as AdSlotKey}
+      customClasses={customClasses}
+      pageKey={pageKey}
+    />
+  )
 }

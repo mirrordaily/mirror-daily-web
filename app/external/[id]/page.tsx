@@ -14,6 +14,11 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import { ENV } from '@/constants/config'
+import { ENVIRONMENT } from '@/constants/misc'
+
+const isStagingOrProd =
+  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
+
 type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
@@ -82,32 +87,56 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="flex flex-col items-center">
       <MisoPageView productIds={`external_${id}`} />
-      <div className="hidden min-h-[306px] lg:flex lg:items-center">
-        <DesktopGptAd
-          slotKey="mirrordaily_article_PC_970x250_top"
-          customClasses="mt-5 mb-9"
-        />
-      </div>
-      <div className="block min-h-[286px] md:hidden">
-        <MobileGptAd
-          slotKey="mirrordaily_article_MW_300x250_top"
-          customClasses="mb-9"
-        />
-      </div>
+      {isStagingOrProd ? (
+        <>
+          <div className="hidden min-h-[306px] lg:block">
+            <DesktopGptAd
+              slotKey="mirrordaily_home_PC_970x250_1"
+              customClasses="mt-5 mb-9"
+            />
+          </div>
+          <div className="block min-h-[352px] md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_list_MW_336x280_HD"
+              customClasses="my-9"
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="hidden min-h-[306px] lg:flex lg:items-center">
+            <DesktopGptAd
+              slotKey="mirrordaily_article_PC_970x250_top"
+              customClasses="mt-5 mb-9"
+            />
+          </div>
+          <div className="block min-h-[286px] md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_article_MW_300x250_top"
+              customClasses="mb-9"
+            />
+          </div>
+        </>
+      )}
       <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
       <section className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
         <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
           <ArticleIntro {...intro} />
           <Article brief={brief} content={content} />
 
-          <DesktopGptAd
-            slotKey="mirrordaily_article_PC_728x90_in2"
-            customClasses="mt-9 mx-auto"
-          />
-          <MobileGptAd
-            slotKey="mirrordaily_article_MW_300x250_in2"
-            customClasses="mt-8 mx-auto"
-          />
+          {!isStagingOrProd && (
+            <DesktopGptAd
+              slotKey="mirrordaily_article_PC_728x90_in2"
+              customClasses="mt-9 mx-auto"
+            />
+          )}
+
+          {!isStagingOrProd && (
+            <MobileGptAd
+              slotKey="mirrordaily_article_MW_300x250_in2"
+              customClasses="mt-8 mx-auto"
+            />
+          )}
 
           <RelatedNewsList posts={relatedPosts} />
 
@@ -131,17 +160,21 @@ export default async function Page({ params }: PageProps) {
               posts={latestPosts}
               type="latest"
             />
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_r2"
-              customClasses="mt-5"
-            />
+            {!isStagingOrProd && (
+              <DesktopGptAd
+                slotKey="mirrordaily_article_PC_300x600_r2"
+                customClasses="mt-5"
+              />
+            )}
           </div>
           <div>
             <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_r3"
-              customClasses="mt-5"
-            />
+            {!isStagingOrProd && (
+              <DesktopGptAd
+                slotKey="mirrordaily_article_PC_300x600_r3"
+                customClasses="mt-5"
+              />
+            )}
           </div>
         </div>
       </section>

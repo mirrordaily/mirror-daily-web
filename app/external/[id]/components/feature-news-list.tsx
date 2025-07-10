@@ -1,5 +1,10 @@
 import FeaturedNewsCard from '@/shared-components/featured-news-card'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+import { ENV } from '@/constants/config'
+import { ENVIRONMENT } from '@/constants/misc'
+
+const isStagingOrProd =
+  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 type Props = {
   title: string
@@ -19,7 +24,7 @@ export default function FeatureNewsList({ title, posts, type }: Props) {
         {posts.map((item, i) => (
           <>
             <FeaturedNewsCard {...item} key={item.postId} />
-            {type === 'latest' && i === 0 && (
+            {type === 'latest' && i === 0 && !isStagingOrProd && (
               <DesktopGptAd slotKey="mirrordaily_article_PC_300x250_r1" />
             )}
           </>
