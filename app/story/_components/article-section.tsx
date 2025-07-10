@@ -106,7 +106,7 @@ export default async function ArticleSection({
           {isStagingOrProd && (
             <DesktopGptAd
               slotKey="mirrordaily_article_300x600_1"
-              customClasses="mb-[-20px]"
+              customClasses="mb-5"
             />
           )}
           <FeaturedNewsSection
@@ -117,7 +117,7 @@ export default async function ArticleSection({
           {isStagingOrProd && (
             <DesktopGptAd
               slotKey="mirrordaily_article_PC_300x600_R2"
-              customClasses="mt-[-28px]"
+              customClasses="mt-5"
             />
           )}
           {isStagingOrProd && (
