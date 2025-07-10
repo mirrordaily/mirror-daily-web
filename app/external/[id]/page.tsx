@@ -158,7 +158,7 @@ export default async function Page({ params }: PageProps) {
             {isStagingOrProd && (
               <DesktopGptAd
                 slotKey="mirrordaily_article_300x600_1"
-                customClasses="mb-[-20px]"
+                customClasses="mb-5"
               />
             )}
             <FeatureNewsList
@@ -166,6 +166,18 @@ export default async function Page({ params }: PageProps) {
               posts={latestPosts}
               type="latest"
             />
+            {isStagingOrProd && (
+              <DesktopGptAd
+                slotKey="mirrordaily_article_PC_300x600_R2"
+                customClasses="mt-5"
+              />
+            )}
+            {isStagingOrProd && (
+              <MobileGptAd
+                slotKey="mirrordaily_article_MW_336x280_E1"
+                customClasses="mt-5"
+              />
+            )}
             {!isStagingOrProd && (
               <DesktopGptAd
                 slotKey="mirrordaily_article_PC_300x600_r2"
