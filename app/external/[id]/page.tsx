@@ -166,10 +166,19 @@ export default async function Page({ params }: PageProps) {
               posts={latestPosts}
               type="latest"
             />
+            {isStagingOrProd && (
+              <DesktopGptAd slotKey="mirrordaily_article_PC_300x600_R2" />
+            )}
+            {isStagingOrProd && (
+              <MobileGptAd
+                slotKey="mirrordaily_article_MW_336x280_E1"
+                customClasses="mt-5"
+              />
+            )}
             {!isStagingOrProd && (
               <DesktopGptAd
                 slotKey="mirrordaily_article_PC_300x600_r2"
-                customClasses="mt-5"
+                customClasses="mt-8"
               />
             )}
           </div>
