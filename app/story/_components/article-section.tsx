@@ -106,7 +106,7 @@ export default async function ArticleSection({
           {isStagingOrProd && (
             <DesktopGptAd
               slotKey="mirrordaily_article_300x600_1"
-              customClasses="mb-[-20px]"
+              customClasses="mb-5"
             />
           )}
           <FeaturedNewsSection

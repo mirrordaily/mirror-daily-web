@@ -158,7 +158,7 @@ export default async function Page({ params }: PageProps) {
             {isStagingOrProd && (
               <DesktopGptAd
                 slotKey="mirrordaily_article_300x600_1"
-                customClasses="mb-[-20px]"
+                customClasses="mb-5"
               />
             )}
             <FeatureNewsList
