@@ -1,7 +1,19 @@
 import FeaturedNewsCard from './featured-news-card'
 import { fetchPopularPost } from '@/app/actions-general'
+import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
+import { ENV } from '@/constants/config'
+import { ENVIRONMENT } from '@/constants/misc'
 
-export default async function PopularNewsSection(): Promise<JSX.Element | null> {
+type Props = {
+  slug?: string
+}
+
+const isStagingOrProd =
+  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
+
+export default async function PopularNewsSection({
+  slug,
+}: Props): Promise<JSX.Element | null> {
   const articles = await fetchPopularPost()
   if (!articles.length) return null
 
@@ -10,10 +22,30 @@ export default async function PopularNewsSection(): Promise<JSX.Element | null> 
       <p className="text-lg font-bold leading-normal text-[#674ab1]">
         熱門新聞
       </p>
-      <div className="grid md:grid-cols-2 md:gap-7 lg:grid-cols-1 lg:gap-y-5">
+      <div className="grid justify-items-center md:grid-cols-2 md:gap-7 lg:grid-cols-1 lg:gap-y-5">
         {articles &&
-          articles.map((item) => (
-            <FeaturedNewsCard {...item} key={item.postId} />
+          articles.map((item, i) => (
+            <>
+              <FeaturedNewsCard {...item} key={item.postId} />
+              {i === 0 && !isStagingOrProd && (
+                <DesktopGptAd
+                  slotKey="mirrordaily_section_PC_300x250_r1"
+                  pageKey={slug}
+                />
+              )}
+              {i === 2 && !isStagingOrProd && (
+                <DesktopGptAd
+                  slotKey="mirrordaily_section_PC_300x600_r2"
+                  pageKey={slug}
+                />
+              )}
+              {i === 5 && !isStagingOrProd && (
+                <DesktopGptAd
+                  slotKey="mirrordaily_section_PC_300x600_r3"
+                  pageKey={slug}
+                />
+              )}
+            </>
           ))}
       </div>
     </section>

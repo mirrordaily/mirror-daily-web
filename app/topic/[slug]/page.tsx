@@ -202,6 +202,7 @@ export default async function Page({
       <div className="topic">
         {/* 因為該需求先註解掉：https://app.asana.com/1/614399484723017/project/1210077071799813/task/1210066204142622?focus=true */}
         {/* {leadingJsx} */}
+        <h1 className="topic-name">{topic.name}</h1>
         <main className="topic-list">{listingJsx}</main>
       </div>
     </>

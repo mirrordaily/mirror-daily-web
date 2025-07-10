@@ -5272,6 +5272,168 @@ export type GetRelatedPostsByIdQuery = {
         color?: string | null
       }> | null
     } | null> | null
+    relatedsOne?: {
+      __typename?: 'Post'
+      id: string
+      title?: string | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      og_image?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      sections?: Array<{
+        __typename?: 'Section'
+        name?: string | null
+        color?: string | null
+      }> | null
+    } | null
+    relatedsTwo?: {
+      __typename?: 'Post'
+      id: string
+      title?: string | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      og_image?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      sections?: Array<{
+        __typename?: 'Section'
+        name?: string | null
+        color?: string | null
+      }> | null
+    } | null
+    relatedsThree?: {
+      __typename?: 'Post'
+      id: string
+      title?: string | null
+      heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      og_image?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      sections?: Array<{
+        __typename?: 'Section'
+        name?: string | null
+        color?: string | null
+      }> | null
+    } | null
   } | null
 }
 
@@ -10190,6 +10352,45 @@ export const GetRelatedPostsByIdDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'relatedsInInputOrder' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'RelatedPost' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'relatedsOne' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'RelatedPost' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'relatedsTwo' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'RelatedPost' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'relatedsThree' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [

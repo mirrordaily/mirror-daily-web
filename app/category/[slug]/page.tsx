@@ -13,6 +13,11 @@ import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/category'
+import { ENV } from '@/constants/config'
+import { ENVIRONMENT } from '@/constants/misc'
+
+const isStagingOrProd =
+  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 type PageProps = { params: { slug: string } }
 
@@ -89,18 +94,40 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <div className="hidden min-h-[306px] lg:block">
-        <DesktopGptAd
-          slotKey="mirrordaily_home_PC_970x250_1"
-          customClasses="mt-5 mb-9 mx-auto"
-        />
-      </div>
-      <div className="block min-h-[352px] md:hidden">
-        <MobileGptAd
-          slotKey="mirrordaily_list_MW_336x280_HD"
-          customClasses="my-9 mx-auto"
-        />
-      </div>
+      {isStagingOrProd ? (
+        <>
+          <div className="hidden min-h-[306px] lg:block">
+            <DesktopGptAd
+              slotKey="mirrordaily_home_PC_970x250_1"
+              customClasses="mt-5 mb-9 mx-auto"
+            />
+          </div>
+          <div className="block min-h-[352px] md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_list_MW_336x280_HD"
+              customClasses="my-9 mx-auto"
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="hidden min-h-[306px] lg:flex lg:items-center">
+            <DesktopGptAd
+              slotKey="mirrordaily_section_PC_970x250_top"
+              customClasses="mt-5 mb-9 mx-auto"
+              pageKey={slug}
+            />
+          </div>
+          <div className="block min-h-[286px] md:hidden">
+            <MobileGptAd
+              slotKey="mirrordaily_section_MW_300x250_top"
+              customClasses="mb-9 mx-auto"
+              pageKey={slug}
+            />
+          </div>
+        </>
+      )}
+
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList
           initialPosts={initialPosts}
@@ -108,22 +135,18 @@ export default async function Page({ params }: PageProps) {
           name={name}
           fetchMorePosts={fetchMorePosts}
           totalAmount={totalAmount}
+          slug={slug}
         />
         <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
-        <PopularNewsSection />
-        {/* <MobileGptAd
-          slotKey="mirrordaily_list_MW_320x100_FIX"
-          customClasses="fixed bottom-0 auto z-[9999]"
-        /> */}
+        <PopularNewsSection slug={slug} />
       </main>
-      <DesktopGptAd
-        slotKey="mirrordaily_list_970x250"
-        customClasses="mb-[80px] mx-auto"
-      />
-      <MobileGptAd
-        slotKey="mirrordaily_list_MW_336x280_FT"
-        customClasses="mt-8 mb-9 mx-auto z-[5]"
-      />
+      {!isStagingOrProd && (
+        <MobileGptAd
+          slotKey="mirrordaily_section_MW_300x250_list4"
+          customClasses="mt-8 mb-9 mx-auto"
+          pageKey={slug}
+        />
+      )}
     </>
   )
 }

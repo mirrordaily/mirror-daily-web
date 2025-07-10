@@ -1,5 +1,6 @@
 import type { HeroImage } from '@/types/common'
 import type { ApiData } from '@/shared-components/api-data-renderer/renderer'
+import type { GetRelatedPostsByIdQuery } from '@/graphql/__generated__/graphql'
 
 export type Contact = {
   link: string
@@ -32,3 +33,13 @@ export type ItemInHeroSection = Omit<
   Post,
   'apiData' | 'apiDataBrief' | 'id' | 'warnings' | 'isAdult'
 >
+
+type PostKeys =
+  | 'relatedsInInputOrder'
+  | 'relatedsOne'
+  | 'relatedsTwo'
+  | 'relatedsThree'
+
+export type RawRelatedFromPost = NonNullable<
+  GetRelatedPostsByIdQuery['post']
+>[PostKeys]

@@ -57,7 +57,7 @@ export default function ShortsItem({
     }
     const newTimeoutId = setTimeout(() => {
       setShowMask(true)
-    }, 3000)
+    }, 500)
     setMaskTimeoutId(newTimeoutId)
   }, [maskTimeoutId])
 

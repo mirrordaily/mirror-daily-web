@@ -3,10 +3,10 @@
 import { useEffect, useRef } from 'react'
 import { ENV } from '@/constants/config'
 import { ENVIRONMENT } from '@/constants/misc'
-import { adSlots } from '@/constants/ad'
+import { testAdSlots } from '@/constants/ad-test'
 import { twMerge } from 'tailwind-merge'
 
-export type AdSlotKey = keyof typeof adSlots
+export type TestAdSlotKey = keyof typeof testAdSlots
 
 declare global {
   interface Window {
@@ -17,17 +17,18 @@ declare global {
 
 const isDebugMode = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
-export default function BaseGptAd({
+export default function TestBaseGptAd({
   slotKey,
   customClasses,
   pageKey,
 }: {
-  slotKey: AdSlotKey
+  slotKey: TestAdSlotKey
   customClasses: string
   pageKey: string
 }) {
   const isInitialed = useRef(false)
-  const { slotId, sizes, adId, collapseEmptyDivs, minSize } = adSlots[slotKey]
+  const { slotId, sizes, adId, collapseEmptyDivs, minSize } =
+    testAdSlots[slotKey]
   const adDivId = `div-gpt-ad-${adId}`
 
   useEffect(() => {
