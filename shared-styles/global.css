@@ -7,8 +7,6 @@
   --shorts-body-padding: 0px;
   --shorts-item-gap: 0px;
   --shorts-next-item-preview-height: 0px;
-  touch-action: none;
-
   /* @see https://github.com/tailwindlabs/tailwindcss/discussions/10779#discussioncomment-5288493 */
   @media screen(md) {
     --shorts-header-height: 96px;
