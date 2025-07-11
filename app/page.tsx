@@ -54,7 +54,7 @@ export default async function Home() {
             </>
           ) : (
             <>
-              {/* <div className="hidden min-h-[306px] lg:flex lg:items-center">
+              <div className="hidden min-h-[306px] lg:flex lg:items-center">
                 <DesktopGptAd
                   slotKey="mirrordaily_home_PC_970x250_top"
                   customClasses="mt-5 mb-9"
@@ -65,7 +65,7 @@ export default async function Home() {
                   slotKey="mirrordaily_home_MW_300x250_top"
                   customClasses="mb-9 mx-auto"
                 />
-              </div> */}
+              </div>
             </>
           )}
 
@@ -86,33 +86,33 @@ export default async function Home() {
               customClasses="my-7"
             />
           )}
-          {/* {!isStagingOrProd && (
+          {!isStagingOrProd && (
             <DesktopGptAd
               slotKey="mirrordaily_home_PC_970x90_b1"
               customClasses="my-7"
             />
-          )} */}
+          )}
           <SectionDivider customClasses="lg:hidden" />
           {/* 直播區 */}
           <LiveSection />
           <SectionDivider />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection headerData={headerData} />
-          {/* {!isStagingOrProd && (
+          {!isStagingOrProd && (
             <DesktopGptAd
               slotKey="mirrordaily_home_PC_970x90_b2"
               customClasses="mb-9"
             />
-          )} */}
+          )}
           <SectionDivider />
-          {/* {!isStagingOrProd && (
+          {!isStagingOrProd && (
             <div className="block md:hidden">
               <MobileGptAd
                 slotKey="mirrordaily_home_MW_300x250_b1"
                 customClasses="mt-9 mx-auto"
               />
             </div>
-          )} */}
+          )}
           {/* 短影音新聞 */}
           <Suspense
             fallback={
@@ -124,14 +124,14 @@ export default async function Home() {
             <ShortsNewsSection />
           </Suspense>
           <SectionDivider />
-          {/* {!isStagingOrProd && (
+          {!isStagingOrProd && (
             <div className="block md:hidden">
               <MobileGptAd
                 slotKey="mirrordaily_home_MW_300x250_b2"
                 customClasses="mt-9 mb-3 mx-auto"
               />
             </div>
-          )} */}
+          )}
           {/* Topic（4則）+ 天氣 */}
           <Suspense
             fallback={
@@ -152,7 +152,7 @@ export default async function Home() {
           >
             <SportsSection />
           </Suspense>
-          {/* {!isStagingOrProd && (
+          {!isStagingOrProd && (
             <DesktopGptAd
               slotKey="mirrordaily_home_PC_970x90_b3"
               customClasses="mb-9"
@@ -165,7 +165,7 @@ export default async function Home() {
                 customClasses="mb-9 mt-2 mx-auto"
               />
             </div>
-          )} */}
+          )}
           <SectionDivider />
           {/* 短影音．投稿 */}
           <Suspense
@@ -177,14 +177,14 @@ export default async function Home() {
           >
             <ShortsDerivativeSection />
           </Suspense>
-          {/* {!isStagingOrProd && (
+          {!isStagingOrProd && (
             <div className="block md:hidden">
               <MobileGptAd
                 slotKey="mirrordaily_home_MW_300x250_b4"
                 customClasses="mb-9 mx-auto"
               />
             </div>
-          )} */}
+          )}
           <SectionDivider />
           {/* 最新新聞 */}
           <LatestNewsSection />
