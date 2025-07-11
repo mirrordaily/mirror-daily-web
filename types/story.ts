@@ -34,12 +34,8 @@ export type ItemInHeroSection = Omit<
   'apiData' | 'apiDataBrief' | 'id' | 'warnings' | 'isAdult'
 >
 
-type PostKeys =
-  | 'relatedsInInputOrder'
-  | 'relatedsOne'
-  | 'relatedsTwo'
-  | 'relatedsThree'
+type PostKeys = 'relatedsOne' | 'relatedsTwo' | 'relatedsThree'
 
-export type RawRelatedFromPost = NonNullable<
-  GetRelatedPostsByIdQuery['post']
->[PostKeys]
+export type RawRelatedFromPost =
+  | NonNullable<GetRelatedPostsByIdQuery['post']>['relateds']
+  | NonNullable<GetRelatedPostsByIdQuery['post']>[PostKeys]

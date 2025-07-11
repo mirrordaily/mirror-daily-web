@@ -312,15 +312,15 @@ const transformRawRelatedPosts = (rawData: RawRelatedPosts): RelatedPost[] => {
   const relatedFromPost = rawData.__typename === 'Post'
   const relatedFromExternal = rawData.__typename === 'External'
 
-  let combinedRelatedData: RawRelatedFromExternal | RawRelatedFromPost = []
+  let combinedRelatedData: RawRelatedFromPost | RawRelatedFromExternal = []
 
   if (relatedFromExternal) {
     if (rawData.relateds) {
       combinedRelatedData = rawData.relateds
     }
   } else if (relatedFromPost) {
-    if (rawData.relatedsInInputOrder) {
-      combinedRelatedData = [...rawData.relatedsInInputOrder]
+    if (rawData.relateds) {
+      combinedRelatedData = [...rawData.relateds]
     }
     for (const key of [
       'relatedsOne',
