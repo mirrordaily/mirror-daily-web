@@ -18,7 +18,7 @@ export default function LatestVideoList({
   }
 
   return (
-    <div className="flex grow flex-col items-center lg:items-start lg:justify-start lg:gap-8">
+    <div className="flex grow flex-col items-center lg:items-start lg:justify-start lg:gap-12">
       {latestVideos.map((video) => (
         <a
           key={video.id}

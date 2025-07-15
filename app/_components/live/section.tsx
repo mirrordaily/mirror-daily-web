@@ -27,15 +27,20 @@ export default async function LiveSection() {
   return (
     <section className="section-in-homepage items-center py-7 lg:flex lg:items-start">
       <div className="flex grow flex-col justify-start lg:w-[640px]">
-        <p className="mb-6 w-full text-center text-lg font-bold leading-none text-mirror-blue-700 lg:text-start">
+        <p className="mb-4 w-full text-center text-lg font-bold leading-none text-mirror-blue-700 md:mb-5 lg:mb-4 lg:text-start">
           直播區
         </p>
-        <div className="lg:mr-11 lg:h-[364px] lg:border-r lg:border-r-black lg:pr-11">
-          <LiveSectionMain {...liveEventData} />
+        <div className="lg:mr-9 lg:border-r lg:border-r-primary-800 lg:pr-9">
+          <div className="lg:h-[360px]">
+            <LiveSectionMain {...liveEventData} />
+          </div>
+          <div className="mt-4 w-full text-justify text-base/[1.2] font-medium text-primary-800 md:mx-auto md:mt-5 md:w-[504px] lg:mx-0 lg:mt-4 lg:w-[600px] lg:text-xl/[1.2] lg:font-bold">
+            {liveEventData.postName}
+          </div>
         </div>
       </div>
-      <div className="hidden lg:flex lg:w-[400px] lg:flex-col lg:justify-start lg:self-stretch">
-        <p className="mb-6 w-full text-center text-lg font-bold leading-none text-mirror-blue-700 lg:text-start">
+      <div className="hidden lg:flex lg:w-[455px] lg:flex-col lg:justify-start lg:self-stretch">
+        <p className="mb-4 w-full text-center text-lg font-bold leading-none text-mirror-blue-700 lg:text-start">
           最新影音
         </p>
         <LatestVideoList latestVideos={latestVideosData} />
