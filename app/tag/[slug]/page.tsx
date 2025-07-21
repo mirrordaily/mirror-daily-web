@@ -21,6 +21,22 @@ export async function generateMetadata({
     notFound()
   }
 
+  const { totalAmount } = await fetchTagPosts({
+    take: 0,
+    skip: 0,
+    slug,
+    withAmount: true,
+  })
+
+  const robotsObj =
+    (totalAmount ?? 0) < 4
+      ? {
+          robots: {
+            index: false,
+            follow: false,
+          },
+        }
+      : {}
   const defaultMetadata = getDefaultMetadata()
 
   const title = `${tagInfo.name} - ${SITE_NAME}`
@@ -29,6 +45,7 @@ export async function generateMetadata({
     {},
     {
       ...defaultMetadata,
+      ...robotsObj,
       title,
       openGraph: {
         ...(defaultMetadata.openGraph ?? {}),
