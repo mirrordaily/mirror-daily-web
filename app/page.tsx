@@ -19,6 +19,8 @@ import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import { ENV } from '@/constants/config'
 import { ENVIRONMENT } from '@/constants/misc'
+import { IS_SPECIAL_EVENT } from '@/constants/config'
+import ElectionRecall from './_components/election-recall'
 
 // add segment config to prevent data fetch during build
 export const dynamic = 'force-dynamic'
@@ -68,6 +70,9 @@ export default async function Home() {
               </div>
             </>
           )}
+
+          {/* 選舉罷免 */}
+          {IS_SPECIAL_EVENT === 'True' && <ElectionRecall />}
 
           <SectionDivider customClasses="hidden md:block lg:hidden" />
           {/* 編輯精選 */}
