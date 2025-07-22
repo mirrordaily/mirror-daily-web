@@ -28,7 +28,8 @@ export async function generateMetadata({
     withAmount: true,
   })
 
-  const robotsObj =
+  const defaultMetadata = getDefaultMetadata()
+  const robotsMetaData =
     (totalAmount ?? 0) < 4
       ? {
           robots: {
@@ -37,7 +38,6 @@ export async function generateMetadata({
           },
         }
       : {}
-  const defaultMetadata = getDefaultMetadata()
 
   const title = `${tagInfo.name} - ${SITE_NAME}`
 
@@ -45,7 +45,7 @@ export async function generateMetadata({
     {},
     {
       ...defaultMetadata,
-      ...robotsObj,
+      ...robotsMetaData,
       title,
       openGraph: {
         ...(defaultMetadata.openGraph ?? {}),
