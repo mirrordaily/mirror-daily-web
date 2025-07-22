@@ -96,7 +96,7 @@ const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
 const IS_SPECIAL_EVENT = process.env.NEXT_PUBLIC_SPECIALEVENT
 
-const URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html`
+const URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html?source=mirror`
 
 export {
   ENV,
