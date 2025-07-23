@@ -94,7 +94,7 @@ const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_catego
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
-const IS_SPECIAL_EVENT = process.env.NEXT_PUBLIC_SPECIALEVENT
+const IS_SPECIAL_EVENT = 'True'
 
 const URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html?source=mirror`
 
