@@ -6,6 +6,7 @@ steps:
       - 'NEXT_PUBLIC_ENV=$_ENV'
       - 'NEXT_PUBLIC_IS_PREVIEW_MODE=$_IS_PREVIEW_MODE'
       - 'GIT_HASH=${SHORT_SHA}'
+      - 'NEXT_PUBLIC_SPECIALEVENT=$_SPECIALEVENT'
     entrypoint: 'bash'
     args:
       - '-c'
