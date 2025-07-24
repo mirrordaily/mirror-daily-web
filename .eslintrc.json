@@ -23,7 +23,7 @@
     "tailwindcss/enforces-shorthand": "error",
     "tailwindcss/no-unnecessary-arbitrary-value": "error",
     "tailwindcss/no-custom-classname": ["error", {
-      "whitelist": ["custom-swiper-pagination", "GTM-*"]
+      "whitelist": ["custom-swiper-pagination", "^GTM-.*"]
     }],
     "check-file/folder-naming-convention": [
       "error", {
