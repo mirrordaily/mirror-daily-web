@@ -101,7 +101,8 @@ const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_catego
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
-const IS_SPECIAL_EVENT = 'True'
+const URL_ELECTION_RECALL_DISPLAY =
+  'https://storage.googleapis.com/whoareyou-gcs.readr.tw/json/202507_recall_homepage_display.json'
 
 export {
   ENV,
@@ -125,6 +126,7 @@ export {
   URL_STATIC_CATEGORY_NEWS,
   URL_ELECTION_RECALL_IFRAME,
   URL_ELECTION_RECALL_FULL_DATA,
+  URL_ELECTION_RECALL_DISPLAY,
   GCP_PROJECT_ID,
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_API_KEY,
@@ -133,5 +135,4 @@ export {
   SITE_URL,
   GTM_ID,
   MISO_API_KEY,
-  IS_SPECIAL_EVENT,
 }
