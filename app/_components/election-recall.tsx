@@ -17,7 +17,7 @@ export default async function ElectionRecall() {
           className="mb-4 h-[240px] w-full overflow-hidden md:h-[230px]"
         />
         <a
-          className="cursor-pointer text-base font-bold leading-none text-[#6C00AA] underline"
+          className="GTM-click_2025_election_page cursor-pointer text-base font-bold leading-none text-[#6C00AA] underline"
           target="_blank"
           href={URL_ELECTION_RECALL_FULL_DATA}
         >
