@@ -3,9 +3,9 @@ steps:
   - name: gcr.io/cloud-builders/docker
     id: Build Image
     env:
-    - 'NEXT_PUBLIC_ENV=$_ENV'
-    - 'NEXT_PUBLIC_IS_PREVIEW_MODE=$_IS_PREVIEW_MODE'
-    - 'GIT_HASH=${SHORT_SHA}'
+      - 'NEXT_PUBLIC_ENV=$_ENV'
+      - 'NEXT_PUBLIC_IS_PREVIEW_MODE=$_IS_PREVIEW_MODE'
+      - 'GIT_HASH=${SHORT_SHA}'
     entrypoint: 'bash'
     args:
       - '-c'
@@ -47,4 +47,5 @@ substitutions:
   _IMAGE_NAME: '' # default value
   _CLOUD_RUN_SERVICE_NAMES: '' # default value
   _ENV: 'dev' # default value
-  _IS_PREVIEW_MODE: 'false'  # default value
+  _IS_PREVIEW_MODE: 'false' # default value
+

@@ -18,6 +18,8 @@ let STATIC_FILE_DOMAIN: string
 let JSON_FILE_PATH: string
 let SITE_URL: `https://${string}`
 let GTM_ID: string
+let URL_ELECTION_RECALL_FULL_DATA: string
+let URL_ELECTION_RECALL_IFRAME: string
 
 const ENV = (function () {
   const env = process.env.NEXT_PUBLIC_ENV
@@ -42,6 +44,8 @@ switch (ENV) {
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://www.mirrordaily.news'
     GTM_ID = 'GTM-MPWSXJ4X'
+    URL_ELECTION_RECALL_FULL_DATA = '/projects/taiwan-elections/index.html'
+    URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html?source=mirror`
     break
 
   case ENVIRONMENT.STAGING:
@@ -49,6 +53,10 @@ switch (ENV) {
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://staging.mirrordaily.news'
     GTM_ID = 'GTM-P7XPJ6P4'
+    URL_ELECTION_RECALL_FULL_DATA =
+      'https://www.mirrordaily.news/projects/taiwan-elections/index.html'
+    URL_ELECTION_RECALL_IFRAME =
+      'https://www.mirrordaily.news/projects/election2025-homepage/index.html?source=mirror'
     break
 
   case ENVIRONMENT.DEVELOPMENT:
@@ -56,6 +64,8 @@ switch (ENV) {
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://dev.mirrordaily.news'
     GTM_ID = 'GTM-MG9V2TJC'
+    URL_ELECTION_RECALL_FULL_DATA = '/projects/dev-taiwan-elections/index.html'
+    URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html?source=mirror`
     break
 
   default:
@@ -63,6 +73,8 @@ switch (ENV) {
     JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://dev.mirrordaily.news'
     GTM_ID = 'GTM-MG9V2TJC'
+    URL_ELECTION_RECALL_FULL_DATA = `${SITE_URL}/projects/dev-taiwan-elections/index.html`
+    URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html?source=mirror`
     break
 }
 const URL_STATIC_POPULAR_NEWS = `${JSON_FILE_PATH}/popular.json`
@@ -89,6 +101,9 @@ const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_catego
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
+const URL_ELECTION_RECALL_DISPLAY =
+  'https://storage.googleapis.com/whoareyou-gcs.readr.tw/json/202507_recall_homepage_display.json'
+
 export {
   ENV,
   CPBL_SITE_URL,
@@ -109,6 +124,9 @@ export {
   URL_STATIC_LATEST_SPORTS_NEWS,
   URL_STATIC_SECTION_NEWS,
   URL_STATIC_CATEGORY_NEWS,
+  URL_ELECTION_RECALL_IFRAME,
+  URL_ELECTION_RECALL_FULL_DATA,
+  URL_ELECTION_RECALL_DISPLAY,
   GCP_PROJECT_ID,
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_API_KEY,
