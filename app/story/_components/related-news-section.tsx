@@ -6,7 +6,7 @@ type Props = {
 export default function RelatedNewsSection({ posts }: Props) {
   if (!posts.length) return null
   return (
-    <section className="flex flex-col items-center gap-y-8 pl-[23px] pr-[22px] md:px-0 lg:items-start lg:gap-y-7">
+    <section className="mt-7 flex flex-col items-center gap-y-8 pl-[23px] pr-[22px] md:px-0 lg:items-start lg:gap-y-7">
       <h3 className="text-lg font-bold leading-normal text-[#674ab1]">
         延伸閱讀
       </h3>

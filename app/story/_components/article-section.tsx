@@ -82,12 +82,12 @@ export default async function ArticleSection({
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />
           ) : (
-            <div id="_popIn_recommend_word" className="mt-6"></div>
+            <div id="_popIn_recommend_word" className="mt-7"></div>
           )}
           {adTypeBottom === 'dable' ? (
             <DableWidget type="articleBottomPC" />
           ) : (
-            <div id="_popIn_recommend" className="mt-6"></div>
+            <div id="_popIn_recommend" className="mt-7"></div>
           )}
         </div>
       </div>
