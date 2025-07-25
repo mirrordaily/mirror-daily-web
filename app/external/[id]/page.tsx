@@ -143,12 +143,12 @@ export default async function Page({ params }: PageProps) {
           {adTypeRelated === 'dable' ? (
             <DableWidget type="related" />
           ) : (
-            <div id="_popIn_recommend_word" className="mt-7"></div>
+            <div id="_popIn_recommend_word" className="mt-6"></div>
           )}
           {adTypeBottom === 'dable' ? (
             <DableWidget type="articleBottomPC" />
           ) : (
-            <div id="_popIn_recommend" className="mt-7"></div>
+            <div id="_popIn_recommend" className="mt-6"></div>
           )}
         </div>
 
