@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { dateFormatter } from '@/utils/data-process'
 import { MISO_API_KEY } from '@/constants/config'
-// import '@/shared-styles/search.css'
+import '@/shared-styles/search.css'
 
 export default function MisoSearch() {
   useEffect(() => {
