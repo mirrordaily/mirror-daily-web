@@ -72,14 +72,14 @@ export default async function ArticleSection({
           <RelatedNewsSection posts={relatedPosts} />
 
           {adTypeRelated === 'dable' ? (
-            <DableWidget type="related" />
+            <DableWidget type="related" customClasses="mt-4" />
           ) : (
-            <div id="_popIn_recommend_word" className="mt-6"></div>
+            <div id="_popIn_recommend_word" className="mt-7"></div>
           )}
           {adTypeBottom === 'dable' ? (
-            <DableWidget type="articleBottomPC" />
+            <DableWidget type="articleBottomPC" customClasses="mt-4" />
           ) : (
-            <div id="_popIn_recommend" className="mt-6"></div>
+            <div id="_popIn_recommend" className="mt-7"></div>
           )}
         </div>
       </div>
