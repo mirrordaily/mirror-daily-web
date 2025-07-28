@@ -8,7 +8,7 @@ import { getRandomItems } from '@/utils/common'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
-import { ENV } from '@/constants/config'
+
 import DableWidget from '@/shared-components/dable-widget'
 
 type Props = Post
@@ -27,8 +27,8 @@ export default async function ArticleSection({
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
   const popularPostsTopSix = popularPosts.slice(0, 6)
 
-  const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
-  const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
+  const adTypeRelated = Math.random() < 0.5 ? 'popIn' : 'dable'
+  const adTypeBottom = Math.random() < 0.5 ? 'popIn' : 'dable'
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
     const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
