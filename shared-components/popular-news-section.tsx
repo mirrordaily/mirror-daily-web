@@ -1,15 +1,10 @@
 import FeaturedNewsCard from './featured-news-card'
 import { fetchPopularPost } from '@/app/actions-general'
 import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
-import { ENV } from '@/constants/config'
-import { ENVIRONMENT } from '@/constants/misc'
 
 type Props = {
   slug?: string
 }
-
-const isStagingOrProd =
-  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 export default async function PopularNewsSection({
   slug,
@@ -27,19 +22,19 @@ export default async function PopularNewsSection({
           articles.map((item, i) => (
             <>
               <FeaturedNewsCard {...item} key={item.postId} />
-              {i === 0 && !isStagingOrProd && (
+              {i === 0 && (
                 <DesktopGptAd
                   slotKey="mirrordaily_section_PC_300x250_r1"
                   pageKey={slug}
                 />
               )}
-              {i === 2 && !isStagingOrProd && (
+              {i === 2 && (
                 <DesktopGptAd
                   slotKey="mirrordaily_section_PC_300x600_r2"
                   pageKey={slug}
                 />
               )}
-              {i === 5 && !isStagingOrProd && (
+              {i === 5 && (
                 <DesktopGptAd
                   slotKey="mirrordaily_section_PC_300x600_r3"
                   pageKey={slug}
