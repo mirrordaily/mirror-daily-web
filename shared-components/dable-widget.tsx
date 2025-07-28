@@ -19,10 +19,10 @@ declare global {
 
 type DableWidgetProps = {
   type: DableWidgetType
-  className?: string
+  customClasses?: string
 }
 
-export default function DableWidget({ type, className }: DableWidgetProps) {
+export default function DableWidget({ type, customClasses }: DableWidgetProps) {
   const { width = 0 } = useWindowSize()
   const [shouldRender, setShouldRender] = useState(false)
   const isProd = ENV === 'prod'
@@ -54,7 +54,7 @@ export default function DableWidget({ type, className }: DableWidgetProps) {
           id={`dablewidget_${config.widgetId}`}
           data-widget_id-pc={config.pcWidgetId}
           data-widget_id-mo={config.moWidgetId}
-          className={className}
+          className={customClasses}
         />
       </div>
     )
