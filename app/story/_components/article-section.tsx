@@ -10,10 +10,6 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { ENV } from '@/constants/config'
 import DableWidget from '@/shared-components/dable-widget'
-import { ENVIRONMENT } from '@/constants/misc'
-
-const isStagingOrProd =
-  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 type Props = Post
 
@@ -64,18 +60,14 @@ export default async function ArticleSection({
             </p>
           ))}
 
-          {!isStagingOrProd && (
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_728x90_in2"
-              customClasses="my-9 mx-auto"
-            />
-          )}
-          {!isStagingOrProd && (
-            <MobileGptAd
-              slotKey="mirrordaily_article_MW_300x250_in2"
-              customClasses="mx-auto my-8"
-            />
-          )}
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_728x90_in2"
+            customClasses="my-9 mx-auto"
+          />
+          <MobileGptAd
+            slotKey="mirrordaily_article_MW_300x250_in2"
+            customClasses="mx-auto my-8"
+          />
 
           <RelatedNewsSection posts={relatedPosts} />
 
@@ -92,52 +84,26 @@ export default async function ArticleSection({
         </div>
       </div>
 
-      {isStagingOrProd && (
-        <MobileGptAd
-          slotKey="mirrordaily_article_MW_336x280_AT3"
-          customClasses="mt-8"
-        />
-      )}
-
       <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
       <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12">
         <div>
-          {isStagingOrProd && (
-            <DesktopGptAd
-              slotKey="mirrordaily_article_300x600_1"
-              customClasses="mb-5"
-            />
-          )}
           <FeaturedNewsSection
             title="最新新聞"
             posts={latestPosts}
             type="latest"
           />
-          {isStagingOrProd && (
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_R2"
-              customClasses="mt-5"
-            />
-          )}
-          {isStagingOrProd && (
-            <MobileGptAd slotKey="mirrordaily_article_MW_336x280_E1" />
-          )}
-          {!isStagingOrProd && (
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_r2"
-              customClasses="mt-5"
-            />
-          )}
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_300x600_r2"
+            customClasses="mt-5"
+          />
         </div>
         <div>
           <FeaturedNewsSection title="熱門新聞" posts={popularPostsTopSix} />
-          {!isStagingOrProd && (
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_r3"
-              customClasses="mt-5"
-            />
-          )}
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_300x600_r3"
+            customClasses="mt-5"
+          />
         </div>
       </div>
     </section>
