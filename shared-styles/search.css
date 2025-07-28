@@ -97,7 +97,7 @@
         box-shadow: none;
 
         .miso-hybrid-search-combo__answer-box-inner {
-          /* max-height: inherit; */
+          max-height: inherit;
           border: 0;
         }
 
@@ -294,9 +294,9 @@
         }
       }
 
-      /* .miso-hybrid-search-combo__answer-box-toggle-container {
+      .miso-hybrid-search-combo__answer-box-toggle-container {
         display: none;
-      } */
+      }
     }
 
     /* result 上方 */
