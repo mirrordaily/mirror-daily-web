@@ -22,11 +22,6 @@ import { getOrganizationFromSourceCustomId } from './utils'
 import { Fragment } from 'react'
 import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
-import { ENV } from '@/constants/config'
-import { ENVIRONMENT } from '@/constants/misc'
-
-const isStagingOrProd =
-  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 export type { ApiData } from './block-renderer/types'
 
@@ -169,26 +164,8 @@ export default function ApiDataRenderer({
         const apiDataBlockJsx = getApiDataBlockJsx(apiDataBlock)
         return (
           <Fragment key={i}>
-            {!isBrief && i === 1 && isStagingOrProd && (
-              <MobileGptAd
-                slotKey="mirrordaily_article_MW_336x280_AT1"
-                customClasses="mx-auto"
-              />
-            )}
-            {!isBrief && i === 3 && isStagingOrProd && (
-              <DesktopGptAd
-                slotKey="mirrordaily_article_PC_640x390_AT1"
-                customClasses="mx-auto"
-              />
-            )}
-            {!isBrief && i === 5 && isStagingOrProd && (
-              <MobileGptAd
-                slotKey="mirrordaily_article_MW_336x280_AT2"
-                customClasses="mx-auto"
-              />
-            )}
             {apiDataBlockJsx}
-            {!isBrief && i === 0 && !isStagingOrProd && (
+            {!isBrief && i === 0 && (
               <>
                 <DesktopGptAd
                   slotKey="mirrordaily_article_PC_728x90_in1"
