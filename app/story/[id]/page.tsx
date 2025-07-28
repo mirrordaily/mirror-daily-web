@@ -13,10 +13,6 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV } from '@/constants/config'
-import { ENVIRONMENT } from '@/constants/misc'
-
-const isStagingOrProd =
-  ENV === ENVIRONMENT.STAGING || ENV === ENVIRONMENT.PRODUCTION
 
 type PageProps = { params: { id: string } }
 
@@ -93,39 +89,19 @@ export default async function Page({ params }: PageProps) {
         <PageLogger extra={extra} />
       </Suspense>
       <main className="flex flex-col items-center">
-        {isStagingOrProd && (
-          <div className="hidden min-h-[306px] lg:block">
-            <DesktopGptAd
-              slotKey="mirrordaily_home_PC_970x250_1"
-              customClasses="mt-5 mb-9"
-            />
-          </div>
-        )}
-        {isStagingOrProd && (
-          <div className="block min-h-[352px] md:hidden">
-            <MobileGptAd
-              slotKey="mirrordaily_list_MW_336x280_HD"
-              customClasses="my-9"
-            />
-          </div>
-        )}
-        {!isStagingOrProd && (
-          <div className="hidden min-h-[306px] lg:flex lg:items-center">
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_970x250_top"
-              customClasses="mt-5 mb-9"
-            />
-          </div>
-        )}
-        {!isStagingOrProd && (
-          <div className="block min-h-[286px] md:hidden">
-            <MobileGptAd
-              slotKey="mirrordaily_article_MW_300x250_top"
-              customClasses="mb-9"
-            />
-          </div>
-        )}
+        <div className="hidden min-h-[306px] lg:flex lg:items-center">
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_970x250_top"
+            customClasses="mt-5 mb-9"
+          />
+        </div>
 
+        <div className="block min-h-[286px] md:hidden">
+          <MobileGptAd
+            slotKey="mirrordaily_article_MW_300x250_top"
+            customClasses="mb-9"
+          />
+        </div>
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
