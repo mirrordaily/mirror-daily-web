@@ -294,9 +294,37 @@
         }
       }
 
-      /* .miso-hybrid-search-combo__answer-box-toggle-container {
-        display: none;
-      } */
+      .miso-hybrid-search-combo__answer-box-toggle {
+        font-size: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        height: 40px;
+        width: 114px;
+        border-radius: 8px;
+        border: 1px solid #68666d;
+        &::before {
+          transform: translate(0.5px, 0);
+          content: '展開更多';
+          color: #68666d;
+          text-align: center;
+          font-feature-settings:
+            'liga' off,
+            'clig' off;
+          font-family: 'Noto Sans TC';
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 28px; /* 175% */
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+
+    .miso-hybrid-search-combo__answer-box-open {
+      .miso-hybrid-search-combo__answer-box-toggle::before {
+        content: '';
+      }
     }
 
     /* result 上方 */
