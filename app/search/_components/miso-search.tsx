@@ -111,6 +111,38 @@ export default function MisoSearch() {
 
       wireAnswerBox(client, rootElement)
 
+      // answer box toggle button text
+      const handleToggleButtonText = () => {
+        const toggleButton = rootElement?.querySelector(
+          '.miso-hybrid-search-combo__answer-box-toggle'
+        )
+        if (toggleButton) {
+          toggleButton.textContent = '展開更多'
+          toggleButton.addEventListener('click', () => {
+            setTimeout(() => {
+              const isExpanded =
+                rootElement?.classList.contains(
+                  'miso-hybrid-search-combo__answer-box-open'
+                ) ||
+                rootElement?.querySelector(
+                  '.miso-hybrid-search-combo__answer-box-open'
+                )
+
+              if (isExpanded) {
+                toggleButton.textContent = '收合全部'
+              } else {
+                toggleButton.textContent = '展開更多'
+              }
+            }, 100)
+          })
+        }
+      }
+
+      // 等待 DOM 更新後處理按鈕文字
+      setTimeout(() => {
+        handleToggleButtonText()
+      }, 100)
+
       // start query if specified in URL parameters
       setTimeout(() => {
         workflow.autoQuery()

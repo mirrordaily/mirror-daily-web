@@ -97,7 +97,7 @@
         box-shadow: none;
 
         .miso-hybrid-search-combo__answer-box-inner {
-          max-height: inherit;
+          /* max-height: inherit; */
           border: 0;
         }
 
@@ -294,8 +294,26 @@
         }
       }
 
-      .miso-hybrid-search-combo__answer-box-toggle-container {
-        display: none;
+      .miso-hybrid-search-combo__answer-box-toggle {
+        content: '展開更多';
+        color: #68666d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        height: 40px;
+        width: 114px;
+        border-radius: 8px;
+        border: 1px solid #68666d;
+        text-align: center;
+        font-feature-settings:
+          'liga' off,
+          'clig' off;
+        font-family: 'Noto Sans TC';
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 28px;
+        letter-spacing: 0.5px;
       }
     }
 

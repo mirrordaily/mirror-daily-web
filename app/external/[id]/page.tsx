@@ -13,7 +13,6 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
-import { ENV } from '@/constants/config'
 
 type PageProps = { params: { id: string } }
 
@@ -65,8 +64,8 @@ export default async function Page({ params }: PageProps) {
   const popularPostsTopSix = popularPosts.slice(0, 6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 
-  const adTypeRelated = ENV === 'prod' ? 'popIn' : 'dable'
-  const adTypeBottom = ENV === 'prod' ? 'popIn' : 'dable'
+  const adTypeRelated = Math.random() < 0.5 ? 'popIn' : 'dable'
+  const adTypeBottom = Math.random() < 0.5 ? 'popIn' : 'dable'
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
     const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
