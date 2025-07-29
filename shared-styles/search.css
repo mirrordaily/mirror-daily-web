@@ -321,10 +321,9 @@
       }
     }
 
-    .miso-hybrid-search-combo__answer-box-open {
+    .miso-hybrid-search-combo.miso-hybrid-search-combo__answer-box-open
       .miso-hybrid-search-combo__answer-box-toggle::before {
-        content: '收合全部';
-      }
+      content: '收合全部' !important;
     }
 
     /* result 上方 */
