@@ -323,7 +323,7 @@
 
     .miso-hybrid-search-combo__answer-box-open {
       .miso-hybrid-search-combo__answer-box-toggle::before {
-        content: '';
+        content: '收合全部';
       }
     }
 
