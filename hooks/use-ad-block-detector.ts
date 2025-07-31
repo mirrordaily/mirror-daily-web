@@ -2,38 +2,40 @@
 
 import { useState, useEffect } from 'react'
 
+const BLOCKED_URLS = [
+  'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+  'https://static.doubleclick.net/instream/ad_status.js',
+  'https://imasdk.googleapis.com/js/sdkloader/ima3.js',
+]
+
 export default function useAdBlockDetector() {
   const [isAdBlockerActive, setIsAdBlockerActive] = useState(false)
 
   useEffect(() => {
-    const bait = document.createElement('div')
-    bait.className = 'ad-banner text-ad ad-container advertisement'
-    bait.style.height = '1px'
-    bait.style.width = '1px'
-    bait.style.position = 'absolute'
-    bait.style.top = '-9999px'
-    bait.style.left = '-9999px'
-    bait.style.pointerEvents = 'none' // Ensure it's not interactive.
-    bait.setAttribute('aria-hidden', 'true') // Hide from screen readers.
+    const checkAdBlocker = async () => {
+      try {
+        await Promise.all(
+          BLOCKED_URLS.map((url) =>
+            fetch(new Request(url), {
+              method: 'HEAD',
+              mode: 'no-cors',
+              cache: 'no-store',
+            })
+          )
+        )
 
-    document.body.appendChild(bait)
-
-    const timer = setTimeout(() => {
-      if (bait.offsetHeight === 0) {
+        setIsAdBlockerActive(false)
+      } catch (error) {
         setIsAdBlockerActive(true)
       }
+    }
 
-      if (document.body.contains(bait)) {
-        document.body.removeChild(bait)
-      }
-    }, 150)
+    const checkTimeout = setTimeout(() => {
+      checkAdBlocker()
+    }, 50)
 
     return () => {
-      clearTimeout(timer)
-
-      if (document.body.contains(bait)) {
-        document.body.removeChild(bait)
-      }
+      clearTimeout(checkTimeout)
     }
   }, [])
 
