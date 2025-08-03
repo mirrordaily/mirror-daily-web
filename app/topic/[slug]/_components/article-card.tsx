@@ -16,7 +16,7 @@ export default function ArticleCard({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="article-container"
+      className="GTM-topic_click_related_articles article-container"
     >
       <figure className="image">
         <CustomImage
