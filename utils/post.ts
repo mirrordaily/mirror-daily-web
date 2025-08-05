@@ -14,7 +14,7 @@ const hasExternalLink = (
   return isValidUrl(redirect)
 }
 
-type CategoryConfig = {
+type SectionConfig = {
   name: string
   color: string
 }
@@ -22,15 +22,15 @@ type CategoryConfig = {
 const getSectionConfig = (
   rawPosts: z.infer<typeof rawLatestPostSchema>,
   headerData: HeaderData[]
-): CategoryConfig => {
+): SectionConfig => {
   const { partner, sections } = rawPosts
 
   if (typeof partner === 'string') {
-    const categoryName = sections[0]?.name || DEFAULT_SECTION_NAME
-    const color = getSectionColor(headerData, sections[0]?.slug)
+    const sectionName = sections[1]?.name || DEFAULT_SECTION_NAME
+    const color = getSectionColor(headerData, sections[1]?.slug)
 
     return {
-      name: categoryName,
+      name: sectionName,
       color,
     }
   } else {
@@ -87,11 +87,11 @@ const transformRawPopularPost = (
     sectionsInInputOrder: sections,
     categories,
   } = rawPosts
-  const sectionColor = getSectionColor(headerData, sections[0]?.slug)
+  const sectionColor = getSectionColor(headerData, sections[1]?.slug)
   const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
 
   return {
-    sectionName: sections[0]?.name ?? DEFAULT_SECTION_NAME,
+    sectionName: sections[1]?.name ?? DEFAULT_SECTION_NAME,
     sectionColor,
     categoryName: categories[0]?.name ?? DEFAULT_SECTION_NAME,
     categoryColor,

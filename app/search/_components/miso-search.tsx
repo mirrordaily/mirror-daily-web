@@ -5,6 +5,10 @@ import { MISO_API_KEY } from '@/constants/config'
 import '@/shared-styles/search.css'
 
 export default function MisoSearch() {
+  const sortOptions = [
+    { field: 'relevance', text: '關聯性', default: true },
+    { field: 'published_at', text: '由新到舊' },
+  ]
   useEffect(() => {
     const misocmd = window.misocmd || (window.misocmd = [])
     misocmd.push(async () => {
@@ -12,7 +16,8 @@ export default function MisoSearch() {
       const MisoClient = window.MisoClient
       const client = new MisoClient(MISO_API_KEY)
       const workflow = client.ui.hybridSearch
-      workflow.useApi({
+
+      const apiConfig = {
         fq: 'product_id:/mirrordaily_.+/',
         source_fl: [
           'cover_image',
@@ -32,7 +37,10 @@ export default function MisoSearch() {
           'title',
         ],
         snippet_max_chars: 60,
-      })
+        sort: 'relevance', // 默認排序
+      }
+
+      workflow.useApi(apiConfig)
       workflow.useLayouts({
         query: {
           placeholder: 'Ask anything!',
@@ -48,10 +56,7 @@ export default function MisoSearch() {
       })
       workflow.useFilters({
         sort: {
-          options: [
-            { field: 'relevance', text: '關聯性', default: true },
-            { field: 'published_at', text: '由新到舊' },
-          ],
+          options: sortOptions,
         },
       })
 
@@ -99,7 +104,18 @@ export default function MisoSearch() {
         html = html.replace(
           '<miso-facets></miso-facets>',
           // eslint-disable-next-line tailwindcss/no-custom-classname
-          `<div class="miso-hybrid-search-combo__search-results-filters__right"><div class="miso-hybrid-search-combo__search-results-filters__sort-header">Sort</div><miso-sort></miso-sort></div>`
+          `
+          <div class="miso-hybrid-search-combo__search-results-filters__right">
+            <div class="miso-hybrid-search-combo__search-results-filters__sort-header">排序依</div>
+            <miso-sort style="display: none;"></miso-sort>
+            <div class="miso-hybrid-search-combo__search-results-filters__sort-options-container">
+            ${sortOptions
+              .map((sortItem) => {
+                return `<button class="miso-hybrid-search-combo__search-results-filters__sort-option" data-field="${sortItem.field}" key="${sortItem.field}">${sortItem.text}</button>`
+              })
+              .join('')}
+            </div>
+          </div>`
         )
         return html
       }
@@ -138,9 +154,74 @@ export default function MisoSearch() {
         }
       }
 
-      // 等待 DOM 更新後處理按鈕文字
+      // 排序按鈕事件監聽器
+      const handleSortButtons = () => {
+        const sortButtons = rootElement?.querySelectorAll(
+          '.miso-hybrid-search-combo__search-results-filters__sort-option'
+        )
+
+        // 設置默認選中的排序選項
+        const defaultSortOption = sortOptions.find((option) => option.default)
+        if (defaultSortOption) {
+          const defaultButton = rootElement?.querySelector(
+            `[data-field="${defaultSortOption.field}"]`
+          )
+          defaultButton?.classList.add('active')
+        }
+
+        sortButtons?.forEach((button) => {
+          button.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement
+            const field = target.getAttribute('data-field')
+
+            // 移除所有按鈕的 active 狀態
+            sortButtons.forEach((btn) => {
+              btn.classList.remove('active')
+            })
+
+            // 添加當前按鈕的 active 狀態
+            target.classList.add('active')
+
+            // 觸發排序 - 通過隱藏的 miso-sort 元素
+            if (field) {
+              // 找到隱藏的 miso-sort 元素
+              const misoSortElement = rootElement?.querySelector('miso-sort')
+              if (misoSortElement) {
+                // 找到 miso-sort 內部的選擇按鈕
+                const misoSortButton = misoSortElement.querySelector(
+                  '.miso-select__button'
+                ) as HTMLElement
+                if (misoSortButton) {
+                  // 點擊 miso-sort 按鈕打開選項
+                  misoSortButton.click()
+
+                  // 等待選項出現後選擇對應的選項
+                  setTimeout(() => {
+                    const misoSortOptions = misoSortElement.querySelectorAll(
+                      '.miso-select__option'
+                    )
+                    misoSortOptions.forEach((option) => {
+                      const optionText = option.textContent?.trim()
+                      const sortOption = sortOptions.find(
+                        (opt) => opt.text === optionText
+                      )
+                      if (sortOption && sortOption.field === field) {
+                        // 點擊對應的選項
+                        ;(option as HTMLElement).click()
+                      }
+                    })
+                  }, 100)
+                }
+              }
+            }
+          })
+        })
+      }
+
+      // 等待 DOM 更新後處理按鈕文字和排序按鈕
       setTimeout(() => {
         handleToggleButtonText()
+        handleSortButtons()
       }, 100)
 
       // start query if specified in URL parameters
