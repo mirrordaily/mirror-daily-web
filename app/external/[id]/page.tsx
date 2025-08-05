@@ -65,7 +65,7 @@ export default async function Page({ params }: PageProps) {
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
 
   const adTypeRelated = Math.random() < 0.5 ? 'popIn' : 'dable'
-  const adTypeBottom = Math.random() < 0.8 ? 'popIn' : 'dable'
+  const adTypeBottom = Math.random() < 0.5 ? 'popIn' : 'dable'
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
     const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
