@@ -381,8 +381,8 @@ export const DABLE_PROD_WIDGET_CONFIG: Record<
     widgetId: 'goB9q42X_wXQ2PDRo',
     pcWidgetId: 'goB9q42X',
     moWidgetId: 'wXQ2PDRo',
-    renderType: 'renderWidget',
-    device: 'pc',
+    renderType: 'renderWidgetByWidth',
+    device: 'both',
   },
 }
 
