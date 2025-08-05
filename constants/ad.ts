@@ -379,6 +379,8 @@ export const DABLE_PROD_WIDGET_CONFIG: Record<
   // 其他人都在看
   articleBottomPC: {
     widgetId: 'goB9q42X_wXQ2PDRo',
+    pcWidgetId: 'goB9q42X',
+    moWidgetId: 'wXQ2PDRo',
     renderType: 'renderWidget',
     device: 'pc',
   },
