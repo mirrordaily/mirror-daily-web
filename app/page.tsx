@@ -18,7 +18,7 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import ElectionRecall from './_components/election-recall'
-
+import TopAdSection from './_components/top-ad-section'
 // add segment config to prevent data fetch during build
 export const dynamic = 'force-dynamic'
 
@@ -33,18 +33,7 @@ export default async function Home() {
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
-          <div className="hidden min-h-[306px] lg:flex lg:items-center">
-            <DesktopGptAd
-              slotKey="mirrordaily_home_PC_970x250_top"
-              customClasses="mt-5 mb-9"
-            />
-          </div>
-          <div className="block min-h-[286px] md:hidden">
-            <MobileGptAd
-              slotKey="mirrordaily_home_MW_300x250_top"
-              customClasses="mb-9 mx-auto"
-            />
-          </div>
+          <TopAdSection />
 
           {/* 選舉罷免 */}
           <ElectionRecall />
