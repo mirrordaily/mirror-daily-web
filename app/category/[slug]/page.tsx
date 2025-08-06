@@ -4,7 +4,7 @@ import {
   fetchCategoryPostsFromJSON,
   fetchCategoryInformation,
 } from '../actions'
-import ArticlesList from '../../../shared-components/articles-list'
+import ArticlesList from '@/shared-components/list/articles-list'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'

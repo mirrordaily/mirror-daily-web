@@ -1,5 +1,5 @@
 import PopularNewsSection from '@/shared-components/popular-news-section'
-import ArticlesList from '../../../shared-components/articles-list'
+import ArticlesList from '@/shared-components/list/articles-list'
 import {
   fetchSectionPosts,
   fetchSectionInformation,

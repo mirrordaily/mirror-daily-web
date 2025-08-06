@@ -6,8 +6,8 @@ import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
 import { notFound } from 'next/navigation'
 import type { PostData } from '@/utils/data-process'
 import { PAGE_SIZE } from '@/constants/section'
-import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from './gpt-ad/mobile-gpt-ad'
+import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
+import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
 
 type Props<T> = {
   initialPosts: T[]
