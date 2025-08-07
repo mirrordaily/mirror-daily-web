@@ -30,6 +30,11 @@ export async function generateMetadata({
   const title = `${postData.title} - ${SITE_NAME}`
   const description = getFirstParagraphFromApiData(postData.apiDataBrief) || ''
   const image = postData.postMainImage?.resized?.original || IMAGE_PATH
+  const tags = postData.tags.map((tag) => tag.name)
+  const algoTags = postData.algoTags.map((tag) => tag.name)
+  const keywords = [postData.title, SITE_NAME, '新聞', ...tags, ...algoTags]
+    .filter(Boolean)
+    .join(', ')
   const other: Record<string, string> = {
     'article:published_time': new Date(postData.publishedTime).toISOString(),
     'article:section': postData.sectionName || 'UnCategorized',
@@ -38,6 +43,7 @@ export async function generateMetadata({
       : 'Unknown Author',
     'dable:item_id': postData.id,
     'section:color': postData.sectionColor,
+    news_keywords: keywords,
   }
 
   if (ENV !== 'prod') {
