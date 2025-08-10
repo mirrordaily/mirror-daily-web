@@ -4,10 +4,12 @@ import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'
 
 type Props = {
   slug?: string
+  gtmClassName?: Parameters<typeof FeaturedNewsCard>[0]['gtmClassName']
 }
 
 export default async function PopularNewsSection({
   slug,
+  gtmClassName,
 }: Props): Promise<JSX.Element | null> {
   const articles = await fetchPopularPost()
   if (!articles.length) return null
@@ -21,7 +23,11 @@ export default async function PopularNewsSection({
         {articles &&
           articles.map((item, i) => (
             <>
-              <FeaturedNewsCard {...item} key={item.postId} />
+              <FeaturedNewsCard
+                {...item}
+                key={item.postId}
+                gtmClassName={gtmClassName}
+              />
               {i === 0 && (
                 <DesktopGptAd
                   slotKey="mirrordaily_section_PC_300x250_r1"

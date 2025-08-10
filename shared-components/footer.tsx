@@ -15,6 +15,7 @@ import { Fragment, type ReactElement } from 'react'
 import IconMirrorMedia from '@/public/icons/logos/mirror-media-white.svg'
 import IconMirrorFiction from '@/public/icons/logos/mirror-fiction-white.svg'
 import IconMirrorNews from '@/public/icons/logos/mirror-news-white.svg'
+import { footerGtmEvents } from '@/constants/gtm'
 
 const ExtendedSocialLinks = [
   {
@@ -93,14 +94,23 @@ export default function Footer(): ReactElement {
           </div>
           <div className="hidden flex-row items-center gap-x-3 lg:mt-2 lg:flex">
             {ExtendedSocialLinks.map(({ name, href, icon }) => (
-              <a key={name} href={href} target="_blank">
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                className={`${footerGtmEvents[name]}`}
+              >
                 <NextImage src={icon} alt={name} />
               </a>
             ))}
           </div>
         </section>
         <section className="flex shrink-0 gap-x-[18px]">
-          <a target="_blank" href={SITE_LINKS[0].href}>
+          <a
+            target="_blank"
+            href={SITE_LINKS[0].href}
+            className={`${footerGtmEvents[SITE_LINKS[0].nameEn]}`}
+          >
             <NextImage
               src={IconMirrorMedia}
               width={57.5}
@@ -108,7 +118,11 @@ export default function Footer(): ReactElement {
               alt={SITE_LINKS[0].name}
             />
           </a>
-          <a target="_blank" href={SITE_LINKS[1].href}>
+          <a
+            target="_blank"
+            href={SITE_LINKS[1].href}
+            className={`${footerGtmEvents[SITE_LINKS[1].nameEn]}`}
+          >
             <NextImage
               src={IconMirrorFiction}
               width={56}
@@ -116,7 +130,11 @@ export default function Footer(): ReactElement {
               alt={SITE_LINKS[1].name}
             />
           </a>
-          <a target="_blank" href={SITE_LINKS[2].href}>
+          <a
+            target="_blank"
+            href={SITE_LINKS[2].href}
+            className={`${footerGtmEvents[SITE_LINKS[2].nameEn]}`}
+          >
             <NextImage
               src={IconMirrorNews}
               width={76}

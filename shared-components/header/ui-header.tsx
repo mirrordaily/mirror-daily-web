@@ -14,6 +14,7 @@ import type { HeaderData } from '@/types/common'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
 import type { FlashNews } from '@/types/homepage'
+import { headerGtmEvents } from '@/constants/gtm'
 
 const ExtendedSocialLinks = [
   {
@@ -60,7 +61,7 @@ export default function UiHeader({
         <div className="flex w-full max-w-screen-sm pl-4 pr-6 md:max-w-screen-md md:pl-5 lg:max-w-screen-lg lg:px-9">
           <a
             href="/"
-            className="relative mt-2 h-12 w-[161px] md:mt-5 md:h-[58px] md:w-[120px] lg:mt-3 lg:shrink-0"
+            className={`${headerGtmEvents.logo} relative mt-2 h-12 w-[161px] md:mt-5 md:h-[58px] md:w-[120px] lg:mt-3 lg:shrink-0`}
           >
             <NextImage
               src={IconLogo}
@@ -73,7 +74,7 @@ export default function UiHeader({
           <div className="flex w-full justify-end">
             <div className="ml-auto mr-4 mt-5 flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
               <a
-                className="flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px]"
+                className={`${headerGtmEvents.search} flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px]`}
                 href="/search"
               >
                 <span className="md:hidden">AI 搜尋</span>
@@ -120,7 +121,12 @@ export default function UiHeader({
             {ExtendedSocialLinks.map(({ name, href, icon }) => {
               const width = iconSizes[name] || 24
               return (
-                <a key={name} href={href} target="_blank">
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  className={`${headerGtmEvents[name]}`}
+                >
                   <NextImage src={icon} alt={name} width={width} height={24} />
                 </a>
               )

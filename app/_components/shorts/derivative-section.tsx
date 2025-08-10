@@ -16,7 +16,11 @@ export default async function ShortsDerivativeSection() {
         </p>
         <UploadButton />
       </div>
-      <ShortsList customClass="mt-12 md:mt-8 lg:mt-[22px]" items={items} />
+      <ShortsList
+        customClass="mt-12 md:mt-8 lg:mt-[22px]"
+        items={items}
+        type={SHORTS_TYPE.DERIVATIVE}
+      />
     </section>
   )
 }

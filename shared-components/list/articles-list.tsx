@@ -16,6 +16,7 @@ type Props<T> = {
   totalAmount: number
   fetchMorePosts: (page: number) => Promise<T[]>
   slug: string
+  gtm: Parameters<typeof MainArticleCard>[0]['gtm']
 }
 
 export default function ArticlesList<T extends PostData>({
@@ -25,6 +26,7 @@ export default function ArticlesList<T extends PostData>({
   totalAmount,
   fetchMorePosts,
   slug,
+  gtm,
 }: Props<T>): ReactElement {
   const [firstPost, ...otherPosts] = initialPosts
   if (!firstPost) notFound()
@@ -45,7 +47,7 @@ export default function ArticlesList<T extends PostData>({
       </div>
       <div className="flex w-full flex-col items-start">
         <div className="mb-10 w-full md:mb-[50px]">
-          <MainArticleCard color={color} postItem={firstPost} />
+          <MainArticleCard color={color} postItem={firstPost} gtm={gtm} />
         </div>
         <div className="pl-[23px] pr-[22px] md:px-0">
           <div className="flex max-w-[330px] flex-col gap-y-5 md:max-w-[670px] md:gap-y-8 lg:max-w-[725px]">
@@ -58,7 +60,9 @@ export default function ArticlesList<T extends PostData>({
                 amountOfElements={otherPostsCount}
                 loader={
                   <div className="mt-4 flex justify-center md:mt-12">
-                    <button className="h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493] hover-or-active:border-[#119CC7] hover-or-active:text-[#119CC7]">
+                    <button
+                      className={`${gtm.loadmore} h-9 rounded border-[1.5px] px-[33px] py-[4.5px] text-lg font-bold leading-[1.3] text-[#7F8493] hover-or-active:border-[#119CC7] hover-or-active:text-[#119CC7]`}
+                    >
                       看更多
                     </button>
                   </div>

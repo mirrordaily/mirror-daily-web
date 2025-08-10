@@ -3,6 +3,13 @@ import type { ReactNode } from 'react'
 import type { PickupItemInTopNewsSection } from '@/types/homepage'
 import CustomImage from '@/shared-components/custom-image'
 import ReactPlayer from 'react-player/lazy'
+import type { TAB } from './section'
+import { homepageGtmEvents } from '@/constants/gtm'
+
+export const gtmClassNameMap = {
+  Latest: homepageGtmEvents.latestArticle,
+  Hot: homepageGtmEvents.popularArticle,
+} as const
 
 // 標題與簡介
 const PostTitleAndBrief = ({
@@ -26,17 +33,23 @@ const PostTitleAndBrief = ({
   )
 }
 
+type Props = PickupItemInTopNewsSection & {
+  tab: keyof typeof TAB
+}
 export default function HighlightItem({
   heroImage,
   postName,
   postBrief,
   link,
   isVideoType,
-}: PickupItemInTopNewsSection): ReactNode {
+  tab,
+}: Props): ReactNode {
   if (isVideoType) {
     return (
       <div className="flex flex-col">
-        <div className="aspect-[330/220] w-full shrink-0 md:aspect-auto md:h-[208px] md:w-[312px] lg:h-[374px] lg:w-[560px]">
+        <div
+          className={`${homepageGtmEvents.liveStream} aspect-[330/220] w-full shrink-0 md:aspect-auto md:h-[208px] md:w-[312px] lg:h-[374px] lg:w-[560px]`}
+        >
           <ReactPlayer
             url={link}
             width="100%"
@@ -60,7 +73,7 @@ export default function HighlightItem({
 
   return (
     <a
-      className="group/highlight-item w-full shrink-0 md:w-[312px] lg:w-[560px]"
+      className={`${gtmClassNameMap[tab]} group/highlight-item w-full shrink-0 md:w-[312px] lg:w-[560px]`}
       href={link}
       target="_blank"
     >

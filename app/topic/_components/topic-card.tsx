@@ -2,6 +2,7 @@ import CustomImage from '@/shared-components/custom-image'
 import type { Topic } from '@/types/topic'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import Link from 'next/link'
+import { topicListingGtmEvents } from '@/constants/gtm'
 
 export default function TopicCard({ topic }: { topic: Topic }) {
   return (
@@ -9,7 +10,7 @@ export default function TopicCard({ topic }: { topic: Topic }) {
       prefetch={false}
       href={getTopicPageUrl(topic.slug)}
       target="_blank"
-      className="GTM-topic_click_topics mx-auto w-[320px] md:w-[280px] lg:w-[466px]"
+      className={`${topicListingGtmEvents.topic} mx-auto w-[320px] md:w-[280px] lg:w-[466px]`}
     >
       <figure className="relative h-[180px] w-[320px] md:h-[158px] md:w-[280px] lg:h-[262px] lg:w-[466px]">
         <CustomImage

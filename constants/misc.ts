@@ -108,17 +108,20 @@ export const SOCIAL_LINKS = [
 export const SITE_LINKS = [
   {
     name: '鏡週刊',
+    nameEn: 'mirrormedia',
     href: 'https://www.mirrormedia.mg/',
   },
   {
     name: '鏡文學',
+    nameEn: 'mirrorfiction',
     href: 'https://www.mirrorfiction.com/',
   },
   {
     name: '鏡電視',
+    nameEn: 'mnews',
     href: 'https://www.mnews.tw/',
   },
-] as const satisfies SocialLinks[]
+] as const
 
 export const IMAGE_BREAKPOINT = {
   mobile: '719px',

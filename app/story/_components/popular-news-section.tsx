@@ -1,0 +1,34 @@
+import FeaturedNewsCard from '@/shared-components/featured-news-card'
+import type { PopularNews } from '@/types/common'
+import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+import { storyGtmEvents } from '@/constants/gtm'
+
+type Props = {
+  posts: PopularNews[]
+}
+
+export default function PopularNewsSection({ posts }: Props) {
+  if (!posts.length) return null
+  return (
+    <section className="flex flex-col items-center gap-y-8 pl-12 pr-[47px] md:px-0 lg:gap-y-5">
+      <h3 className="text-lg font-bold leading-normal text-[#674ab1]">
+        熱門新聞
+      </h3>
+      <div className="grid grid-cols-1 justify-items-center gap-y-7 md:grid-cols-2 md:gap-x-7 lg:grid-cols-1 lg:gap-y-5">
+        {posts.map((item) => (
+          <>
+            <FeaturedNewsCard
+              {...item}
+              key={item.postId}
+              gtmClassName={storyGtmEvents.popularArticle}
+            />
+          </>
+        ))}
+        <DesktopGptAd
+          slotKey="mirrordaily_article_PC_300x600_r3"
+          customClasses="mt-5"
+        />
+      </div>
+    </section>
+  )
+}

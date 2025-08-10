@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
 import type { TopicPostData } from '@/types/topic'
+import { topicGtmEvents } from '@/constants/gtm'
 
 export default function ArticleCard({
   title,
@@ -16,7 +17,7 @@ export default function ArticleCard({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="GTM-topic_click_related_articles article-container"
+      className={`${topicGtmEvents.topicArticle} article-container`}
     >
       <figure className="image">
         <CustomImage

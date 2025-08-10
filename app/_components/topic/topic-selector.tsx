@@ -5,6 +5,7 @@ import { useWindowSize } from 'usehooks-ts'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { getTopicListingPage } from '@/utils/site-urls'
 import { isServer } from '@/utils/common'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 function getWidthOfText(text: string, styles: unknown): number {
   const isObjectJSON = function (obj: unknown): obj is CSSStyleDeclaration {
@@ -141,7 +142,7 @@ export default function TopicSelector({
           <button
             key={topic}
             onClick={() => setTopic(topic)}
-            className={`${
+            className={`${homepageGtmEvents.toTopic} ${
               isActive
                 ? 'text-[#896fcc] lg:bg-[#674ab1] lg:text-white'
                 : 'text-[#68666d] lg:bg-[#ccced4]'
@@ -154,7 +155,7 @@ export default function TopicSelector({
       <a
         href={getTopicListingPage()}
         target="_blank"
-        className="whitespace-nowrap font-medium text-[#000928] hover-or-active:text-[#575D71]"
+        className={`${homepageGtmEvents.moreTopicButton} whitespace-nowrap font-medium text-[#000928] hover-or-active:text-[#575D71]`}
       >
         更多
       </a>

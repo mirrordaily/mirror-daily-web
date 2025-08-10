@@ -95,7 +95,7 @@ export default function TopNewsSection({ headerData }: Props) {
   return (
     <section className="section-in-homepage mb-4 mt-[41px] md:mb-14 md:mt-6 lg:mb-9 lg:mt-[26px]">
       <Selector selectedTab={tab} setTab={setTab} />
-      <PostList key={tab} list={posts} />
+      <PostList key={tab} list={posts} tab={tab} />
     </section>
   )
 }

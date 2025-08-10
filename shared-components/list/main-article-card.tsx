@@ -2,13 +2,15 @@ import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
 import type { PostData } from '@/utils/data-process'
 import NextImage from 'next/image'
+import type { sectionGtmEvents, categoryGtmEvents } from '@/constants/gtm'
 
 type Props = {
   postItem: PostData
   color: string
+  gtm: typeof sectionGtmEvents | typeof categoryGtmEvents
 }
 
-export default function MainArticleCard({ postItem, color }: Props) {
+export default function MainArticleCard({ postItem, color, gtm }: Props) {
   const { title, postMainImage } = postItem
 
   return (
@@ -17,9 +19,11 @@ export default function MainArticleCard({ postItem, color }: Props) {
       href={postItem.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex w-full flex-col gap-y-5 md:gap-y-[30px] lg:gap-y-7"
+      className={`${gtm.article} flex w-full flex-col gap-y-5 md:gap-y-[30px] lg:gap-y-7`}
     >
-      <figure className="relative aspect-[375/250] w-full overflow-hidden md:h-[446px] md:rounded lg:h-[492px]">
+      <figure
+        className={`${gtm.firstArticleImg} relative aspect-[375/250] w-full overflow-hidden md:h-[446px] md:rounded lg:h-[492px]`}
+      >
         {/* external post */}
         {typeof postMainImage === 'string' && (
           <NextImage
@@ -44,7 +48,9 @@ export default function MainArticleCard({ postItem, color }: Props) {
           style={{ backgroundColor: color }}
           className={`h-20 w-7 shrink-0 md:h-12`}
         />
-        <figcaption className="line-clamp-3 max-w-[294px] text-xl font-bold leading-[1.3] text-[#000928] md:line-clamp-2 md:max-w-[506px]">
+        <figcaption
+          className={`${gtm.firstArticleTitle} line-clamp-3 max-w-[294px] text-xl font-bold leading-[1.3] text-[#000928] md:line-clamp-2 md:max-w-[506px]`}
+        >
           {title}
         </figcaption>
       </div>

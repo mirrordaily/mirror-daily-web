@@ -1,5 +1,6 @@
 import ArticlesList from '../../../shared-components/search/articles-list'
 import type { AuthorInfo, AuthorPost } from '@/types/author'
+import { authorClickGtmEvents } from '@/constants/gtm'
 
 type Props = {
   info: AuthorInfo
@@ -29,6 +30,7 @@ export default function ArticleSection({
           fetchMorePosts={fetchMorePosts}
           initialList={initialList}
           totalAmount={totalAmount}
+          gtm={authorClickGtmEvents}
         />
       </div>
 

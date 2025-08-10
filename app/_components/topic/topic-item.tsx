@@ -1,5 +1,6 @@
 import type { TopicPost } from '@/types/homepage'
 import CustomImage from '@/shared-components/custom-image'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 type Props = TopicPost & { isFirst?: boolean }
 
@@ -13,7 +14,7 @@ export default function TopicItem({
     <div
       className={`group/card relative flex w-full flex-col gap-y-2 ${
         isFirst ? 'relative' : 'md:w-[204px] lg:gap-x-4'
-      } `}
+      }`}
     >
       <a
         href={link}
@@ -21,7 +22,7 @@ export default function TopicItem({
           isFirst
             ? 'md:aspect-[680/453] lg:aspect-[650/434] lg:w-full'
             : 'md:aspect-[204/136] lg:aspect-[232/154] lg:w-[232px]'
-        } `}
+        } ${homepageGtmEvents.toTopicArticle}`}
       >
         <CustomImage
           images={heroImage.resized}
@@ -40,7 +41,7 @@ export default function TopicItem({
           isFirst
             ? 'md:absolute md:bottom-[14px] md:left-[21px] md:w-[471px] md:text-xl md:text-white md:group-hover/card:text-white md:group-hover/card:underline md:group-active/card:text-white md:group-active/card:underline lg:absolute lg:inset-x-6 lg:bottom-6 lg:mt-6 lg:w-full lg:font-bold lg:leading-none lg:text-white lg:group-hover/card:text-[#575D71]'
             : 'md:line-clamp-3 md:h-[72px] lg:line-clamp-2 lg:h-fit'
-        }`}
+        } ${homepageGtmEvents.toTopicArticle}`}
       >
         {postName}
       </a>

@@ -13,6 +13,7 @@ import { getDefaultMetadata } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/category'
+import { categoryGtmEvents } from '@/constants/gtm'
 
 type PageProps = { params: { slug: string } }
 
@@ -112,9 +113,13 @@ export default async function Page({ params }: PageProps) {
           fetchMorePosts={fetchMorePosts}
           totalAmount={totalAmount}
           slug={slug}
+          gtm={categoryGtmEvents}
         />
         <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
-        <PopularNewsSection slug={slug} />
+        <PopularNewsSection
+          slug={slug}
+          gtmClassName={categoryGtmEvents.popularArticle}
+        />
       </main>
       <MobileGptAd
         slotKey="mirrordaily_section_MW_300x250_list4"
