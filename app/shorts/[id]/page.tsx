@@ -52,7 +52,7 @@ export default async function Page({ params }: PageProps) {
 
   const data = await fetchShortsRandom(videoId, 19, shortsData.videoSection)
 
-  const { id, name, videoSrc, youtubeUrl } = shortsData
+  const { id, name, videoSrc, youtubeUrl, createdAt, duration } = shortsData
   data.unshift({
     id,
     title: name,
@@ -62,13 +62,31 @@ export default async function Page({ params }: PageProps) {
     contributor: '',
   })
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: name,
+    thumbnailUrl: shortsData.heroImage?.resized?.original || IMAGE_PATH,
+    uploadDate: createdAt,
+    duration: duration,
+    contentUrl: videoSrc || youtubeUrl || '',
+  }
+
   return (
-    <ShortsLayout
-      tabLinks={LATEST_SHORT_PAGES}
-      activeTab={shortsData.videoSection}
-      className="touch-none"
-    >
-      <VideoBlock items={data} />
-    </ShortsLayout>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
+      <ShortsLayout
+        tabLinks={LATEST_SHORT_PAGES}
+        activeTab={shortsData.videoSection}
+        className="touch-none"
+      >
+        <VideoBlock items={data} />
+      </ShortsLayout>
+    </>
   )
 }

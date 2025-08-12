@@ -54,6 +54,8 @@ export const fetchShortsData = async (
       youtubeUrl: data.youtubeUrl || '',
       videoSrc: data.videoSrc || '',
       heroImage: getHeroImage(data.heroImage),
+      createdAt: data.createdAt || '',
+      duration: data.duration || '',
     }
   }
 

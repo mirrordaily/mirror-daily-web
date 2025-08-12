@@ -154,6 +154,8 @@ export const shortsDataSchema = z.object({
     })
   ),
   heroImage: heroImageSchema.nullable(),
+  createdAt: z.string(),
+  duration: z.string(),
 })
 
 export const latestVideosSchema = z.object({
