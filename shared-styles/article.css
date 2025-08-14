@@ -798,6 +798,10 @@
         position: relative;
         white-space: normal;
 
+        & iframe {
+          width: 100%;
+        }
+
         &.top-layer {
           /* FIXME: apply z-index following project setup */
           z-index: 1000;

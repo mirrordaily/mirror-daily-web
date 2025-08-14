@@ -9,10 +9,9 @@ import { getDefaultMetadata } from '@/utils/common'
 import { Suspense } from 'react'
 import PageLogger from '@/shared-components/page-logger'
 import AdultWarning from '../_components/adult-warning'
-import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV } from '@/constants/config'
+import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -31,6 +30,11 @@ export async function generateMetadata({
   const title = `${postData.title} - ${SITE_NAME}`
   const description = getFirstParagraphFromApiData(postData.apiDataBrief) || ''
   const image = postData.postMainImage?.resized?.original || IMAGE_PATH
+  const tags = postData.tags.map((tag) => tag.name)
+  const algoTags = postData.algoTags.map((tag) => tag.name)
+  const keywords = [postData.title, SITE_NAME, '新聞', ...tags, ...algoTags]
+    .filter(Boolean)
+    .join(', ')
   const other: Record<string, string> = {
     'article:published_time': new Date(postData.publishedTime).toISOString(),
     'article:section': postData.sectionName || 'UnCategorized',
@@ -39,6 +43,7 @@ export async function generateMetadata({
       : 'Unknown Author',
     'dable:item_id': postData.id,
     'section:color': postData.sectionColor,
+    news_keywords: keywords,
   }
 
   if (ENV !== 'prod') {
@@ -89,19 +94,7 @@ export default async function Page({ params }: PageProps) {
         <PageLogger extra={extra} />
       </Suspense>
       <main className="flex flex-col items-center">
-        <div className="hidden min-h-[306px] lg:flex lg:items-center">
-          <DesktopGptAd
-            slotKey="mirrordaily_article_PC_970x250_top"
-            customClasses="mt-5 mb-9"
-          />
-        </div>
-
-        <div className="block min-h-[286px] md:hidden">
-          <MobileGptAd
-            slotKey="mirrordaily_article_MW_300x250_top"
-            customClasses="mb-9"
-          />
-        </div>
+        <ArticlePageTopAd />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
