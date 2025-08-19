@@ -14,7 +14,6 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
-
 type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
@@ -78,63 +77,80 @@ export default async function Page({ params }: PageProps) {
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
-  const { brief, content, ...intro } = externalPost
+  const { title, partner, thumb, publishedTime, brief, content } = externalPost
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: title,
+    author: partner ? { name: partner } : { name: SITE_NAME },
+    image: thumb || `https://www.mirrordaily.news${IMAGE_PATH}`,
+    datePublished: new Date(publishedTime).toISOString(),
+  }
 
   return (
-    <main className="flex flex-col items-center">
-      <MisoPageView productIds={`external_${id}`} />
-      <ArticlePageTopAd />
-      <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
-      <section className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
-        <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
-          <ArticleIntro {...intro} />
-          <Article brief={brief} content={content} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
+      <main className="flex flex-col items-center">
+        <MisoPageView productIds={`external_${id}`} />
+        <ArticlePageTopAd />
+        <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
+        <section className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
+          <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
+            <ArticleIntro {...externalPost} />
+            <Article brief={brief} content={content} />
 
-          <DesktopGptAd
-            slotKey="mirrordaily_article_PC_728x90_in2"
-            customClasses="mt-9 mx-auto"
-          />
-          <MobileGptAd
-            slotKey="mirrordaily_article_MW_300x250_in2"
-            customClasses="mt-8 mx-auto"
-          />
-
-          <RelatedNewsList posts={relatedPosts} />
-
-          {adTypeRelated === 'dable' ? (
-            <DableWidget type="related" customClasses="mt-4" />
-          ) : (
-            <div id="_popIn_recommend_word" className="mt-7"></div>
-          )}
-          {adTypeBottom === 'dable' ? (
-            <DableWidget type="articleBottomPC" customClasses="mt-4" />
-          ) : (
-            <div id="_popIn_recommend" className="mt-7"></div>
-          )}
-        </div>
-
-        <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />
-        <div className="flex flex-col gap-y-[46px] md:gap-y-12 lg:min-w-[300px] lg:gap-y-[60px]">
-          <div>
-            <FeatureNewsList
-              title="最新新聞"
-              posts={latestPosts}
-              type="latest"
-            />
             <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_r2"
-              customClasses="mt-5"
+              slotKey="mirrordaily_article_PC_728x90_in2"
+              customClasses="mt-9 mx-auto"
             />
-          </div>
-          <div>
-            <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
-            <DesktopGptAd
-              slotKey="mirrordaily_article_PC_300x600_r3"
-              customClasses="mt-5"
+            <MobileGptAd
+              slotKey="mirrordaily_article_MW_300x250_in2"
+              customClasses="mt-8 mx-auto"
             />
+
+            <RelatedNewsList posts={relatedPosts} />
+
+            {adTypeRelated === 'dable' ? (
+              <DableWidget type="related" customClasses="mt-4" />
+            ) : (
+              <div id="_popIn_recommend_word" className="mt-7"></div>
+            )}
+            {adTypeBottom === 'dable' ? (
+              <DableWidget type="articleBottomPC" customClasses="mt-4" />
+            ) : (
+              <div id="_popIn_recommend" className="mt-7"></div>
+            )}
           </div>
-        </div>
-      </section>
-    </main>
+
+          <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />
+          <div className="flex flex-col gap-y-[46px] md:gap-y-12 lg:min-w-[300px] lg:gap-y-[60px]">
+            <div>
+              <FeatureNewsList
+                title="最新新聞"
+                posts={latestPosts}
+                type="latest"
+              />
+              <DesktopGptAd
+                slotKey="mirrordaily_article_PC_300x600_r2"
+                customClasses="mt-5"
+              />
+            </div>
+            <div>
+              <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
+              <DesktopGptAd
+                slotKey="mirrordaily_article_PC_300x600_r3"
+                customClasses="mt-5"
+              />
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
   )
 }
