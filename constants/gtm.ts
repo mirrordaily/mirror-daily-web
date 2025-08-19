@@ -9,6 +9,8 @@ const gtmEvents = {
     Instagram: 'GTM-header_click_Instagram_icon',
     Threads: 'GTM-header_click_Threads_icon',
     YouTube: 'GTM-header_click_YouTube_icon',
+    spill: 'GTM-header_click_spill',
+    email: 'GTM-header_click_email',
   },
   //footer
   footer: {
@@ -20,6 +22,11 @@ const gtmEvents = {
     mirrormedia: 'GTM-footer_click_mirrormedia',
     mirrorfiction: 'GTM-footer_click_mirrorfiction',
     mnews: 'GTM-footer_click_mnews',
+    discipline: 'GTM-footer_click_discipline',
+    aiProtocol: 'GTM-footer_click_ai_protocol',
+    adsales: 'GTM-footer_click_adsales',
+    webauthorization: 'GTM-footer_click_auth',
+    privacy: 'GTM-footer_click_privacy',
   },
   //首頁
   homepage: {
@@ -91,6 +98,26 @@ const gtmEvents = {
   search: {
     article: 'GTM-search_click_article',
   },
+  //短影音頁(/shorts、shorts/news、shorts/creativity)
+  shorts: {
+    logo: 'GTM-shorts_click_logo',
+    homeIcon: 'GTM-shorts_click_home_icon',
+    newsIcon: 'GTM-shorts_click_news_icon',
+    creativityIcon: 'GTM-shorts_click_creativity_icon',
+    discipline: 'GTM-shorts_click_discipline',
+    aiProtocol: 'GTM-shorts_click_ai_protocol',
+    adsales: 'GTM-shorts_click_adsales',
+    webauthorization: 'GTM-shorts_click_auth',
+    privacy: 'GTM-shorts_click_privacy',
+    mirrormedia: 'GTM-shorts_click_mirrormedia',
+    mirrorfiction: 'GTM-shorts_click_mirrorfiction',
+    mnews: 'GTM-shorts_click_mnews',
+    search: 'GTM-shorts_click_search',
+    creativityButton: 'GTM-shorts_click_creativity_button',
+    facebookShare: 'GTM-shorts_click_share_to_fb',
+    lineShare: 'GTM-shorts_click_share_to_line',
+    copyUrl: 'GTM-shorts_click_share_link',
+  },
 } as const
 
 const homepageGtmEvents = gtmEvents.homepage
@@ -104,6 +131,7 @@ const authorClickGtmEvents = gtmEvents.author.click
 const headerGtmEvents = gtmEvents.header
 const footerGtmEvents = gtmEvents.footer
 const searchGtmEvents = gtmEvents.search
+const shortsGtmEvents = gtmEvents.shorts
 
 export {
   gtmEvents,
@@ -118,4 +146,5 @@ export {
   headerGtmEvents,
   footerGtmEvents,
   searchGtmEvents,
+  shortsGtmEvents,
 }

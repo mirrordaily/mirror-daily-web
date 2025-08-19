@@ -16,71 +16,77 @@ type SocialLinks = {
 
 type PageLink = SocialLinks & {
   isExternal?: boolean
+  englishName: string
 }
 
 type ContactLink = SocialLinks & {
   text: string
   headerSubmitButtonName: string
+  gtmKey: string
 }
 
 // TODO: update url values
-export const PAGE_LINKS: PageLink[] = [
+export const PAGE_LINKS = [
   {
     name: '新聞自律',
     href: '/',
     isExternal: true,
+    englishName: 'discipline',
   },
   {
     name: 'AI使用規範',
     href: 'https://www.mirrordaily.news/story/4764',
     isExternal: true,
+    englishName: 'aiProtocol',
   },
   {
     name: '廣告業務',
     href: 'https://www.mirrordaily.news/story/5836',
     isExternal: true,
+    englishName: 'adsales',
   },
   {
     name: '內容授權',
     href: 'https://www.mirrordaily.news/story/5853',
     isExternal: true,
+    englishName: 'webauthorization',
   },
   {
     name: '隱私權政策',
     href: 'https://www.mirrordaily.news/story/4936',
     isExternal: true,
+    englishName: 'privacy',
   },
   // {
   //   name: '下載APP',
   //   href: '/',
   //   isExternal: true,
   // },
-]
+] as const satisfies PageLink[]
 
-export const CONTACT_LINKS: ContactLink[] = [
+export const CONTACT_LINKS = [
   {
     name: '爆料專線',
     headerSubmitButtonName: '',
     href: 'tel:+886(02)6619-8085',
     text: '(02)6619-8085',
+    gtmKey: 'phone',
   },
   {
     name: '爆料信箱',
     headerSubmitButtonName: '我要爆料',
     href: 'mailto:119@mirrordaily.news',
     text: '119@mirrordaily.news',
+    gtmKey: 'spill',
   },
   {
     name: '投書信箱',
     headerSubmitButtonName: '我要投書',
     href: 'mailto:editor@mirrordaily.news',
     text: 'editor@mirrordaily.news',
+    gtmKey: 'email',
   },
-]
-
-export const CONTACT_LINKS_WITHOUT_FIRST = CONTACT_LINKS.filter(
-  (_, idx) => idx !== 0
-)
+] as const satisfies ContactLink[]
 
 export const SOCIAL_LINKS = [
   {

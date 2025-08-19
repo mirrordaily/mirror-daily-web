@@ -1,5 +1,5 @@
 import NextImage from 'next/image'
-import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
+import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
 import FlashNewsList from './flash-news-list'
@@ -48,6 +48,8 @@ const iconSizes: Record<(typeof ExtendedSocialLinks)[number]['name'], number> =
     LINE: 24,
   }
 
+const [, ...CONTACT_LINKS_WITHOUT_FIRST] = CONTACT_LINKS
+
 export default function UiHeader({
   data,
   flashNews,
@@ -88,7 +90,9 @@ export default function UiHeader({
               return (
                 <a
                   key={contactLink.href + contactLink.name}
-                  className="header-submit-button ml-3 first:ml-0"
+                  className={`${
+                    headerGtmEvents[contactLink?.gtmKey] || ''
+                  } header-submit-button ml-3 first:ml-0`}
                   href={contactLink.href}
                 >
                   {contactLink.headerSubmitButtonName}

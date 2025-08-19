@@ -147,9 +147,9 @@ export default function Footer(): ReactElement {
         <section
           className={`relative text-left text-sm font-normal leading-[20px] text-white lg:my-[38px] lg:ml-[10.5px] lg:mr-[27.5px]`}
         >
-          {PAGE_LINKS.map(({ name, href, isExternal }) => (
+          {PAGE_LINKS.map(({ name, href, isExternal, englishName }) => (
             <a
-              className="block"
+              className={`${footerGtmEvents[englishName]} block`}
               key={name}
               href={href}
               target={isExternal ? '_blank' : '_self'}
