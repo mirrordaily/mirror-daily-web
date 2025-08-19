@@ -10,10 +10,10 @@ import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { getSectionPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
-import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 import { sectionGtmEvents } from '@/constants/gtm'
+import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 
 type PageProps = { params: { slug: string } }
 
@@ -92,20 +92,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="hidden min-h-[306px] lg:flex lg:items-center">
-        <DesktopGptAd
-          slotKey="mirrordaily_section_PC_970x250_top"
-          customClasses="mt-5 mb-9 mx-auto"
-          pageKey={slug}
-        />
-      </div>
-      <div className="block min-h-[286px] md:hidden">
-        <MobileGptAd
-          slotKey="mirrordaily_section_MW_300x250_top"
-          customClasses="mb-9 mx-auto"
-          pageKey={slug}
-        />
-      </div>
+      <ListPageTopAd slug={slug} />
 
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList

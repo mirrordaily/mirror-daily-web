@@ -97,11 +97,11 @@
         box-shadow: none;
 
         .miso-hybrid-search-combo__answer-box-inner {
-          max-height: 18rem;
+          /* max-height: 18rem; */
           border: 0;
-          @media (min-width: 768px) {
+          /* @media (min-width: 768px) {
             max-height: 12rem;
-          }
+          } */
         }
 
         .miso-hybrid-search-combo__phrase {
