@@ -14,6 +14,8 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 import { sectionGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
+import { PROD_SITE_URL } from '@/constants/config'
+import { IMAGE_PATH } from '@/constants/default-path'
 
 type PageProps = { params: { slug: string } }
 
@@ -90,8 +92,39 @@ export default async function Page({
 
   const totalAmount = jsonPostsCount + postsCount
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: initialPosts.map((post, index) => {
+      let imageUrl: string | undefined
+      if (typeof post.postMainImage === 'string') {
+        imageUrl = post.postMainImage
+      } else {
+        imageUrl = post.postMainImage.resized?.original
+      }
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'NewsArticle',
+          name: post.title,
+          image: imageUrl || `${PROD_SITE_URL}${IMAGE_PATH}`,
+          dateCreated: new Date(post.formattedDate).toISOString(),
+          description: post.brief,
+          url: `${PROD_SITE_URL}${post.link}`,
+        },
+      }
+    }),
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
       <ListPageTopAd slug={slug} />
 
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
