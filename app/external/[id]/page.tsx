@@ -14,6 +14,8 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
+import { PROD_SITE_URL } from '@/constants/config'
+
 type PageProps = { params: { id: string } }
 
 export async function generateMetadata({
@@ -84,7 +86,7 @@ export default async function Page({ params }: PageProps) {
     '@type': 'NewsArticle',
     headline: title,
     author: partner ? { name: partner } : { name: SITE_NAME },
-    image: thumb || `https://www.mirrordaily.news${IMAGE_PATH}`,
+    image: thumb || `${PROD_SITE_URL}${IMAGE_PATH}`,
     datePublished: new Date(publishedTime).toISOString(),
   }
 
