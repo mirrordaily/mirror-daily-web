@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 import PageLogger from '@/shared-components/page-logger'
 import AdultWarning from '../_components/adult-warning'
 import MisoPageView from '@/shared-components/miso-pageview'
-import { ENV } from '@/constants/config'
+import { ENV, PROD_SITE_URL } from '@/constants/config'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 
 type PageProps = { params: { id: string } }
@@ -97,7 +97,9 @@ export default async function Page({ params }: PageProps) {
     '@type': 'NewsArticle',
     headline: postData.title,
     author: author,
-    image: postData.postMainImage?.resized?.original || IMAGE_PATH,
+    image:
+      postData.postMainImage?.resized?.original ||
+      `${PROD_SITE_URL}${IMAGE_PATH}`,
     datePublished: new Date(postData.publishedTime).toISOString(),
   }
 
