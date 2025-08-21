@@ -114,7 +114,7 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />
-        <div className="flex flex-col gap-y-[46px] md:gap-y-12 lg:gap-y-[60px]">
+        <div className="flex flex-col gap-y-[46px] md:gap-y-12 lg:min-w-[300px] lg:gap-y-[60px]">
           <div>
             <FeatureNewsList
               title="最新新聞"
