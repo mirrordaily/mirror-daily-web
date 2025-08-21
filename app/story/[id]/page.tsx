@@ -103,8 +103,6 @@ export default async function Page({ params }: PageProps) {
     datePublished: new Date(postData.publishedTime).toISOString(),
   }
 
-  console.log('jsonLd', jsonLd)
-
   return (
     <>
       <script
