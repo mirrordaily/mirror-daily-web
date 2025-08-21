@@ -1,5 +1,7 @@
 import type { ItemInTopNewsSection } from '@/types/homepage'
 import type { CSSProperties } from 'react'
+import type { TAB } from './section'
+import { gtmClassNameMap } from './highlight-item'
 
 type Props = Pick<
   ItemInTopNewsSection,
@@ -9,7 +11,9 @@ type Props = Pick<
   | 'postName'
   | 'publishedDate'
   | 'link'
->
+> & {
+  tab: keyof typeof TAB
+}
 
 export default function ListItem({
   sectionName,
@@ -17,6 +21,7 @@ export default function ListItem({
   publishedDate,
   postName,
   link,
+  tab,
 }: Props) {
   return (
     <div className="[&:not(:last-child)]:border-b [&:not(:last-child)]:border-[#CCCED4] [&:not(:last-child)]:pb-3 md:[&:not(:last-child)]:pb-2">
@@ -37,7 +42,7 @@ export default function ListItem({
       <a
         href={link}
         target="_blank"
-        className="mt-[6px] line-clamp-2 h-[42px] break-all text-base font-medium leading-[21px] text-[#575D71] hover-or-active:text-[color:var(--custom-active-color)] md:h-10 md:text-sm md:font-normal md:leading-[20px] lg:line-clamp-1 lg:h-auto lg:text-base lg:font-medium lg:leading-normal"
+        className={`${gtmClassNameMap[tab]} mt-[6px] line-clamp-2 h-[42px] break-all text-base font-medium leading-[21px] text-[#575D71] hover-or-active:text-[color:var(--custom-active-color)] md:h-10 md:text-sm md:font-normal md:leading-[20px] lg:line-clamp-1 lg:h-auto lg:text-base lg:font-medium lg:leading-normal`}
         style={
           {
             '--custom-active-color': sectionColor,

@@ -3,7 +3,7 @@
 import type { HeaderData } from '@/types/common'
 import NextImage from 'next/image'
 import { useState } from 'react'
-import { CONTACT_LINKS_WITHOUT_FIRST, SOCIAL_LINKS } from '@/constants/misc'
+import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
 import MobileNavList from './mobile-nav-list'
 import IconHamburger from '@/public/icons/hamburger.svg'
 import IconClose from '@/public/icons/sidebar-close.svg'
@@ -14,6 +14,7 @@ import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
+import { headerGtmEvents } from '@/constants/gtm'
 
 const ExtendedSocialLinks = [
   {
@@ -41,6 +42,8 @@ const ExtendedSocialLinks = [
 type Props = {
   data: HeaderData[]
 }
+
+const [, ...CONTACT_LINKS_WITHOUT_FIRST] = CONTACT_LINKS
 
 export default function MobileToggleAndNav({ data }: Props) {
   const [isOpen, setIsOpen] = useState(false)
@@ -75,7 +78,9 @@ export default function MobileToggleAndNav({ data }: Props) {
               {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => (
                 <a
                   key={`${contactLink.href}-${contactLink.headerSubmitButtonName}`}
-                  className="mobile-toggle-and-nav-submit-button"
+                  className={`mobile-toggle-and-nav-submit-button ${
+                    headerGtmEvents[contactLink?.gtmKey] || ''
+                  }`}
                   href={contactLink.href}
                 >
                   {contactLink.headerSubmitButtonName}

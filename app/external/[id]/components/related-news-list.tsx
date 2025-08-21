@@ -1,4 +1,4 @@
-import RelatedNewsCard from '@/app/story/_components/related-news-card'
+import RelatedNewsCard from '@/shared-components/article/related-news-card'
 
 type Props = {
   posts: Parameters<typeof RelatedNewsCard>[0][]

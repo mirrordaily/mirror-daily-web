@@ -6,6 +6,7 @@ import ReactPlayer from 'react-player/lazy'
 import SocialShareBar from '../social-share-bar'
 import useVideoViewLogger from '@/hooks/use-video-logger'
 import { ENV } from '@/constants/config'
+import { shortsGtmEvents } from '@/constants/gtm'
 
 type Props = Shorts & {
   isActive: boolean
@@ -124,12 +125,22 @@ export default function ShortsItem({
           </div>
         </div>
         <div className="absolute -right-4 bottom-0 hidden translate-x-full rounded-full md:inline-block">
-          <SocialShareBar title={title} link={link} direction="vertical" />
+          <SocialShareBar
+            title={title}
+            link={link}
+            direction="vertical"
+            gtmEvents={shortsGtmEvents}
+          />
         </div>
       </div>
 
       <div className="absolute bottom-6 right-[17px] inline-block rounded-full md:hidden">
-        <SocialShareBar title={title} link={link} direction="vertical" />
+        <SocialShareBar
+          title={title}
+          link={link}
+          direction="vertical"
+          gtmEvents={shortsGtmEvents}
+        />
       </div>
     </div>
   )

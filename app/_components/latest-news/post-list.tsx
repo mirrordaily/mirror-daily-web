@@ -12,6 +12,7 @@ import {
   selectLiveEvent,
 } from '@/redux/homepage/selector'
 import React from 'react'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 /** the amount of articles each time load-more is clicked  */
 const RENDER_PAGE_SIZE = 20
@@ -51,7 +52,9 @@ export default function PostList({ headerData }: PostListProps): ReactNode {
       fetchListInPage={fetchMoreLatestPost}
       isAutoFetch={false}
       loader={
-        <button className="mt-4 inline-block rounded border-2 border-solid border-[#896fcc] p-[10px] text-lg font-bold leading-normal text-[#896fcc] hover-or-active:bg-[#896fcc] hover-or-active:text-[#ffffff] lg:mt-6">
+        <button
+          className={`${homepageGtmEvents.loadmore} mt-4 inline-block rounded border-2 border-solid border-[#896fcc] p-[10px] text-lg font-bold leading-normal text-[#896fcc] hover-or-active:bg-[#896fcc] hover-or-active:text-[#ffffff] lg:mt-6`}
+        >
           看更多
         </button>
       }
