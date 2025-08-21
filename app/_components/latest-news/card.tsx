@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import CustomImage from '@/shared-components/custom-image'
 import type { LatestPost } from '@/types/common'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 type Props = Pick<
   LatestPost,
@@ -28,7 +29,11 @@ export default function LatestNewsCard({
       >
         {sectionName}
       </p>
-      <a href={link} target="_blank" className="group/card">
+      <a
+        href={link}
+        target="_blank"
+        className={`${homepageGtmEvents.latest} group/card`}
+      >
         <div className="relative aspect-[330/220] w-full overflow-hidden rounded group-hover/card:*:scale-110 group-active/card:*:scale-110 md:aspect-auto md:h-[134px] lg:h-[170px]">
           <CustomImage
             images={heroImage.resized}

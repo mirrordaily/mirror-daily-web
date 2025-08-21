@@ -12,6 +12,7 @@ import IconRain from '@/public/icons/weather/rain.svg'
 import IconSnow from '@/public/icons/weather/snow.svg'
 import IconWeatherUnknown from '@/public/icons/weather/unknown.svg'
 import type { CityAndWeather } from '@/types/homepage'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 const weatherToImage = {
   晴: IconSunny,
@@ -79,7 +80,7 @@ export default function WeatherMain({ data }: Props) {
             <ul className="absolute left-0 top-full z-city-selection-box h-[91px] w-[100px] cursor-pointer overflow-y-auto bg-[#f6f6fb] px-[26px] pt-[11px] md:h-[196px] lg:left-6">
               {cities.map((city) => (
                 <li
-                  className="whitespace-nowrap pb-4 text-base font-medium hover-or-active:text-[#674ab1]"
+                  className={`${homepageGtmEvents.weather} whitespace-nowrap pb-4 text-base font-medium hover-or-active:text-[#674ab1]`}
                   key={city}
                   onClick={() => handleCitySelect(city)}
                 >

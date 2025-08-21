@@ -1,15 +1,23 @@
 'use client'
 
+import { homepageGtmEvents } from '@/constants/gtm'
 import useVideoViewLogger from '@/hooks/use-video-logger'
 import type { Shorts } from '@/types/common'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
+import { SHORTS_TYPE } from '@/types/common'
 
 type Props = Shorts & {
   isActive: boolean
   onPlay(): void
   onPause(): void
+  type: SHORTS_TYPE
 }
+
+const gtmClassNameMap = {
+  [SHORTS_TYPE.NEWS]: homepageGtmEvents.shortNews,
+  [SHORTS_TYPE.DERIVATIVE]: homepageGtmEvents.shortCreativity,
+} as const
 
 export default function ShortsItem({
   fileUrl,
@@ -19,6 +27,7 @@ export default function ShortsItem({
   isActive,
   onPlay,
   onPause,
+  type,
 }: Props) {
   const [isClientSide, setIsClientSide] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
@@ -35,7 +44,7 @@ export default function ShortsItem({
     setIsClientSide(true)
   }, [])
   return (
-    <a className="w-full select-none" href={link}>
+    <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
         {isClientSide && (
           <ReactPlayer

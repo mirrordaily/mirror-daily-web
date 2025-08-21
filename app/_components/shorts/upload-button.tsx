@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { selectIsModalOpened } from '@/redux/shorts-upload/selector'
 import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 import useRecaptcha from '@/hooks/use-recaptcha'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 export default function UploadButton() {
   const dispatch = useAppDispatch()
@@ -19,7 +20,7 @@ export default function UploadButton() {
 
   return (
     <button
-      className="rounded-[29px] bg-[#D94141] px-[10px] py-[2.5px] text-[15px] font-normal leading-[23px] text-white"
+      className={`${homepageGtmEvents.shortCreativitySubmitButton} rounded-[29px] bg-[#D94141] px-[10px] py-[2.5px] text-[15px] font-normal leading-[23px] text-white`}
       onClick={onUpload}
     >
       我要投稿

@@ -7,6 +7,7 @@ import type { Contact } from '@/types/story'
 import { getTagPageUrl } from '@/utils/site-urls'
 import IconMirrorDaily from '@/public/icons/logos/mirror-daily-black.svg'
 import NextImage from 'next/image'
+import { storyGtmEvents } from '@/constants/gtm'
 
 export default function HeroSection({
   title,
@@ -123,6 +124,7 @@ export default function HeroSection({
               href={getTagPageUrl(item.slug)}
               target="_blank"
               key={item.slug}
+              className={`${storyGtmEvents.tag}`}
             >
               <div className="flex justify-center rounded bg-[#CCCED4] py-1 pl-[10px] pr-3 text-sm font-normal leading-[24px]">
                 {item.name}

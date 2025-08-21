@@ -15,13 +15,21 @@ import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
 import type { Shorts } from '@/types/common'
 import { useIntersectionObserver } from 'usehooks-ts'
+import { SHORTS_TYPE } from '@/types/common'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 type Props = {
   items: Shorts[]
   customClass?: string
+  type: SHORTS_TYPE
 }
 
-export default function ShortsList({ items, customClass = '' }: Props) {
+const gtmClassNameMap = {
+  [SHORTS_TYPE.NEWS]: homepageGtmEvents.shortNewsButton,
+  [SHORTS_TYPE.DERIVATIVE]: homepageGtmEvents.shortCreativityButton,
+} as const
+
+export default function ShortsList({ items, customClass = '', type }: Props) {
   const swiperRef = useRef<SwiperRef>(null)
   const slideNextRef = useRef<HTMLButtonElement>(null)
   const slidePrevRef = useRef<HTMLButtonElement>(null)
@@ -87,6 +95,7 @@ export default function ShortsList({ items, customClass = '' }: Props) {
             <ShortsItem
               {...item}
               key={index}
+              type={type}
               isActive={isIntersecting && activeIndex === index}
               onPlay={() => {
                 setActiveIndex(index)
@@ -100,13 +109,13 @@ export default function ShortsList({ items, customClass = '' }: Props) {
         ))}
       </Swiper>
       <button
-        className={`shorts-swiper-button right-4 ${swiperIsEnd ? 'hidden' : ''}`}
+        className={`${gtmClassNameMap[type]} shorts-swiper-button right-4 ${swiperIsEnd ? 'hidden' : ''}`}
         ref={slideNextRef}
       >
         <NextImage src={IconNext} width={40} height={40} alt="下一筆" />
       </button>
       <button
-        className={`shorts-swiper-button left-4 ${swiperIsBeginning ? 'hidden' : ''}`}
+        className={`${gtmClassNameMap[type]} shorts-swiper-button left-4 ${swiperIsBeginning ? 'hidden' : ''}`}
         ref={slidePrevRef}
       >
         <NextImage src={IconPrev} width={40} height={40} alt="上一筆" />

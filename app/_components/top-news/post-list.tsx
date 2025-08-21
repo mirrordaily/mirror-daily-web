@@ -4,22 +4,24 @@ import type {
 } from '@/types/homepage'
 import HighlightItem from './highlight-item'
 import ListItem from './list-item'
+import type { TAB } from './section'
 
 type Props = {
   list: [PickupItemInTopNewsSection | undefined, ...ItemInTopNewsSection[]]
+  tab: keyof typeof TAB
 }
 
-export default function PostList({ list }: Props) {
+export default function PostList({ list, tab }: Props) {
   const [highlight, ...others] = list
 
   if (!highlight) return null
 
   return (
     <div className="mt-4 flex w-full flex-col gap-y-[34px] md:flex-row lg:mt-3">
-      <HighlightItem {...highlight} />
+      <HighlightItem {...highlight} tab={tab} />
       <div className="flex w-full flex-col gap-y-3 md:ml-6 md:gap-y-2 lg:ml-5 lg:mt-[3px] lg:border-l-[0.5px] lg:border-l-[#000928] lg:pl-[21px]">
         {others.map((post) => (
-          <ListItem key={post.postId} {...post} />
+          <ListItem key={post.postId} {...post} tab={tab} />
         ))}
       </div>
     </div>

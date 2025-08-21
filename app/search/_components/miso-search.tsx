@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { dateFormatter } from '@/utils/data-process'
 import { MISO_API_KEY } from '@/constants/config'
 import '@/shared-styles/search.css'
+import { searchGtmEvents } from '@/constants/gtm'
 
 export default function MisoSearch() {
   const sortOptions = [
@@ -75,7 +76,7 @@ export default function MisoSearch() {
         product: Product
       ): string {
         const html = `
-          <a class="miso-list__item-body" data-role="item" data-miso-product-id="${
+          <a class="miso-list__item-body ${searchGtmEvents.article}" data-role="item" data-miso-product-id="${
             product.id
           }" href="${product.url}" target="_blank" rel="noopener">
             <div class="miso-list__item-cover-image-container">
@@ -84,9 +85,11 @@ export default function MisoSearch() {
               }">
             </div>
             <div class="miso-list__item-info-container">
-              <div class='miso-list__item-time'>${dateFormatter(
-                product['published_at'].toString()
-              )}</div>
+              <div class='miso-list__item-time'>${
+                product['published_at']?.toString()
+                  ? dateFormatter(product['published_at']?.toString())
+                  : ''
+              }</div>
               <div class="miso-list__item-title">${product.title}</div>
               <div class="miso-list__item-snippet">${product.snippet}</div>
             </div>

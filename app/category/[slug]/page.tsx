@@ -4,7 +4,7 @@ import {
   fetchCategoryPostsFromJSON,
   fetchCategoryInformation,
 } from '../actions'
-import ArticlesList from '../../../shared-components/articles-list'
+import ArticlesList from '@/shared-components/list/articles-list'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
@@ -12,6 +12,7 @@ import { getCategoryPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/category'
+import { categoryGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 
 type PageProps = { params: { slug: string } }
@@ -99,9 +100,13 @@ export default async function Page({ params }: PageProps) {
           fetchMorePosts={fetchMorePosts}
           totalAmount={totalAmount}
           slug={slug}
+          gtm={categoryGtmEvents}
         />
         <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
-        <PopularNewsSection slug={slug} />
+        <PopularNewsSection
+          slug={slug}
+          gtmClassName={categoryGtmEvents.popularArticle}
+        />
       </main>
       <MobileGptAd
         slotKey="mirrordaily_section_MW_300x250_list4"
