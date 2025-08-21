@@ -6,17 +6,20 @@ import IconShare from '@/public/icons/share-gray.svg'
 import NextImage from 'next/image'
 import { useShareHandler } from '@/hooks/use-share-handler'
 import { useEffect, useState } from 'react'
+import type { shortsGtmEvents } from '@/constants/gtm'
 
 type Props = {
   title: string
   link?: string
   direction?: 'vertical' | 'horizontal'
+  gtmEvents?: typeof shortsGtmEvents
 }
 
 export default function SocialShareBar({
   title,
   link,
   direction = 'horizontal',
+  gtmEvents,
 }: Props) {
   const { write, getPopupJsx } = useShareHandler()
   const [url, setUrl] = useState('')
@@ -34,7 +37,11 @@ export default function SocialShareBar({
             : `flex flex-col items-center gap-y-2`
         }
       >
-        <a target="_blank" href={`${SHARE_URL_FACEBOOK}${url}`}>
+        <a
+          target="_blank"
+          href={`${SHARE_URL_FACEBOOK}${url}`}
+          className={`${gtmEvents ? gtmEvents.facebookShare : ''}`}
+        >
           <button>
             <NextImage
               src={IconFacebook}
@@ -45,7 +52,11 @@ export default function SocialShareBar({
           </button>
         </a>
 
-        <a target="_blank" href={`${SHARE_URL_LINE}${url}`}>
+        <a
+          target="_blank"
+          href={`${SHARE_URL_LINE}${url}`}
+          className={`${gtmEvents ? gtmEvents.lineShare : ''}`}
+        >
           <button>
             <NextImage src={IconLine} width={35} height={35} alt="Line 分享" />
           </button>
@@ -58,6 +69,7 @@ export default function SocialShareBar({
               url,
             })
           }}
+          className={`${gtmEvents ? gtmEvents.copyUrl : ''}`}
         >
           <NextImage src={IconShare} width={35} height={35} alt="分享連結" />
         </button>

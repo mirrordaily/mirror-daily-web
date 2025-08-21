@@ -12,7 +12,11 @@ export default async function ShortsNewsSection() {
       <p className="flex justify-center text-lg font-bold leading-none text-[#896FCC] md:justify-start md:pl-5 lg:pl-9 lg:text-xl">
         短影音．新聞
       </p>
-      <ShortsList customClass="mt-9 lg:mt-5" items={items} />
+      <ShortsList
+        customClass="mt-9 lg:mt-5"
+        items={items}
+        type={SHORTS_TYPE.NEWS}
+      />
     </section>
   )
 }

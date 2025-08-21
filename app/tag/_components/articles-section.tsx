@@ -1,5 +1,6 @@
 import ArticlesList from '../../../shared-components/search/articles-list'
 import type { TagInfo, TagPost } from '@/types/tag'
+import { tagClickGtmEvents } from '@/constants/gtm'
 
 type Props = {
   info: TagInfo
@@ -28,6 +29,7 @@ export default function ArticleSection({
           fetchMorePosts={fetchMorePosts}
           initialList={initialList}
           totalAmount={totalAmount}
+          gtm={tagClickGtmEvents}
         />
       </div>
 

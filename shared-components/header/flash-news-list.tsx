@@ -47,7 +47,7 @@ export default function FlashNewsList({ items }: Props) {
           <a
             key={index}
             href={link}
-            className={`${baseStyles} ${getClassesByIndex(index, currentIndex)}`}
+            className={`GTM-header_click_flash_news ${baseStyles} ${getClassesByIndex(index, currentIndex)}`}
           >
             {postName}
           </a>

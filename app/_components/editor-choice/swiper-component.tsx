@@ -9,6 +9,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import type { EditorChoice } from '@/types/homepage'
 import Image from 'next/image'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 type Props = {
   list: EditorChoice[]
@@ -50,7 +51,11 @@ export default function SwiperComponent({ list }: Props) {
               key={postId}
               className="relative w-full max-w-screen-sm md:max-w-none"
             >
-              <a href={link} target="_blank" className="group/slide w-full">
+              <a
+                href={link}
+                target="_blank"
+                className={`${homepageGtmEvents.editorChoice} group/slide w-full`}
+              >
                 <div className="relative aspect-[330/186] w-full overflow-hidden md:aspect-[680/383] lg:aspect-[1128/634]">
                   <CustomImage
                     images={heroImage.resized}
@@ -67,7 +72,9 @@ export default function SwiperComponent({ list }: Props) {
           )
         })}
         <div className="custom-swiper-pagination" />
-        <button className="custom-swiper-navigation-prev">
+        <button
+          className={`${homepageGtmEvents.editorChoiceButton} custom-swiper-navigation-prev`}
+        >
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Previous Slide</span>
           <Image
@@ -76,7 +83,9 @@ export default function SwiperComponent({ list }: Props) {
             {...swiperNavigationButtonSize}
           />
         </button>
-        <button className="custom-swiper-navigation-next">
+        <button
+          className={`${homepageGtmEvents.editorChoiceButton} custom-swiper-navigation-next`}
+        >
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
           <span className="sr-only">Next Slide</span>
           <Image

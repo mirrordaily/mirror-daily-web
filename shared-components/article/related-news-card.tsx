@@ -1,20 +1,26 @@
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
 import type { RelatedPost } from '@/types/common'
+import type { storyGtmEvents } from '@/constants/gtm'
 
+type Props = RelatedPost & {
+  gtmClassName?: typeof storyGtmEvents.relatedArticle
+}
 export default function RelatedNewsCard({
   postName,
   link,
   heroImage,
   sectionColor,
   sectionName,
-}: RelatedPost) {
+  gtmClassName,
+}: Props) {
   return (
     <Link
       prefetch={false}
       href={link}
       target="_blank"
       rel="noopener noreferrer"
+      className={`${gtmClassName || ''}`}
     >
       <figure className="flex max-w-[330px] flex-row gap-x-3 md:w-[280px] md:flex-col md:gap-y-2 lg:w-[240px]">
         <div className="relative h-[108px] w-40 shrink-0 overflow-hidden rounded md:h-[188px] md:w-full lg:h-[160px]">

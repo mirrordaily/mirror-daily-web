@@ -18,6 +18,7 @@ import IconMirrorMedia from '@/public/icons/logos/mirror-media-shorts.svg'
 import IconMirrorFiction from '@/public/icons/logos/mirror-fiction-shorts.png'
 import IconMirrorNews from '@/public/icons/logos/mirror-news-shorts.svg'
 import { SHORTS_TYPE } from '@/types/common'
+import { shortsGtmEvents } from '@/constants/gtm'
 
 const ExtendedSocialLinks = [
   {
@@ -53,7 +54,7 @@ export default function Navbar({ tabs, activeTab }: Props) {
       <nav className="grid w-[80px] shrink-0 grid-rows-[80px_33px_80px_80px] place-items-center text-sm font-normal leading-normal text-black *:rounded-lg [&>*:active]:bg-[#F0F0F1] [&>*:hover]:bg-[#F6F6FB]">
         <a
           href="/"
-          className="flex size-full flex-col items-center justify-center gap-y-2"
+          className={`${shortsGtmEvents.homeIcon} flex size-full flex-col items-center justify-center gap-y-2`}
         >
           <NextImage src={IconHomepage} alt="首頁" />
           <p>首頁</p>
@@ -61,7 +62,7 @@ export default function Navbar({ tabs, activeTab }: Props) {
         <hr className="my-4 h-px w-[54px] bg-[#000000]" />
         <a
           href={tabs.news}
-          className={`flex size-full flex-col items-center justify-center gap-y-1 ${
+          className={`${shortsGtmEvents.newsIcon} flex size-full flex-col items-center justify-center gap-y-1 ${
             activeTab === SHORTS_TYPE.NEWS ? 'bg-[#F0F0F1]' : ''
           }`}
         >
@@ -70,7 +71,7 @@ export default function Navbar({ tabs, activeTab }: Props) {
         </a>
         <a
           href={tabs.creativity}
-          className={`flex size-full flex-col items-center justify-center gap-y-1 ${
+          className={`${shortsGtmEvents.creativityIcon} flex size-full flex-col items-center justify-center gap-y-1 ${
             activeTab === SHORTS_TYPE.DERIVATIVE ? 'bg-[#F0F0F1]' : ''
           }`}
         >
@@ -89,9 +90,9 @@ export default function Navbar({ tabs, activeTab }: Props) {
         ))}
       </section>
       <section className="mt-4 shrink-0 text-sm font-normal leading-[20px] text-[#575D71]">
-        {PAGE_LINKS.map(({ name, href, isExternal }) => (
+        {PAGE_LINKS.map(({ englishName, name, href, isExternal }) => (
           <a
-            className="block"
+            className={`${shortsGtmEvents[englishName]} block`}
             key={name}
             href={href}
             target={isExternal ? '_blank' : '_self'}
@@ -111,7 +112,7 @@ export default function Navbar({ tabs, activeTab }: Props) {
         <a
           target="_blank"
           href={SITE_LINKS[0].href}
-          className="relative inline-block h-7 w-[66px]"
+          className={`${shortsGtmEvents.mirrormedia} relative inline-block h-7 w-[66px]`}
         >
           <NextImage
             src={IconMirrorMedia}
@@ -122,7 +123,7 @@ export default function Navbar({ tabs, activeTab }: Props) {
         <a
           target="_blank"
           href={SITE_LINKS[1].href}
-          className="relative mt-[9px] inline-block h-4 w-[66px]"
+          className={`${shortsGtmEvents.mirrorfiction} relative mt-[9px] inline-block h-4 w-[66px]`}
         >
           <NextImage
             src={IconMirrorFiction}
@@ -133,7 +134,7 @@ export default function Navbar({ tabs, activeTab }: Props) {
         <a
           target="_blank"
           href={SITE_LINKS[2].href}
-          className="relative mt-[9px] inline-block h-4 w-[52px]"
+          className={`${shortsGtmEvents.mnews} relative mt-[9px] inline-block h-4 w-[52px]`}
         >
           <NextImage
             src={IconMirrorNews}

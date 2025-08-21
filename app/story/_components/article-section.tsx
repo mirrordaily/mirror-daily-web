@@ -1,5 +1,4 @@
 import HeroSection from '../_components/hero-section'
-import FeaturedNewsSection from '../_components/featured-news-section'
 import RelatedNewsSection from '../_components/related-news-section'
 import Article from '../_components/article'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
@@ -8,6 +7,8 @@ import { getRandomItems } from '@/utils/common'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import PopularNewsSection from './popular-news-section'
+import LatestNewsSection from './latest-news-section'
 
 import DableWidget from '@/shared-components/dable-widget'
 
@@ -86,25 +87,9 @@ export default async function ArticleSection({
 
       <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
-      <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12">
-        <div>
-          <FeaturedNewsSection
-            title="最新新聞"
-            posts={latestPosts}
-            type="latest"
-          />
-          <DesktopGptAd
-            slotKey="mirrordaily_article_PC_300x600_r2"
-            customClasses="mt-5"
-          />
-        </div>
-        <div>
-          <FeaturedNewsSection title="熱門新聞" posts={popularPostsTopSix} />
-          <DesktopGptAd
-            slotKey="mirrordaily_article_PC_300x600_r3"
-            customClasses="mt-5"
-          />
-        </div>
+      <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12 lg:min-w-[300px]">
+        <LatestNewsSection posts={latestPosts} />
+        <PopularNewsSection posts={popularPostsTopSix} />
       </div>
     </section>
   )
