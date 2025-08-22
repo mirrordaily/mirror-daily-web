@@ -58,8 +58,8 @@ export default async function Page({ params }: PageProps) {
     videoSrc,
     youtubeUrl,
     createdAt,
-    fileDuration,
-    youtubeDuration,
+    // fileDuration,
+    // youtubeDuration,
   } = shortsData
   data.unshift({
     id,
@@ -78,7 +78,7 @@ export default async function Page({ params }: PageProps) {
       shortsData.heroImage?.resized?.original ||
       `${PROD_SITE_URL}${IMAGE_PATH}`,
     uploadDate: createdAt,
-    duration: fileDuration || youtubeDuration,
+    // duration: fileDuration || youtubeDuration,
     contentUrl: videoSrc || youtubeUrl || '',
   }
 
