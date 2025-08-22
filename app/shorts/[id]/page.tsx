@@ -52,7 +52,15 @@ export default async function Page({ params }: PageProps) {
 
   const data = await fetchShortsRandom(videoId, 19, shortsData.videoSection)
 
-  const { id, name, videoSrc, youtubeUrl, createdAt, duration } = shortsData
+  const {
+    id,
+    name,
+    videoSrc,
+    youtubeUrl,
+    createdAt,
+    fileDuration,
+    youtubeDuration,
+  } = shortsData
   data.unshift({
     id,
     title: name,
@@ -70,7 +78,7 @@ export default async function Page({ params }: PageProps) {
       shortsData.heroImage?.resized?.original ||
       `${PROD_SITE_URL}${IMAGE_PATH}`,
     uploadDate: createdAt,
-    duration: duration,
+    duration: fileDuration || youtubeDuration,
     contentUrl: videoSrc || youtubeUrl || '',
   }
 

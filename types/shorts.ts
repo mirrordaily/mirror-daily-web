@@ -11,7 +11,8 @@ export type ShortsData = {
   tagId?: string
   heroImage: HeroImage
   createdAt: string
-  duration: string
+  fileDuration: string
+  youtubeDuration: string
 }
 
 export enum FormState {
