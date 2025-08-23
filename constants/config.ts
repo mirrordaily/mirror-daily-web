@@ -45,7 +45,7 @@ switch (ENV) {
     SITE_URL = 'https://www.mirrordaily.news'
     GTM_ID = 'GTM-MPWSXJ4X'
     URL_ELECTION_RECALL_FULL_DATA = '/projects/taiwan-elections/index.html'
-    URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html?source=mirror`
+    URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html`
     break
 
   case ENVIRONMENT.STAGING:
@@ -56,7 +56,7 @@ switch (ENV) {
     URL_ELECTION_RECALL_FULL_DATA =
       'https://www.mirrordaily.news/projects/taiwan-elections/index.html'
     URL_ELECTION_RECALL_IFRAME =
-      'https://www.mirrordaily.news/projects/election2025-homepage/index.html?source=mirror'
+      'https://www.mirrordaily.news/projects/election2025-homepage/index.html'
     break
 
   case ENVIRONMENT.DEVELOPMENT:
@@ -65,7 +65,7 @@ switch (ENV) {
     SITE_URL = 'https://dev.mirrordaily.news'
     GTM_ID = 'GTM-MG9V2TJC'
     URL_ELECTION_RECALL_FULL_DATA = '/projects/dev-taiwan-elections/index.html'
-    URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html?source=mirror`
+    URL_ELECTION_RECALL_IFRAME = `${SITE_URL}/projects/election2025-homepage/index.html`
     break
 
   default:
