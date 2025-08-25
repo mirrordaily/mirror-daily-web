@@ -107,7 +107,7 @@ export const fetchPopularPost = async (
 
 export const fetchLatestShorts = async (
   type: SHORTS_TYPE,
-  amount: number = 10,
+  amount: number = 20,
   start: number = 0
 ): Promise<Shorts[]> => {
   const errorLogger = createErrorLogger(
