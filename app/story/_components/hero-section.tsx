@@ -111,10 +111,6 @@ export default function HeroSection({
           )}
         </div>
 
-        {/* <div className="mb-4 md:mb-3 lg:mb-4">
-          <SocialShareBar title={title} link={link} />
-        </div> */}
-
         <div className="flex flex-wrap gap-x-2 gap-y-4 md:grid-cols-6 md:gap-x-3 lg:mb-4">
           {displayTags.map((item) => (
             <Link
