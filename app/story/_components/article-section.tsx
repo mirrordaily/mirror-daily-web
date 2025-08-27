@@ -9,6 +9,7 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import PopularNewsSection from './popular-news-section'
 import LatestNewsSection from './latest-news-section'
+import SocialSharePanel from './social-share-panel'
 
 import DableWidget from '@/shared-components/dable-widget'
 
@@ -21,6 +22,7 @@ export default async function ArticleSection({
   apiData,
   apiDataBrief,
   id,
+  link,
   ...heroContent
 }: Props) {
   let relatedPosts = await fetchRelatedPosts(id)
@@ -69,6 +71,8 @@ export default async function ArticleSection({
             slotKey="mirrordaily_article_MW_300x250_in2"
             customClasses="mx-auto my-8"
           />
+
+          <SocialSharePanel link={link} />
 
           <RelatedNewsSection posts={relatedPosts} />
 
