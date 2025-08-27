@@ -14,6 +14,7 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
+import SocialSharePanel from '@/app/story/_components/social-share-panel'
 
 type PageProps = { params: { id: string } }
 
@@ -78,7 +79,7 @@ export default async function Page({ params }: PageProps) {
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
-  const { brief, content, ...intro } = externalPost
+  const { brief, content, link, ...intro } = externalPost
 
   return (
     <main className="flex flex-col items-center">
@@ -98,6 +99,8 @@ export default async function Page({ params }: PageProps) {
             slotKey="mirrordaily_article_MW_300x250_in2"
             customClasses="mt-8 mx-auto"
           />
+
+          <SocialSharePanel link={link} />
 
           <RelatedNewsList posts={relatedPosts} />
 
