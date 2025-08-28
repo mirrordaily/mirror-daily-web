@@ -15,6 +15,7 @@ import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 import { SITE_URL } from '@/constants/config'
+import SocialSharePanel from '@/app/story/_components/social-share-panel'
 
 type PageProps = { params: { id: string } }
 
@@ -79,7 +80,8 @@ export default async function Page({ params }: PageProps) {
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
-  const { title, partner, thumb, publishedTime, brief, content } = externalPost
+  const { title, partner, thumb, publishedTime, brief, content, link } =
+    externalPost
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -116,6 +118,8 @@ export default async function Page({ params }: PageProps) {
               customClasses="mt-8 mx-auto"
             />
 
+            <SocialSharePanel link={link} />
+
             <RelatedNewsList posts={relatedPosts} />
 
             {adTypeRelated === 'dable' ? (
@@ -143,6 +147,7 @@ export default async function Page({ params }: PageProps) {
                 customClasses="mt-5"
               />
             </div>
+
             <div>
               <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
               <DesktopGptAd

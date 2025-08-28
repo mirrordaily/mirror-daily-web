@@ -31,7 +31,7 @@ export type Post = {
 
 export type ItemInHeroSection = Omit<
   Post,
-  'apiData' | 'apiDataBrief' | 'id' | 'warnings' | 'isAdult'
+  'apiData' | 'apiDataBrief' | 'id' | 'warnings' | 'isAdult' | 'link'
 >
 
 type PostKeys = 'relatedsOne' | 'relatedsTwo' | 'relatedsThree'
