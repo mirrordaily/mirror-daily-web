@@ -7,7 +7,7 @@ import { getDefaultMetadata } from '@/utils/common'
 import { getShortsPageUrl } from '@/utils/site-urls'
 import VideoBlock from '@/shared-components/shorts/video-block'
 import { IMAGE_PATH } from '@/constants/default-path'
-import { PROD_SITE_URL } from '@/constants/config'
+import { SITE_URL } from '@/constants/config'
 type PageProps = {
   params: { id?: string }
 }
@@ -75,8 +75,7 @@ export default async function Page({ params }: PageProps) {
     '@type': 'VideoObject',
     name: name,
     thumbnailUrl:
-      shortsData.heroImage?.resized?.original ||
-      `${PROD_SITE_URL}${IMAGE_PATH}`,
+      shortsData.heroImage?.resized?.original || `${SITE_URL}${IMAGE_PATH}`,
     uploadDate: createdAt,
     // duration: fileDuration || youtubeDuration,
     contentUrl: videoSrc || youtubeUrl || '',

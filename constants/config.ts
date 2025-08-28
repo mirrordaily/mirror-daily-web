@@ -14,7 +14,6 @@ import { ENVIRONMENT } from './misc'
 
 const JSON_ROOT = '/json'
 const MISO_API_KEY = 'IHtn9b9tfPsO1EQpGV74OMf2syhELb6XVZe8u9FT'
-const PROD_SITE_URL = 'https://www.mirrordaily.news' // used in JSON-LD
 let STATIC_FILE_DOMAIN: string
 let JSON_FILE_PATH: string
 let SITE_URL: `https://${string}`
@@ -107,7 +106,6 @@ const URL_ELECTION_RECALL_DISPLAY =
 
 export {
   ENV,
-  PROD_SITE_URL,
   CPBL_SITE_URL,
   TPBL_SITE_URL,
   API_ENDPOINT,

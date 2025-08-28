@@ -14,7 +14,7 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/category'
 import { categoryGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
-import { PROD_SITE_URL } from '@/constants/config'
+import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
 
 type PageProps = { params: { slug: string } }
@@ -106,10 +106,10 @@ export default async function Page({ params }: PageProps) {
         item: {
           '@type': 'NewsArticle',
           name: post.title,
-          image: imageUrl || `${PROD_SITE_URL}${IMAGE_PATH}`,
+          image: imageUrl || `${SITE_URL}${IMAGE_PATH}`,
           dateCreated: new Date(post.formattedDate).toISOString(),
           description: post.brief,
-          url: `${PROD_SITE_URL}${post.link}`,
+          url: `${SITE_URL}${post.link}`,
         },
       }
     }),
