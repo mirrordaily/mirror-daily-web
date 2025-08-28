@@ -52,6 +52,7 @@ module.exports = {
         'sports-event-select-menu': 10,
         'over-editor-choice': 10,
         'over-shorts': 10,
+        'over-mobile-shorts-swiper': 10,
         'over-slides': 10,
         'over-flashnews': 10,
         'city-selection-box': 10,
