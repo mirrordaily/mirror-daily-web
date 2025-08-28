@@ -76,12 +76,12 @@ module.exports = {
       keyframes: {
         popup: {
           '0%, 100%': {
-            transform: 'translateY(-100%)',
+            transform: 'translateX(-50%) translateY(-100%)',
             top: '0px',
             opacity: 0,
           },
           '25%, 75%': {
-            transform: 'translateY(0%)',
+            transform: 'translateX(-50%) translateY(0%)',
             top: '40px',
             opacity: 1,
           },
