@@ -72,7 +72,7 @@ export default async function ArticleSection({
             customClasses="mx-auto my-8"
           />
 
-          <SocialSharePanel link={link} />
+          <SocialSharePanel link={link} title={heroContent.title} />
 
           <RelatedNewsSection posts={relatedPosts} />
 

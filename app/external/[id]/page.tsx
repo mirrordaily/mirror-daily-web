@@ -100,7 +100,7 @@ export default async function Page({ params }: PageProps) {
             customClasses="mt-8 mx-auto"
           />
 
-          <SocialSharePanel link={link} />
+          <SocialSharePanel link={link} title={intro.title} />
 
           <RelatedNewsList posts={relatedPosts} />
 
