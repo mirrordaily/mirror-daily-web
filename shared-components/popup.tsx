@@ -18,7 +18,7 @@ export default function Popup({
     <>
       {createPortal(
         <div
-          className={`fixed left-1/2 top-0 w-[100px] -translate-x-1/2 -translate-y-full rounded-[40px] bg-[rgba(0,0,0,0.87)] px-3 py-1 text-center text-sm font-medium leading-loose text-white ${isActive ? 'animate-popup' : ''}`}
+          className={`fixed left-1/2 top-0 z-over-mobile-shorts-swiper w-[100px] -translate-x-1/2 -translate-y-full rounded-[40px] bg-[rgba(0,0,0,0.87)] px-3 py-1 text-center text-sm font-medium leading-loose text-white ${isActive ? 'animate-popup' : ''}`}
         >
           {children}
         </div>,

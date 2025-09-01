@@ -243,6 +243,7 @@ const transformRawPost = (rawPost: RawPost): PostData => {
       formattedDate,
       textContent,
       postMainImage,
+      brief,
     }
   } else if (isExternalFromJSON) {
     const link = getExternalPageUrl(id)
@@ -258,6 +259,7 @@ const transformRawPost = (rawPost: RawPost): PostData => {
       formattedDate,
       textContent,
       postMainImage,
+      brief,
     }
   } else {
     throw new Error('unexpected rawPost type')

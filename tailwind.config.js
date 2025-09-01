@@ -52,6 +52,7 @@ module.exports = {
         'sports-event-select-menu': 10,
         'over-editor-choice': 10,
         'over-shorts': 10,
+        'over-mobile-shorts-swiper': 10,
         'over-slides': 10,
         'over-flashnews': 10,
         'city-selection-box': 10,
@@ -75,12 +76,12 @@ module.exports = {
       keyframes: {
         popup: {
           '0%, 100%': {
-            transform: 'translateY(-100%)',
+            transform: 'translateX(-50%) translateY(-100%)',
             top: '0px',
             opacity: 0,
           },
           '25%, 75%': {
-            transform: 'translateY(0%)',
+            transform: 'translateX(-50%) translateY(0%)',
             top: '40px',
             opacity: 1,
           },
