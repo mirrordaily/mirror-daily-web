@@ -118,19 +118,19 @@ export default async function Page({ params }: PageProps) {
               customClasses="mt-8 mx-auto"
             />
 
-            <SocialSharePanel link={link} />
+            <SocialSharePanel link={link} title={externalPost.title} />
 
             <RelatedNewsList posts={relatedPosts} />
 
             {adTypeRelated === 'dable' ? (
               <DableWidget type="related" customClasses="mt-4" />
             ) : (
-              <div id="_popIn_recommend_word" className="mt-7"></div>
+              <div id="_popIn_recommend_word" className="mt-7" />
             )}
             {adTypeBottom === 'dable' ? (
               <DableWidget type="articleBottomPC" customClasses="mt-4" />
             ) : (
-              <div id="_popIn_recommend" className="mt-7"></div>
+              <div id="_popIn_recommend" className="mt-7" />
             )}
           </div>
 
@@ -147,7 +147,6 @@ export default async function Page({ params }: PageProps) {
                 customClasses="mt-5"
               />
             </div>
-
             <div>
               <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
               <DesktopGptAd
