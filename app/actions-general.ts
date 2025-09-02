@@ -28,7 +28,6 @@ import {
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_HEADER,
-  URL_ELECTION_RECALL_DISPLAY,
 } from '@/constants/config'
 import {
   CreateCreativityShortsDocument,
@@ -51,8 +50,6 @@ import {
   transformRawPopularPost,
 } from '@/utils/post'
 import { cache } from 'react'
-import { ENV } from '@/constants/config'
-import { ENVIRONMENT } from '@/constants/misc'
 
 export const fetchLatestPost = async (
   page: number = 1
@@ -107,7 +104,7 @@ export const fetchPopularPost = async (
 
 export const fetchLatestShorts = async (
   type: SHORTS_TYPE,
-  amount: number = 10,
+  amount: number = 20,
   start: number = 0
 ): Promise<Shorts[]> => {
   const errorLogger = createErrorLogger(
@@ -359,23 +356,3 @@ export const fetchHeaderData = cache(async (): Promise<HeaderData[]> => {
 
   return transformHeaderData(data)
 })
-
-export const fetchShouldDisplayElectionRecall = async () => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching election recall display json',
-    getTraceObject()
-  )
-  try {
-    const resp = await fetch(URL_ELECTION_RECALL_DISPLAY)
-    const data = await resp.json()
-    const key =
-      ENV === ENVIRONMENT.LOCAL
-        ? `display_iframe_${ENVIRONMENT.DEVELOPMENT}`
-        : `display_iframe_${ENV}`
-    const display = data[key]
-    return display
-  } catch (e) {
-    errorLogger(e)
-    return false
-  }
-}

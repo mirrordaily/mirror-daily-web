@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 import PageLogger from '@/shared-components/page-logger'
 import AdultWarning from '../_components/adult-warning'
 import MisoPageView from '@/shared-components/miso-pageview'
-import { ENV } from '@/constants/config'
+import { ENV, SITE_URL } from '@/constants/config'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 
 type PageProps = { params: { id: string } }
@@ -88,8 +88,28 @@ export default async function Page({ params }: PageProps) {
     mainWriters: postData.mainWriters.map((m) => m.name),
   }
 
+  const author = postData.writers?.[0]
+    ? postData.writers.map((writer) => ({ name: writer.name }))
+    : [{ name: SITE_NAME }]
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: postData.title,
+    author: author,
+    image:
+      postData.postMainImage?.resized?.original || `${SITE_URL}${IMAGE_PATH}`,
+    datePublished: new Date(postData.publishedTime).toISOString(),
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
       <Suspense>
         <PageLogger extra={extra} />
       </Suspense>

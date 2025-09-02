@@ -1,6 +1,5 @@
 import type { PostIntro } from '@/types/external'
 import Image from 'next/image'
-import SocialShareBar from '@/shared-components/social-share-bar'
 import Link from 'next/link'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getTagPageUrl } from '@/utils/site-urls'
@@ -14,7 +13,6 @@ export default function ArticleIntro({
   externalsLink,
   publishedTime,
   tags,
-  link,
   sectionName,
 }: PostIntro) {
   return (
@@ -48,9 +46,6 @@ export default function ArticleIntro({
               記者：{partner}
             </a>
           )}
-        </div>
-        <div className="mb-4 md:mb-3 lg:mb-4">
-          <SocialShareBar title={title} link={link} />
         </div>
         {tags.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-x-2 gap-y-4 md:mb-6 md:grid-cols-6 md:gap-x-3 lg:mb-4">
