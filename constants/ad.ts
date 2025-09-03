@@ -350,7 +350,6 @@ export const gptStickyAdSlots = {
   //文章頁置底桌機版
   mirrordaily_article_PC_970x90_sticky: {
     slotId: '/23304347674/mirrordaily_pc/article/sticky',
-    minSize: [728, 90],
     collapseEmptyDivs: true,
   },
 } as const

@@ -25,7 +25,7 @@ export default function StickyGptAd({
   customClasses: string
 }) {
   const isInitialed = useRef(false)
-  const { slotId, collapseEmptyDivs, minSize } = gptStickyAdSlots[slotKey]
+  const { slotId, collapseEmptyDivs } = gptStickyAdSlots[slotKey]
 
   useEffect(() => {
     if (typeof window === 'undefined' || isInitialed.current) return
@@ -57,12 +57,8 @@ export default function StickyGptAd({
   return (
     <div
       id={slotId}
-      style={{
-        width: minSize[0],
-        minHeight: minSize[1],
-      }}
       className={twMerge(
-        `${isDebugMode ? `relative flex items-center justify-center border-2 border-dashed border-red-500` : 'flex items-center justify-center'}`,
+        `${isDebugMode ? `relative flex items-center justify-center border-2 border-dashed border-red-500` : 'hidden'}`,
         customClasses
       )}
     >
