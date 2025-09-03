@@ -3633,6 +3633,7 @@ export type Topic = {
   og_title?: Maybe<Scalars['String']['output']>
   posts?: Maybe<Array<Post>>
   postsCount?: Maybe<Scalars['Int']['output']>
+  publishedDate?: Maybe<Scalars['DateTime']['output']>
   sections?: Maybe<Array<Section>>
   sectionsCount?: Maybe<Scalars['Int']['output']>
   slideshow_images?: Maybe<Array<Photo>>
@@ -3729,6 +3730,7 @@ export type TopicCreateInput = {
   og_image?: InputMaybe<PhotoRelateToOneForCreateInput>
   og_title?: InputMaybe<Scalars['String']['input']>
   posts?: InputMaybe<PostRelateToManyForCreateInput>
+  publishedDate?: InputMaybe<Scalars['DateTime']['input']>
   sections?: InputMaybe<SectionRelateToManyForCreateInput>
   slideshow_images?: InputMaybe<PhotoRelateToManyForCreateInput>
   slug?: InputMaybe<Scalars['String']['input']>
@@ -3760,6 +3762,7 @@ export type TopicOrderByInput = {
   name?: InputMaybe<OrderDirection>
   og_description?: InputMaybe<OrderDirection>
   og_title?: InputMaybe<OrderDirection>
+  publishedDate?: InputMaybe<OrderDirection>
   slug?: InputMaybe<OrderDirection>
   sortOrder?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
@@ -3817,6 +3820,7 @@ export type TopicUpdateInput = {
   og_image?: InputMaybe<PhotoRelateToOneForUpdateInput>
   og_title?: InputMaybe<Scalars['String']['input']>
   posts?: InputMaybe<PostRelateToManyForUpdateInput>
+  publishedDate?: InputMaybe<Scalars['DateTime']['input']>
   sections?: InputMaybe<SectionRelateToManyForUpdateInput>
   slideshow_images?: InputMaybe<PhotoRelateToManyForUpdateInput>
   slug?: InputMaybe<Scalars['String']['input']>
@@ -3851,6 +3855,7 @@ export type TopicWhereInput = {
   og_image?: InputMaybe<PhotoWhereInput>
   og_title?: InputMaybe<StringFilter>
   posts?: InputMaybe<PostManyRelationFilter>
+  publishedDate?: InputMaybe<DateTimeFilter>
   sections?: InputMaybe<SectionManyRelationFilter>
   slideshow_images?: InputMaybe<PhotoManyRelationFilter>
   slug?: InputMaybe<StringFilter>
@@ -5899,6 +5904,7 @@ export type GetShortsDataQuery = {
     __typename?: 'Video'
     youtubeUrl?: string | null
     videoSrc?: string | null
+    createdAt?: any | null
     id: string
     name?: string | null
     state?: string | null
@@ -12625,6 +12631,7 @@ export const GetShortsDataDocument = {
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
               ],
             },
           },

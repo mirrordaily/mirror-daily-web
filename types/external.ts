@@ -17,7 +17,7 @@ export type ExternalPost = {
   sectionName: string
 }
 
-export type PostIntro = Omit<ExternalPost, 'brief' | 'content'>
+export type PostIntro = Omit<ExternalPost, 'brief' | 'content' | 'link'>
 
 export type RawRelatedFromExternal = NonNullable<
   GetRelatedPostsByExternalIdQuery['external']

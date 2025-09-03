@@ -7,7 +7,7 @@ import { getDefaultMetadata } from '@/utils/common'
 import { getShortsPageUrl } from '@/utils/site-urls'
 import VideoBlock from '@/shared-components/shorts/video-block'
 import { IMAGE_PATH } from '@/constants/default-path'
-
+import { SITE_URL } from '@/constants/config'
 type PageProps = {
   params: { id?: string }
 }
@@ -52,7 +52,15 @@ export default async function Page({ params }: PageProps) {
 
   const data = await fetchShortsRandom(videoId, 19, shortsData.videoSection)
 
-  const { id, name, videoSrc, youtubeUrl } = shortsData
+  const {
+    id,
+    name,
+    videoSrc,
+    youtubeUrl,
+    createdAt,
+    // fileDuration,
+    // youtubeDuration,
+  } = shortsData
   data.unshift({
     id,
     title: name,
@@ -62,13 +70,32 @@ export default async function Page({ params }: PageProps) {
     contributor: '',
   })
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: name,
+    thumbnailUrl:
+      shortsData.heroImage?.resized?.original || `${SITE_URL}${IMAGE_PATH}`,
+    uploadDate: createdAt,
+    // duration: fileDuration || youtubeDuration,
+    contentUrl: videoSrc || youtubeUrl || '',
+  }
+
   return (
-    <ShortsLayout
-      tabLinks={LATEST_SHORT_PAGES}
-      activeTab={shortsData.videoSection}
-      className="touch-none"
-    >
-      <VideoBlock items={data} />
-    </ShortsLayout>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
+      <ShortsLayout
+        tabLinks={LATEST_SHORT_PAGES}
+        activeTab={shortsData.videoSection}
+        className="touch-none"
+      >
+        <VideoBlock items={data} />
+      </ShortsLayout>
+    </>
   )
 }
