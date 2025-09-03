@@ -32,7 +32,7 @@ export async function generateMetadata({
   const image = postData.postMainImage?.resized?.original || IMAGE_PATH
   const tags = postData.tags.map((tag) => tag.name)
   const algoTags = postData.algoTags.map((tag) => tag.name)
-  const keywords = [postData.title, SITE_NAME, '新聞', ...tags, ...algoTags]
+  const newsKeywords = [postData.title, SITE_NAME, '新聞', ...tags, ...algoTags]
     .filter(Boolean)
     .join(', ')
   const other: Record<string, string> = {
@@ -43,7 +43,7 @@ export async function generateMetadata({
       : 'Unknown Author',
     'dable:item_id': postData.id,
     'section:color': postData.sectionColor,
-    news_keywords: keywords,
+    news_keywords: newsKeywords,
   }
 
   if (ENV !== 'prod') {
