@@ -32,12 +32,7 @@ export function DesktopGptAd({
   if (!show) return null
 
   if (isStickyAd) {
-    return (
-      <StickyGptAd
-        customClasses={customClasses}
-        slotKey={slotKey as StickyAdSlotKey}
-      />
-    )
+    return <StickyGptAd slotKey={slotKey as StickyAdSlotKey} />
   }
 
   return (
