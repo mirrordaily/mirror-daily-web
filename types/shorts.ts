@@ -13,6 +13,7 @@ export type ShortsData = {
   createdAt: string
   // fileDuration: string
   // youtubeDuration: string
+  content: string
 }
 
 export enum FormState {

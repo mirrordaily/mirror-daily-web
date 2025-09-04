@@ -5905,6 +5905,7 @@ export type GetShortsDataQuery = {
     youtubeUrl?: string | null
     videoSrc?: string | null
     createdAt?: any | null
+    content?: string | null
     id: string
     name?: string | null
     state?: string | null
@@ -12632,6 +12633,7 @@ export const GetShortsDataDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'content' } },
               ],
             },
           },
