@@ -14,12 +14,17 @@ import {
   GetTopicListDocument,
 } from '@/graphql/__generated__/graphql'
 import {
+  createDataFetchingChain,
   getFirstParagraphFromApiData,
   getHeroImage,
   transformRawPost,
+  type PostData,
 } from '@/utils/data-process'
-import type { PostDataWithTags, Topic, TopicPostData } from '@/types/topic'
+import type { PostDataWithTags, Topic } from '@/types/topic'
 import { getStoryPageUrl } from '@/utils/site-urls'
+import { URL_STATIC_TOPIC_NEWS } from '@/constants/config'
+import { sectionPostSchema, countsSchema } from '@/utils/data-schema'
+import { z } from 'zod'
 
 async function fetchTopicBasicInfo(
   slug: string
@@ -51,41 +56,79 @@ async function fetchListTypeTopicPostBySlug({
   take: number
   skip?: number
   withAmount?: boolean
-}): Promise<{
-  items: TopicPostData[]
-  totalAmount?: number
-}> {
+}) {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching list type topic posts (slug: ${slug})`,
     getTraceObject()
   )
 
-  const result = await fetchGQLData(errorLogger, GetListTypeTopcPostsDocument, {
-    slug,
-    take,
-    skip,
-    withAmount,
-  })
+  const data = await createDataFetchingChain<{
+    postsData: PostData[]
+    postsCount: number
+  }>(
+    errorLogger,
+    {
+      postsData: [],
+      postsCount: 0,
+    },
+    async () => {
+      const jsonPage = Math.floor(skip / 24) + 1
+      const resp = await fetch(
+        `${URL_STATIC_TOPIC_NEWS}_${slug}_${jsonPage}.json`
+      )
+      const rawData = await resp.json()
 
-  if (result && result.topic && Array.isArray(result.topic.posts)) {
-    const items = result.topic.posts.map(transformRawPost)
+      const schema = z.object({
+        items: z.array(sectionPostSchema),
+        counts: countsSchema,
+      })
 
-    if (typeof result.topic.postsCount === 'number') {
+      const result = schema.parse(rawData?.topic)
+
+      const postsData = result.items.map(transformRawPost)
+      const postsCount = result.counts.posts + result.counts.externals
+
       return {
-        items: items as TopicPostData[],
-        totalAmount: result.topic.postsCount,
+        postsData,
+        postsCount,
       }
-    } else {
-      return {
-        items: items as TopicPostData[],
+    },
+    async () => {
+      const rawData = await fetchGQLData(
+        errorLogger,
+        GetListTypeTopcPostsDocument,
+        {
+          slug,
+          take,
+          skip,
+          withAmount,
+        }
+      )
+      if (rawData && rawData.topic && Array.isArray(rawData.topic.posts)) {
+        const postsData = rawData.topic.posts.map(transformRawPost)
+        if (
+          typeof rawData.topic.postsCount === 'number' &&
+          typeof rawData.topic.externalsCount === 'number'
+        ) {
+          return {
+            postsData,
+            postsCount: rawData.topic.postsCount + rawData.topic.externalsCount,
+          }
+        } else {
+          return {
+            postsData: [],
+            postsCount: 0,
+          }
+        }
+      } else {
+        return {
+          postsData: [],
+          postsCount: 0,
+        }
       }
     }
-  } else {
-    return {
-      items: [],
-      totalAmount: 0,
-    }
-  }
+  )
+  return data
 }
 
 type RawPostWithTags = NonNullable<

@@ -9,30 +9,30 @@ type Props = {
 }
 
 export default async function ListTypeListing({ slug }: Props) {
-  const { items, totalAmount = 0 } = await fetchListTypeTopicPostBySlug({
+  const { postsData, postsCount } = await fetchListTypeTopicPostBySlug({
     slug,
     take: PAGE_SIZE,
     skip: 0,
     withAmount: true,
   })
 
-  if (totalAmount === 0) notFound()
+  if (postsCount === 0) notFound()
 
   const fetchMorePosts = async (page: number) => {
     'use server'
-    const { items } = await fetchListTypeTopicPostBySlug({
+    const { postsData } = await fetchListTypeTopicPostBySlug({
       slug,
       take: PAGE_SIZE,
       skip: PAGE_SIZE * (page - 1),
     })
-    return items
+    return postsData
   }
 
   return (
     <List
       pageSize={PAGE_SIZE}
-      totalAmount={totalAmount}
-      initialList={items}
+      totalAmount={postsCount}
+      initialList={postsData}
       fetchMoreItem={fetchMorePosts}
     />
   )
