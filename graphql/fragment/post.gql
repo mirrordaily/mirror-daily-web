@@ -28,6 +28,9 @@ fragment TopicPost on Post {
   heroImage {
     ...ImageData
   }
+  og_image {
+    ...ImageData
+  }
 }
 
 fragment RelatedPost on Post {

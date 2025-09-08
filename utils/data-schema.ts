@@ -282,6 +282,7 @@ export const latestSportsNewsSchema = z.object({
 })
 
 export { sportsNewsItemSchema, sportsNewsCounts }
+
 export const sectionPostSchema = z.union([
   sectionStorySchema,
   sectionExternalSchema,
