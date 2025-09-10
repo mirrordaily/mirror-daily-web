@@ -16,14 +16,14 @@ export type TopicPostData = {
   title: string
   link: string
   textContent: string
-  postMainImage: HeroImage
+  postMainImage: HeroImage | string
 }
 
 export type PostDataWithTags = {
   id: string
   title: string
   link: string
-  postMainImage: HeroImage
+  postMainImage: HeroImage | string
   textContent: string
   tags: { id: string }[]
 }
