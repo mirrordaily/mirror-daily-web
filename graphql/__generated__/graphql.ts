@@ -5140,6 +5140,7 @@ export type GetPostByIdQuery = {
     subtitle?: string | null
     heroCaption?: string | null
     publishedDate?: any | null
+    hiddenAdvertised?: boolean | null
     apiData?: any | null
     apiDataBrief?: any | null
     isAdult?: boolean | null
@@ -5663,7 +5664,6 @@ export type GetListTypeTopcPostsQuery = {
   topic?: {
     __typename?: 'Topic'
     postsCount?: number | null
-    externalsCount?: number | null
     posts?: Array<{
       __typename?: 'Post'
       id: string
@@ -5714,14 +5714,6 @@ export type GetListTypeTopcPostsQuery = {
           w2400?: string | null
         } | null
       } | null
-    }> | null
-    externals?: Array<{
-      __typename?: 'External'
-      id: string
-      title?: string | null
-      thumb?: string | null
-      brief?: string | null
-      content?: string | null
     }> | null
   } | null
 }
@@ -10210,6 +10202,10 @@ export const GetPostByIdDocument = {
                 },
                 {
                   kind: 'Field',
+                  name: { kind: 'Name', value: 'hiddenAdvertised' },
+                },
+                {
+                  kind: 'Field',
                   name: { kind: 'Name', value: 'heroImage' },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -11330,137 +11326,7 @@ export const GetListTypeTopcPostsDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'externals' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'where' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'state' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'equals' },
-                                  value: {
-                                    kind: 'StringValue',
-                                    value: 'published',
-                                    block: false,
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'orderBy' },
-                      value: {
-                        kind: 'ListValue',
-                        values: [
-                          {
-                            kind: 'ObjectValue',
-                            fields: [
-                              {
-                                kind: 'ObjectField',
-                                name: { kind: 'Name', value: 'publishedDate' },
-                                value: { kind: 'EnumValue', value: 'desc' },
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'take' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'take' },
-                      },
-                    },
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'skip' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'skip' },
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'thumb' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'content' },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'Field',
                   name: { kind: 'Name', value: 'postsCount' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'where' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'state' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'equals' },
-                                  value: {
-                                    kind: 'StringValue',
-                                    value: 'published',
-                                    block: false,
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  directives: [
-                    {
-                      kind: 'Directive',
-                      name: { kind: 'Name', value: 'include' },
-                      arguments: [
-                        {
-                          kind: 'Argument',
-                          name: { kind: 'Name', value: 'if' },
-                          value: {
-                            kind: 'Variable',
-                            name: { kind: 'Name', value: 'withAmount' },
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'externalsCount' },
                   arguments: [
                     {
                       kind: 'Argument',

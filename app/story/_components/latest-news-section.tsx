@@ -5,9 +5,10 @@ import { storyGtmEvents } from '@/constants/gtm'
 
 type Props = {
   posts: LatestPost[]
+  shouldShowAd: boolean
 }
 
-export default function LatestNewsSection({ posts }: Props) {
+export default function LatestNewsSection({ posts, shouldShowAd }: Props) {
   if (!posts.length) return null
   return (
     <section className="flex flex-col items-center gap-y-8 pl-12 pr-[47px] md:px-0 lg:gap-y-5">
@@ -22,12 +23,14 @@ export default function LatestNewsSection({ posts }: Props) {
               key={item.postId}
               gtmClassName={storyGtmEvents.latestArticle}
             />
-            {i === 0 && (
+            {i === 0 && shouldShowAd && (
               <DesktopGptAd slotKey="mirrordaily_article_PC_300x250_r1" />
             )}
           </>
         ))}
-        <DesktopGptAd slotKey="mirrordaily_article_PC_300x600_r2" />
+        {shouldShowAd && (
+          <DesktopGptAd slotKey="mirrordaily_article_PC_300x600_r2" />
+        )}
       </div>
     </section>
   )

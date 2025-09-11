@@ -80,6 +80,8 @@ export default async function Page({ params }: PageProps) {
   const postData = await fetchPost(id)
   if (!postData) notFound()
 
+  const shouldShowAd = postData.shouldShowAd
+
   const extra = {
     storyId: postData.id,
     storyTitle: postData.title,
@@ -117,15 +119,17 @@ export default async function Page({ params }: PageProps) {
         <PageLogger extra={extra} />
       </Suspense>
       <main className="flex flex-col items-center">
-        <ArticlePageTopAd />
+        {shouldShowAd && <ArticlePageTopAd />}
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        <DesktopGptAd
-          slotKey="mirrordaily_article_PC_970x90_sticky"
-          isStickyAd={true}
-        />
+        {shouldShowAd && (
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_970x90_sticky"
+            isStickyAd={true}
+          />
+        )}
       </main>
     </>
   )

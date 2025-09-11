@@ -21,15 +21,9 @@ import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   if (!rawData) return null
 
-  const title = rawData.title ?? ''
-  const subtitle = rawData.subtitle ?? ''
-  const heroCaption = rawData.heroCaption ?? ''
-  const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
   const heroImage = getHeroImage(rawData.heroImage)
   const ogImage = getHeroImage(rawData.og_image)
   const postMainImage = selectMainImage(heroImage, ogImage)
-  const sectionName = rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
-  const sectionColor = rawData.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR
   // 為了相容舊資料：目前警語是複選 (Warnings)，但以前是單選 (Warning)，所以兩個欄位都需要保留
   const warnings =
     rawData.Warnings?.map(({ id, content }) => ({
@@ -74,17 +68,19 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
       name: tag.name ?? '',
       slug: tag.slug ?? '',
     })) ?? []
-  const link = getStoryPageUrl(rawData.id)
 
   return {
     id: rawData.id,
-    title,
-    subtitle,
-    heroCaption,
-    publishedTime,
+    link: getStoryPageUrl(rawData.id),
+    title: rawData.title ?? '',
+    subtitle: rawData.subtitle ?? '',
+    heroCaption: rawData.heroCaption ?? '',
+    publishedTime: dateFormatter(rawData.publishedDate) ?? '',
     postMainImage,
-    sectionName,
-    sectionColor,
+    sectionName: rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME,
+    sectionColor: rawData.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR,
+    isAdult: rawData.isAdult ?? false,
+    shouldShowAd: !(rawData.hiddenAdvertised ?? false),
     writers,
     photographers,
     editors,
@@ -93,9 +89,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     apiDataBrief,
     tags,
     algoTags,
-    link,
     warnings,
-    isAdult: rawData.isAdult ?? false,
   }
 }
 
