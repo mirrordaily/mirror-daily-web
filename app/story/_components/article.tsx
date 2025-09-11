@@ -8,11 +8,11 @@ const sourceCustomId = 'mirrormedia'
 export default function Article({
   content,
   isBrief = false,
-  shouldShowAd,
+  shouldShowAd = true,
 }: {
   content: ApiData
   isBrief?: boolean
-  shouldShowAd: boolean
+  shouldShowAd?: boolean
 }) {
   return (
     <ApiDataRenderer

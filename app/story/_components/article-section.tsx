@@ -50,14 +50,14 @@ export default async function ArticleSection({
         <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
           <HeroSection {...heroContent} />
 
-          <Article
-            content={apiDataBrief}
-            isBrief={true}
-            shouldShowAd={shouldShowAd}
-          />
+          <Article content={apiDataBrief} isBrief={true} />
           {/* for dable */}
           <div itemProp="articleBody">
-            <Article content={apiData} isBrief={false} />
+            <Article
+              content={apiData}
+              isBrief={false}
+              shouldShowAd={shouldShowAd}
+            />
           </div>
           {warnings.map(({ id, content }) => (
             <p
