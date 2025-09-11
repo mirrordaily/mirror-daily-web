@@ -72,21 +72,7 @@ query GetListTypeTopcPosts(
     ) {
       ...TopicPost
     }
-    externals(
-      where: { state: { equals: "published" } }
-      orderBy: [{ publishedDate: desc }]
-      take: $take
-      skip: $skip
-    ) {
-      id
-      title
-      thumb
-      brief
-      content
-    }
     postsCount(where: { state: { equals: "published" } })
-      @include(if: $withAmount)
-    externalsCount(where: { state: { equals: "published" } })
       @include(if: $withAmount)
   }
 }
