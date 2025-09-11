@@ -5140,6 +5140,7 @@ export type GetPostByIdQuery = {
     subtitle?: string | null
     heroCaption?: string | null
     publishedDate?: any | null
+    hiddenAdvertised?: boolean | null
     apiData?: any | null
     apiDataBrief?: any | null
     isAdult?: boolean | null
@@ -10207,6 +10208,10 @@ export const GetPostByIdDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'publishedDate' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'hiddenAdvertised' },
                 },
                 {
                   kind: 'Field',

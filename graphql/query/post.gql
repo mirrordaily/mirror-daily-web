@@ -129,6 +129,7 @@ query GetPostById($id: ID!) {
     subtitle
     heroCaption
     publishedDate
+    hiddenAdvertised
     heroImage {
       ...ImageData
     }
