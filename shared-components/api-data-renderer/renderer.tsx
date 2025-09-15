@@ -29,10 +29,12 @@ export default function ApiDataRenderer({
   apiData,
   sourceCustomId,
   isBrief,
+  shouldShowAd,
 }: {
   apiData: ApiData
   sourceCustomId: string
   isBrief: boolean
+  shouldShowAd: boolean
 }) {
   const organization =
     getOrganizationFromSourceCustomId(sourceCustomId) || 'mirror-media'
@@ -165,7 +167,7 @@ export default function ApiDataRenderer({
         return (
           <Fragment key={i}>
             {apiDataBlockJsx}
-            {!isBrief && i === 0 && (
+            {!isBrief && i === 0 && shouldShowAd && (
               <>
                 <DesktopGptAd
                   slotKey="mirrordaily_article_PC_728x90_in1"

@@ -27,11 +27,18 @@ export type Post = {
   link: string
   warnings: { id: string; content: string }[]
   isAdult: boolean
+  shouldShowAd: boolean
 }
 
 export type ItemInHeroSection = Omit<
   Post,
-  'apiData' | 'apiDataBrief' | 'id' | 'warnings' | 'isAdult' | 'link'
+  | 'apiData'
+  | 'apiDataBrief'
+  | 'id'
+  | 'warnings'
+  | 'isAdult'
+  | 'link'
+  | 'shouldShowAd'
 >
 
 type PostKeys = 'relatedsOne' | 'relatedsTwo' | 'relatedsThree'

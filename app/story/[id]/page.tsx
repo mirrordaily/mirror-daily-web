@@ -12,6 +12,7 @@ import AdultWarning from '../_components/adult-warning'
 import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV, SITE_URL } from '@/constants/config'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
+// import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -32,9 +33,10 @@ export async function generateMetadata({
   const image = postData.postMainImage?.resized?.original || IMAGE_PATH
   const tags = postData.tags.map((tag) => tag.name)
   const algoTags = postData.algoTags.map((tag) => tag.name)
-  const keywords = [postData.title, SITE_NAME, '新聞', ...tags, ...algoTags]
+  const newsKeywords = [postData.title, SITE_NAME, '新聞', ...tags, ...algoTags]
     .filter(Boolean)
     .join(', ')
+  const keywords = [...tags, ...algoTags].filter(Boolean).join(', ')
   const other: Record<string, string> = {
     'article:published_time': new Date(postData.publishedTime).toISOString(),
     'article:section': postData.sectionName || 'UnCategorized',
@@ -43,7 +45,8 @@ export async function generateMetadata({
       : 'Unknown Author',
     'dable:item_id': postData.id,
     'section:color': postData.sectionColor,
-    news_keywords: keywords,
+    news_keywords: newsKeywords,
+    keywords: keywords,
   }
 
   if (ENV !== 'prod') {
@@ -76,6 +79,8 @@ export default async function Page({ params }: PageProps) {
 
   const postData = await fetchPost(id)
   if (!postData) notFound()
+
+  const shouldShowAd = postData.shouldShowAd
 
   const extra = {
     storyId: postData.id,
@@ -114,11 +119,17 @@ export default async function Page({ params }: PageProps) {
         <PageLogger extra={extra} />
       </Suspense>
       <main className="flex flex-col items-center">
-        <ArticlePageTopAd />
+        {shouldShowAd && <ArticlePageTopAd />}
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
+        {/* {shouldShowAd && (
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_970x90_sticky"
+            isStickyAd={true}
+          />
+        )} */}
       </main>
     </>
   )

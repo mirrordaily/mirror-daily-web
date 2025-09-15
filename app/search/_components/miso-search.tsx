@@ -157,6 +157,58 @@ export default function MisoSearch() {
         }
       }
 
+      // 重置排序為預設值的函數
+      const resetSortToDefault = () => {
+        const defaultSortOption = sortOptions.find((option) => option.default)
+
+        if (defaultSortOption) {
+          const sortButtons = rootElement?.querySelectorAll(
+            '.miso-hybrid-search-combo__search-results-filters__sort-option'
+          )
+
+          // 重置 UI 狀態
+          sortButtons?.forEach((btn) => {
+            btn.classList.remove('active')
+          })
+
+          const defaultButton = rootElement?.querySelector(
+            `[data-field="${defaultSortOption.field}"]`
+          )
+          if (defaultButton) {
+            defaultButton.classList.add('active')
+          }
+
+          // 重置 Miso 內部排序狀態
+          const misoSortElement = rootElement?.querySelector('miso-sort')
+          if (misoSortElement) {
+            const misoSortButton = misoSortElement.querySelector(
+              '.miso-select__button'
+            ) as HTMLElement
+            if (misoSortButton) {
+              misoSortButton.click()
+
+              setTimeout(() => {
+                const misoSortOptions = misoSortElement.querySelectorAll(
+                  '.miso-select__option'
+                )
+                misoSortOptions.forEach((option) => {
+                  const optionText = option.textContent?.trim()
+                  const sortOption = sortOptions.find(
+                    (opt) => opt.text === optionText
+                  )
+                  if (
+                    sortOption &&
+                    sortOption.field === defaultSortOption.field
+                  ) {
+                    ;(option as HTMLElement).click()
+                  }
+                })
+              }, 100)
+            }
+          }
+        }
+      }
+
       // 排序按鈕事件監聽器
       const handleSortButtons = () => {
         const sortButtons = rootElement?.querySelectorAll(
@@ -221,10 +273,83 @@ export default function MisoSearch() {
         })
       }
 
+      // 監聽搜尋觸發事件
+      const handleSearchTrigger = () => {
+        // 使用 MutationObserver 監聽 DOM 變化
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+              // 檢查是否有搜尋按鈕
+              const searchButton = rootElement?.querySelector(
+                'button[type="submit"], .miso-hybrid-search-combo button, miso-query button, button[data-role="search"], button[data-role="submit"], .miso-hybrid-search-combo__search-button'
+              )
+              if (
+                searchButton &&
+                !searchButton.hasAttribute('data-listener-added')
+              ) {
+                searchButton.setAttribute('data-listener-added', 'true')
+                searchButton.addEventListener('click', () => {
+                  resetSortToDefault()
+                })
+              }
+
+              // 檢查是否有搜尋輸入框
+              const queryInput = rootElement?.querySelector(
+                'input[type="search"], input[placeholder*="Ask"], .miso-hybrid-search-combo input, miso-query input, .miso-hybrid-search-combo__query-input'
+              )
+              if (
+                queryInput &&
+                !queryInput.hasAttribute('data-listener-added')
+              ) {
+                queryInput.setAttribute('data-listener-added', 'true')
+                queryInput.addEventListener('keydown', (e) => {
+                  if ((e as KeyboardEvent).key === 'Enter') {
+                    resetSortToDefault()
+                  }
+                })
+              }
+            }
+          })
+        })
+
+        // 開始觀察 DOM 變化
+        if (rootElement) {
+          observer.observe(rootElement, {
+            childList: true,
+            subtree: true,
+          })
+        }
+
+        // 也嘗試直接查找搜尋按鈕（以防它已經存在）
+        const searchButton = rootElement?.querySelector(
+          'button[type="submit"], .miso-hybrid-search-combo button, miso-query button, button[data-role="search"], button[data-role="submit"], .miso-hybrid-search-combo__search-button'
+        )
+        if (searchButton && !searchButton.hasAttribute('data-listener-added')) {
+          searchButton.setAttribute('data-listener-added', 'true')
+          searchButton.addEventListener('click', () => {
+            resetSortToDefault()
+          })
+        }
+
+        // 也嘗試直接查找搜尋輸入框（以防它已經存在）
+        const queryInput = rootElement?.querySelector(
+          'input[type="search"], input[placeholder*="Ask"], .miso-hybrid-search-combo input, miso-query input, .miso-hybrid-search-combo__query-input'
+        )
+        if (queryInput && !queryInput.hasAttribute('data-listener-added')) {
+          queryInput.setAttribute('data-listener-added', 'true')
+          queryInput.addEventListener('keydown', (e) => {
+            if ((e as KeyboardEvent).key === 'Enter') {
+              resetSortToDefault()
+            }
+          })
+        }
+      }
+
       // 等待 DOM 更新後處理按鈕文字和排序按鈕
       setTimeout(() => {
         handleToggleButtonText()
         handleSortButtons()
+        handleSearchTrigger()
       }, 100)
 
       // start query if specified in URL parameters

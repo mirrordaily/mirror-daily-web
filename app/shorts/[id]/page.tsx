@@ -60,6 +60,7 @@ export default async function Page({ params }: PageProps) {
     createdAt,
     // fileDuration,
     // youtubeDuration,
+    content,
   } = shortsData
   data.unshift({
     id,
@@ -79,6 +80,7 @@ export default async function Page({ params }: PageProps) {
     uploadDate: createdAt,
     // duration: fileDuration || youtubeDuration,
     contentUrl: videoSrc || youtubeUrl || '',
+    description: content || name,
   }
 
   return (

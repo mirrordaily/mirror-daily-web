@@ -2,17 +2,21 @@
 
 import { useEffect, useState } from 'react'
 import type { AdSlotKey } from './base-gpt-ad'
+import type { StickyAdSlotKey } from './sticky-gpt-ad'
 import BaseGptAd from './base-gpt-ad'
+import StickyGptAd from './sticky-gpt-ad'
 import { getTailwindConfigBreakpointNumber } from '@/utils/tailwind'
 
 export function DesktopGptAd({
   slotKey,
   customClasses = '',
   pageKey = '',
+  isStickyAd = false,
 }: {
-  slotKey: AdSlotKey
+  slotKey: AdSlotKey | StickyAdSlotKey
   customClasses?: string
   pageKey?: string
+  isStickyAd?: boolean
 }) {
   const [show, setShow] = useState(false)
 
@@ -26,6 +30,10 @@ export function DesktopGptAd({
   }, [])
 
   if (!show) return null
+
+  if (isStickyAd) {
+    return <StickyGptAd slotKey={slotKey as StickyAdSlotKey} />
+  }
 
   return (
     <BaseGptAd

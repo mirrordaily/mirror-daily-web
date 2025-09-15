@@ -408,4 +408,5 @@ export {
   transformRawRelatedPosts,
   getSectionColor,
   getCategoryColor,
+  removeHtmlTags,
 }
