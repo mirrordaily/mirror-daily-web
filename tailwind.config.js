@@ -49,6 +49,7 @@ module.exports = {
           'linear-gradient(to bottom, rgba(255, 255, 255, 0) 648px, rgba(255, 255, 255, 1) 906px)',
       },
       zIndex: {
+        'topic-header-mobile': 10,
         'sports-event-select-menu': 10,
         'over-editor-choice': 10,
         'over-shorts': 10,

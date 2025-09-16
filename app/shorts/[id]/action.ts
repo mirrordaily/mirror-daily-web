@@ -57,6 +57,7 @@ export const fetchShortsData = async (
       createdAt: data.createdAt || '',
       // fileDuration: data.fileDuration,
       // youtubeDuration: data.youtubeDuration,
+      content: data.content,
     }
   }
 

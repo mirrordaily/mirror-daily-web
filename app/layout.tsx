@@ -7,6 +7,7 @@ import { Noto_Sans_TC } from 'next/font/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import { getDefaultMetadata } from '@/utils/common'
+import { headers } from 'next/headers'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
@@ -14,7 +15,23 @@ const notoSans = Noto_Sans_TC({
   display: 'swap',
 })
 
-export const metadata: Metadata = getDefaultMetadata()
+export async function generateMetadata(): Promise<Metadata> {
+  const defaultMetadata = getDefaultMetadata()
+  const headersList = headers()
+  const pathname = headersList.get('x-current-pathname')
+  const isSearchPage = pathname === '/search'
+
+  if (!pathname || isSearchPage) {
+    return defaultMetadata
+  }
+
+  return {
+    ...defaultMetadata,
+    alternates: {
+      canonical: pathname,
+    },
+  }
+}
 
 export default function RootLayout({
   children,

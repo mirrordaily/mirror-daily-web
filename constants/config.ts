@@ -79,13 +79,14 @@ const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/sports_schedule.json`
 // shorts listing page
 const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
 const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
-const CPBL_SITE_URL = 'https://www.cpbl.com.tw'
-const TPBL_SITE_URL = 'https://tpbl.basketball'
-
 // section page
 const URL_STATIC_SECTION_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section`
 // category page
 const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category`
+// topic page
+const URL_STATIC_TOPIC_NEWS = `${JSON_FILE_PATH}/latest/latest_content_topic`
+const CPBL_SITE_URL = 'https://www.cpbl.com.tw'
+const TPBL_SITE_URL = 'https://tpbl.basketball'
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
@@ -109,6 +110,7 @@ export {
   URL_STATIC_LATEST_SPORTS_NEWS,
   URL_STATIC_SECTION_NEWS,
   URL_STATIC_CATEGORY_NEWS,
+  URL_STATIC_TOPIC_NEWS,
   GCP_PROJECT_ID,
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_API_KEY,

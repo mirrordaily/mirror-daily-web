@@ -4423,6 +4423,28 @@ export type TopicPostFragment = {
       w2400?: string | null
     } | null
   } | null
+  og_image?: {
+    __typename?: 'Photo'
+    id: string
+    resized?: {
+      __typename?: 'ResizedImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+    resizedWebp?: {
+      __typename?: 'ResizedWebPImages'
+      original?: string | null
+      w480?: string | null
+      w800?: string | null
+      w1200?: string | null
+      w1600?: string | null
+      w2400?: string | null
+    } | null
+  } | null
 }
 
 export type RelatedPostFragment = {
@@ -5118,6 +5140,7 @@ export type GetPostByIdQuery = {
     subtitle?: string | null
     heroCaption?: string | null
     publishedDate?: any | null
+    hiddenAdvertised?: boolean | null
     apiData?: any | null
     apiDataBrief?: any | null
     isAdult?: boolean | null
@@ -5669,6 +5692,28 @@ export type GetListTypeTopcPostsQuery = {
           w2400?: string | null
         } | null
       } | null
+      og_image?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
     }> | null
   } | null
 }
@@ -5689,6 +5734,28 @@ export type GetGroupTypeTopicPostsQuery = {
       apiData?: any | null
       tags?: Array<{ __typename?: 'Tag'; id: string }> | null
       heroImage?: {
+        __typename?: 'Photo'
+        id: string
+        resized?: {
+          __typename?: 'ResizedImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+        resizedWebp?: {
+          __typename?: 'ResizedWebPImages'
+          original?: string | null
+          w480?: string | null
+          w800?: string | null
+          w1200?: string | null
+          w1600?: string | null
+          w2400?: string | null
+        } | null
+      } | null
+      og_image?: {
         __typename?: 'Photo'
         id: string
         resized?: {
@@ -5905,6 +5972,7 @@ export type GetShortsDataQuery = {
     youtubeUrl?: string | null
     videoSrc?: string | null
     createdAt?: any | null
+    content?: string | null
     id: string
     name?: string | null
     state?: string | null
@@ -6374,6 +6442,19 @@ export const TopicPostFragmentDoc = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -10121,6 +10202,10 @@ export const GetPostByIdDocument = {
                 },
                 {
                   kind: 'Field',
+                  name: { kind: 'Name', value: 'hiddenAdvertised' },
+                },
+                {
+                  kind: 'Field',
                   name: { kind: 'Name', value: 'heroImage' },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -11365,6 +11450,19 @@ export const GetListTypeTopcPostsDocument = {
               ],
             },
           },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
         ],
       },
     },
@@ -11582,6 +11680,19 @@ export const GetGroupTypeTopicPostsDocument = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'heroImage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ImageData' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'og_image' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -12632,6 +12743,7 @@ export const GetShortsDataDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'youtubeUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'videoSrc' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'content' } },
               ],
             },
           },

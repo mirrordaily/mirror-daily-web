@@ -157,6 +157,7 @@ export const shortsDataSchema = z.object({
   createdAt: z.string(),
   // fileDuration: z.string(),
   // youtubeDuration: z.string(),
+  content: z.string(),
 })
 
 export const latestVideosSchema = z.object({
@@ -281,11 +282,31 @@ export const latestSportsNewsSchema = z.object({
 })
 
 export { sportsNewsItemSchema, sportsNewsCounts }
+
 export const sectionPostSchema = z.union([
   sectionStorySchema,
   sectionExternalSchema,
 ])
+
 export const countsSchema = z.object({
   posts: z.number(),
   externals: z.number(),
 })
+
+const topicStorySchema = sectionStorySchema.extend({
+  tags: z.array(
+    z.object({
+      id: z.string(),
+    })
+  ),
+})
+
+const topicExternalSchema = sectionExternalSchema.extend({
+  tags: z.array(
+    z.object({
+      id: z.string(),
+    })
+  ),
+})
+
+export const topicPostSchema = z.union([topicStorySchema, topicExternalSchema])

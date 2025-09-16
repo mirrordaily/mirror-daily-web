@@ -23,6 +23,7 @@ export default async function ArticleSection({
   apiDataBrief,
   id,
   link,
+  shouldShowAd,
   ...heroContent
 }: Props) {
   let relatedPosts = await fetchRelatedPosts(id)
@@ -52,7 +53,11 @@ export default async function ArticleSection({
           <Article content={apiDataBrief} isBrief={true} />
           {/* for dable */}
           <div itemProp="articleBody">
-            <Article content={apiData} isBrief={false} />
+            <Article
+              content={apiData}
+              isBrief={false}
+              shouldShowAd={shouldShowAd}
+            />
           </div>
           {warnings.map(({ id, content }) => (
             <p
@@ -63,14 +68,18 @@ export default async function ArticleSection({
             </p>
           ))}
 
-          <DesktopGptAd
-            slotKey="mirrordaily_article_PC_728x90_in2"
-            customClasses="my-9 mx-auto"
-          />
-          <MobileGptAd
-            slotKey="mirrordaily_article_MW_300x250_in2"
-            customClasses="mx-auto my-8"
-          />
+          {shouldShowAd && (
+            <>
+              <DesktopGptAd
+                slotKey="mirrordaily_article_PC_728x90_in2"
+                customClasses="my-9 mx-auto"
+              />
+              <MobileGptAd
+                slotKey="mirrordaily_article_MW_300x250_in2"
+                customClasses="mx-auto my-8"
+              />
+            </>
+          )}
 
           <SocialSharePanel link={link} title={heroContent.title} />
 
@@ -92,8 +101,11 @@ export default async function ArticleSection({
       <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
       <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12 lg:min-w-[300px]">
-        <LatestNewsSection posts={latestPosts} />
-        <PopularNewsSection posts={popularPostsTopSix} />
+        <LatestNewsSection posts={latestPosts} shouldShowAd={shouldShowAd} />
+        <PopularNewsSection
+          posts={popularPostsTopSix}
+          shouldShowAd={shouldShowAd}
+        />
       </div>
     </section>
   )

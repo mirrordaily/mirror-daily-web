@@ -2,15 +2,18 @@
 
 import Link from 'next/link'
 import CustomImage from '@/shared-components/custom-image'
-import type { TopicPostData } from '@/types/topic'
 import { topicGtmEvents } from '@/constants/gtm'
+import type { PostData } from '@/utils/data-process'
+import NextImage from 'next/image'
+
+type Props = Pick<PostData, 'title' | 'link' | 'textContent' | 'postMainImage'>
 
 export default function ArticleCard({
   title,
   link,
   textContent,
   postMainImage,
-}: TopicPostData) {
+}: Props) {
   return (
     <Link
       prefetch={false}
@@ -19,13 +22,26 @@ export default function ArticleCard({
       rel="noopener noreferrer"
       className={`${topicGtmEvents.topicArticle} article-container`}
     >
-      <figure className="image">
-        <CustomImage
-          images={postMainImage.resized}
-          imagesWebP={postMainImage.resizedWebp}
-          alt={title}
-        />
-      </figure>
+      {typeof postMainImage === 'string' && (
+        <figure className="image">
+          <NextImage
+            src={postMainImage}
+            unoptimized
+            fill
+            alt={title}
+            className="object-cover"
+          />
+        </figure>
+      )}
+      {typeof postMainImage === 'object' && (
+        <figure className="image">
+          <CustomImage
+            images={postMainImage.resized}
+            imagesWebP={postMainImage?.resizedWebp}
+            alt={title}
+          />
+        </figure>
+      )}
       <figcaption className="title">{title}</figcaption>
       <p className="brief">{textContent}</p>
     </Link>
