@@ -452,7 +452,7 @@ const transformSportsNewsImage = (
 const transformLatestSportsNews = (
   rawData: z.infer<typeof latestSportsNewsSchema> | undefined
 ): LatestSportsNewsData[] => {
-  if (!rawData) return []
+  if (!rawData || !rawData.category) return []
 
   return rawData.category.items.map((item) => {
     if (item.type === 'external') {
@@ -487,8 +487,13 @@ export const fetchLatestSportsNews = async (): Promise<
   const schema = z.promise(latestSportsNewsSchema)
   try {
     const resp = await fetch(URL_STATIC_LATEST_SPORTS_NEWS)
-    const rawSportsEventsData = await schema.parse(resp.json())
-    return transformLatestSportsNews(rawSportsEventsData)
+    const parseResult = await schema.safeParse(resp.json())
+    if (!parseResult.success) {
+      errorLogger(parseResult.error)
+      return []
+    }
+    const parsed = await parseResult.data
+    return transformLatestSportsNews(parsed)
   } catch (e) {
     errorLogger(e)
   }

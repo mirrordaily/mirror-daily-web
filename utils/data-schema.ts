@@ -294,10 +294,12 @@ const sportsNewsCounts = z.object({
 })
 
 export const latestSportsNewsSchema = z.object({
-  category: z.object({
-    items: z.array(sportsNewsItemSchema),
-    counts: sportsNewsCounts,
-  }),
+  category: z
+    .object({
+      items: z.array(sportsNewsItemSchema),
+      counts: sportsNewsCounts,
+    })
+    .optional(),
 })
 
 export { sportsNewsItemSchema, sportsNewsCounts }
