@@ -409,13 +409,11 @@ type ImageSizeVariants = {
   w2400: string
 }
 
-type SchemaImageData = z.infer<
-  typeof latestSportsNewsSchema
->['category']['items'][0]['heroImage']
+type GetHeroParam = Parameters<typeof getHeroImage>[0]
 
 const createImageSizeVariants = (
   primaryImage: HeroImage,
-  fallbackImage: SchemaImageData,
+  fallbackImage?: HeroImage,
   isWebp = false
 ): ImageSizeVariants => {
   const imageType = isWebp ? 'resizedWebp' : 'resized'
@@ -431,14 +429,23 @@ const createImageSizeVariants = (
 }
 
 const transformSportsNewsImage = (
-  heroImage: SchemaImageData,
-  ogImage: SchemaImageData
+  heroImage: GetHeroParam,
+  ogImage: GetHeroParam
 ): LatestSportsNewsData['heroImage'] => {
   const transformedHeroImage = getHeroImage(heroImage)
+  const transformedOgImage = getHeroImage(ogImage)
 
   return {
-    resized: createImageSizeVariants(transformedHeroImage, ogImage, false),
-    resizedWebp: createImageSizeVariants(transformedHeroImage, ogImage, true),
+    resized: createImageSizeVariants(
+      transformedHeroImage,
+      transformedOgImage,
+      false
+    ),
+    resizedWebp: createImageSizeVariants(
+      transformedHeroImage,
+      transformedOgImage,
+      true
+    ),
   }
 }
 
@@ -447,15 +454,27 @@ const transformLatestSportsNews = (
 ): LatestSportsNewsData[] => {
   if (!rawData) return []
 
-  return rawData.category.items.map(
-    ({ id, type, title, publishedDate, heroImage, og_image }) => ({
+  return rawData.category.items.map((item) => {
+    if (item.type === 'external') {
+      const { id, title, publishedDate, thumb } = item
+      return {
+        id,
+        type: item.type,
+        title,
+        publishedDate,
+        heroImage: transformSportsNewsImage(thumb, undefined),
+      }
+    }
+
+    const { id, type, title, publishedDate, heroImage, og_image } = item
+    return {
       id,
       type,
       title,
       publishedDate,
       heroImage: transformSportsNewsImage(heroImage, og_image),
-    })
-  )
+    }
+  })
 }
 
 export const fetchLatestSportsNews = async (): Promise<
