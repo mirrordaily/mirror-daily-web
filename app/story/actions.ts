@@ -16,7 +16,6 @@ import {
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
-import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   if (!rawData) return null
@@ -69,6 +68,16 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
       slug: tag.slug ?? '',
     })) ?? []
 
+  const sections =
+    Array.isArray(rawData.sections) && rawData.sections.length > 0
+      ? rawData.sections.slice(1, 4).map((section) => ({
+          // slice(1, 4) 是因為首頁各新聞大分類標籤原本拿第一個標籤，但多為「即時」，因重複度過高故改取第二個，所以文章頁也不取第一個以保持一致性，然後最多取三個
+          name: section.name ?? '',
+          color: section.color ?? '',
+          slug: section.slug ?? '',
+        }))
+      : []
+
   return {
     id: rawData.id,
     link: getStoryPageUrl(rawData.id),
@@ -77,8 +86,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     heroCaption: rawData.heroCaption ?? '',
     publishedTime: dateFormatter(rawData.publishedDate) ?? '',
     postMainImage,
-    sectionName: rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME,
-    sectionColor: rawData.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR,
+    sections: sections,
     isAdult: rawData.isAdult ?? false,
     shouldShowAd: !(rawData.hiddenAdvertised ?? false),
     writers,
