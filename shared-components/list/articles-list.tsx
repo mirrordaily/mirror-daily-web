@@ -1,5 +1,6 @@
 'use client'
 import type { ReactElement } from 'react'
+import React from 'react'
 import MainArticleCard from './main-article-card'
 import SecondaryArticleCard from './secondary-article-card'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
@@ -70,14 +71,10 @@ export default function ArticlesList<T extends PostData>({
               >
                 {(posts) =>
                   posts.map((post, i) => (
-                    <>
-                      <SecondaryArticleCard
-                        key={post.id}
-                        color={color}
-                        postItem={post}
-                      />
+                    <React.Fragment key={post.id}>
+                      <SecondaryArticleCard color={color} postItem={post} />
                       {i === 0 && (
-                        <>
+                        <div key={post.id + 'ad-0'}>
                           <DesktopGptAd
                             slotKey="mirrordaily_section_PC_728x90_list1"
                             pageKey={slug}
@@ -89,10 +86,10 @@ export default function ArticlesList<T extends PostData>({
                               pageKey={slug}
                             />
                           </div>
-                        </>
+                        </div>
                       )}
                       {i === 3 && (
-                        <>
+                        <div key={post.id + 'ad-3'}>
                           <DesktopGptAd
                             slotKey="mirrordaily_section_PC_728x90_list2"
                             pageKey={slug}
@@ -104,10 +101,10 @@ export default function ArticlesList<T extends PostData>({
                               pageKey={slug}
                             />
                           </div>
-                        </>
+                        </div>
                       )}
                       {i === 6 && (
-                        <>
+                        <div key={post.id + 'ad-6'}>
                           <DesktopGptAd
                             slotKey="mirrordaily_section_PC_728x90_list3"
                             pageKey={slug}
@@ -119,9 +116,9 @@ export default function ArticlesList<T extends PostData>({
                               pageKey={slug}
                             />
                           </div>
-                        </>
+                        </div>
                       )}
-                    </>
+                    </React.Fragment>
                   ))
                 }
               </InfiniteScrollList>

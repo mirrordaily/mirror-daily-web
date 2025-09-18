@@ -409,13 +409,11 @@ type ImageSizeVariants = {
   w2400: string
 }
 
-type SchemaImageData = z.infer<
-  typeof latestSportsNewsSchema
->['category']['items'][0]['heroImage']
+type GetHeroParam = Parameters<typeof getHeroImage>[0]
 
 const createImageSizeVariants = (
   primaryImage: HeroImage,
-  fallbackImage: SchemaImageData,
+  fallbackImage?: HeroImage,
   isWebp = false
 ): ImageSizeVariants => {
   const imageType = isWebp ? 'resizedWebp' : 'resized'
@@ -431,31 +429,52 @@ const createImageSizeVariants = (
 }
 
 const transformSportsNewsImage = (
-  heroImage: SchemaImageData,
-  ogImage: SchemaImageData
+  heroImage: GetHeroParam,
+  ogImage: GetHeroParam
 ): LatestSportsNewsData['heroImage'] => {
   const transformedHeroImage = getHeroImage(heroImage)
+  const transformedOgImage = getHeroImage(ogImage)
 
   return {
-    resized: createImageSizeVariants(transformedHeroImage, ogImage, false),
-    resizedWebp: createImageSizeVariants(transformedHeroImage, ogImage, true),
+    resized: createImageSizeVariants(
+      transformedHeroImage,
+      transformedOgImage,
+      false
+    ),
+    resizedWebp: createImageSizeVariants(
+      transformedHeroImage,
+      transformedOgImage,
+      true
+    ),
   }
 }
 
 const transformLatestSportsNews = (
   rawData: z.infer<typeof latestSportsNewsSchema> | undefined
 ): LatestSportsNewsData[] => {
-  if (!rawData) return []
+  if (!rawData || !rawData.category) return []
 
-  return rawData.category.items.map(
-    ({ id, type, title, publishedDate, heroImage, og_image }) => ({
+  return rawData.category.items.map((item) => {
+    if (item.type === 'external') {
+      const { id, title, publishedDate, thumb } = item
+      return {
+        id,
+        type: item.type,
+        title,
+        publishedDate,
+        heroImage: transformSportsNewsImage(thumb, undefined),
+      }
+    }
+
+    const { id, type, title, publishedDate, heroImage, og_image } = item
+    return {
       id,
       type,
       title,
       publishedDate,
       heroImage: transformSportsNewsImage(heroImage, og_image),
-    })
-  )
+    }
+  })
 }
 
 export const fetchLatestSportsNews = async (): Promise<
@@ -468,8 +487,13 @@ export const fetchLatestSportsNews = async (): Promise<
   const schema = z.promise(latestSportsNewsSchema)
   try {
     const resp = await fetch(URL_STATIC_LATEST_SPORTS_NEWS)
-    const rawSportsEventsData = await schema.parse(resp.json())
-    return transformLatestSportsNews(rawSportsEventsData)
+    const parseResult = await schema.safeParse(resp.json())
+    if (!parseResult.success) {
+      errorLogger(parseResult.error)
+      return []
+    }
+    const parsed = await parseResult.data
+    return transformLatestSportsNews(parsed)
   } catch (e) {
     errorLogger(e)
   }
