@@ -12,7 +12,6 @@ type Props = Shorts & {
   onPlay(): void
   onPause(): void
   type: SHORTS_TYPE
-  readyToLoad?: boolean
 }
 
 const gtmClassNameMap = {
@@ -29,7 +28,6 @@ export default function ShortsItem({
   onPlay,
   onPause,
   type,
-  readyToLoad = false,
 }: Props) {
   const [isClientSide, setIsClientSide] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
@@ -48,7 +46,7 @@ export default function ShortsItem({
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
-        {isClientSide && (isActive || readyToLoad) && (
+        {isClientSide && (
           <ReactPlayer
             url={fileUrl}
             width="100%"

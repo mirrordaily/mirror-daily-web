@@ -2,7 +2,7 @@
 import DateSwitcher from './date-switcher'
 import GameInfoCard from './game-info-card'
 import SelectMenu from './select-menu'
-import { useMemo, useState, useCallback, useEffect } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import type { LatestSportsNewsData, SportsGameData } from '@/types/homepage'
 import dayjs, { type Dayjs } from 'dayjs'
 import { eventGameMap } from './helper/game-map'
@@ -39,28 +39,11 @@ export default function SportsMain({
   latestSportsNewsData,
 }: SportsMainProps) {
   const POLLING_INTERVAL_TIME = 180000
-  // 僅在使用者開始捲動之後才啟用抓取與輪詢
-  const [enabled, setEnabled] = useState(false)
-
-  useEffect(() => {
-    if (enabled) return
-    const enable = () => setEnabled(true)
-    window.addEventListener('scroll', enable, { once: true, passive: true })
-    window.addEventListener('wheel', enable, { once: true, passive: true })
-    window.addEventListener('touchstart', enable, { once: true, passive: true })
-    return () => {
-      window.removeEventListener('scroll', enable)
-      window.removeEventListener('wheel', enable)
-      window.removeEventListener('touchstart', enable)
-    }
-  }, [enabled])
-
-  // RTK Query approach for polling（延後啟用）
+  // RTK Query approach for polling
   const { data } = useSportsEventsRTK({
     initialData: scheduleData,
     pollingInterval: POLLING_INTERVAL_TIME,
     skipPollingIfUnfocused: true,
-    enabled,
   })
 
   // Use RTK Query data, fall back to initial data

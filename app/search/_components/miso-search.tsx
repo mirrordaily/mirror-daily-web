@@ -1,18 +1,15 @@
 'use client'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { dateFormatter } from '@/utils/data-process'
 import { MISO_API_KEY } from '@/constants/config'
 import '@/shared-styles/search.css'
 import { searchGtmEvents } from '@/constants/gtm'
 
 export default function MisoSearch() {
-  const sortOptions = useMemo(
-    () => [
-      { field: 'relevance', text: '關聯性', default: true },
-      { field: 'published_at', text: '由新到舊' },
-    ],
-    []
-  )
+  const sortOptions = [
+    { field: 'relevance', text: '關聯性', default: true },
+    { field: 'published_at', text: '由新到舊' },
+  ]
   useEffect(() => {
     const misocmd = window.misocmd || (window.misocmd = [])
     misocmd.push(async () => {
@@ -116,7 +113,7 @@ export default function MisoSearch() {
             <miso-sort style="display: none;"></miso-sort>
             <div class="miso-hybrid-search-combo__search-results-filters__sort-options-container">
             ${sortOptions
-              .map((sortItem: { field: string; text: string }) => {
+              .map((sortItem) => {
                 return `<button class="miso-hybrid-search-combo__search-results-filters__sort-option" data-field="${sortItem.field}" key="${sortItem.field}">${sortItem.text}</button>`
               })
               .join('')}
@@ -191,7 +188,7 @@ export default function MisoSearch() {
               misoSortButton.click()
 
               setTimeout(() => {
-          const misoSortOptions: NodeListOf<Element> = misoSortElement.querySelectorAll(
+                const misoSortOptions = misoSortElement.querySelectorAll(
                   '.miso-select__option'
                 )
                 misoSortOptions.forEach((option) => {
@@ -255,7 +252,7 @@ export default function MisoSearch() {
 
                   // 等待選項出現後選擇對應的選項
                   setTimeout(() => {
-                const misoSortOptions: NodeListOf<Element> = misoSortElement.querySelectorAll(
+                    const misoSortOptions = misoSortElement.querySelectorAll(
                       '.miso-select__option'
                     )
                     misoSortOptions.forEach((option) => {
@@ -279,8 +276,8 @@ export default function MisoSearch() {
       // 監聽搜尋觸發事件
       const handleSearchTrigger = () => {
         // 使用 MutationObserver 監聽 DOM 變化
-        const observer = new MutationObserver((mutations: MutationRecord[]) => {
-          mutations.forEach((mutation: MutationRecord) => {
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
             if (mutation.type === 'childList') {
               // 檢查是否有搜尋按鈕
               const searchButton = rootElement?.querySelector(
@@ -360,7 +357,7 @@ export default function MisoSearch() {
         workflow.autoQuery()
       }, 1000)
     })
-  }, [sortOptions])
+  }, [])
   return (
     <div
       id="miso-hybrid-search-combo"
