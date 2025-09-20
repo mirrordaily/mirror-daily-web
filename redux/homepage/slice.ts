@@ -27,13 +27,18 @@ export const initializeData = createAsyncThunk(
   async (headerData: HeaderData[]) => {
     const liveEvent = await fetchLiveEvent()
     const latestPosts = await fetchLatestPost(headerData, 1)
-    const popularNews = await fetchPopularPost(headerData)
-
     return {
       liveEvent,
       latestPosts,
-      popularNews,
     }
+  }
+)
+
+export const fetchPopularNews = createAsyncThunk(
+  'homepage/fetchPopular',
+  async (headerData: HeaderData[]) => {
+    const popularNews = await fetchPopularPost(headerData)
+    return popularNews
   }
 )
 
@@ -57,12 +62,15 @@ const homepageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(initializeData.fulfilled, (state, action) => {
-      const { liveEvent, latestPosts, popularNews } = action.payload
+      const { liveEvent, latestPosts } = action.payload
 
       state.isInitialized = true
       state.liveEvent = liveEvent
       state.latestPosts = latestPosts
-      state.popularNews = popularNews
+    })
+
+    builder.addCase(fetchPopularNews.fulfilled, (state, action) => {
+      state.popularNews = action.payload
     })
   },
 })

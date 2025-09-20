@@ -167,7 +167,7 @@ export const latestVideosSchema = z.object({
   youtubeUrl: z.string().nullish(),
   videoSrc: z.string().nullish(),
   heroImage: heroImageSchema.nullable(),
-  updatedAt: z.string().nullable(),
+  updatedAt: z.string().nullish(),
 })
 
 export const headerSchema = z.array(
@@ -234,8 +234,8 @@ const apiDataContentSchema = z.object({
   alignment: z.string().optional(),
 })
 
-// Sports news article schema - reuses heroImageSchema for consistency
-const sportsNewsItemSchema = z.object({
+// Sports news article schema - support both story and external
+const sportsNewsStoryItemSchema = z.object({
   type: z.literal('story'),
   id: z.string(),
   title: z.string(),
@@ -247,6 +247,25 @@ const sportsNewsItemSchema = z.object({
   apiData: z.array(z.unknown()), // Generic array for any additional API data
   apiDataBrief: z.array(apiDataContentSchema),
 })
+
+const sportsNewsExternalItemSchema = z.object({
+  type: z.literal('external'),
+  id: z.string(),
+  title: z.string(),
+  publishedDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid publishedDate string',
+  }),
+  // external uses a single thumb url instead of heroImage / og_image
+  thumb: z.string(),
+  // content/brief are commonly present for externals; keep them optional to be resilient to data variance
+  content: z.string().optional(),
+  brief: z.string().optional(),
+})
+
+const sportsNewsItemSchema = z.union([
+  sportsNewsStoryItemSchema,
+  sportsNewsExternalItemSchema,
+])
 
 const baseSectionPostSchema = rawLatestPostSchema.pick({
   id: true,
@@ -275,10 +294,12 @@ const sportsNewsCounts = z.object({
 })
 
 export const latestSportsNewsSchema = z.object({
-  category: z.object({
-    items: z.array(sportsNewsItemSchema),
-    counts: sportsNewsCounts,
-  }),
+  category: z
+    .object({
+      items: z.array(sportsNewsItemSchema),
+      counts: sportsNewsCounts,
+    })
+    .optional(),
 })
 
 export { sportsNewsItemSchema, sportsNewsCounts }
