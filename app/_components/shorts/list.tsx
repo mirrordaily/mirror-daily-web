@@ -37,6 +37,7 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
   const [swiperIsEnd, setSwiperIsEnd] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { isIntersecting, ref } = useIntersectionObserver({ threshold: 0.75 })
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false)
   const initialized = useRef(false)
 
   useEffect(() => {
@@ -45,6 +46,12 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
       initialized.current = true
     }
   }, [isIntersecting])
+
+  useEffect(() => {
+    if (isIntersecting && !hasEnteredViewport) {
+      setHasEnteredViewport(true)
+    }
+  }, [isIntersecting, hasEnteredViewport])
 
   return (
     <div
@@ -94,11 +101,10 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
           <SwiperSlide key={index}>
             <ShortsItem
               {...item}
-              key={index}
               type={type}
               isActive={isIntersecting && activeIndex === index}
               readyToLoad={
-                isIntersecting &&
+                hasEnteredViewport &&
                 (index < 6 ||
                   (activeIndex !== null &&
                     (index === activeIndex ||
