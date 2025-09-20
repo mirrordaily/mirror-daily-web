@@ -72,16 +72,6 @@ export default function ShortsItem({
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
-        {(!isClientSide || !isActive) && (
-          <NextImage
-            src={previewSrc}
-            alt={`${title} 縮圖`}
-            fill
-            sizes="100vw"
-            className="pointer-events-none"
-            style={{ objectFit: 'cover' }}
-          />
-        )}
         {isClientSide && (
           <ReactPlayer
             url={fileUrl}
@@ -93,7 +83,7 @@ export default function ShortsItem({
             config={{
               file: {
                 attributes: {
-                  poster,
+                  poster: previewSrc,
                   preload: 'none',
                 },
               },
@@ -107,6 +97,16 @@ export default function ShortsItem({
             onProgress={({ playedSeconds }) => {
               setPlayedSeconds(playedSeconds)
             }}
+          />
+        )}
+        {!isActive && (
+          <NextImage
+            src={previewSrc}
+            alt={`${title} 縮圖`}
+            fill
+            sizes="100vw"
+            className="pointer-events-none absolute inset-0 z-[1]"
+            style={{ objectFit: 'cover' }}
           />
         )}
         <div
