@@ -75,9 +75,9 @@ export default function TopNewsSection({ headerData }: Props) {
       Latest: latestList,
       Hot: hotList,
     }
-  }, [liveEvent, latestPosts, popularNews])
+  }, [latestPosts, popularNews])
 
-  const posts = postData[tab]
+  const posts = postData[tab as keyof typeof TAB]
 
   useEffect(() => {
     if (!isInitialized) {
@@ -101,7 +101,7 @@ export default function TopNewsSection({ headerData }: Props) {
   return (
     <section className="section-in-homepage mb-4 mt-[41px] md:mb-14 md:mt-6 lg:mb-9 lg:mt-[26px]">
       <Selector selectedTab={tab} setTab={setTab} />
-      <PostList key={tab} list={posts} tab={tab} />
+      <PostList list={posts} tab={tab} />
     </section>
   )
 }

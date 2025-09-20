@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { fetchLatestSportsNews } from '@/app/actions'
 import SportsMain from './main'
 
