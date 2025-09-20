@@ -22,6 +22,7 @@ export default function ShortsListWithRefresh({
 }: Props) {
   const [data, setData] = useState<Shorts[]>(items)
   const isFetchingRef = useRef(false)
+  const limitRef = useRef<number>(items.length)
 
   const prevIdsRef = useRef<string>(items.map((s) => s.id).join(','))
 
@@ -37,12 +38,13 @@ export default function ShortsListWithRefresh({
       const resp = await fetch(URL_STATIC_LATEST_SHORTS, { cache: 'no-store' })
       const raw = await schema.parseAsync(await resp.json())
       const updated = raw[type].map(transformLatestShorts)
+      const limited = updated.slice(0, limitRef.current)
 
       // 比對 id 是否有變化（長度或順序變更都更新）
-      const nextIds = updated.map((s) => s.id).join(',')
+      const nextIds = limited.map((s) => s.id).join(',')
       if (prevIdsRef.current !== nextIds) {
         prevIdsRef.current = nextIds
-        setData(updated)
+        setData(limited)
       }
     } catch (err) {
       // 靜默失敗
