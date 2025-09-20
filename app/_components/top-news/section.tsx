@@ -6,7 +6,6 @@ import type { HeaderData, ParameterOfComponent } from '@/types/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
   selectIsInitialized,
-  selectLiveEvent,
   selectLatestPosts,
   selectPopularNews,
 } from '@/redux/homepage/selector'
