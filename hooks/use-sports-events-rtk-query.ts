@@ -8,6 +8,8 @@ interface UseSportsEventsRTKOptions {
   pollingInterval?: number
   /** Whether to skip polling when tab is unfocused (default: true) */
   skipPollingIfUnfocused?: boolean
+  /** Enable fetching; when false, skip initial fetch/polling */
+  enabled?: boolean
 }
 
 export const useSportsEventsRTK = (options: UseSportsEventsRTKOptions = {}) => {
@@ -15,6 +17,7 @@ export const useSportsEventsRTK = (options: UseSportsEventsRTKOptions = {}) => {
     initialData = [],
     pollingInterval = 3000,
     skipPollingIfUnfocused = true,
+    enabled = true,
   } = options
 
   const {
@@ -26,9 +29,10 @@ export const useSportsEventsRTK = (options: UseSportsEventsRTKOptions = {}) => {
     isSuccess,
     refetch,
   } = useGetSportsEventsQuery(undefined, {
-    pollingInterval,
+    pollingInterval: enabled ? pollingInterval : 0,
     skipPollingIfUnfocused,
     refetchOnMountOrArgChange: true,
+    skip: !enabled,
   })
 
   return {

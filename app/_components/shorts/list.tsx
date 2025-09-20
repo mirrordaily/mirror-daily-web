@@ -98,10 +98,13 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
               type={type}
               isActive={isIntersecting && activeIndex === index}
               readyToLoad={
-                activeIndex !== null &&
-                (index === activeIndex ||
-                  index === activeIndex + 1 ||
-                  index === activeIndex - 1)
+                // 預設前 10 則先行就緒
+                index < 10 ||
+                // 另外保留 active 與相鄰預加載
+                (activeIndex !== null &&
+                  (index === activeIndex ||
+                    index === activeIndex + 1 ||
+                    index === activeIndex - 1))
               }
               onPlay={() => {
                 setActiveIndex(index)
