@@ -4,6 +4,7 @@ import { homepageGtmEvents } from '@/constants/gtm'
 import useVideoViewLogger from '@/hooks/use-video-logger'
 import type { Shorts } from '@/types/common'
 import { useEffect, useState } from 'react'
+import NextImage from 'next/image'
 import ReactPlayer from 'react-player/lazy'
 import { SHORTS_TYPE } from '@/types/common'
 
@@ -47,10 +48,13 @@ export default function ShortsItem({
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
         {(!isClientSide || !isActive) && (
-          <img
+          <NextImage
             src={poster || '/images-next/default-image.png'}
             alt={`${title} 縮圖`}
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+            fill
+            sizes="100vw"
+            className="pointer-events-none"
+            style={{ objectFit: 'cover' }}
           />
         )}
         {isClientSide && (
