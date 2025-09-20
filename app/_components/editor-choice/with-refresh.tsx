@@ -19,7 +19,9 @@ export default function EditorChoiceWithRefresh(initial: Props) {
   const [data, setData] = useState<Props>(initial)
   const isFetchingRef = useRef(false)
 
-  const prevIdsRef = useRef<string>(initial.editor.map((e) => e.postId).join(','))
+  const prevIdsRef = useRef<string>(
+    initial.editor.map((e) => e.postId).join(',')
+  )
 
   const fetchAndMaybeUpdate = useCallback(async () => {
     if (isFetchingRef.current) return
@@ -115,4 +117,3 @@ export default function EditorChoiceWithRefresh(initial: Props) {
   const props = useMemo(() => data, [data])
   return <EditorChoiceMain {...props} />
 }
-
