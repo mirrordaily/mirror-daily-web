@@ -46,6 +46,13 @@ export default function ShortsItem({
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
+        {(!isClientSide || !isActive) && (
+          <img
+            src={poster || '/images-next/default-image.png'}
+            alt={`${title} 縮圖`}
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+          />
+        )}
         {isClientSide && (
           <ReactPlayer
             url={fileUrl}
