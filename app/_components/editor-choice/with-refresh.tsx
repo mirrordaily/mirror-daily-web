@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { EditorChoice } from '@/types/homepage'
 import EditorChoiceMain from './main'
 import { URL_STATIC_EDITOR_CHOICE } from '@/constants/config'
@@ -19,7 +19,7 @@ export default function EditorChoiceWithRefresh(initial: Props) {
   const [data, setData] = useState<Props>(initial)
   const isFetchingRef = useRef(false)
 
-  const fetchAndMaybeUpdate = async () => {
+  const fetchAndMaybeUpdate = useCallback(async () => {
     if (isFetchingRef.current) return
     isFetchingRef.current = true
     try {
@@ -39,7 +39,7 @@ export default function EditorChoiceWithRefresh(initial: Props) {
             choiceexternal: externalRawPost,
           },
           index
-        ) => {
+          ) => {
           const postId = rawPost?.id ?? ''
           const externalId = externalRawPost?.id ?? ''
 
@@ -50,8 +50,10 @@ export default function EditorChoiceWithRefresh(initial: Props) {
               | null
               | undefined
           ) => {
-            const editorChoiceHeroImage = heroImage ? getHeroImage(heroImage) : null
-            return editorChoiceHeroImage || getHeroImage(imageParam)
+              const editorChoiceHeroImage = heroImage
+                ? getHeroImage(heroImage)
+                : null
+              return editorChoiceHeroImage || getHeroImage(imageParam)
           }
 
           if (outlink) {
@@ -91,7 +93,7 @@ export default function EditorChoiceWithRefresh(initial: Props) {
     } finally {
       isFetchingRef.current = false
     }
-  }
+  }, [])
 
   useEffect(() => {
     const onFocus = () => fetchAndMaybeUpdate()
@@ -106,10 +108,8 @@ export default function EditorChoiceWithRefresh(initial: Props) {
       clearTimeout(t)
       clearInterval(interval)
     }
-  }, [])
+  }, [fetchAndMaybeUpdate])
 
   const props = useMemo(() => data, [data])
   return <EditorChoiceMain {...props} />
 }
-
-

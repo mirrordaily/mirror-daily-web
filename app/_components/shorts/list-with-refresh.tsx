@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ShortsList from './list'
 import type { Shorts } from '@/types/common'
 import { SHORTS_TYPE } from '@/types/common'
@@ -19,7 +19,7 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
   const [data, setData] = useState<Shorts[]>(items)
   const isFetchingRef = useRef(false)
 
-  const fetchAndMaybeUpdate = async () => {
+  const fetchAndMaybeUpdate = useCallback(async () => {
     if (isFetchingRef.current) return
     isFetchingRef.current = true
     try {
@@ -44,7 +44,7 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
     } finally {
       isFetchingRef.current = false
     }
-  }
+  }, [data, type])
 
   useEffect(() => {
     // 聚焦與網路恢復時嘗試更新
@@ -65,7 +65,7 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
       clearTimeout(t)
       clearInterval(interval)
     }
-  }, [type])
+  }, [type, fetchAndMaybeUpdate])
 
   const list = useMemo(() => data, [data])
 
