@@ -97,6 +97,14 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
               key={index}
               type={type}
               isActive={isIntersecting && activeIndex === index}
+              readyToLoad={
+                isIntersecting &&
+                (index < 6 ||
+                  (activeIndex !== null &&
+                    (index === activeIndex ||
+                      index === activeIndex + 1 ||
+                      index === activeIndex - 1)))
+              }
               onPlay={() => {
                 setActiveIndex(index)
               }}
