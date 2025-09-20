@@ -38,6 +38,7 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { isIntersecting, ref } = useIntersectionObserver({ threshold: 0.75 })
   const [hasEnteredViewport, setHasEnteredViewport] = useState(false)
+  const [readySet, setReadySet] = useState<Set<number>>(new Set())
   const initialized = useRef(false)
 
   useEffect(() => {
@@ -53,6 +54,23 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
     }
   }, [isIntersecting, hasEnteredViewport])
 
+  // Persistently mark indices as ready once eligible (first 6 and adjacent to active)
+  useEffect(() => {
+    if (!hasEnteredViewport) return
+    setReadySet((prev) => {
+      const next = new Set(prev)
+      for (let i = 0; i < 6 && i < items.length; i += 1) {
+        next.add(i)
+      }
+      if (activeIndex !== null) {
+        next.add(activeIndex)
+        next.add(activeIndex + 1)
+        next.add(activeIndex - 1)
+      }
+      return next
+    })
+  }, [hasEnteredViewport, activeIndex, items.length])
+
   return (
     <div
       ref={ref}
@@ -67,6 +85,9 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
         modules={[FreeMode, Navigation, Keyboard]}
         keyboard={true}
         grabCursor={true}
+        observer={true}
+        observeParents={true}
+        observeSlideChildren={true}
         breakpoints={{
           320: {
             spaceBetween: 36,
@@ -103,14 +124,7 @@ export default function ShortsList({ items, customClass = '', type }: Props) {
               {...item}
               type={type}
               isActive={isIntersecting && activeIndex === index}
-              readyToLoad={
-                hasEnteredViewport &&
-                (index < 6 ||
-                  (activeIndex !== null &&
-                    (index === activeIndex ||
-                      index === activeIndex + 1 ||
-                      index === activeIndex - 1)))
-              }
+              readyToLoad={hasEnteredViewport && readySet.has(index)}
               onPlay={() => {
                 setActiveIndex(index)
               }}
