@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ShortsList from './list'
 import type { Shorts } from '@/types/common'
 import { SHORTS_TYPE } from '@/types/common'
@@ -19,7 +19,9 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
   const [data, setData] = useState<Shorts[]>(items)
   const isFetchingRef = useRef(false)
 
-  const fetchAndMaybeUpdate = async () => {
+  const prevIdsRef = useRef<string>(items.map((s) => s.id).join(','))
+
+  const fetchAndMaybeUpdate = useCallback(async () => {
     if (isFetchingRef.current) return
     isFetchingRef.current = true
     try {
@@ -33,9 +35,9 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
       const updated = raw[type].map(transformLatestShorts)
 
       // 比對 id 是否有變化（長度或順序變更都更新）
-      const prevIds = data.map((s) => s.id).join(',')
       const nextIds = updated.map((s) => s.id).join(',')
-      if (prevIds !== nextIds) {
+      if (prevIdsRef.current !== nextIds) {
+        prevIdsRef.current = nextIds
         setData(updated)
       }
     } catch (err) {
@@ -44,7 +46,7 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
     } finally {
       isFetchingRef.current = false
     }
-  }
+  }, [type])
 
   useEffect(() => {
     // 聚焦與網路恢復時嘗試更新
@@ -65,11 +67,9 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
       clearTimeout(t)
       clearInterval(interval)
     }
-  }, [type])
+  }, [type, fetchAndMaybeUpdate])
 
   const list = useMemo(() => data, [data])
-
   return <ShortsList items={list} type={type} customClass={customClass} />
 }
-
 
