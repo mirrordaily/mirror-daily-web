@@ -64,9 +64,13 @@ export default function ShortsItem({
   }
 
   const previewSrc = (() => {
+    // Prefer provided poster if available
+    if (poster && poster.trim() !== '') return poster
+    // Else derive from YouTube URL
     const ytId = extractYouTubeId(fileUrl)
     if (ytId) return `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`
-    return poster || '/images-next/default-image.png'
+    // Fallback
+    return '/images-next/default-image.png'
   })()
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
