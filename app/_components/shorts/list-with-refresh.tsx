@@ -15,7 +15,11 @@ type Props = {
   customClass?: string
 }
 
-export default function ShortsListWithRefresh({ items, type, customClass }: Props) {
+export default function ShortsListWithRefresh({
+  items,
+  type,
+  customClass,
+}: Props) {
   const [data, setData] = useState<Shorts[]>(items)
   const isFetchingRef = useRef(false)
 
@@ -71,5 +75,3 @@ export default function ShortsListWithRefresh({ items, type, customClass }: Prop
 
   return <ShortsList items={list} type={type} customClass={customClass} />
 }
-
-
