@@ -18,6 +18,9 @@ type Props = {
 export default function EditorChoiceWithRefresh(initial: Props) {
   const [data, setData] = useState<Props>(initial)
   const isFetchingRef = useRef(false)
+  const prevIdsRef = useRef<string>(
+    (initial.editor || []).map((e) => e.postId).join(',')
+  )
 
   const fetchAndMaybeUpdate = useCallback(async () => {
     if (isFetchingRef.current) return
@@ -39,7 +42,7 @@ export default function EditorChoiceWithRefresh(initial: Props) {
             choiceexternal: externalRawPost,
           },
           index
-          ) => {
+        ) => {
           const postId = rawPost?.id ?? ''
           const externalId = externalRawPost?.id ?? ''
 
@@ -50,10 +53,10 @@ export default function EditorChoiceWithRefresh(initial: Props) {
               | null
               | undefined
           ) => {
-              const editorChoiceHeroImage = heroImage
-                ? getHeroImage(heroImage)
-                : null
-              return editorChoiceHeroImage || getHeroImage(imageParam)
+            const editorChoiceHeroImage = heroImage
+              ? getHeroImage(heroImage)
+              : null
+            return editorChoiceHeroImage || getHeroImage(imageParam)
           }
 
           if (outlink) {
@@ -83,9 +86,9 @@ export default function EditorChoiceWithRefresh(initial: Props) {
         }
       )
 
-      const prevIds = data.editor.map((e) => e.postId).join(',')
       const nextIds = normalized.map((e) => e.postId).join(',')
-      if (prevIds !== nextIds) {
+      if (prevIdsRef.current !== nextIds) {
+        prevIdsRef.current = nextIds
         setData({ editor: normalized.slice(0, 10), ai: [] })
       }
     } catch (err) {
