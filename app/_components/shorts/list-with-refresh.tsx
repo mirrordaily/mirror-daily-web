@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import ShortsList from './list'
 import type { Shorts } from '@/types/common'
 import { SHORTS_TYPE } from '@/types/common'
@@ -15,18 +15,11 @@ type Props = {
   customClass?: string
 }
 
-export default function ShortsListWithRefresh({
-  items,
-  type,
-  customClass,
-}: Props) {
+export default function ShortsListWithRefresh({ items, type, customClass }: Props) {
   const [data, setData] = useState<Shorts[]>(items)
   const isFetchingRef = useRef(false)
-  const limitRef = useRef<number>(items.length)
 
-  const prevIdsRef = useRef<string>(items.map((s) => s.id).join(','))
-
-  const fetchAndMaybeUpdate = useCallback(async () => {
+  const fetchAndMaybeUpdate = async () => {
     if (isFetchingRef.current) return
     isFetchingRef.current = true
     try {
@@ -38,13 +31,12 @@ export default function ShortsListWithRefresh({
       const resp = await fetch(URL_STATIC_LATEST_SHORTS, { cache: 'no-store' })
       const raw = await schema.parseAsync(await resp.json())
       const updated = raw[type].map(transformLatestShorts)
-      const limited = updated.slice(0, limitRef.current)
 
       // 比對 id 是否有變化（長度或順序變更都更新）
-      const nextIds = limited.map((s) => s.id).join(',')
-      if (prevIdsRef.current !== nextIds) {
-        prevIdsRef.current = nextIds
-        setData(limited)
+      const prevIds = data.map((s) => s.id).join(',')
+      const nextIds = updated.map((s) => s.id).join(',')
+      if (prevIds !== nextIds) {
+        setData(updated)
       }
     } catch (err) {
       // 靜默失敗
@@ -52,7 +44,7 @@ export default function ShortsListWithRefresh({
     } finally {
       isFetchingRef.current = false
     }
-  }, [type])
+  }
 
   useEffect(() => {
     // 聚焦與網路恢復時嘗試更新
@@ -73,8 +65,11 @@ export default function ShortsListWithRefresh({
       clearTimeout(t)
       clearInterval(interval)
     }
-  }, [type, fetchAndMaybeUpdate])
+  }, [type])
 
   const list = useMemo(() => data, [data])
+
   return <ShortsList items={list} type={type} customClass={customClass} />
 }
+
+

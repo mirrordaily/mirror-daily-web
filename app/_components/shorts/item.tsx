@@ -43,35 +43,6 @@ export default function ShortsItem({
   useEffect(() => {
     setIsClientSide(true)
   }, [])
-
-  const extractYouTubeId = (url: string): string | null => {
-    try {
-      const u = new URL(url)
-      if (u.hostname.includes('youtu.be')) {
-        return u.pathname.replace(/^\//, '') || null
-      }
-      if (u.hostname.includes('youtube.com')) {
-        const v = u.searchParams.get('v')
-        if (v) return v
-        const path = u.pathname
-        const match = path.match(/\/(embed|shorts)\/([^/?#]+)/)
-        if (match && match[2]) return match[2]
-      }
-    } catch (_e) {
-      return null
-    }
-    return null
-  }
-
-  const previewSrc = (() => {
-    // Prefer provided poster if available
-    if (poster && poster.trim() !== '') return poster
-    // Else derive from YouTube URL
-    const ytId = extractYouTubeId(fileUrl)
-    if (ytId) return `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`
-    // Fallback
-    return '/images-next/default-image.png'
-  })()
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
@@ -83,11 +54,10 @@ export default function ShortsItem({
             muted={true}
             playing={isActive}
             playsinline={true}
-            light={previewSrc}
             config={{
               file: {
                 attributes: {
-                  poster: previewSrc,
+                  poster,
                   preload: 'none',
                 },
               },

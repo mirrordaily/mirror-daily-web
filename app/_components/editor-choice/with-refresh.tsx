@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { EditorChoice } from '@/types/homepage'
 import EditorChoiceMain from './main'
 import { URL_STATIC_EDITOR_CHOICE } from '@/constants/config'
@@ -19,11 +19,7 @@ export default function EditorChoiceWithRefresh(initial: Props) {
   const [data, setData] = useState<Props>(initial)
   const isFetchingRef = useRef(false)
 
-  const prevIdsRef = useRef<string>(
-    initial.editor.map((e) => e.postId).join(',')
-  )
-
-  const fetchAndMaybeUpdate = useCallback(async () => {
+  const fetchAndMaybeUpdate = async () => {
     if (isFetchingRef.current) return
     isFetchingRef.current = true
     try {
@@ -54,9 +50,7 @@ export default function EditorChoiceWithRefresh(initial: Props) {
               | null
               | undefined
           ) => {
-            const editorChoiceHeroImage = heroImage
-              ? getHeroImage(heroImage)
-              : null
+            const editorChoiceHeroImage = heroImage ? getHeroImage(heroImage) : null
             return editorChoiceHeroImage || getHeroImage(imageParam)
           }
 
@@ -87,9 +81,9 @@ export default function EditorChoiceWithRefresh(initial: Props) {
         }
       )
 
+      const prevIds = data.editor.map((e) => e.postId).join(',')
       const nextIds = normalized.map((e) => e.postId).join(',')
-      if (prevIdsRef.current !== nextIds) {
-        prevIdsRef.current = nextIds
+      if (prevIds !== nextIds) {
         setData({ editor: normalized.slice(0, 10), ai: [] })
       }
     } catch (err) {
@@ -97,7 +91,7 @@ export default function EditorChoiceWithRefresh(initial: Props) {
     } finally {
       isFetchingRef.current = false
     }
-  }, [])
+  }
 
   useEffect(() => {
     const onFocus = () => fetchAndMaybeUpdate()
@@ -112,8 +106,10 @@ export default function EditorChoiceWithRefresh(initial: Props) {
       clearTimeout(t)
       clearInterval(interval)
     }
-  }, [fetchAndMaybeUpdate])
+  }, [])
 
   const props = useMemo(() => data, [data])
   return <EditorChoiceMain {...props} />
 }
+
+
