@@ -44,12 +44,37 @@ export default function ShortsItem({
   useEffect(() => {
     setIsClientSide(true)
   }, [])
+
+  const extractYouTubeId = (url: string): string | null => {
+    try {
+      const u = new URL(url)
+      if (u.hostname.includes('youtu.be')) {
+        return u.pathname.replace(/^\//, '') || null
+      }
+      if (u.hostname.includes('youtube.com')) {
+        const v = u.searchParams.get('v')
+        if (v) return v
+        const path = u.pathname
+        const match = path.match(/\/(embed|shorts)\/([^/?#]+)/)
+        if (match && match[2]) return match[2]
+      }
+    } catch (_e) {
+      return null
+    }
+    return null
+  }
+
+  const previewSrc = (() => {
+    const ytId = extractYouTubeId(fileUrl)
+    if (ytId) return `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`
+    return poster || '/images-next/default-image.png'
+  })()
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div className="relative h-[400px] w-full lg:h-[400px]">
         {(!isClientSide || !isActive) && (
           <NextImage
-            src={poster || '/images-next/default-image.png'}
+            src={previewSrc}
             alt={`${title} 縮圖`}
             fill
             sizes="100vw"
