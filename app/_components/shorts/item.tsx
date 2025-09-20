@@ -80,6 +80,7 @@ export default function ShortsItem({
             muted={true}
             playing={isActive}
             playsinline={true}
+            light={previewSrc}
             config={{
               file: {
                 attributes: {
@@ -97,16 +98,6 @@ export default function ShortsItem({
             onProgress={({ playedSeconds }) => {
               setPlayedSeconds(playedSeconds)
             }}
-          />
-        )}
-        {!isActive && (
-          <NextImage
-            src={previewSrc}
-            alt={`${title} 縮圖`}
-            fill
-            sizes="100vw"
-            className="pointer-events-none absolute inset-0 z-[1]"
-            style={{ objectFit: 'cover' }}
           />
         )}
         <div
