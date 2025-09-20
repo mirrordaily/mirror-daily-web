@@ -4,7 +4,6 @@ import { homepageGtmEvents } from '@/constants/gtm'
 import useVideoViewLogger from '@/hooks/use-video-logger'
 import type { Shorts } from '@/types/common'
 import { useEffect, useState } from 'react'
-import NextImage from 'next/image'
 import ReactPlayer from 'react-player/lazy'
 import { SHORTS_TYPE } from '@/types/common'
 
