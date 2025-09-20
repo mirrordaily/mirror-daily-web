@@ -10,7 +10,7 @@ import {
   selectLatestPosts,
   selectPopularNews,
 } from '@/redux/homepage/selector'
-import { initializeData } from '@/redux/homepage/slice'
+import { initializeData, fetchPopularNews } from '@/redux/homepage/slice'
 import Loading from '../loading'
 
 export const TAB = {
@@ -84,6 +84,12 @@ export default function TopNewsSection({ headerData }: Props) {
       dispatch(initializeData(headerData))
     }
   }, [isInitialized, dispatch, headerData])
+
+  useEffect(() => {
+    if (tab === 'Hot' && popularNews.length === 0) {
+      dispatch(fetchPopularNews(headerData))
+    }
+  }, [tab, popularNews.length, dispatch, headerData])
 
   if (!isInitialized)
     return (
