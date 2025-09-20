@@ -1,5 +1,5 @@
 import { fetchLatestShorts } from '@/app/actions-general'
-import ShortsListWithRefresh from './list-with-refresh'
+import ShortsList from './list'
 import { SHORTS_TYPE } from '@/types/common'
 import UploadButton from './upload-button'
 
@@ -16,7 +16,7 @@ export default async function ShortsDerivativeSection() {
         </p>
         <UploadButton />
       </div>
-      <ShortsListWithRefresh
+      <ShortsList
         customClass="mt-12 md:mt-8 lg:mt-[22px]"
         items={items}
         type={SHORTS_TYPE.DERIVATIVE}
