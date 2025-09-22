@@ -68,15 +68,17 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
       slug: tag.slug ?? '',
     })) ?? []
 
-  const sections =
-    Array.isArray(rawData.sections) && rawData.sections.length > 0
-      ? rawData.sections.slice(1, 4).map((section) => ({
-          // slice(1, 4) 是因為首頁各新聞大分類標籤原本拿第一個標籤，但多為「即時」，因重複度過高故改取第二個，所以文章頁也不取第一個以保持一致性，然後最多取三個
-          name: section.name ?? '',
-          color: section.color ?? '',
-          slug: section.slug ?? '',
-        }))
-      : []
+  const slicedSections = Array.isArray(rawData.sections)
+    ? rawData.sections.length === 1
+      ? rawData.sections.slice(0, 1)
+      : rawData.sections.slice(1, 4)
+    : []
+
+  const sections = slicedSections.map((section) => ({
+    name: section.name ?? '',
+    color: section.color ?? '',
+    slug: section.slug ?? '',
+  }))
 
   return {
     id: rawData.id,
