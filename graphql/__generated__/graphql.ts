@@ -3983,6 +3983,7 @@ export type Video = {
   createdAt?: Maybe<Scalars['DateTime']['output']>
   createdBy?: Maybe<User>
   file?: Maybe<FileFieldOutput>
+  fileDuration?: Maybe<Scalars['String']['output']>
   heroImage?: Maybe<Photo>
   id: Scalars['ID']['output']
   isFeed?: Maybe<Scalars['Boolean']['output']>
@@ -4004,6 +4005,7 @@ export type Video = {
   uploaderEmail?: Maybe<Scalars['String']['output']>
   videoSection?: Maybe<Scalars['String']['output']>
   videoSrc?: Maybe<Scalars['String']['output']>
+  youtubeDuration?: Maybe<Scalars['String']['output']>
   youtubeUrl?: Maybe<Scalars['String']['output']>
 }
 
@@ -4036,6 +4038,7 @@ export type VideoCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
   file?: InputMaybe<FileFieldInput>
+  fileDuration?: InputMaybe<Scalars['String']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
   isFeed?: InputMaybe<Scalars['Boolean']['input']>
   isShorts?: InputMaybe<Scalars['Boolean']['input']>
@@ -4052,12 +4055,14 @@ export type VideoCreateInput = {
   uploader?: InputMaybe<Scalars['String']['input']>
   uploaderEmail?: InputMaybe<Scalars['String']['input']>
   videoSection?: InputMaybe<Scalars['String']['input']>
+  youtubeDuration?: InputMaybe<Scalars['String']['input']>
   youtubeUrl?: InputMaybe<Scalars['String']['input']>
 }
 
 export type VideoOrderByInput = {
   content?: InputMaybe<OrderDirection>
   createdAt?: InputMaybe<OrderDirection>
+  fileDuration?: InputMaybe<OrderDirection>
   id?: InputMaybe<OrderDirection>
   isFeed?: InputMaybe<OrderDirection>
   isShorts?: InputMaybe<OrderDirection>
@@ -4070,6 +4075,7 @@ export type VideoOrderByInput = {
   uploader?: InputMaybe<OrderDirection>
   uploaderEmail?: InputMaybe<OrderDirection>
   videoSection?: InputMaybe<OrderDirection>
+  youtubeDuration?: InputMaybe<OrderDirection>
   youtubeUrl?: InputMaybe<OrderDirection>
 }
 
@@ -4106,6 +4112,7 @@ export type VideoUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
   file?: InputMaybe<FileFieldInput>
+  fileDuration?: InputMaybe<Scalars['String']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
   isFeed?: InputMaybe<Scalars['Boolean']['input']>
   isShorts?: InputMaybe<Scalars['Boolean']['input']>
@@ -4122,6 +4129,7 @@ export type VideoUpdateInput = {
   uploader?: InputMaybe<Scalars['String']['input']>
   uploaderEmail?: InputMaybe<Scalars['String']['input']>
   videoSection?: InputMaybe<Scalars['String']['input']>
+  youtubeDuration?: InputMaybe<Scalars['String']['input']>
   youtubeUrl?: InputMaybe<Scalars['String']['input']>
 }
 
@@ -4132,6 +4140,7 @@ export type VideoWhereInput = {
   content?: InputMaybe<StringFilter>
   createdAt?: InputMaybe<DateTimeNullableFilter>
   createdBy?: InputMaybe<UserWhereInput>
+  fileDuration?: InputMaybe<StringFilter>
   heroImage?: InputMaybe<PhotoWhereInput>
   id?: InputMaybe<IdFilter>
   isFeed?: InputMaybe<BooleanFilter>
@@ -4147,6 +4156,7 @@ export type VideoWhereInput = {
   uploader?: InputMaybe<StringFilter>
   uploaderEmail?: InputMaybe<StringFilter>
   videoSection?: InputMaybe<StringNullableFilter>
+  youtubeDuration?: InputMaybe<StringFilter>
   youtubeUrl?: InputMaybe<StringFilter>
 }
 

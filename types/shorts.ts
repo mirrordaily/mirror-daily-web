@@ -11,8 +11,8 @@ export type ShortsData = {
   tagId?: string
   heroImage: HeroImage
   createdAt: string
-  // fileDuration: string
-  // youtubeDuration: string
+  fileDuration: string
+  youtubeDuration: string
   content: string
 }
 
