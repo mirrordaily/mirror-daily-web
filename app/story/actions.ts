@@ -69,6 +69,18 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
       slug: tag.slug ?? '',
     })) ?? []
 
+  const slicedSections = Array.isArray(rawData.sections)
+    ? rawData.sections.length === 1
+      ? rawData.sections.slice(0, 1)
+      : rawData.sections.slice(1, 4)
+    : []
+
+  const sections = slicedSections.map((section) => ({
+    name: section.name ?? '',
+    color: section.color ?? '',
+    slug: section.slug ?? '',
+  }))
+
   return {
     id: rawData.id,
     link: getStoryPageUrl(rawData.id),
