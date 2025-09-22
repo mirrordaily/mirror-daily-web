@@ -18,8 +18,7 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
-// add segment config to prevent data fetch during build
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export default async function Home() {
   const headerData = await fetchHeaderData()
