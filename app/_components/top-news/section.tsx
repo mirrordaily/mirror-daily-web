@@ -6,11 +6,10 @@ import type { HeaderData, ParameterOfComponent } from '@/types/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
   selectIsInitialized,
-  selectLiveEvent,
   selectLatestPosts,
   selectPopularNews,
 } from '@/redux/homepage/selector'
-import { initializeData } from '@/redux/homepage/slice'
+import { initializeData, fetchPopularNews } from '@/redux/homepage/slice'
 import Loading from '../loading'
 
 export const TAB = {
@@ -30,7 +29,7 @@ type PostData = Record<
 export default function TopNewsSection({ headerData }: Props) {
   const dispatch = useAppDispatch()
   const isInitialized = useAppSelector(selectIsInitialized)
-  const liveEvent = useAppSelector(selectLiveEvent)
+  // const liveEvent = useAppSelector(selectLiveEvent)
   const latestPosts = useAppSelector(selectLatestPosts)
   const popularNews = useAppSelector(selectPopularNews)
 
@@ -75,7 +74,7 @@ export default function TopNewsSection({ headerData }: Props) {
       Latest: latestList,
       Hot: hotList,
     }
-  }, [liveEvent, latestPosts, popularNews])
+  }, [latestPosts, popularNews])
 
   const posts = postData[tab]
 
@@ -84,6 +83,12 @@ export default function TopNewsSection({ headerData }: Props) {
       dispatch(initializeData(headerData))
     }
   }, [isInitialized, dispatch, headerData])
+
+  useEffect(() => {
+    if (tab === 'Hot' && popularNews.length === 0) {
+      dispatch(fetchPopularNews(headerData))
+    }
+  }, [tab, popularNews.length, dispatch, headerData])
 
   if (!isInitialized)
     return (

@@ -63,8 +63,8 @@ query GetShortsData($id: ID!) {
     youtubeUrl
     videoSrc
     createdAt
-    # fileDuration
-    # youtubeDuration
+    fileDuration
+    youtubeDuration
     content
   }
 }

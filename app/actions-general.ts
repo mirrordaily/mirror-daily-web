@@ -104,7 +104,7 @@ export const fetchPopularPost = async (
 
 export const fetchLatestShorts = async (
   type: SHORTS_TYPE,
-  amount: number = 20,
+  amount: number = 10,
   start: number = 0
 ): Promise<Shorts[]> => {
   const errorLogger = createErrorLogger(
@@ -166,14 +166,28 @@ export const fetchLatestVideos = async (
     },
     async () => {
       const resp = await fetch(URL_STATIC_LATEST_VIDEOS)
-      const result = await schema.parse(resp.json())
-      return result
+      const parseResult = await schema.safeParse(resp.json())
+      if (!parseResult.success) {
+        errorLogger(parseResult.error)
+        return {
+          [LATEST_VIDEOS_TYPE.NEWS]: [],
+          [LATEST_VIDEOS_TYPE.CREATIVITY]: [],
+        }
+      }
+      return parseResult.data
     },
     async () => {
-      const result = await schema.parse(
+      const parseResult = await schema.safeParse(
         fetchGQLData(errorLogger, GetLatestVideosDocument, { amount, start })
       )
-      return result
+      if (!parseResult.success) {
+        errorLogger(parseResult.error)
+        return {
+          [LATEST_VIDEOS_TYPE.NEWS]: [],
+          [LATEST_VIDEOS_TYPE.CREATIVITY]: [],
+        }
+      }
+      return parseResult.data
     }
   )
   const matchedData = data[type].slice(start, amount)
