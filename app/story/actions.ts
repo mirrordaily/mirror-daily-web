@@ -86,7 +86,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     heroCaption: rawData.heroCaption ?? '',
     publishedTime: dateFormatter(rawData.publishedDate) ?? '',
     postMainImage,
-    sections: sections,
+    sections,
     isAdult: rawData.isAdult ?? false,
     shouldShowAd: !(rawData.hiddenAdvertised ?? false),
     writers,
