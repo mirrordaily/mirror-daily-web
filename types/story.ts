@@ -14,8 +14,7 @@ export type Post = {
   heroCaption: string
   publishedTime: string
   postMainImage: HeroImage
-  sectionName: string
-  sectionColor: string
+  sections: { name: string; color: string; slug: string }[]
   writers: Contact[]
   photographers: Contact[]
   mainWriters: Contact[]

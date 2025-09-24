@@ -16,7 +16,6 @@ import {
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
-import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   if (!rawData) return null
@@ -69,6 +68,16 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
       slug: tag.slug ?? '',
     })) ?? []
 
+  const slicedSections = Array.isArray(rawData.sections)
+    ? rawData.sections.slice(0, 3)
+    : []
+
+  const sections = slicedSections.map((section) => ({
+    name: section.name ?? '',
+    color: section.color ?? '',
+    slug: section.slug ?? '',
+  }))
+
   return {
     id: rawData.id,
     link: getStoryPageUrl(rawData.id),
@@ -77,8 +86,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     heroCaption: rawData.heroCaption ?? '',
     publishedTime: dateFormatter(rawData.publishedDate) ?? '',
     postMainImage,
-    sectionName: rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME,
-    sectionColor: rawData.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR,
+    sections,
     isAdult: rawData.isAdult ?? false,
     shouldShowAd: !(rawData.hiddenAdvertised ?? false),
     writers,
