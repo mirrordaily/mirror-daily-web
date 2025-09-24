@@ -69,9 +69,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     })) ?? []
 
   const slicedSections = Array.isArray(rawData.sections)
-    ? rawData.sections.length === 1
-      ? rawData.sections.slice(0, 1)
-      : rawData.sections.slice(0, 3)
+    ? rawData.sections.slice(0, 3)
     : []
 
   const sections = slicedSections.map((section) => ({
