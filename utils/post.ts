@@ -90,8 +90,19 @@ const transformRawPopularPost = (
   const sectionColor = getSectionColor(headerData, sections[1]?.slug)
   const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
 
+  let sectionName: string
+  if (sections.length === 1) {
+    sectionName = sections[0]?.name ?? DEFAULT_SECTION_NAME
+  } else if (sections.length > 1) {
+    sectionName =
+      sections.filter((section) => section.name !== '即時')[0]?.name ??
+      DEFAULT_SECTION_NAME
+  } else {
+    sectionName = DEFAULT_SECTION_NAME
+  }
+
   return {
-    sectionName: sections[1]?.name ?? DEFAULT_SECTION_NAME,
+    sectionName,
     sectionColor,
     categoryName: categories[0]?.name ?? DEFAULT_SECTION_NAME,
     categoryColor,
