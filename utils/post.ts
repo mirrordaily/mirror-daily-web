@@ -2,7 +2,7 @@ import type { z } from 'zod'
 import { isValidUrl } from './common'
 import type { rawLatestPostSchema, rawPopularPostSchema } from './data-schema'
 import type { HeaderData, LatestPost, PopularNews } from '@/types/common'
-import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
+import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 import { getHeroImage, getSectionColor, getCategoryColor } from './data-process'
 import { getPostPageUrl } from './site-urls'
 import { dateFormatter } from './data-process'
@@ -25,28 +25,32 @@ const getSectionConfig = (
 ): SectionConfig => {
   const { partner, sections } = rawPosts
 
-  if (typeof partner === 'string') {
-    const sectionName = sections[1]?.name || DEFAULT_SECTION_NAME
+  if (
+    partner &&
+    typeof partner !== 'string' &&
+    partner?.slug === 'healthnews'
+  ) {
+    return {
+      name: '生活',
+      color: '#03C121',
+    }
+  } else {
     const color = getSectionColor(headerData, sections[1]?.slug)
+
+    let sectionName: string
+    if (sections.length === 1) {
+      sectionName = sections[0]?.name ?? DEFAULT_SECTION_NAME
+    } else if (sections.length > 1) {
+      sectionName =
+        sections.filter((section) => section.name !== '即時')[0]?.name ??
+        DEFAULT_SECTION_NAME
+    } else {
+      sectionName = DEFAULT_SECTION_NAME
+    }
 
     return {
       name: sectionName,
       color,
-    }
-  } else {
-    const { slug } = partner
-    if (slug === 'healthnews') {
-      return {
-        name: '生活',
-        color: '#03C121',
-      }
-    } else {
-      // ebc and others
-      const color = DEFAULT_SECTION_COLOR
-      return {
-        name: DEFAULT_SECTION_NAME,
-        color,
-      }
     }
   }
 }
