@@ -18,9 +18,8 @@ type Props = {
 export default function EditorChoiceWithRefresh(initial: Props) {
   const [data, setData] = useState<Props>(initial)
   const isFetchingRef = useRef(false)
-
   const prevIdsRef = useRef<string>(
-    initial.editor.map((e) => e.postId).join(',')
+    (initial.editor || []).map((e) => e.postId).join(',')
   )
 
   const fetchAndMaybeUpdate = useCallback(async () => {
