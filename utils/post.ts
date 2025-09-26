@@ -57,15 +57,15 @@ const getSectionConfig = (
       name: '生活',
       color: '#03C121',
     }
-  } else {
-    const sectionSlug = getSectionSlug(sections)
-    const color = getSectionColor(headerData, sectionSlug)
-    const sectionName = getSectionName(sections)
+  }
 
-    return {
-      name: sectionName,
-      color,
-    }
+  const sectionSlug = getSectionSlug(sections)
+  const color = getSectionColor(headerData, sectionSlug)
+  const sectionName = getSectionName(sections)
+
+  return {
+    name: sectionName,
+    color,
   }
 }
 
