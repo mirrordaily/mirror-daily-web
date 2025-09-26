@@ -19,6 +19,19 @@ type SectionConfig = {
   color: string
 }
 
+const getSectionName = (sections: { name: string; slug: string }[]) => {
+  if (sections.length === 1) {
+    return sections[0]?.name ?? DEFAULT_SECTION_NAME
+  } else if (sections.length > 1) {
+    return (
+      sections.filter((section) => section.name !== '即時')[0]?.name ??
+      DEFAULT_SECTION_NAME
+    )
+  } else {
+    return DEFAULT_SECTION_NAME
+  }
+}
+
 const getSectionConfig = (
   rawPosts: z.infer<typeof rawLatestPostSchema>,
   headerData: HeaderData[]
@@ -45,17 +58,7 @@ const getSectionConfig = (
       sectionSlug = ''
     }
     const color = getSectionColor(headerData, sectionSlug)
-
-    let sectionName: string
-    if (sections.length === 1) {
-      sectionName = sections[0]?.name ?? DEFAULT_SECTION_NAME
-    } else if (sections.length > 1) {
-      sectionName =
-        sections.filter((section) => section.name !== '即時')[0]?.name ??
-        DEFAULT_SECTION_NAME
-    } else {
-      sectionName = DEFAULT_SECTION_NAME
-    }
+    const sectionName = getSectionName(sections)
 
     return {
       name: sectionName,
@@ -111,17 +114,7 @@ const transformRawPopularPost = (
   }
   const sectionColor = getSectionColor(headerData, sectionSlug)
   const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
-
-  let sectionName: string
-  if (sections.length === 1) {
-    sectionName = sections[0]?.name ?? DEFAULT_SECTION_NAME
-  } else if (sections.length > 1) {
-    sectionName =
-      sections.filter((section) => section.name !== '即時')[0]?.name ??
-      DEFAULT_SECTION_NAME
-  } else {
-    sectionName = DEFAULT_SECTION_NAME
-  }
+  const sectionName = getSectionName(sections)
 
   return {
     sectionName,
