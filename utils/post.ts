@@ -19,6 +19,16 @@ type SectionConfig = {
   color: string
 }
 
+const getSectionSlug = (sections: { name: string; slug: string }[]) => {
+  if (sections.length === 1) {
+    return sections[0]?.slug ?? ''
+  } else if (sections.length > 1) {
+    return sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
+  } else {
+    return ''
+  }
+}
+
 const getSectionName = (sections: { name: string; slug: string }[]) => {
   if (sections.length === 1) {
     return sections[0]?.name ?? DEFAULT_SECTION_NAME
@@ -48,15 +58,7 @@ const getSectionConfig = (
       color: '#03C121',
     }
   } else {
-    let sectionSlug: string
-    if (sections.length === 1) {
-      sectionSlug = sections[0]?.slug ?? ''
-    } else if (sections.length > 1) {
-      sectionSlug =
-        sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
-    } else {
-      sectionSlug = ''
-    }
+    const sectionSlug = getSectionSlug(sections)
     const color = getSectionColor(headerData, sectionSlug)
     const sectionName = getSectionName(sections)
 
@@ -103,15 +105,7 @@ const transformRawPopularPost = (
     sectionsInInputOrder: sections,
     categories,
   } = rawPosts
-  let sectionSlug: string
-  if (sections.length === 1) {
-    sectionSlug = sections[0]?.slug ?? ''
-  } else if (sections.length > 1) {
-    sectionSlug =
-      sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
-  } else {
-    sectionSlug = ''
-  }
+  const sectionSlug = getSectionSlug(sections)
   const sectionColor = getSectionColor(headerData, sectionSlug)
   const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
   const sectionName = getSectionName(sections)
