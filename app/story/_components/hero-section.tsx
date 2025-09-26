@@ -3,10 +3,11 @@ import type { ItemInHeroSection } from '@/types/story'
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import type { Contact } from '@/types/story'
-import { getTagPageUrl } from '@/utils/site-urls'
+import { getTagPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import IconMirrorDaily from '@/public/icons/logos/mirror-daily-black.svg'
 import NextImage from 'next/image'
 import { storyGtmEvents } from '@/constants/gtm'
+import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 export default function HeroSection({
   title,
@@ -14,8 +15,7 @@ export default function HeroSection({
   heroCaption,
   publishedTime,
   postMainImage,
-  sectionName,
-  sectionColor,
+  sections,
   writers,
   photographers,
   mainWriters,
@@ -61,10 +61,27 @@ export default function HeroSection({
       </figure>
 
       <div className="order-2 w-full px-5 md:px-0 lg:order-1">
-        <p
-          style={{ color: sectionColor }}
-          className="mb-1"
-        >{`｜${sectionName}`}</p>
+        {sections.length > 0 ? (
+          <ul className="mb-1 flex text-sm/normal lg:mb-4 lg:font-bold lg:leading-none">
+            {sections.map((section) => (
+              <Link
+                prefetch={false}
+                href={getSectionPageUrl(section.slug)}
+                target="_blank"
+                key={section.slug}
+              >
+                <li key={section.name} style={{ color: section.color }}>
+                  {`｜${section.name}`}
+                </li>
+              </Link>
+            ))}
+          </ul>
+        ) : (
+          <p
+            style={{ color: DEFAULT_SECTION_COLOR }}
+            className="mb-1 text-sm/normal lg:mb-4 lg:font-bold lg:leading-none"
+          >{`｜${DEFAULT_SECTION_NAME}`}</p>
+        )}
         <h1 className="mb-3 break-all text-[32px] font-normal leading-[45px] text-[#212944] md:mb-1 lg:mb-4">
           {title}
         </h1>

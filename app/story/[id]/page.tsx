@@ -39,12 +39,12 @@ export async function generateMetadata({
   const keywords = [...tags, ...algoTags].filter(Boolean).join(', ')
   const other: Record<string, string> = {
     'article:published_time': new Date(postData.publishedTime).toISOString(),
-    'article:section': postData.sectionName || 'UnCategorized',
+    'article:section': postData.sections?.[0]?.name || 'UnCategorized',
     'dable:author': postData.writers?.[0]
       ? postData.writers[0].name
       : 'Unknown Author',
     'dable:item_id': postData.id,
-    'section:color': postData.sectionColor,
+    'section:color': postData.sections?.[0]?.color || '#000000',
     news_keywords: newsKeywords,
     keywords: keywords,
   }
@@ -86,7 +86,7 @@ export default async function Page({ params }: PageProps) {
     storyId: postData.id,
     storyTitle: postData.title,
     authorNames: postData.writers.map((w) => w.name),
-    sectionName: postData.sectionName,
+    sectionName: postData.sections?.[0]?.name || '',
     tags: postData.tags.map((t) => t.name),
     algoTags: postData.algoTags.map((t) => t.name),
     editors: postData.editors.map((e) => e.name),
