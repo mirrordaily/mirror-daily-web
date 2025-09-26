@@ -35,7 +35,16 @@ const getSectionConfig = (
       color: '#03C121',
     }
   } else {
-    const color = getSectionColor(headerData, sections[1]?.slug)
+    let sectionSlug: string
+    if (sections.length === 1) {
+      sectionSlug = sections[0]?.slug ?? ''
+    } else if (sections.length > 1) {
+      sectionSlug =
+        sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
+    } else {
+      sectionSlug = ''
+    }
+    const color = getSectionColor(headerData, sectionSlug)
 
     let sectionName: string
     if (sections.length === 1) {
