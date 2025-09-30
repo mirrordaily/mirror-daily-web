@@ -2375,7 +2375,6 @@ export type Post = {
   redirect?: Maybe<Scalars['String']['output']>
   related_videos?: Maybe<Array<Video>>
   related_videosCount?: Maybe<Scalars['Int']['output']>
-  related_videosInInputOrder?: Maybe<Array<Maybe<Video>>>
   relateds?: Maybe<Array<Post>>
   relatedsCount?: Maybe<Scalars['Int']['output']>
   relatedsOne?: Maybe<Post>
@@ -2404,7 +2403,6 @@ export type Post = {
   vocalsCount?: Maybe<Scalars['Int']['output']>
   writers?: Maybe<Array<Contact>>
   writersCount?: Maybe<Scalars['Int']['output']>
-  writersInInputOrder?: Maybe<Array<Maybe<Contact>>>
 }
 
 export type PostWarningsArgs = {
