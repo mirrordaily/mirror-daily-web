@@ -19,25 +19,42 @@ type SectionConfig = {
   color: string
 }
 
-const getSectionSlug = (sections: { name: string; slug: string }[]) => {
-  if (sections.length === 1) {
-    return sections[0]?.slug ?? ''
-  } else if (sections.length > 1) {
-    return sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
-  }
-  return ''
-}
+type Sections = {
+  name: string
+  slug: string
+}[]
 
-const getSectionName = (sections: { name: string; slug: string }[]) => {
-  if (sections.length === 1) {
-    return sections[0]?.name ?? DEFAULT_SECTION_NAME
-  } else if (sections.length > 1) {
-    return (
-      sections.filter((section) => section.name !== '即時')[0]?.name ??
-      DEFAULT_SECTION_NAME
-    )
+const getLabelSection = (sections: Sections, headerData: HeaderData[]) => {
+  const getSectionSlug = (sections: Sections) => {
+    if (sections.length === 1) {
+      return sections[0]?.slug ?? ''
+    } else if (sections.length > 1) {
+      return (
+        sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
+      )
+    }
+    return ''
   }
-  return DEFAULT_SECTION_NAME
+
+  const getSectionName = (sections: Sections) => {
+    if (sections.length === 1) {
+      return sections[0]?.name ?? DEFAULT_SECTION_NAME
+    } else if (sections.length > 1) {
+      return (
+        sections.filter((section) => section.name !== '即時')[0]?.name ??
+        DEFAULT_SECTION_NAME
+      )
+    }
+  }
+
+  const sectionSlug = getSectionSlug(sections)
+  const sectionColor = getSectionColor(headerData, sectionSlug)
+  const sectionName = getSectionName(sections)
+
+  return {
+    sectionName,
+    color: sectionColor,
+  }
 }
 
 const getSectionConfig = (
@@ -57,9 +74,10 @@ const getSectionConfig = (
     }
   }
 
-  const sectionSlug = getSectionSlug(sections)
-  const color = getSectionColor(headerData, sectionSlug)
-  const sectionName = getSectionName(sections)
+  const { sectionName = DEFAULT_SECTION_NAME, color } = getLabelSection(
+    sections,
+    headerData
+  )
 
   return {
     name: sectionName,
@@ -103,14 +121,15 @@ const transformRawPopularPost = (
     sectionsInInputOrder: sections,
     categories,
   } = rawPosts
-  const sectionSlug = getSectionSlug(sections)
-  const sectionColor = getSectionColor(headerData, sectionSlug)
   const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
-  const sectionName = getSectionName(sections)
+  const { sectionName = DEFAULT_SECTION_NAME, color } = getLabelSection(
+    sections,
+    headerData
+  )
 
   return {
     sectionName,
-    sectionColor,
+    sectionColor: color,
     categoryName: categories[0]?.name ?? DEFAULT_SECTION_NAME,
     categoryColor,
     postId: id,
