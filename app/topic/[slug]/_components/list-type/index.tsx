@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation'
 import { fetchListTypeTopicPostBySlug } from '../../../action'
 import List from './list'
-
-const PAGE_SIZE = 12
+import { PAGE_SIZE } from '@/constants/topic'
 
 type Props = {
   slug: string
@@ -12,7 +11,7 @@ export default async function ListTypeListing({ slug }: Props) {
   const { postsData, postsCount } = await fetchListTypeTopicPostBySlug({
     slug,
     take: PAGE_SIZE,
-    skip: 0,
+    page: 1,
     withAmount: true,
   })
 
@@ -23,7 +22,7 @@ export default async function ListTypeListing({ slug }: Props) {
     const { postsData } = await fetchListTypeTopicPostBySlug({
       slug,
       take: PAGE_SIZE,
-      skip: PAGE_SIZE * (page - 1),
+      page,
     })
     return postsData
   }
