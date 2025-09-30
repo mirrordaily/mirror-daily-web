@@ -24,9 +24,8 @@ const getSectionSlug = (sections: { name: string; slug: string }[]) => {
     return sections[0]?.slug ?? ''
   } else if (sections.length > 1) {
     return sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
-  } else {
-    return ''
   }
+  return ''
 }
 
 const getSectionName = (sections: { name: string; slug: string }[]) => {
@@ -37,9 +36,8 @@ const getSectionName = (sections: { name: string; slug: string }[]) => {
       sections.filter((section) => section.name !== '即時')[0]?.name ??
       DEFAULT_SECTION_NAME
     )
-  } else {
-    return DEFAULT_SECTION_NAME
   }
+  return DEFAULT_SECTION_NAME
 }
 
 const getSectionConfig = (
