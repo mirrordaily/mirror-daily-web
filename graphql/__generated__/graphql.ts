@@ -5210,6 +5210,7 @@ export type GetPostByIdQuery = {
       __typename?: 'Section'
       name?: string | null
       color?: string | null
+      slug?: string | null
     }> | null
     writers?: Array<{
       __typename?: 'Contact'
@@ -10270,6 +10271,7 @@ export const GetPostByIdDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                     ],
                   },
                 },
