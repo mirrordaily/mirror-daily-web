@@ -25,35 +25,25 @@ type Sections = {
 }[]
 
 const getLabelSection = (sections: Sections, headerData: HeaderData[]) => {
-  const getSectionSlug = (sections: Sections) => {
-    if (sections.length === 1) {
-      return sections[0]?.slug ?? ''
-    } else if (sections.length > 1) {
-      return (
-        sections.filter((section) => section.name !== '即時')[0]?.slug ?? ''
-      )
+  if (!sections.length)
+    return {
+      sectionName: DEFAULT_SECTION_NAME,
+      color: getSectionColor(headerData, ''),
     }
-    return ''
-  }
 
-  const getSectionName = (sections: Sections) => {
-    if (sections.length === 1) {
-      return sections[0]?.name ?? DEFAULT_SECTION_NAME
-    } else if (sections.length > 1) {
-      return (
-        sections.filter((section) => section.name !== '即時')[0]?.name ??
-        DEFAULT_SECTION_NAME
-      )
-    }
+  const defaultShownSection = { name: DEFAULT_SECTION_NAME, slug: '' }
+  let shownSection = { ...defaultShownSection }
+  if (sections.length === 1) {
+    shownSection = sections[0] ?? defaultShownSection
+  } else {
+    shownSection =
+      sections.filter((section) => section.name !== '即時')?.[0] ??
+      defaultShownSection
   }
-
-  const sectionSlug = getSectionSlug(sections)
-  const sectionColor = getSectionColor(headerData, sectionSlug)
-  const sectionName = getSectionName(sections)
 
   return {
-    sectionName,
-    color: sectionColor,
+    sectionName: shownSection.name ?? DEFAULT_SECTION_NAME,
+    color: getSectionColor(headerData, shownSection.slug ?? ''),
   }
 }
 
@@ -74,10 +64,7 @@ const getSectionConfig = (
     }
   }
 
-  const { sectionName = DEFAULT_SECTION_NAME, color } = getLabelSection(
-    sections,
-    headerData
-  )
+  const { sectionName, color } = getLabelSection(sections, headerData)
 
   return {
     name: sectionName,
@@ -122,10 +109,7 @@ const transformRawPopularPost = (
     categories,
   } = rawPosts
   const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
-  const { sectionName = DEFAULT_SECTION_NAME, color } = getLabelSection(
-    sections,
-    headerData
-  )
+  const { sectionName, color } = getLabelSection(sections, headerData)
 
   return {
     sectionName,
