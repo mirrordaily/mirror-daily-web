@@ -79,11 +79,7 @@ async function fetchListTypeTopicPostBySlug({
       postsCount: 0,
     },
     async () => {
-      const skip = PAGE_SIZE * page
-      const jsonPage = Math.floor(skip / 24) + 1
-      const resp = await fetch(
-        `${URL_STATIC_TOPIC_NEWS}_${slug}_${jsonPage}.json`
-      )
+      const resp = await fetch(`${URL_STATIC_TOPIC_NEWS}_${slug}_${page}.json`)
       const rawData = await resp.json()
 
       const schema = z.object({
