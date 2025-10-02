@@ -1,15 +1,15 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { dateFormatter } from '@/utils/data-process'
 import { MISO_API_KEY } from '@/constants/config'
 import '@/shared-styles/search.css'
 import { searchGtmEvents } from '@/constants/gtm'
 
 export default function MisoSearch() {
-  const sortOptions = [
+  const sortOptions = useMemo(() => [
     { field: 'relevance', text: '關聯性', default: true },
     { field: 'published_at', text: '由新到舊' },
-  ]
+  ], [])
   useEffect(() => {
     const misocmd = window.misocmd || (window.misocmd = [])
     misocmd.push(async () => {

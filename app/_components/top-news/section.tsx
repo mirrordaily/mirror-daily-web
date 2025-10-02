@@ -6,7 +6,6 @@ import type { HeaderData, ParameterOfComponent } from '@/types/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
   selectIsInitialized,
-  selectLiveEvent,
   selectLatestPosts,
   selectPopularNews,
 } from '@/redux/homepage/selector'
@@ -30,7 +29,6 @@ type PostData = Record<
 export default function TopNewsSection({ headerData }: Props) {
   const dispatch = useAppDispatch()
   const isInitialized = useAppSelector(selectIsInitialized)
-  const liveEvent = useAppSelector(selectLiveEvent)
   const latestPosts = useAppSelector(selectLatestPosts)
   const popularNews = useAppSelector(selectPopularNews)
 

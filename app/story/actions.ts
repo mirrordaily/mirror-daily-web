@@ -6,7 +6,10 @@ import {
   GetPostByIdDocument,
   GetRelatedPostsByIdDocument,
 } from '@/graphql/__generated__/graphql'
-import type { GetPostByIdQuery, GetRelatedPostsByIdQuery } from '@/graphql/__generated__/graphql'
+import type {
+  GetPostByIdQuery,
+  GetRelatedPostsByIdQuery,
+} from '@/graphql/__generated__/graphql'
 import {
   dateFormatter,
   getHeroImage,
