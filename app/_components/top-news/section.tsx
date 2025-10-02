@@ -75,7 +75,7 @@ export default function TopNewsSection({ headerData }: Props) {
       Latest: latestList,
       Hot: hotList,
     }
-  }, [liveEvent, latestPosts, popularNews])
+  }, [latestPosts, popularNews])
 
   const posts = postData[tab]
 

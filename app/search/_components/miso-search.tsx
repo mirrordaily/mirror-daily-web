@@ -357,7 +357,7 @@ export default function MisoSearch() {
         workflow.autoQuery()
       }, 1000)
     })
-  }, [])
+  }, [sortOptions])
   return (
     <div
       id="miso-hybrid-search-combo"

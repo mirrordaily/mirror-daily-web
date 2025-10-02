@@ -6,7 +6,7 @@ import {
   GetPostByIdDocument,
   GetRelatedPostsByIdDocument,
 } from '@/graphql/__generated__/graphql'
-import type { GetPostByIdQuery } from '@/graphql/__generated__/graphql'
+import type { GetPostByIdQuery, GetRelatedPostsByIdQuery } from '@/graphql/__generated__/graphql'
 import {
   dateFormatter,
   getHeroImage,
@@ -117,7 +117,7 @@ async function fetchPost(id: string) {
   })
 
   if (result) {
-    const { post } = result as any
+    const { post } = result as GetPostByIdQuery
     return transformPost(post)
   } else {
     return null
@@ -135,7 +135,7 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   })
 
   if (result) {
-    const { post } = result as any
+    const { post } = result as GetRelatedPostsByIdQuery
     return transformRawRelatedPosts(post)
   } else return []
 }
