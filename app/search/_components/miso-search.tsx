@@ -11,7 +11,7 @@ export default function MisoSearch() {
       { field: 'relevance', text: '關聯性', default: true },
       { field: 'published_at', text: '由新到舊' },
     ],
-    [],
+    []
   )
   useEffect(() => {
     const misocmd = window.misocmd || (window.misocmd = [])
