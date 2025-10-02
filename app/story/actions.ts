@@ -72,13 +72,13 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   const slicedSections = Array.isArray(rawData.sections)
     ? rawData.sections.length === 1
       ? rawData.sections.slice(0, 1)
-      : rawData.sections.slice(1, 4)
+      : rawData.sections.slice(0, 3)
     : []
 
   const sections = slicedSections.map((section) => ({
     name: section.name ?? '',
     color: section.color ?? '',
-    slug: section.slug ?? '',
+    slug: (section as any).slug ?? '',
   }))
 
   return {
@@ -91,6 +91,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     postMainImage,
     sectionName: rawData.sections?.[0]?.name ?? DEFAULT_SECTION_NAME,
     sectionColor: rawData.sections?.[0]?.color ?? DEFAULT_SECTION_COLOR,
+    sections,
     isAdult: rawData.isAdult ?? false,
     shouldShowAd: !(rawData.hiddenAdvertised ?? false),
     writers,
@@ -116,7 +117,7 @@ async function fetchPost(id: string) {
   })
 
   if (result) {
-    const { post } = result
+    const { post } = result as any
     return transformPost(post)
   } else {
     return null
@@ -134,7 +135,7 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   })
 
   if (result) {
-    const { post } = result
+    const { post } = result as any
     return transformRawRelatedPosts(post)
   } else return []
 }
