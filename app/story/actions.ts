@@ -78,7 +78,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
   const sections = slicedSections.map((section) => ({
     name: section.name ?? '',
     color: section.color ?? '',
-    slug: (section as any).slug ?? '',
+    slug: '', // slug 字段在 GraphQL 查詢中未包含，設為空字符串
   }))
 
   return {
