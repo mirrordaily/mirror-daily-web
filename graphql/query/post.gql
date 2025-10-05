@@ -147,6 +147,7 @@ query GetPostById($id: ID!) {
     sections {
       name
       color
+      slug
     }
     writers {
       id

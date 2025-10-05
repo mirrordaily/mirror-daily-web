@@ -63,8 +63,8 @@ query GetShortsData($id: ID!) {
     youtubeUrl
     videoSrc
     createdAt
-    # fileDuration
-    # youtubeDuration
+    fileDuration
+    youtubeDuration
     content
   }
 }
@@ -80,13 +80,7 @@ query GetShortsByTagAndVideoSection(
     where: {
       state: { equals: "published" }
       videoSection: { equals: $section }
-      tags:  {
-        some:  {
-          id:  {
-            equals: $tagId
-          }
-        }
-      }
+      tags: { some: { id: { equals: $tagId } } }
       isShorts: { equals: true }
     }
     take: $take
