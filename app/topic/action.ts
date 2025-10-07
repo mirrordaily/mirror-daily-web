@@ -31,6 +31,7 @@ import {
   topicPostSchema,
 } from '@/utils/data-schema'
 import { z } from 'zod'
+import { PAGE_SIZE } from '@/constants/topic'
 
 async function fetchTopicBasicInfo(
   slug: string
@@ -55,12 +56,12 @@ async function fetchTopicBasicInfo(
 async function fetchListTypeTopicPostBySlug({
   slug,
   take,
-  skip = 0,
+  page = 1,
   withAmount = false,
 }: {
   slug: string
   take: number
-  skip?: number
+  page?: number
   withAmount?: boolean
 }) {
   const errorLogger = createErrorLogger(
@@ -78,10 +79,7 @@ async function fetchListTypeTopicPostBySlug({
       postsCount: 0,
     },
     async () => {
-      const jsonPage = Math.floor(skip / 24) + 1
-      const resp = await fetch(
-        `${URL_STATIC_TOPIC_NEWS}_${slug}_${jsonPage}.json`
-      )
+      const resp = await fetch(`${URL_STATIC_TOPIC_NEWS}_${slug}_${page}.json`)
       const rawData = await resp.json()
 
       const schema = z.object({
@@ -100,6 +98,7 @@ async function fetchListTypeTopicPostBySlug({
       }
     },
     async () => {
+      const skip = PAGE_SIZE * (page - 1)
       const rawData = await fetchGQLData(
         errorLogger,
         GetListTypeTopcPostsDocument,
@@ -119,7 +118,7 @@ async function fetchListTypeTopicPostBySlug({
           }
         } else {
           return {
-            postsData: [],
+            postsData,
             postsCount: 0,
           }
         }

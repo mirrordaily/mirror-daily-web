@@ -2,7 +2,7 @@ import type { z } from 'zod'
 import { isValidUrl } from './common'
 import type { rawLatestPostSchema, rawPopularPostSchema } from './data-schema'
 import type { HeaderData, LatestPost, PopularNews } from '@/types/common'
-import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
+import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 import { getHeroImage, getSectionColor, getCategoryColor } from './data-process'
 import { getPostPageUrl } from './site-urls'
 import { dateFormatter } from './data-process'
@@ -19,35 +19,56 @@ type SectionConfig = {
   color: string
 }
 
+type Sections = {
+  name: string
+  slug: string
+}[]
+
+const getLabelSection = (sections: Sections, headerData: HeaderData[]) => {
+  if (!sections.length)
+    return {
+      sectionName: DEFAULT_SECTION_NAME,
+      color: getSectionColor(headerData, ''),
+    }
+
+  const defaultShownSection = { name: DEFAULT_SECTION_NAME, slug: '' }
+  let shownSection = { ...defaultShownSection }
+  if (sections.length === 1) {
+    shownSection = sections[0] ?? defaultShownSection
+  } else {
+    shownSection =
+      sections.filter((section) => section.name !== '即時')?.[0] ??
+      defaultShownSection
+  }
+
+  return {
+    sectionName: shownSection.name ?? DEFAULT_SECTION_NAME,
+    color: getSectionColor(headerData, shownSection.slug ?? ''),
+  }
+}
+
 const getSectionConfig = (
   rawPosts: z.infer<typeof rawLatestPostSchema>,
   headerData: HeaderData[]
 ): SectionConfig => {
   const { partner, sections } = rawPosts
 
-  if (typeof partner === 'string') {
-    const sectionName = sections[1]?.name || DEFAULT_SECTION_NAME
-    const color = getSectionColor(headerData, sections[1]?.slug)
-
+  if (
+    partner &&
+    typeof partner !== 'string' &&
+    partner?.slug === 'healthnews'
+  ) {
     return {
-      name: sectionName,
-      color,
+      name: '生活',
+      color: '#03C121',
     }
-  } else {
-    const { slug } = partner
-    if (slug === 'healthnews') {
-      return {
-        name: '生活',
-        color: '#03C121',
-      }
-    } else {
-      // ebc and others
-      const color = DEFAULT_SECTION_COLOR
-      return {
-        name: DEFAULT_SECTION_NAME,
-        color,
-      }
-    }
+  }
+
+  const { sectionName, color } = getLabelSection(sections, headerData)
+
+  return {
+    name: sectionName,
+    color,
   }
 }
 
@@ -87,12 +108,12 @@ const transformRawPopularPost = (
     sectionsInInputOrder: sections,
     categories,
   } = rawPosts
-  const sectionColor = getSectionColor(headerData, sections[1]?.slug)
   const categoryColor = getCategoryColor(headerData, categories[0]?.slug)
+  const { sectionName, color } = getLabelSection(sections, headerData)
 
   return {
-    sectionName: sections[1]?.name ?? DEFAULT_SECTION_NAME,
-    sectionColor,
+    sectionName,
+    sectionColor: color,
     categoryName: categories[0]?.name ?? DEFAULT_SECTION_NAME,
     categoryColor,
     postId: id,

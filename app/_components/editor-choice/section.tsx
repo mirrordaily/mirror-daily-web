@@ -1,5 +1,5 @@
 import { fetchEditorChoices } from '@/app/actions'
-import EditorChoiceWithRefresh from './with-refresh'
+import EditorChoiceMain from './main'
 
 // TODO: handle item with external link
 export default async function EditorChoiceSection() {
@@ -17,7 +17,7 @@ export default async function EditorChoiceSection() {
 
   return (
     <section className="section-in-homepage mb-9 mt-[6px] md:my-5 md:px-5 lg:mb-0 lg:px-9">
-      <EditorChoiceWithRefresh {...data} />
+      <EditorChoiceMain {...data} />
     </section>
   )
 }
