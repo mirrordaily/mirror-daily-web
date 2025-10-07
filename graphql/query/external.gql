@@ -15,6 +15,11 @@ query GetExternalById($id: ID!) {
       name
       slug
     }
+    sections {
+      name
+      color
+      slug
+    }
   }
 }
 
