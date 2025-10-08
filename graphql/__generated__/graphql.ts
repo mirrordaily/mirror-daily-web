@@ -2375,7 +2375,6 @@ export type Post = {
   redirect?: Maybe<Scalars['String']['output']>
   related_videos?: Maybe<Array<Video>>
   related_videosCount?: Maybe<Scalars['Int']['output']>
-  related_videosInInputOrder?: Maybe<Array<Maybe<Video>>>
   relateds?: Maybe<Array<Post>>
   relatedsCount?: Maybe<Scalars['Int']['output']>
   relatedsOne?: Maybe<Post>
@@ -2404,7 +2403,6 @@ export type Post = {
   vocalsCount?: Maybe<Scalars['Int']['output']>
   writers?: Maybe<Array<Contact>>
   writersCount?: Maybe<Scalars['Int']['output']>
-  writersInInputOrder?: Maybe<Array<Maybe<Contact>>>
 }
 
 export type PostWarningsArgs = {
@@ -4758,6 +4756,12 @@ export type GetExternalByIdQuery = {
       name?: string | null
       slug?: string | null
     } | null
+    sections?: Array<{
+      __typename?: 'Section'
+      name?: string | null
+      color?: string | null
+      slug?: string | null
+    }> | null
   } | null
 }
 
@@ -7779,6 +7783,18 @@ export const GetExternalByIdDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'sections' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                     ],
                   },

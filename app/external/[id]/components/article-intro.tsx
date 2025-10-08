@@ -2,8 +2,9 @@ import type { PostIntro } from '@/types/external'
 import Image from 'next/image'
 import Link from 'next/link'
 import { IMAGE_PATH } from '@/constants/default-path'
-import { getTagPageUrl } from '@/utils/site-urls'
+import { getTagPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import IconMirrorDaily from '@/public/icons/logos/mirror-daily-black.svg'
+import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 
 export default function ArticleIntro({
   title,
@@ -13,7 +14,7 @@ export default function ArticleIntro({
   externalsLink,
   publishedTime,
   tags,
-  sectionName,
+  sections,
 }: PostIntro) {
   return (
     <section className="flex max-w-screen-sm flex-col items-center md:w-[600px] md:max-w-none lg:w-[720px]">
@@ -32,7 +33,27 @@ export default function ArticleIntro({
         </figcaption>
       </figure>
       <div className="order-2 w-full px-5 md:px-0 lg:order-1">
-        <p className="mb-1 text-[#ff800A] lg:mb-4">{`｜${sectionName}`}</p>
+        {sections.length > 0 ? (
+          <ul className="mb-1 flex text-sm/normal lg:mb-4 lg:font-bold lg:leading-none">
+            {sections.map((section) => (
+              <Link
+                prefetch={false}
+                href={getSectionPageUrl(section.slug)}
+                target="_blank"
+                key={section.slug}
+              >
+                <li key={section.name} style={{ color: section.color }}>
+                  {`｜${section.name}`}
+                </li>
+              </Link>
+            ))}
+          </ul>
+        ) : (
+          <div
+            style={{ color: DEFAULT_SECTION_COLOR }}
+            className="mb-1 text-sm/normal lg:mb-4 lg:font-bold lg:leading-none"
+          >{`｜${DEFAULT_SECTION_NAME}`}</div>
+        )}
         <h1 className="mb-3 text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
           {title}
         </h1>

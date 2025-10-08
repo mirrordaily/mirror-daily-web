@@ -14,7 +14,7 @@ export type ExternalPost = {
     slug: string
   }[]
   link: string
-  sectionName: string
+  sections: { name: string; color: string; slug: string }[]
 }
 
 export type PostIntro = Omit<ExternalPost, 'brief' | 'content' | 'link'>
