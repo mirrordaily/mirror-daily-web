@@ -12,7 +12,7 @@ import AdultWarning from '../_components/adult-warning'
 import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV, SITE_URL } from '@/constants/config'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
-// import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -124,12 +124,12 @@ export default async function Page({ params }: PageProps) {
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        {/* {shouldShowAd && (
+        {shouldShowAd && (
           <DesktopGptAd
             slotKey="mirrordaily_article_PC_970x90_sticky"
             isStickyAd={true}
           />
-        )} */}
+        )}
       </main>
     </>
   )
