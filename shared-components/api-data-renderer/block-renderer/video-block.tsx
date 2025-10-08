@@ -56,7 +56,7 @@ const Video = ({ video }: VideoProps) => {
   const adDisplayContainerRef = useRef<google.ima.AdDisplayContainer | null>(
     null
   )
-  const adsLoaderRef = useRef(null)
+  const adsLoaderRef = useRef<google.ima.AdsLoader | null>(null)
   const adsInitialized = useRef(false)
 
   useEffect(() => {
@@ -163,6 +163,7 @@ const Video = ({ video }: VideoProps) => {
     videoContent.onended = contentEndedListener
 
     const adsRequest = new ima.AdsRequest()
+    // TODO: update to production ad tag url
     adsRequest.adTagUrl =
       'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator='
 
