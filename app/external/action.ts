@@ -31,8 +31,15 @@ function transformExternal(
       slug: tag.slug ?? '',
     })) ?? []
   const link = getExternalPageUrl(rawData.id)
-  const sectionName = '時事'
+  const slicedSections = Array.isArray(rawData.sections)
+    ? rawData.sections.slice(0, 3)
+    : []
 
+  const sections = slicedSections.map((section) => ({
+    name: section.name ?? '',
+    color: section.color ?? '',
+    slug: section.slug ?? '',
+  }))
   return {
     title,
     thumb,
@@ -44,7 +51,7 @@ function transformExternal(
     content,
     tags,
     link,
-    sectionName,
+    sections,
   }
 }
 
