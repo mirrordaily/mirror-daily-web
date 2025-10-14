@@ -170,6 +170,10 @@ const getPosterFromShorts = (
   const pickedSize: ImageKeys[] = ['w800', 'w480', 'original']
   if (!heroImage) return ''
 
+  if (typeof heroImage === 'string') {
+    return heroImage
+  }
+
   const resized = getImageSrc(heroImage.resized, pickedSize)
   const resizedWebp = getImageSrc(heroImage.resizedWebp, pickedSize)
 

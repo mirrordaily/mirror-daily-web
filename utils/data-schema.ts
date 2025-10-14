@@ -166,7 +166,7 @@ export const latestVideosSchema = z.object({
   uploader: z.string(),
   youtubeUrl: z.string().nullish(),
   videoSrc: z.string().nullish(),
-  heroImage: heroImageSchema.nullable(),
+  heroImage: z.union([heroImageSchema, z.string()]).nullable(),
   updatedAt: z.string().nullish(),
 })
 

@@ -153,7 +153,7 @@ export const fetchLatestVideos = async (
 
   const original = z.object({
     [LATEST_VIDEOS_TYPE.NEWS]: z.array(latestVideosSchema),
-    [LATEST_VIDEOS_TYPE.CREATIVITY]: z.array(latestVideosSchema),
+    [LATEST_VIDEOS_TYPE.CREATIVITY]: z.array(latestVideosSchema).optional(),
   })
 
   const schema = z.promise(original)
@@ -166,7 +166,18 @@ export const fetchLatestVideos = async (
     },
     async () => {
       const resp = await fetch(URL_STATIC_LATEST_VIDEOS)
-      const parseResult = await schema.safeParse(resp.json())
+
+      if (!resp.ok) {
+        console.error(
+          'Failed to fetch YouTube data:',
+          resp.status,
+          resp.statusText
+        )
+        throw new Error(`HTTP error! status: ${resp.status}`)
+      }
+
+      const jsonData = await resp.json()
+      const parseResult = await original.safeParse(jsonData)
       if (!parseResult.success) {
         errorLogger(parseResult.error)
         return {
@@ -190,7 +201,7 @@ export const fetchLatestVideos = async (
       return parseResult.data
     }
   )
-  const matchedData = data[type].slice(start, amount)
+  const matchedData = (data[type] || []).slice(start, amount)
   return matchedData.map(transformLatestVideos)
 }
 
