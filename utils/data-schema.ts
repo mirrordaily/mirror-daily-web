@@ -177,17 +177,6 @@ export const jsonVideosSchema = baseLatestVideosSchema.extend({
   heroImage: z.string().nullable(),
 })
 
-// Legacy schema for backward compatibility (keeping the original union type)
-export const latestVideosSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  uploader: z.string(),
-  youtubeUrl: z.string().nullish(),
-  videoSrc: z.string().nullish(),
-  heroImage: z.union([heroImageSchema, z.string()]).nullable(),
-  updatedAt: z.string().nullish(),
-})
-
 export const headerSchema = z.array(
   z.union([
     sectionSchema,
