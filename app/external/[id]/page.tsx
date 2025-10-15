@@ -156,6 +156,14 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
         </section>
+        <DesktopGptAd
+          slotKey="mirrordaily_article_PC_970x90_sticky"
+          isStickyAd={true}
+        />
+        <MobileGptAd
+          slotKey="mirrordaily_article_MW_320x100_sticky"
+          isStickyAd={true}
+        />
       </main>
     </>
   )
