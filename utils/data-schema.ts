@@ -160,6 +160,24 @@ export const shortsDataSchema = z.object({
   content: z.string(),
 })
 
+const baseLatestVideosSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  uploader: z.string(),
+  youtubeUrl: z.string().nullish(),
+  videoSrc: z.string().nullish(),
+  updatedAt: z.string().nullish(),
+})
+
+export const graphqlVideosSchema = baseLatestVideosSchema.extend({
+  heroImage: heroImageSchema.nullable(),
+})
+
+export const jsonVideosSchema = baseLatestVideosSchema.extend({
+  heroImage: z.string().nullable(),
+})
+
+// Legacy schema for backward compatibility (keeping the original union type)
 export const latestVideosSchema = z.object({
   id: z.string(),
   name: z.string(),

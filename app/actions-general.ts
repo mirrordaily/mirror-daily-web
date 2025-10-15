@@ -20,7 +20,8 @@ import {
   rawPopularPostSchema,
   rawLatestPostSchema,
   headerSchema,
-  latestVideosSchema,
+  graphqlVideosSchema,
+  jsonVideosSchema,
 } from '@/utils/data-schema'
 import {
   URL_STATIC_LATEST_SHORTS,
@@ -152,8 +153,11 @@ export const fetchLatestVideos = async (
   )
 
   const original = z.object({
-    [LATEST_VIDEOS_TYPE.NEWS]: z.array(latestVideosSchema),
-    [LATEST_VIDEOS_TYPE.CREATIVITY]: z.array(latestVideosSchema).optional(),
+    [LATEST_VIDEOS_TYPE.NEWS]: z.array(graphqlVideosSchema),
+    [LATEST_VIDEOS_TYPE.CREATIVITY]: z.array(graphqlVideosSchema),
+  })
+  const jsonOriginal = z.object({
+    [LATEST_VIDEOS_TYPE.NEWS]: z.array(jsonVideosSchema),
   })
 
   const schema = z.promise(original)
@@ -177,15 +181,34 @@ export const fetchLatestVideos = async (
       }
 
       const jsonData = await resp.json()
-      const parseResult = await original.safeParse(jsonData)
+      const parseResult = jsonOriginal.safeParse(jsonData)
       if (!parseResult.success) {
+        console.error('JSON Schema Validation Failed:', {
+          errors: parseResult.error.flatten(),
+          receivedData: jsonData,
+          expectedSchema: 'jsonOriginal schema',
+        })
         errorLogger(parseResult.error)
         return {
           [LATEST_VIDEOS_TYPE.NEWS]: [],
           [LATEST_VIDEOS_TYPE.CREATIVITY]: [],
         }
       }
-      return parseResult.data
+
+      const transformedNewsData = parseResult.data[LATEST_VIDEOS_TYPE.NEWS].map(
+        (item) => ({
+          ...item,
+          heroImage:
+            typeof item.heroImage === 'string'
+              ? { resized: { original: item.heroImage } }
+              : item.heroImage,
+        })
+      )
+
+      return {
+        [LATEST_VIDEOS_TYPE.NEWS]: transformedNewsData,
+        [LATEST_VIDEOS_TYPE.CREATIVITY]: [],
+      }
     },
     async () => {
       const parseResult = await schema.safeParse(
@@ -201,7 +224,7 @@ export const fetchLatestVideos = async (
       return parseResult.data
     }
   )
-  const matchedData = (data[type] || []).slice(start, amount)
+  const matchedData = data[type].slice(start, amount)
   return matchedData.map(transformLatestVideos)
 }
 
