@@ -13,6 +13,7 @@ import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV, SITE_URL } from '@/constants/config'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
+import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -127,6 +128,12 @@ export default async function Page({ params }: PageProps) {
         {shouldShowAd && (
           <DesktopGptAd
             slotKey="mirrordaily_article_PC_970x90_sticky"
+            isStickyAd={true}
+          />
+        )}
+        {shouldShowAd && (
+          <MobileGptAd
+            slotKey="mirrordaily_article_MW_320x100_sticky"
             isStickyAd={true}
           />
         )}
