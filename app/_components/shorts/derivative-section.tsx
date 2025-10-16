@@ -4,7 +4,7 @@ import { SHORTS_TYPE } from '@/types/common'
 import UploadButton from './upload-button'
 
 export default async function ShortsDerivativeSection() {
-  const items = await fetchLatestShorts(SHORTS_TYPE.DERIVATIVE, 20)
+  const items = await fetchLatestShorts(SHORTS_TYPE.DERIVATIVE)
 
   if (!items.length) return null
 
