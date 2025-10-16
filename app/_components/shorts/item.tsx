@@ -6,6 +6,7 @@ import type { Shorts } from '@/types/common'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
 import { SHORTS_TYPE } from '@/types/common'
+import { useIntersectionObserver } from 'usehooks-ts'
 
 type Props = Shorts & {
   isActive: boolean
@@ -32,6 +33,12 @@ export default function ShortsItem({
   const [isClientSide, setIsClientSide] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
   const [playedSeconds, setPlayedSeconds] = useState(0)
+
+  const { isIntersecting, ref: itemRef } = useIntersectionObserver({
+    threshold: 0,
+    rootMargin: '0px 300px',
+  })
+
   const { sendVideoLog } = useVideoViewLogger({
     isActive,
     title,
@@ -43,10 +50,11 @@ export default function ShortsItem({
   useEffect(() => {
     setIsClientSide(true)
   }, [])
+
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
-      <div className="relative h-[400px] w-full lg:h-[400px]">
-        {isClientSide && (
+      <div ref={itemRef} className="relative h-[400px] w-full lg:h-[400px]">
+        {isClientSide && isIntersecting && (
           <ReactPlayer
             url={fileUrl}
             width="100%"
