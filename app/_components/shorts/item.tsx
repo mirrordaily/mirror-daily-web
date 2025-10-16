@@ -33,11 +33,18 @@ export default function ShortsItem({
   const [isClientSide, setIsClientSide] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
   const [playedSeconds, setPlayedSeconds] = useState(0)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   const { isIntersecting, ref: itemRef } = useIntersectionObserver({
     threshold: 0,
     rootMargin: '0px 300px',
   })
+
+  useEffect(() => {
+    if (isIntersecting && !hasLoaded) {
+      setHasLoaded(true)
+    }
+  }, [isIntersecting, hasLoaded])
 
   const { sendVideoLog } = useVideoViewLogger({
     isActive,
@@ -54,7 +61,7 @@ export default function ShortsItem({
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div ref={itemRef} className="relative h-[400px] w-full lg:h-[400px]">
-        {isClientSide && isIntersecting && (
+        {isClientSide && hasLoaded && (
           <ReactPlayer
             url={fileUrl}
             width="100%"
