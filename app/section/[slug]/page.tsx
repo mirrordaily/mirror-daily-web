@@ -16,6 +16,7 @@ import { sectionGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
+import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 
 type PageProps = { params: { slug: string } }
 
@@ -118,7 +119,7 @@ export default async function Page({
   }
 
   return (
-    <>
+    <main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -127,7 +128,7 @@ export default async function Page({
       />
       <ListPageTopAd slug={slug} />
 
-      <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
+      <div className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList
           initialPosts={initialPosts}
           totalAmount={totalAmount}
@@ -142,12 +143,20 @@ export default async function Page({
           slug={slug}
           gtmClassName={sectionGtmEvents.popularArticle}
         />
-      </main>
+      </div>
       <MobileGptAd
         slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto"
         pageKey={slug}
       />
-    </>
+      <DesktopGptAd
+        slotKey="mirrordaily_section_PC_970x90_sticky"
+        isStickyAd={true}
+      />
+      <MobileGptAd
+        slotKey="mirrordaily_section_PC_320x100_sticky"
+        isStickyAd={true}
+      />
+    </main>
   )
 }
