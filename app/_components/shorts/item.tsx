@@ -63,6 +63,7 @@ export default function ShortsItem({
       <div ref={itemRef} className="relative h-[400px] w-full lg:h-[400px]">
         {isClientSide && hasLoaded && (
           <ReactPlayer
+            key={title}
             url={fileUrl}
             width="100%"
             height="100%"
