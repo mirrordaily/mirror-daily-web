@@ -36,7 +36,7 @@ export default function ShortsItem({
 
   const { isIntersecting, ref: itemRef } = useIntersectionObserver({
     threshold: 0,
-    rootMargin: '0px 500px 0px 500px',
+    rootMargin: '0px 300px 0px 300px',
   })
 
   const { sendVideoLog } = useVideoViewLogger({
