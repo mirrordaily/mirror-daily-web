@@ -3,9 +3,11 @@
 import { homepageGtmEvents } from '@/constants/gtm'
 import useVideoViewLogger from '@/hooks/use-video-logger'
 import type { Shorts } from '@/types/common'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player/lazy'
 import { SHORTS_TYPE } from '@/types/common'
+import { useIntersectionObserver } from 'usehooks-ts'
+import CustomImage from '@/shared-components/custom-image'
 
 type Props = Shorts & {
   isActive: boolean
@@ -32,6 +34,8 @@ export default function ShortsItem({
   const [isClientSide, setIsClientSide] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
   const [playedSeconds, setPlayedSeconds] = useState(0)
+  const isMountedRef = useRef(true)
+
   const { sendVideoLog } = useVideoViewLogger({
     isActive,
     title,
@@ -40,13 +44,22 @@ export default function ShortsItem({
     playedSeconds,
   })
 
+  const { isIntersecting, ref: itemRef } = useIntersectionObserver({
+    threshold: 0,
+    rootMargin: '0px 300px',
+  })
+
   useEffect(() => {
     setIsClientSide(true)
+    return () => {
+      isMountedRef.current = false
+    }
   }, [])
+
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
-      <div className="relative h-[400px] w-full lg:h-[400px]">
-        {isClientSide && (
+      <div ref={itemRef} className="relative h-[400px] w-full lg:h-[400px]">
+        {isClientSide && isIntersecting ? (
           <ReactPlayer
             url={fileUrl}
             width="100%"
@@ -64,14 +77,25 @@ export default function ShortsItem({
             }}
             onPause={() => onPause()}
             onEnded={async () => {
+              if (!isMountedRef.current) return
               onPause()
               await sendVideoLog(100, true)
             }}
-            onDuration={(duration) => setDuration(duration)}
+            onDuration={(duration) => {
+              if (isMountedRef.current) setDuration(duration)
+            }}
             onProgress={({ playedSeconds }) => {
-              setPlayedSeconds(playedSeconds)
+              if (isMountedRef.current) setPlayedSeconds(playedSeconds)
             }}
           />
+        ) : (
+          poster && (
+            <CustomImage
+              images={{ original: poster }}
+              alt={title}
+              objectFit="cover"
+            />
+          )
         )}
         <div
           className="absolute inset-0"
