@@ -89,9 +89,6 @@ const URL_STATIC_TOPIC_NEWS = `${JSON_FILE_PATH}/latest/latest_content_topic${TI
 const CPBL_SITE_URL = 'https://www.cpbl.com.tw'
 const TPBL_SITE_URL = 'https://tpbl.basketball'
 
-const VIDEO_AD_BASE_URL = 'https://googleads.g.doubleclick.net/pagead/ads'
-const VIDEO_AD_CLIENT_ID = 'ca-video-pub-4968145218643279'
-
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
 
 export {
@@ -123,6 +120,4 @@ export {
   SITE_URL,
   GTM_ID,
   MISO_API_KEY,
-  VIDEO_AD_BASE_URL,
-  VIDEO_AD_CLIENT_ID,
 }
