@@ -46,7 +46,7 @@ export default function ShortsItem({
 
   const { isIntersecting, ref: itemRef } = useIntersectionObserver({
     threshold: 0,
-    rootMargin: '0px 300px',
+    rootMargin: '0px 150px 0px 150px',
   })
 
   useEffect(() => {
@@ -59,43 +59,46 @@ export default function ShortsItem({
   return (
     <a className={`${gtmClassNameMap[type]} w-full select-none`} href={link}>
       <div ref={itemRef} className="relative h-[400px] w-full lg:h-[400px]">
-        {isClientSide && isIntersecting ? (
-          <ReactPlayer
-            url={fileUrl}
-            width="100%"
-            height="100%"
-            muted={true}
-            playing={isActive}
-            playsinline={true}
-            config={{
-              file: {
-                attributes: {
-                  poster,
-                  preload: 'none',
-                },
-              },
-            }}
-            onPause={() => onPause()}
-            onEnded={async () => {
-              if (!isMountedRef.current) return
-              onPause()
-              await sendVideoLog(100, true)
-            }}
-            onDuration={(duration) => {
-              if (isMountedRef.current) setDuration(duration)
-            }}
-            onProgress={({ playedSeconds }) => {
-              if (isMountedRef.current) setPlayedSeconds(playedSeconds)
-            }}
-          />
-        ) : (
-          poster && (
+        {poster && (
+          <div className="absolute inset-0">
             <CustomImage
               images={{ original: poster }}
               alt={title}
               objectFit="cover"
             />
-          )
+          </div>
+        )}
+        {isClientSide && isIntersecting && (
+          <div className="absolute inset-0">
+            <ReactPlayer
+              url={fileUrl}
+              width="100%"
+              height="100%"
+              muted={true}
+              playing={isActive}
+              playsinline={true}
+              config={{
+                file: {
+                  attributes: {
+                    poster,
+                    preload: 'none',
+                  },
+                },
+              }}
+              onPause={() => onPause()}
+              onEnded={async () => {
+                if (!isMountedRef.current) return
+                onPause()
+                await sendVideoLog(100, true)
+              }}
+              onDuration={(duration) => {
+                if (isMountedRef.current) setDuration(duration)
+              }}
+              onProgress={({ playedSeconds }) => {
+                if (isMountedRef.current) setPlayedSeconds(playedSeconds)
+              }}
+            />
+          </div>
         )}
         <div
           className="absolute inset-0"
