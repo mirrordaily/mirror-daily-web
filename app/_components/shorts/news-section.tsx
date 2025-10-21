@@ -3,7 +3,7 @@ import ShortsList from './list'
 import { SHORTS_TYPE } from '@/types/common'
 
 export default async function ShortsNewsSection() {
-  const items = await fetchLatestShorts(SHORTS_TYPE.NEWS)
+  const items = await fetchLatestShorts(SHORTS_TYPE.NEWS, 20)
 
   if (!items.length) return null
 
