@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { useEffect, useRef } from 'react'
 
@@ -47,16 +48,21 @@ type VideoProps = {
   }
 }
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    google?: any
+  }
+}
+
 const Video = ({ video }: VideoProps) => {
   const adContainerRef = useRef<HTMLDivElement>(null)
   const videoContentRef = useRef<HTMLVideoElement>(null)
   const isAdPlaying = useRef<boolean>(false)
   const isContentFinished = useRef<boolean>(false)
-  const adsManagerRef = useRef<google.ima.AdsManager | null>(null)
-  const adDisplayContainerRef = useRef<google.ima.AdDisplayContainer | null>(
-    null
-  )
-  const adsLoaderRef = useRef(null)
+  const adsManagerRef = useRef<any>(null)
+  const adDisplayContainerRef = useRef<any>(null)
+  const adsLoaderRef = useRef<any>(null)
   const adsInitialized = useRef(false)
 
   useEffect(() => {
@@ -68,21 +74,17 @@ const Video = ({ video }: VideoProps) => {
     )
       return
 
-    const adContainer = adContainerRef.current
-    const videoContent = videoContentRef.current
     const ima = window.google.ima
 
     adDisplayContainerRef.current = new ima.AdDisplayContainer(
-      adContainer,
-      videoContent
+      adContainerRef.current,
+      videoContentRef.current
     )
 
     const adsLoader = new ima.AdsLoader(adDisplayContainerRef.current)
     adsLoaderRef.current = adsLoader
 
-    const { AdErrorEvent, AdEvent, AdsManagerLoadedEvent } = ima
-
-    function onAdError(adErrorEvent: google.ima.AdErrorEvent) {
+    function onAdError(adErrorEvent: any) {
       console.log('Ad Error:', adErrorEvent.getError())
       if (adsManagerRef.current) {
         adsManagerRef.current.destroy()
@@ -109,20 +111,16 @@ const Video = ({ video }: VideoProps) => {
       }
     }
 
-    function onAdLoaded(adEvent: google.ima.AdEvent) {
+    function onAdLoaded(adEvent: any) {
       const ad = adEvent.getAd()
-      if (!ad?.isLinear()) {
+      if (!ad.isLinear()) {
         videoContentRef.current?.play()
       }
     }
 
-    function onAdsManagerLoaded(
-      adsManagerLoadedEvent: google.ima.AdsManagerLoadedEvent
-    ) {
+    function onAdsManagerLoaded(adsManagerLoadedEvent: any) {
       const adsRenderingSettings = new ima.AdsRenderingSettings()
       adsRenderingSettings.restoreCustomPlaybackStateOnAdBreakComplete = true
-
-      if (!videoContentRef.current) return
 
       adsManagerRef.current = adsManagerLoadedEvent.getAdsManager(
         videoContentRef.current,
@@ -130,27 +128,30 @@ const Video = ({ video }: VideoProps) => {
       )
 
       adsManagerRef.current.addEventListener(
-        AdErrorEvent.Type.AD_ERROR,
+        window.google.ima.AdErrorEvent.Type.AD_ERROR,
         onAdError
       )
       adsManagerRef.current.addEventListener(
-        AdEvent.Type.CONTENT_PAUSE_REQUESTED,
+        window.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
         onContentPauseRequested
       )
       adsManagerRef.current.addEventListener(
-        AdEvent.Type.CONTENT_RESUME_REQUESTED,
+        window.google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
         onContentResumeRequested
       )
-      adsManagerRef.current.addEventListener(AdEvent.Type.LOADED, onAdLoaded)
+      adsManagerRef.current.addEventListener(
+        window.google.ima.AdEvent.Type.LOADED,
+        onAdLoaded
+      )
     }
 
     adsLoaderRef.current.addEventListener(
-      AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+      window.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
       onAdsManagerLoaded,
       false
     )
     adsLoaderRef.current.addEventListener(
-      AdErrorEvent.Type.AD_ERROR,
+      window.google.ima.AdErrorEvent.Type.AD_ERROR,
       onAdError,
       false
     )
@@ -160,18 +161,17 @@ const Video = ({ video }: VideoProps) => {
       isContentFinished.current = true
       adsLoader.contentComplete()
     }
-    videoContent.onended = contentEndedListener
+    videoContentRef.current.onended = contentEndedListener
 
     const adsRequest = new ima.AdsRequest()
+
     adsRequest.adTagUrl =
       'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator='
 
-    const containerWidth = adContainer.clientWidth
-    const containerHeight = adContainer.clientHeight
+    adsRequest.linearAdSlotWidth = adContainerRef.current.clientWidth
+    adsRequest.linearAdSlotHeight = adContainerRef.current.clientHeight
 
-    adsRequest.linearAdSlotWidth = containerWidth
-    adsRequest.linearAdSlotHeight = containerHeight
-    adsRequest.nonLinearAdSlotWidth = containerWidth
+    adsRequest.nonLinearAdSlotWidth = adContainerRef.current.clientWidth
     adsRequest.nonLinearAdSlotHeight = 150
 
     adsLoader.requestAds(adsRequest)
@@ -183,7 +183,8 @@ const Video = ({ video }: VideoProps) => {
       try {
         adsManagerRef.current?.init(
           videoContentRef.current!.clientWidth,
-          videoContentRef.current!.clientHeight
+          videoContentRef.current!.clientHeight,
+          window.google.ima.ViewMode.NORMAL
         )
         adsManagerRef.current?.start()
         adsInitialized.current = true
