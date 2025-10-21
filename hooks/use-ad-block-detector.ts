@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 const BLOCKED_URLS = [
   'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
   'https://static.doubleclick.net/instream/ad_status.js',
+  'https://imasdk.googleapis.com/js/sdkloader/ima3.js',
 ]
 
 export default function useAdBlockDetector() {
