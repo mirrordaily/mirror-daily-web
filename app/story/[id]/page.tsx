@@ -124,10 +124,12 @@ export default async function Page({ params }: PageProps) {
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        <DesktopGptAd
-          slotKey="mirrordaily_article_PC_970x90_sticky"
-          isStickyAd={true}
-        />
+        {shouldShowAd && (
+          <DesktopGptAd
+            slotKey="mirrordaily_article_PC_970x90_sticky"
+            isStickyAd={true}
+          />
+        )}
       </main>
     </>
   )
