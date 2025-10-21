@@ -374,7 +374,7 @@ export const gptStickyAdSlots = {
   },
   //大分類頁置底手機版
   mirrordaily_section_PC_320x100_sticky: {
-    slotId: '/23304347674/mirrordaily_mweb//section//sticky',
+    slotId: '/23304347674/mirrordaily_mweb//section/sticky',
     collapseEmptyDivs: true,
   },
 } as const
