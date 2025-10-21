@@ -90,6 +90,7 @@ const Video = ({ video }: VideoProps) => {
         adsManagerRef.current.destroy()
         adsManagerRef.current = null
       }
+      videoContentRef.current?.play()
     }
 
     function onContentPauseRequested() {
@@ -105,8 +106,7 @@ const Video = ({ video }: VideoProps) => {
       if (videoContentRef.current) {
         videoContentRef.current.controls = true
         if (!isContentFinished.current) {
-          // Try to resume video after ad, but don't throw if user hasn't interacted
-          videoContentRef.current.play().catch(() => {})
+          videoContentRef.current.play()
         }
       }
     }
@@ -114,8 +114,7 @@ const Video = ({ video }: VideoProps) => {
     function onAdLoaded(adEvent: google.ima.AdEvent) {
       const ad = adEvent.getAd()
       if (!ad?.isLinear()) {
-        // Try to play non-linear ad, but don't throw if user hasn't interacted
-        videoContentRef.current?.play().catch(() => {})
+        videoContentRef.current?.play()
       }
     }
 
