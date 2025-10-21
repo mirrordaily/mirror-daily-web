@@ -10,8 +10,6 @@ import type {
   VideoImage,
 } from '../types'
 
-import { VIDEO_AD_BASE_URL, VIDEO_AD_CLIENT_ID } from '@/constants/config'
-
 type ContentVideo_Readr = {
   video: Video_Readr
 }
@@ -164,10 +162,10 @@ const Video = ({ video }: VideoProps) => {
     }
     videoContent.onended = contentEndedListener
 
-    const currentPageUrl = encodeURIComponent(window.location.href)
-
     const adsRequest = new ima.AdsRequest()
-    adsRequest.adTagUrl = `${VIDEO_AD_BASE_URL}?ad_type=video_text_image&client=${VIDEO_AD_CLIENT_ID}&videoad_start_delay=0&description_url=${currentPageUrl}&max_ad_duration=30000&adtest=on`
+    // TODO: update to production ad tag url
+    adsRequest.adTagUrl =
+      'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator='
 
     const containerWidth = adContainer.clientWidth
     const containerHeight = adContainer.clientHeight
