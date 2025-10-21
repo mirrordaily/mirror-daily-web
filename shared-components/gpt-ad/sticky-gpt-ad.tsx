@@ -30,37 +30,19 @@ export default function StickyGptAd({ slotKey }: { slotKey: StickyAdSlotKey }) {
         console.log(`[GPT-STICKY-AD DEBUG] Registering ad slot: ${slotId}`)
       }
 
-      const slot = window.googletag.defineOutOfPageSlot(
-        slotId,
-        window.googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
-      )
-
-      if (slot) {
-        slot.addService(window.googletag.pubads())
-      }
+      window.googletag
+        .defineOutOfPageSlot(slotId, 'out-of-page-ad')
+        .addService(window.googletag.pubads())
 
       if (collapseEmptyDivs && !isDebugMode) {
         window.googletag.pubads().collapseEmptyDivs()
       }
 
-      window.googletag
-        .pubads()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .addEventListener('slotRenderEnded', function (event: any) {
-          if (event.slot === slot) {
-            if (!event.isEmpty) {
-              setTimeout(
-                'document.querySelector("body").removeAttribute("style");',
-                500
-              )
-            }
-          }
-        })
       window.googletag.enableServices()
-      window.googletag.display(slot)
+      window.googletag.display('out-of-page-ad')
     })
     isInitialed.current = true
   }, [slotId, collapseEmptyDivs])
 
-  return <div></div>
+  return <div id="out-of-page-ad" className="fixed inset-x-0 bottom-0"></div>
 }
