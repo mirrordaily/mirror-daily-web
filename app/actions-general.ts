@@ -50,6 +50,7 @@ import {
   transformRawPopularPost,
 } from '@/utils/post'
 import { cache } from 'react'
+import { hiddenPopularPostIds } from '@/constants/popular-post'
 
 export const fetchLatestPost = async (
   page: number = 1
@@ -94,6 +95,7 @@ export const fetchPopularPost = async (
     const headerData = await fetchHeaderData()
 
     return rawPostData
+      .filter((item) => !hiddenPopularPostIds.includes(item.id))
       .map((item) => transformRawPopularPost(item, headerData))
       .slice(0, amount)
   } catch (e) {

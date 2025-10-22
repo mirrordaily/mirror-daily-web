@@ -23,6 +23,7 @@ import {
   transformRawPopularPost,
 } from './post'
 import { createDataFetchingChain, transformLatestShorts } from './data-process'
+import { hiddenPopularPostIds } from '@/constants/popular-post'
 
 const fetchLatestPost = async (
   headerData: HeaderData[],
@@ -61,6 +62,7 @@ const fetchPopularPost = async (
       .parse(resp.json())
 
     return rawPostData
+      .filter((item) => !hiddenPopularPostIds.includes(item.id))
       .map((item) => transformRawPopularPost(item, headerData))
       .slice(0, amount)
   } catch (e) {
