@@ -30,17 +30,19 @@ export default function StickyGptAd({ slotKey }: { slotKey: StickyAdSlotKey }) {
         console.log(`[GPT-STICKY-AD DEBUG] Registering ad slot: ${slotId}`)
       }
 
-      const slot = window.googletag
-        .defineOutOfPageSlot(
-          slotId,
-          window.googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
-        )
-        .addService(window.googletag.pubads())
+      const slot = window.googletag.defineOutOfPageSlot(
+        slotId,
+        window.googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+      )
+
+      if (slot) {
+        slot.addService(window.googletag.pubads())
+      }
 
       if (collapseEmptyDivs && !isDebugMode) {
         window.googletag.pubads().collapseEmptyDivs()
       }
-      slot.addService(window.googletag.pubads())
+
       window.googletag
         .pubads()
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
