@@ -40,34 +40,34 @@ const TIMESTAMP_FOR_CACHE = '?t=' + Date.now() / 100
 switch (ENV) {
   case ENVIRONMENT.PRODUCTION:
     STATIC_FILE_DOMAIN = 'statics-prod.mirrordaily.news'
-    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}${TIMESTAMP_FOR_CACHE}`
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://www.mirrordaily.news'
     GTM_ID = 'GTM-MPWSXJ4X'
     break
 
   case ENVIRONMENT.STAGING:
     STATIC_FILE_DOMAIN = 'statics-staging.mirrordaily.news'
-    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}${TIMESTAMP_FOR_CACHE}`
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://staging.mirrordaily.news'
     GTM_ID = 'GTM-P7XPJ6P4'
     break
 
   case ENVIRONMENT.DEVELOPMENT:
     STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
-    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}${TIMESTAMP_FOR_CACHE}`
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://dev.mirrordaily.news'
     GTM_ID = 'GTM-MG9V2TJC'
     break
 
   default:
     STATIC_FILE_DOMAIN = 'statics-dev.mirrordaily.news'
-    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}${TIMESTAMP_FOR_CACHE}`
+    JSON_FILE_PATH = `https://${STATIC_FILE_DOMAIN}${JSON_ROOT}`
     SITE_URL = 'https://dev.mirrordaily.news'
     GTM_ID = 'GTM-MG9V2TJC'
     break
 }
 const URL_STATIC_POPULAR_NEWS = `${JSON_FILE_PATH}/popular.json${TIMESTAMP_FOR_CACHE}`
-const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/latest_posts${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/latest_posts`
 const URL_STATIC_HEADER = `${JSON_FILE_PATH}/header.json${TIMESTAMP_FOR_CACHE}`
 const URL_STATIC_HOT_NEWS = `${JSON_FILE_PATH}/flash-news.json${TIMESTAMP_FOR_CACHE}`
 const URL_STATIC_EDITOR_CHOICE = `${JSON_FILE_PATH}/editor-choice.json${TIMESTAMP_FOR_CACHE}`
@@ -78,14 +78,14 @@ const URL_STATIC_WEATHER = `${JSON_FILE_PATH}/weather.json${TIMESTAMP_FOR_CACHE}
 const URL_STATIC_LATEST_SPORTS_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category_sport_1.json${TIMESTAMP_FOR_CACHE}`
 const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/sports_schedule.json${TIMESTAMP_FOR_CACHE}`
 // shorts listing page
-const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news${TIMESTAMP_FOR_CACHE}`
-const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
+const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
 // section page
-const URL_STATIC_SECTION_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_SECTION_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section`
 // category page
-const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category`
 // topic page
-const URL_STATIC_TOPIC_NEWS = `${JSON_FILE_PATH}/latest/latest_content_topic${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_TOPIC_NEWS = `${JSON_FILE_PATH}/latest/latest_content_topic`
 const CPBL_SITE_URL = 'https://www.cpbl.com.tw'
 const TPBL_SITE_URL = 'https://tpbl.basketball'
 
