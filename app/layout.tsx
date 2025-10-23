@@ -65,6 +65,7 @@ export default function RootLayout({
           async
           crossOrigin="anonymous"
         />
+        <Script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" />
         <Script
           type="text/javascript"
           id="popin"
