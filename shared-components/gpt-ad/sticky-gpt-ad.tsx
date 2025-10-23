@@ -41,6 +41,19 @@ export default function StickyGptAd({ slotKey }: { slotKey: StickyAdSlotKey }) {
         window.googletag.pubads().collapseEmptyDivs()
       }
       slot.addService(window.googletag.pubads())
+      window.googletag
+        .pubads()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .addEventListener('slotRenderEnded', function (event: any) {
+          if (event.slot === slot) {
+            if (!event.isEmpty) {
+              setTimeout(
+                'document.querySelector("body").removeAttribute("style");',
+                500
+              )
+            }
+          }
+        })
       window.googletag.enableServices()
       window.googletag.display(slot)
     })
