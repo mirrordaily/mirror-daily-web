@@ -349,7 +349,32 @@ export const adSlots = {
 export const gptStickyAdSlots = {
   //文章頁置底桌機版
   mirrordaily_article_PC_970x90_sticky: {
-    slotId: '/23304347674/mirrordaily_pc/article/sticky',
+    slotId: '/23304347674/mirrordaily_pc//article//sticky',
+    collapseEmptyDivs: true,
+  },
+  //文章頁置底手機版
+  mirrordaily_article_MW_320x100_sticky: {
+    slotId: '/23304347674/mirrordaily_mweb//article//sticky',
+    collapseEmptyDivs: true,
+  },
+  //首頁置底桌機版
+  mirrordaily_homepage_PC_970x90_sticky: {
+    slotId: '/23304347674/mirrordaily_pc//homepage//sticky',
+    collapseEmptyDivs: true,
+  },
+  //首頁置底手機版
+  mirrordaily_homepage_PC_320x100_sticky: {
+    slotId: '/23304347674/mirrordaily_mweb//homepage//sticky',
+    collapseEmptyDivs: true,
+  },
+  //大分類頁置底桌機版
+  mirrordaily_section_PC_970x90_sticky: {
+    slotId: '/23304347674/mirrordaily_pc//section//sticky',
+    collapseEmptyDivs: true,
+  },
+  //大分類頁置底手機版
+  mirrordaily_section_PC_320x100_sticky: {
+    slotId: '/23304347674/mirrordaily_mweb//section/sticky',
     collapseEmptyDivs: true,
   },
 } as const

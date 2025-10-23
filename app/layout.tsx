@@ -66,6 +66,10 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <Script
+          src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"
+          strategy="beforeInteractive"
+        />
+        <Script
           type="text/javascript"
           id="popin"
           dangerouslySetInnerHTML={{

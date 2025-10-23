@@ -8,6 +8,9 @@ const BLOCKED_URLS = [
   'https://imasdk.googleapis.com/js/sdkloader/ima3.js',
 ]
 
+/* For the design rationale and context, see the original Pull Request:
+   https://github.com/mirrordaily/mirror-daily-web/pull/457
+*/
 export default function useAdBlockDetector() {
   const [isAdBlockerActive, setIsAdBlockerActive] = useState(false)
 
