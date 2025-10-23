@@ -75,6 +75,11 @@ export default function GameInfoCard({
   const leagueSiteUrl =
     league === 'cpbl' ? `${CPBL_SITE_URL}/schedule` : `${TPBL_SITE_URL}`
 
+  const getTeamLogoUrl = (league: string, logoPath: string) => {
+    if (league === 'tpbl') return logoPath
+    return `${CPBL_SITE_URL}/${logoPath}`
+  }
+
   return (
     <Link
       prefetch={false}
@@ -96,7 +101,7 @@ export default function GameInfoCard({
         <li className="flex gap-3">
           <div className="relative size-10">
             <Image
-              src={`${CPBL_SITE_URL}/${homeTeamLogo}`}
+              src={getTeamLogoUrl(league, homeTeamLogo)}
               fill
               alt="home team logo"
               unoptimized // remote圖片需要關閉最佳化
@@ -114,7 +119,7 @@ export default function GameInfoCard({
         <li className="flex gap-3">
           <div className="relative size-10">
             <Image
-              src={`${CPBL_SITE_URL}/${visitingTeamLogo}`}
+              src={getTeamLogoUrl(league, visitingTeamLogo)}
               fill
               alt="visiting team logo"
               unoptimized // remote圖片需要關閉最佳化
