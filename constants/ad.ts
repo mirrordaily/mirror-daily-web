@@ -352,6 +352,11 @@ export const gptStickyAdSlots = {
     slotId: '/23304347674/mirrordaily_pc/article/sticky',
     collapseEmptyDivs: true,
   },
+  //文章頁置底手機版
+  mirrordaily_article_MW_320x100_sticky: {
+    slotId: '/23304347674/mirrordaily_mweb/article/sticky',
+    collapseEmptyDivs: true,
+  },
 } as const
 
 export type DableWidgetType =
