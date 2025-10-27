@@ -160,14 +160,21 @@ export const shortsDataSchema = z.object({
   content: z.string(),
 })
 
-export const latestVideosSchema = z.object({
+const baseLatestVideosSchema = z.object({
   id: z.string(),
   name: z.string(),
   uploader: z.string(),
   youtubeUrl: z.string().nullish(),
   videoSrc: z.string().nullish(),
-  heroImage: heroImageSchema.nullable(),
   updatedAt: z.string().nullish(),
+})
+
+export const graphqlVideosSchema = baseLatestVideosSchema.extend({
+  heroImage: heroImageSchema.nullable(),
+})
+
+export const jsonVideosSchema = baseLatestVideosSchema.extend({
+  heroImage: z.string().nullable(),
 })
 
 export const headerSchema = z.array(
@@ -203,7 +210,7 @@ export const gameSchema = z.object({
     .nullish(),
   game_result: z.string(),
   game_result_name: z.string().optional(),
-  is_game_stop: z.string(),
+  is_game_stop: z.string().optional(),
   game_sno: z.number(),
   home_logo: z.string(),
   home_score: z.number(),
