@@ -16,7 +16,6 @@ import { sectionGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
-import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 
 type PageProps = { params: { slug: string } }
 
@@ -148,14 +147,6 @@ export default async function Page({
         slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto"
         pageKey={slug}
-      />
-      <DesktopGptAd
-        slotKey="mirrordaily_section_PC_970x90_sticky"
-        isStickyAd={true}
-      />
-      <MobileGptAd
-        slotKey="mirrordaily_section_PC_320x100_sticky"
-        isStickyAd={true}
       />
     </main>
   )
