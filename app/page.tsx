@@ -134,14 +134,6 @@ export default async function Home() {
           <SectionDivider />
           {/* 最新新聞 */}
           <LatestNewsSection />
-          <DesktopGptAd
-            slotKey="mirrordaily_homepage_PC_970x90_sticky"
-            isStickyAd={true}
-          />
-          <MobileGptAd
-            slotKey="mirrordaily_homepage_PC_320x100_sticky"
-            isStickyAd={true}
-          />
         </main>
       </div>
       <NewsletterSubscription />
