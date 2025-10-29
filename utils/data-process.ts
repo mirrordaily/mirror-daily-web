@@ -22,7 +22,8 @@ import type {
   ImageKeys,
   resizedImageSchema,
   sectionPostSchema,
-  latestVideosSchema,
+  graphqlVideosSchema,
+  jsonVideosSchema,
 } from './data-schema'
 import type { z } from 'zod'
 import {
@@ -165,10 +166,14 @@ const getImageSrc = (
 }
 
 const getPosterFromShorts = (
-  heroImage: z.infer<typeof latestShortsSchema>['heroImage']
+  heroImage: z.infer<typeof latestShortsSchema>['heroImage'] | string | null
 ): string => {
   const pickedSize: ImageKeys[] = ['w800', 'w480', 'original']
   if (!heroImage) return ''
+
+  if (typeof heroImage === 'string') {
+    return heroImage
+  }
 
   const resized = getImageSrc(heroImage.resized, pickedSize)
   const resizedWebp = getImageSrc(heroImage.resizedWebp, pickedSize)
@@ -190,7 +195,9 @@ const transformLatestShorts = (
 }
 
 const transformLatestVideos = (
-  rawData: z.infer<typeof latestVideosSchema>
+  rawData:
+    | z.infer<typeof graphqlVideosSchema>
+    | z.infer<typeof jsonVideosSchema>
 ): LatestVideos => {
   return {
     id: rawData.id,

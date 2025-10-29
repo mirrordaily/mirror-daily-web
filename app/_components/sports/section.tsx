@@ -9,7 +9,7 @@ export default async function SportsSection() {
       <SportsMain
         scheduleData={result}
         latestSportsNewsData={latestSportsNewsData}
-      ></SportsMain>
+      />
     </div>
   )
 }

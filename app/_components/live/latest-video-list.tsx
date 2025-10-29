@@ -27,7 +27,7 @@ export default function LatestVideoList({
           rel="noopener noreferrer"
           className="flex cursor-pointer gap-5"
         >
-          <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow lg:h-[100px] lg:w-[180px]">
+          <div className="md:tablet-live-video relative flex aspect-[330/220] w-full shrink-0 grow bg-black lg:h-[100px] lg:w-[180px]">
             <Image
               src={(() => {
                 const videoId = getYoutubeId(video.fileUrl)
@@ -37,6 +37,7 @@ export default function LatestVideoList({
               })()}
               fill
               alt={`${video.title}`}
+              className="object-contain"
             />
           </div>
           <div className="flex flex-col gap-1">
