@@ -32,6 +32,16 @@ function pick(obj: unknown, key: string): string | undefined {
   return typeof v === 'string' ? v : undefined
 }
 
+function pickObject(
+  obj: unknown,
+  key: string
+): Record<string, unknown> | undefined {
+  const v = read(obj, key)
+  return v && typeof v === 'object' && !Array.isArray(v)
+    ? (v as Record<string, unknown>)
+    : undefined
+}
+
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url)
@@ -65,7 +75,7 @@ export async function GET(req: Request) {
     const body = {
       anonymous_id: `anon_${Date.now()}`,
       q,
-      fq: 'product_id:/mesh_story_.+/',
+      fq: 'product_id:/mirrordaily_.+/',
       start,
       rows,
       order_by: sort,
@@ -77,7 +87,8 @@ export async function GET(req: Request) {
         'published_at',
         'title',
         'authors',
-        'custom_attributes.*',
+        'section_name',
+        'section_color',
       ],
       source_fl: [
         'cover_image',
@@ -128,6 +139,41 @@ export async function GET(req: Request) {
 
     const items = candidates.map((d) => {
       const id = pick(d, 'product_id') ?? pick(d, 'id') ?? ''
+      const customAttrs = pickObject(d, 'custom_attributes')
+
+      // Extract sections from custom_attributes
+      let sections: { name: string; color: string; slug: string }[] | undefined
+      if (customAttrs) {
+        const sectionsData = customAttrs.sections || customAttrs.section
+        if (Array.isArray(sectionsData)) {
+          sections = sectionsData
+            .filter(
+              (s): s is Record<string, unknown> =>
+                s && typeof s === 'object' && !Array.isArray(s)
+            )
+            .map((s) => ({
+              name: typeof s.name === 'string' ? s.name : '',
+              color: typeof s.color === 'string' ? s.color : '',
+              slug: typeof s.slug === 'string' ? s.slug : '',
+            }))
+            .filter((s) => s.name)
+        } else if (
+          sectionsData &&
+          typeof sectionsData === 'object' &&
+          !Array.isArray(sectionsData)
+        ) {
+          // Handle single section object
+          const s = sectionsData as Record<string, unknown>
+          sections = [
+            {
+              name: typeof s.name === 'string' ? s.name : '',
+              color: typeof s.color === 'string' ? s.color : '',
+              slug: typeof s.slug === 'string' ? s.slug : '',
+            },
+          ].filter((s) => s.name)
+        }
+      }
+
       return {
         id,
         title: pick(d, 'title') ?? '',
@@ -135,6 +181,7 @@ export async function GET(req: Request) {
         cover_image: pick(d, 'cover_image') ?? pick(d, 'image') ?? '',
         published_at: pick(d, 'published_at') ?? pick(d, 'created_at') ?? '',
         snippet: pick(d, 'snippet') ?? pick(d, 'highlight') ?? '',
+        ...(sections && sections.length > 0 ? { sections } : {}),
       }
     })
 
