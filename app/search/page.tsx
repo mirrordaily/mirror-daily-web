@@ -1,4 +1,4 @@
-import SearchComponent from './_components/miso-search'
+import SearchComponent from './_components/miso-search-gate'
 
 export default function SearchPage() {
   return (
