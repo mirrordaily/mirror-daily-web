@@ -66,6 +66,18 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <Script
+          id="gpt-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.googletag = window.googletag || { cmd: [] };
+              googletag.cmd.push(function() {
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+              });
+            `,
+          }}
+        />
+        <Script
           src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"
           strategy="beforeInteractive"
         />

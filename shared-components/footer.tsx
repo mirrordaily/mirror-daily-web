@@ -42,7 +42,10 @@ const ExtendedSocialLinks = [
 
 export default function Footer(): ReactElement {
   return (
-    <footer className="flex w-full flex-col bg-mirror-blue-800">
+    <footer
+      id="site-footer"
+      className="flex w-full flex-col bg-mirror-blue-800"
+    >
       <div className="flex w-full max-w-screen-lg flex-col items-center self-center lg:flex-row">
         <a
           href="/"

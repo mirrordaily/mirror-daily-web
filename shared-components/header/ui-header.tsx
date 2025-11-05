@@ -58,7 +58,10 @@ export default function UiHeader({
   flashNews: FlashNews[]
 }) {
   return (
-    <header className="flex w-full shrink-0 flex-col items-center">
+    <header
+      id="site-header"
+      className="flex w-full shrink-0 flex-col items-center"
+    >
       <div className="flex h-[64px] w-full justify-center bg-mirror-blue-700 md:h-[95px] lg:h-[80px]">
         <div className="flex w-full max-w-screen-sm pl-4 pr-6 md:max-w-screen-md md:pl-5 lg:max-w-screen-lg lg:px-9">
           <a

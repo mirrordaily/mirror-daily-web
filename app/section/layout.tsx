@@ -1,7 +1,7 @@
 import Header from '@/shared-components/header'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import Footer from '@/shared-components/footer'
-
+import StickyAd from '@/shared-components/sticky-ad'
 export default function Layout({
   children,
 }: Readonly<{
@@ -16,6 +16,7 @@ export default function Layout({
       </div>
       <NewsletterSubscription />
       <Footer />
+      <StickyAd pageType="section" />
     </>
   )
 }
