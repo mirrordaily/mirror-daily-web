@@ -18,7 +18,7 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
-
+import StickyAd from '../shared-components/sticky-ad'
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
@@ -29,6 +29,7 @@ export default async function Home() {
       <Suspense>
         <PageLogger />
       </Suspense>
+      <StickyAd pageType="homepage" />
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
