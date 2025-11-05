@@ -55,7 +55,7 @@ export default function StickyAd({
         !state.headerVisible &&
         !state.footerVisible
 
-      wrap.hidden = !shouldShow
+      wrap.style.display = shouldShow ? 'flex' : 'none'
     }
 
     const closeBtn = document.getElementById('md-sticky-close')
@@ -132,7 +132,7 @@ export default function StickyAd({
     <div
       id="md-sticky"
       className="fixed inset-x-0 bottom-0 z-[9999] h-[90px] items-center justify-center bg-white shadow-[0_-2px_8px_rgba(0,0,0,0.1)]"
-      hidden
+      style={{ display: 'none' }}
     >
       <div id="gpt-sticky"></div>
       <button
