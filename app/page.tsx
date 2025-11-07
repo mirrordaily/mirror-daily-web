@@ -29,7 +29,6 @@ export default async function Home() {
       <Suspense>
         <PageLogger />
       </Suspense>
-      <StickyAd pageType="homepage" />
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
@@ -137,6 +136,7 @@ export default async function Home() {
           <LatestNewsSection />
         </main>
       </div>
+      <StickyAd pageType="homepage" />
       <NewsletterSubscription />
       <Footer />
     </>

@@ -10,7 +10,10 @@ export default function ArticlePageTopAd() {
   if (isAdBlockerActive) return null
   return (
     <>
-      <div className="hidden min-h-[306px] lg:flex lg:items-center">
+      <div
+        className="hidden min-h-[306px] lg:flex lg:items-center"
+        id="gpt-top-leaderboard"
+      >
         <DesktopGptAd
           slotKey="mirrordaily_article_PC_970x250_top"
           customClasses="mt-5 mb-9"
