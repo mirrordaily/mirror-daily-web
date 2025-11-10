@@ -1,7 +1,7 @@
 import Header from '@/shared-components/header'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import Footer from '@/shared-components/footer'
-import StickyAd from '@/shared-components/sticky-ad'
+import StickyAd from '@/shared-components/gpt-ad/sticky-ad'
 export default function Layout({
   children,
 }: Readonly<{
