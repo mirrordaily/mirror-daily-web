@@ -172,7 +172,7 @@ export default function StickyAd({
       <button
         id="md-sticky-close"
         type="button"
-        className="absolute right-2 top-2 cursor-pointer border-0 bg-transparent text-lg leading-none"
+        className="absolute right-2 top-[-24px] cursor-pointer border-0 bg-white p-1 text-lg leading-none"
         aria-label="關閉"
       >
         ✕
