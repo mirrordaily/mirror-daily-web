@@ -347,9 +347,9 @@ export const adSlots = {
 } as const
 
 export const stickyAdUnitMap = {
-  homepage: '/23304347674/mirrordaily_pc/homepage/sticky_custom',
-  article: '/23304347674/mirrordaily_pc/article/sticky_custom',
-  section: '/23304347674/mirrordaily_pc/section/sticky_custom',
+  homepage: '/23304347674/mirrordaily_pc/homepage/sticky',
+  article: '/23304347674/mirrordaily_pc/article/sticky',
+  section: '/23304347674/mirrordaily_pc/section/sticky',
 } as const
 
 export type StickyAdUnit = keyof typeof stickyAdUnitMap
