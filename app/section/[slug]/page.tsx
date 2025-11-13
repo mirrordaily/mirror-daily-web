@@ -11,6 +11,7 @@ import { SITE_NAME } from '@/constants/misc'
 import { getSectionPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
 import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 import { sectionGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
@@ -144,10 +145,13 @@ export default async function Page({
         />
       </div>
       <MobileGptAd
+        mode="normal"
         slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto"
-        pageKey={slug}
+        targetingId={slug}
       />
+      <MobileGptAd mode="sticky" pageType="section_mw" />
+      <DesktopGptAd mode="sticky" pageType="section_pc" />
     </main>
   )
 }

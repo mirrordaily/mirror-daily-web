@@ -17,10 +17,12 @@ export default function Article({ brief, content }: Props) {
         />
       )}
       <DesktopGptAd
+        mode="normal"
         slotKey="mirrordaily_article_PC_728x90_in1"
         customClasses="mx-auto mb-4"
       />
       <MobileGptAd
+        mode="normal"
         slotKey="mirrordaily_article_MW_300x250_in1"
         customClasses="mx-auto mb-4"
       />

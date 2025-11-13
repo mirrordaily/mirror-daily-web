@@ -15,16 +15,18 @@ export default function ListPageTopAd({ slug }: { slug: string }) {
         id="gpt-top-leaderboard"
       >
         <DesktopGptAd
+          mode="normal"
           slotKey="mirrordaily_section_PC_970x250_top"
           customClasses="mt-5 mb-9 mx-auto"
-          pageKey={slug}
+          targetingId={slug}
         />
       </div>
       <div className="block min-h-[286px] md:hidden">
         <MobileGptAd
+          mode="normal"
           slotKey="mirrordaily_section_MW_300x250_top"
           customClasses="mb-9 mx-auto"
-          pageKey={slug}
+          targetingId={slug}
         />
       </div>
     </>
