@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { getSectionPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 import { sectionGtmEvents } from '@/constants/gtm'
@@ -144,13 +144,13 @@ export default async function Page({
           gtmClassName={sectionGtmEvents.popularArticle}
         />
       </div>
-      <MobileGptAd
+      <NonDesktopGptAd
         mode="normal"
         slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto"
         targetingId={slug}
       />
-      <MobileGptAd mode="sticky" pageType="section_mw" />
+      <NonDesktopGptAd mode="sticky" pageType="section_mw" />
       <DesktopGptAd mode="sticky" pageType="section_pc" />
     </main>
   )

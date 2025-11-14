@@ -21,7 +21,7 @@ import { ApiDataBlockType } from './types'
 import { getOrganizationFromSourceCustomId } from './utils'
 import { Fragment } from 'react'
 import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '../gpt-ad/non-desktop-gpt-ad'
 
 export type { ApiData } from './block-renderer/types'
 
@@ -174,7 +174,7 @@ export default function ApiDataRenderer({
                   slotKey="mirrordaily_article_PC_728x90_in1"
                   customClasses="mx-auto"
                 />
-                <MobileGptAd
+                <NonDesktopGptAd
                   mode="normal"
                   slotKey="mirrordaily_article_MW_300x250_in1"
                   customClasses="mx-auto"

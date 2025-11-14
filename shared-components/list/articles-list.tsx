@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation'
 import type { PostData } from '@/utils/data-process'
 import { PAGE_SIZE } from '@/constants/section'
 import { DesktopGptAd } from '../gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '../gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '../gpt-ad/non-desktop-gpt-ad'
 
 type Props<T> = {
   initialPosts: T[]
@@ -81,7 +81,7 @@ export default function ArticlesList<T extends PostData>({
                             targetingId={slug}
                           />
                           <div className="md:hidden">
-                            <MobileGptAd
+                            <NonDesktopGptAd
                               mode="normal"
                               slotKey="mirrordaily_section_MW_300x250_list1"
                               customClasses="mx-auto"
@@ -97,14 +97,12 @@ export default function ArticlesList<T extends PostData>({
                             slotKey="mirrordaily_section_PC_728x90_list2"
                             targetingId={slug}
                           />
-                          <div className="md:hidden">
-                            <MobileGptAd
-                              mode="normal"
-                              slotKey="mirrordaily_section_MW_300x250_list2"
-                              customClasses="mx-auto"
-                              targetingId={slug}
-                            />
-                          </div>
+                          <NonDesktopGptAd
+                            mode="normal"
+                            slotKey="mirrordaily_section_MW_300x250_list2"
+                            customClasses="mx-auto"
+                            targetingId={slug}
+                          />
                         </div>
                       )}
                       {i === 6 && (
@@ -114,14 +112,12 @@ export default function ArticlesList<T extends PostData>({
                             slotKey="mirrordaily_section_PC_728x90_list3"
                             targetingId={slug}
                           />
-                          <div className="md:hidden">
-                            <MobileGptAd
-                              mode="normal"
-                              slotKey="mirrordaily_section_MW_300x250_list3"
-                              customClasses="mx-auto"
-                              targetingId={slug}
-                            />
-                          </div>
+                          <NonDesktopGptAd
+                            mode="normal"
+                            slotKey="mirrordaily_section_MW_300x250_list3"
+                            customClasses="mx-auto"
+                            targetingId={slug}
+                          />
                         </div>
                       )}
                     </React.Fragment>

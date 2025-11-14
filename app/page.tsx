@@ -14,7 +14,7 @@ import Loading from './_components/loading'
 import { Suspense } from 'react'
 import PageLogger from '@/shared-components/page-logger'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
@@ -61,13 +61,11 @@ export default async function Home() {
             customClasses="mb-9"
           />
           <SectionDivider />
-          <div className="block md:hidden">
-            <MobileGptAd
-              mode="normal"
-              slotKey="mirrordaily_home_MW_300x250_b1"
-              customClasses="mt-9 mx-auto"
-            />
-          </div>
+          <NonDesktopGptAd
+            mode="normal"
+            slotKey="mirrordaily_home_MW_300x250_b1"
+            customClasses="mt-9 mx-auto"
+          />
           {/* 短影音新聞 */}
           <Suspense
             fallback={
@@ -79,13 +77,11 @@ export default async function Home() {
             <ShortsNewsSection />
           </Suspense>
           <SectionDivider />
-          <div className="block md:hidden">
-            <MobileGptAd
-              mode="normal"
-              slotKey="mirrordaily_home_MW_300x250_b2"
-              customClasses="mt-9 mb-3 mx-auto"
-            />
-          </div>
+          <NonDesktopGptAd
+            mode="normal"
+            slotKey="mirrordaily_home_MW_300x250_b2"
+            customClasses="mt-9 mb-3 mx-auto"
+          />
           {/* Topic（4則）+ 天氣 */}
           <Suspense
             fallback={
@@ -111,13 +107,11 @@ export default async function Home() {
             slotKey="mirrordaily_home_PC_970x90_b3"
             customClasses="mb-9"
           />
-          <div className="block md:hidden">
-            <MobileGptAd
-              mode="normal"
-              slotKey="mirrordaily_home_MW_300x250_b3"
-              customClasses="mb-9 mt-2 mx-auto"
-            />
-          </div>
+          <NonDesktopGptAd
+            mode="normal"
+            slotKey="mirrordaily_home_MW_300x250_b3"
+            customClasses="mb-9 mt-2 mx-auto"
+          />
           <SectionDivider />
           {/* 短影音．投稿 */}
           <Suspense
@@ -129,20 +123,17 @@ export default async function Home() {
           >
             <ShortsDerivativeSection />
           </Suspense>
-
-          <div className="block md:hidden">
-            <MobileGptAd
-              mode="normal"
-              slotKey="mirrordaily_home_MW_300x250_b4"
-              customClasses="mb-9 mx-auto"
-            />
-          </div>
+          <NonDesktopGptAd
+            mode="normal"
+            slotKey="mirrordaily_home_MW_300x250_b4"
+            customClasses="mb-9 mx-auto"
+          />
           <SectionDivider />
           {/* 最新新聞 */}
           <LatestNewsSection />
         </main>
       </div>
-      <MobileGptAd mode="sticky" pageType="homepage_mw" />
+      <NonDesktopGptAd mode="sticky" pageType="homepage_mw" />
       <DesktopGptAd mode="sticky" pageType="homepage_pc" />
       <NewsletterSubscription />
       <Footer />

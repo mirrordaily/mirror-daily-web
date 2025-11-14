@@ -1,6 +1,6 @@
 import '@/shared-styles/external.css'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 
 type Props = {
   brief: string
@@ -21,7 +21,7 @@ export default function Article({ brief, content }: Props) {
         slotKey="mirrordaily_article_PC_728x90_in1"
         customClasses="mx-auto mb-4"
       />
-      <MobileGptAd
+      <NonDesktopGptAd
         mode="normal"
         slotKey="mirrordaily_article_MW_300x250_in1"
         customClasses="mx-auto mb-4"

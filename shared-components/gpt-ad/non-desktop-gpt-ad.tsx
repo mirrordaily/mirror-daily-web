@@ -7,7 +7,7 @@ import { getTailwindConfigBreakpointNumber } from '@/utils/tailwind'
 import type { StickyAdUnit } from '@/constants/ad'
 import StickyAd from './sticky-ad'
 
-type MobileGptAdProps =
+type NonDesktopGptAdProps =
   | {
       mode: 'normal'
       slotKey: AdSlotKey
@@ -21,12 +21,12 @@ type MobileGptAdProps =
       footerSelector?: string
     }
 
-export function MobileGptAd(props: MobileGptAdProps) {
+export function NonDesktopGptAd(props: NonDesktopGptAdProps) {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
     const check = () =>
-      setShow(window.innerWidth < getTailwindConfigBreakpointNumber('md'))
+      setShow(window.innerWidth < getTailwindConfigBreakpointNumber('lg'))
 
     check()
     window.addEventListener('resize', check)
