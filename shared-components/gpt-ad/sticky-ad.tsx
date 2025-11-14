@@ -2,12 +2,11 @@
 import { useEffect, useRef, useState } from 'react'
 import type { StickyAdUnit } from '@/constants/ad'
 import { stickyAdUnitMap } from '@/constants/ad'
-import { getTailwindConfigBreakpointNumber } from '@/utils/tailwind'
 
 type StickyAdProps = {
   pageType: StickyAdUnit
-  headerBannerSelector?: string
-  footerSelector?: string
+  headerBannerSelector: string
+  footerSelector: string
 }
 
 declare global {
@@ -19,11 +18,10 @@ declare global {
 
 export default function StickyAd({
   pageType,
-  headerBannerSelector = '#gpt-top-leaderboard',
-  footerSelector = '#site-footer',
+  headerBannerSelector,
+  footerSelector,
 }: StickyAdProps) {
   const hasInitialized = useRef(false)
-  const [show, setShow] = useState(false)
   const [shouldShowState, setShouldShowState] = useState({
     hasFill: false,
     userClosed: false,
@@ -32,24 +30,13 @@ export default function StickyAd({
   })
 
   const shouldShow =
-    show &&
     shouldShowState.hasFill &&
     !shouldShowState.userClosed &&
     !shouldShowState.headerVisible &&
     !shouldShowState.footerVisible
 
   useEffect(() => {
-    const check = () =>
-      setShow(window.innerWidth >= getTailwindConfigBreakpointNumber('lg'))
-
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
-  useEffect(() => {
     if (hasInitialized.current) return
-    if (!show) return
     if (sessionStorage.getItem('md_sticky_closed') === '1') {
       setShouldShowState((prev) => ({ ...prev, userClosed: true }))
       return
@@ -160,7 +147,7 @@ export default function StickyAd({
       }
       hasInitialized.current = false
     }
-  }, [pageType, headerBannerSelector, footerSelector, show])
+  }, [pageType, headerBannerSelector, footerSelector])
 
   return (
     <div

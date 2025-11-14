@@ -18,7 +18,6 @@ import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
 import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
-import StickyAd from '@/shared-components/gpt-ad/sticky-ad'
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
@@ -46,6 +45,7 @@ export default async function Home() {
             <EditorChoiceSection />
           </Suspense>
           <DesktopGptAd
+            mode="normal"
             slotKey="mirrordaily_home_PC_970x90_b1"
             customClasses="my-7"
           />
@@ -56,12 +56,14 @@ export default async function Home() {
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection headerData={headerData} />
           <DesktopGptAd
+            mode="normal"
             slotKey="mirrordaily_home_PC_970x90_b2"
             customClasses="mb-9"
           />
           <SectionDivider />
           <div className="block md:hidden">
             <MobileGptAd
+              mode="normal"
               slotKey="mirrordaily_home_MW_300x250_b1"
               customClasses="mt-9 mx-auto"
             />
@@ -79,6 +81,7 @@ export default async function Home() {
           <SectionDivider />
           <div className="block md:hidden">
             <MobileGptAd
+              mode="normal"
               slotKey="mirrordaily_home_MW_300x250_b2"
               customClasses="mt-9 mb-3 mx-auto"
             />
@@ -104,11 +107,13 @@ export default async function Home() {
             <SportsSection />
           </Suspense>
           <DesktopGptAd
+            mode="normal"
             slotKey="mirrordaily_home_PC_970x90_b3"
             customClasses="mb-9"
           />
           <div className="block md:hidden">
             <MobileGptAd
+              mode="normal"
               slotKey="mirrordaily_home_MW_300x250_b3"
               customClasses="mb-9 mt-2 mx-auto"
             />
@@ -127,6 +132,7 @@ export default async function Home() {
 
           <div className="block md:hidden">
             <MobileGptAd
+              mode="normal"
               slotKey="mirrordaily_home_MW_300x250_b4"
               customClasses="mb-9 mx-auto"
             />
@@ -136,7 +142,8 @@ export default async function Home() {
           <LatestNewsSection />
         </main>
       </div>
-      <StickyAd pageType="homepage" />
+      <MobileGptAd mode="sticky" pageType="homepage_mw" />
+      <DesktopGptAd mode="sticky" pageType="homepage_pc" />
       <NewsletterSubscription />
       <Footer />
     </>

@@ -142,9 +142,10 @@ export default async function Page({ params }: PageProps) {
         />
       </main>
       <MobileGptAd
+        mode="normal"
         slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto"
-        pageKey={slug}
+        targetingId={slug}
       />
     </>
   )

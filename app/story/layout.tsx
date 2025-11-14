@@ -1,7 +1,6 @@
 import Header from '@/shared-components/header'
 import Footer from '@/shared-components/footer'
 import Script from 'next/script'
-import StickyAd from '@/shared-components/gpt-ad/sticky-ad'
 export default function Layout({
   children,
 }: Readonly<{
@@ -33,7 +32,6 @@ export default function Layout({
         {children}
       </div>
       <Footer />
-      <StickyAd pageType="article" />
     </>
   )
 }

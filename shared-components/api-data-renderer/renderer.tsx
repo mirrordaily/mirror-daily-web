@@ -170,10 +170,12 @@ export default function ApiDataRenderer({
             {!isBrief && i === 0 && shouldShowAd && (
               <>
                 <DesktopGptAd
+                  mode="normal"
                   slotKey="mirrordaily_article_PC_728x90_in1"
                   customClasses="mx-auto"
                 />
                 <MobileGptAd
+                  mode="normal"
                   slotKey="mirrordaily_article_MW_300x250_in1"
                   customClasses="mx-auto"
                 />

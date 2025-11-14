@@ -76,14 +76,16 @@ export default function ArticlesList<T extends PostData>({
                       {i === 0 && (
                         <div key={post.id + 'ad-0'}>
                           <DesktopGptAd
+                            mode="normal"
                             slotKey="mirrordaily_section_PC_728x90_list1"
-                            pageKey={slug}
+                            targetingId={slug}
                           />
                           <div className="md:hidden">
                             <MobileGptAd
+                              mode="normal"
                               slotKey="mirrordaily_section_MW_300x250_list1"
                               customClasses="mx-auto"
-                              pageKey={slug}
+                              targetingId={slug}
                             />
                           </div>
                         </div>
@@ -91,14 +93,16 @@ export default function ArticlesList<T extends PostData>({
                       {i === 3 && (
                         <div key={post.id + 'ad-3'}>
                           <DesktopGptAd
+                            mode="normal"
                             slotKey="mirrordaily_section_PC_728x90_list2"
-                            pageKey={slug}
+                            targetingId={slug}
                           />
                           <div className="md:hidden">
                             <MobileGptAd
+                              mode="normal"
                               slotKey="mirrordaily_section_MW_300x250_list2"
                               customClasses="mx-auto"
-                              pageKey={slug}
+                              targetingId={slug}
                             />
                           </div>
                         </div>
@@ -106,14 +110,16 @@ export default function ArticlesList<T extends PostData>({
                       {i === 6 && (
                         <div key={post.id + 'ad-6'}>
                           <DesktopGptAd
+                            mode="normal"
                             slotKey="mirrordaily_section_PC_728x90_list3"
-                            pageKey={slug}
+                            targetingId={slug}
                           />
                           <div className="md:hidden">
                             <MobileGptAd
+                              mode="normal"
                               slotKey="mirrordaily_section_MW_300x250_list3"
                               customClasses="mx-auto"
-                              pageKey={slug}
+                              targetingId={slug}
                             />
                           </div>
                         </div>

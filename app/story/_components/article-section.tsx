@@ -71,10 +71,12 @@ export default async function ArticleSection({
           {shouldShowAd && (
             <>
               <DesktopGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_PC_728x90_in2"
                 customClasses="my-9 mx-auto"
               />
               <MobileGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_MW_300x250_in2"
                 customClasses="mx-auto my-8"
               />

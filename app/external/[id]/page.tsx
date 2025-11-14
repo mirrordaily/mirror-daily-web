@@ -110,10 +110,12 @@ export default async function Page({ params }: PageProps) {
             <Article brief={brief} content={content} />
 
             <DesktopGptAd
+              mode="normal"
               slotKey="mirrordaily_article_PC_728x90_in2"
               customClasses="mt-9 mx-auto"
             />
             <MobileGptAd
+              mode="normal"
               slotKey="mirrordaily_article_MW_300x250_in2"
               customClasses="mt-8 mx-auto"
             />
@@ -143,6 +145,7 @@ export default async function Page({ params }: PageProps) {
                 type="latest"
               />
               <DesktopGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_PC_300x600_r2"
                 customClasses="mt-5"
               />
@@ -150,12 +153,15 @@ export default async function Page({ params }: PageProps) {
             <div>
               <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
               <DesktopGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_PC_300x600_r3"
                 customClasses="mt-5"
               />
             </div>
           </div>
         </section>
+        <MobileGptAd mode="sticky" pageType="external_mw" />
+        <DesktopGptAd mode="sticky" pageType="external_pc" />
       </main>
     </>
   )

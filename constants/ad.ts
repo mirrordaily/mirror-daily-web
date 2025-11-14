@@ -347,9 +347,14 @@ export const adSlots = {
 } as const
 
 export const stickyAdUnitMap = {
-  homepage: '/23304347674/mirrordaily_pc/homepage/sticky',
-  article: '/23304347674/mirrordaily_pc/article/sticky',
-  section: '/23304347674/mirrordaily_pc/section/sticky',
+  homepage_pc: '/23304347674/mirrordaily_pc/homepage/sticky',
+  article_pc: '/23304347674/mirrordaily_pc/article/sticky',
+  section_pc: '/23304347674/mirrordaily_pc/section/sticky',
+  external_pc: '/23304347674/mirrordaily_pc/external/sticky',
+  homepage_mw: '/23304347674/mirrordaily_mweb/homepage/sticky',
+  section_mw: '/23304347674/mirrordaily_mweb/section/sticky',
+  story_mw: '/23304347674/mirrordaily_mweb/story/sticky',
+  external_mw: '/23304347674/mirrordaily_mweb/external/sticky',
 } as const
 
 export type StickyAdUnit = keyof typeof stickyAdUnitMap
