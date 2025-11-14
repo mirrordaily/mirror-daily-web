@@ -47,6 +47,11 @@ export function MobileGptAd(props: MobileGptAdProps) {
         pageType={pageType}
         headerBannerSelector={headerBannerSelector}
         footerSelector={footerSelector}
+        sizes={[
+          [320, 100],
+          [320, 50],
+          [1, 1],
+        ]}
       />
     )
   }

@@ -46,6 +46,11 @@ export function DesktopGptAd(props: DesktopGptAdProps) {
         pageType={pageType}
         headerBannerSelector={headerBannerSelector}
         footerSelector={footerSelector}
+        sizes={[
+          [970, 90],
+          [728, 90],
+          [1, 1],
+        ]}
       />
     )
   }

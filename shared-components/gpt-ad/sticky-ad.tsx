@@ -7,6 +7,7 @@ type StickyAdProps = {
   pageType: StickyAdUnit
   headerBannerSelector: string
   footerSelector: string
+  sizes: Array<[number, number]>
 }
 
 declare global {
@@ -20,6 +21,7 @@ export default function StickyAd({
   pageType,
   headerBannerSelector,
   footerSelector,
+  sizes,
 }: StickyAdProps) {
   const hasInitialized = useRef(false)
   const [shouldShowState, setShouldShowState] = useState({
@@ -74,14 +76,7 @@ export default function StickyAd({
 
     window.googletag.cmd.push(() => {
       gptSlot = window.googletag
-        .defineSlot(
-          adUnitPath,
-          [
-            [970, 90],
-            [728, 90],
-          ],
-          'gpt-sticky'
-        )
+        .defineSlot(adUnitPath, sizes, 'gpt-sticky')
         .addService(window.googletag.pubads())
 
       window.googletag
@@ -147,7 +142,7 @@ export default function StickyAd({
       }
       hasInitialized.current = false
     }
-  }, [pageType, headerBannerSelector, footerSelector])
+  }, [pageType, headerBannerSelector, footerSelector, sizes])
 
   return (
     <div
