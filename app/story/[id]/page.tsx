@@ -13,7 +13,7 @@ import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV, SITE_URL } from '@/constants/config'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -125,7 +125,7 @@ export default async function Page({ params }: PageProps) {
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        <MobileGptAd mode="sticky" pageType="story_mw" />
+        <NonDesktopGptAd mode="sticky" pageType="story_mw" />
         <DesktopGptAd mode="sticky" pageType="article_pc" />
       </main>
     </>
