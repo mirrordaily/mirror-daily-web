@@ -4754,6 +4754,11 @@ export type GetExternalByIdQuery = {
       color?: string | null
       slug?: string | null
     }> | null
+    categories?: Array<{
+      __typename?: 'Category'
+      name?: string | null
+      slug?: string | null
+    }> | null
   } | null
 }
 
@@ -7792,6 +7797,17 @@ export const GetExternalByIdDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'categories' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                     ],
                   },
