@@ -27,6 +27,7 @@ export default function PopularNewsSection({ posts, shouldShowAd }: Props) {
         ))}
         {shouldShowAd && (
           <DesktopGptAd
+            mode="normal"
             slotKey="mirrordaily_article_PC_300x600_r3"
             customClasses="mt-5"
           />

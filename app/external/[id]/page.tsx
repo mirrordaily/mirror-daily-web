@@ -10,7 +10,7 @@ import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
@@ -168,10 +168,12 @@ export default async function Page({ params }: PageProps) {
             <Article brief={brief} content={content} />
 
             <DesktopGptAd
+              mode="normal"
               slotKey="mirrordaily_article_PC_728x90_in2"
               customClasses="mt-9 mx-auto"
             />
-            <MobileGptAd
+            <NonDesktopGptAd
+              mode="normal"
               slotKey="mirrordaily_article_MW_300x250_in2"
               customClasses="mt-8 mx-auto"
             />
@@ -201,6 +203,7 @@ export default async function Page({ params }: PageProps) {
                 type="latest"
               />
               <DesktopGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_PC_300x600_r2"
                 customClasses="mt-5"
               />
@@ -208,12 +211,15 @@ export default async function Page({ params }: PageProps) {
             <div>
               <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
               <DesktopGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_PC_300x600_r3"
                 customClasses="mt-5"
               />
             </div>
           </div>
         </section>
+        <NonDesktopGptAd mode="sticky" pageType="external_mw" />
+        <DesktopGptAd mode="sticky" pageType="external_pc" />
       </main>
     </>
   )

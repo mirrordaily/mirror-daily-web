@@ -7,7 +7,7 @@ import { getTailwindConfigBreakpointNumber } from '@/utils/tailwind'
 import type { StickyAdUnit } from '@/constants/ad'
 import StickyAd from './sticky-ad'
 
-type DesktopGptAdProps =
+type NonDesktopGptAdProps =
   | {
       mode: 'normal'
       slotKey: AdSlotKey
@@ -21,12 +21,12 @@ type DesktopGptAdProps =
       footerSelector?: string
     }
 
-export function DesktopGptAd(props: DesktopGptAdProps) {
+export function NonDesktopGptAd(props: NonDesktopGptAdProps) {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
     const check = () =>
-      setShow(window.innerWidth >= getTailwindConfigBreakpointNumber('lg'))
+      setShow(window.innerWidth < getTailwindConfigBreakpointNumber('lg'))
 
     check()
     window.addEventListener('resize', check)
@@ -41,14 +41,15 @@ export function DesktopGptAd(props: DesktopGptAdProps) {
       headerBannerSelector = '#gpt-top-leaderboard',
       footerSelector = '#site-footer',
     } = props
+
     return (
       <StickyAd
         pageType={pageType}
         headerBannerSelector={headerBannerSelector}
         footerSelector={footerSelector}
         sizes={[
-          [970, 90],
-          [728, 90],
+          [320, 100],
+          [320, 50],
           [1, 1],
         ]}
       />
@@ -56,6 +57,7 @@ export function DesktopGptAd(props: DesktopGptAdProps) {
   }
 
   const { slotKey, customClasses = '', targetingId = '' } = props
+
   return (
     <BaseGptAd
       slotKey={slotKey}

@@ -20,7 +20,10 @@ export default function FeatureNewsList({ title, posts, type }: Props) {
           <>
             <FeaturedNewsCard {...item} key={item.postId} />
             {type === 'latest' && i === 0 && (
-              <DesktopGptAd slotKey="mirrordaily_article_PC_300x250_r1" />
+              <DesktopGptAd
+                mode="normal"
+                slotKey="mirrordaily_article_PC_300x250_r1"
+              />
             )}
           </>
         ))}
