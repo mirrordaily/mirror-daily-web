@@ -182,7 +182,7 @@ export default async function Page({ params }: PageProps) {
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection {...postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        <NonDesktopGptAd mode="sticky" pageType="story_mw" />
+        <NonDesktopGptAd mode="sticky" pageType="article_mw" />
         <DesktopGptAd mode="sticky" pageType="article_pc" />
       </main>
     </>

@@ -39,10 +39,6 @@ export default function StickyAd({
 
   useEffect(() => {
     if (hasInitialized.current) return
-    if (sessionStorage.getItem('md_sticky_closed') === '1') {
-      setShouldShowState((prev) => ({ ...prev, userClosed: true }))
-      return
-    }
 
     const adUnitPath = stickyAdUnitMap[pageType]
     if (!adUnitPath) return
@@ -59,7 +55,6 @@ export default function StickyAd({
 
     const handleClose = () => {
       setShouldShowState((prev) => ({ ...prev, userClosed: true }))
-      sessionStorage.setItem('md_sticky_closed', '1')
     }
 
     const closeBtn = document.getElementById('md-sticky-close')
