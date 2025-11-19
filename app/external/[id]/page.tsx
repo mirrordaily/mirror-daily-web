@@ -16,6 +16,7 @@ import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 import { SITE_URL } from '@/constants/config'
 import SocialSharePanel from '@/app/story/_components/social-share-panel'
+import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 
 type PageProps = { params: { id: string } }
 
@@ -80,17 +81,74 @@ export default async function Page({ params }: PageProps) {
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
-  const { title, partner, thumb, publishedTime, brief, content, link } =
-    externalPost
+  const {
+    title,
+    partner,
+    thumb,
+    publishedTime,
+    brief,
+    content,
+    link,
+    sections,
+    categories,
+  } = externalPost
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    headline: title,
-    author: partner ? { name: partner } : { name: SITE_NAME },
-    image: thumb || `${SITE_URL}${IMAGE_PATH}`,
-    datePublished: new Date(publishedTime).toISOString(),
-  }
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      headline: title,
+      author: partner ? { name: partner } : { name: SITE_NAME },
+      image: thumb || `${SITE_URL}${IMAGE_PATH}`,
+      datePublished: new Date(publishedTime).toISOString(),
+    },
+    ...sections.map((section) => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: section.name,
+          item: `${SITE_URL}${getSectionPageUrl(section.slug)}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: title,
+        },
+      ],
+    })),
+    ...categories.map((category) => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: category.name,
+          item: `${SITE_URL}${getCategoryPageUrl(category.slug)}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: title,
+        },
+      ],
+    })),
+  ]
 
   return (
     <>

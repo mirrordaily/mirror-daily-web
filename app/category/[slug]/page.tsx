@@ -90,30 +90,50 @@ export default async function Page({ params }: PageProps) {
 
   const totalAmount = jsonPostsCount + postsCount
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: initialPosts.map((post, index) => {
-      let imageUrl: string | undefined
-      if (typeof post.postMainImage === 'string') {
-        imageUrl = post.postMainImage
-      } else {
-        imageUrl = post.postMainImage.resized?.original
-      }
-      return {
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'NewsArticle',
-          name: post.title,
-          image: imageUrl || `${SITE_URL}${IMAGE_PATH}`,
-          dateCreated: new Date(post.formattedDate).toISOString(),
-          description: post.brief,
-          url: `${SITE_URL}${post.link}`,
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: initialPosts.map((post, index) => {
+        let imageUrl: string | undefined
+        if (typeof post.postMainImage === 'string') {
+          imageUrl = post.postMainImage
+        } else {
+          imageUrl = post.postMainImage.resized?.original
+        }
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'NewsArticle',
+            name: post.title,
+            image: imageUrl || `${SITE_URL}${IMAGE_PATH}`,
+            dateCreated: new Date(post.formattedDate).toISOString(),
+            description: post.brief,
+            url: `${SITE_URL}${post.link}`,
+          },
+        }
+      }),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
         },
-      }
-    }),
-  }
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: slug,
+          item: `${SITE_URL}${getCategoryPageUrl(slug)}`,
+        },
+      ],
+    },
+  ]
 
   return (
     <>

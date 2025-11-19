@@ -4754,6 +4754,11 @@ export type GetExternalByIdQuery = {
       color?: string | null
       slug?: string | null
     }> | null
+    categories?: Array<{
+      __typename?: 'Category'
+      name?: string | null
+      slug?: string | null
+    }> | null
   } | null
 }
 
@@ -5208,6 +5213,11 @@ export type GetPostByIdQuery = {
       __typename?: 'Section'
       name?: string | null
       color?: string | null
+      slug?: string | null
+    }> | null
+    categories?: Array<{
+      __typename?: 'Category'
+      name?: string | null
       slug?: string | null
     }> | null
     writers?: Array<{
@@ -7791,6 +7801,17 @@ export const GetExternalByIdDocument = {
                     ],
                   },
                 },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'categories' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -10281,6 +10302,17 @@ export const GetPostByIdDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'categories' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                     ],
                   },

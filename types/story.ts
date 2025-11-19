@@ -15,6 +15,7 @@ export type Post = {
   publishedTime: string
   postMainImage: HeroImage
   sections: { name: string; color: string; slug: string }[]
+  categories: { name: string; slug: string }[]
   writers: Contact[]
   photographers: Contact[]
   mainWriters: Contact[]

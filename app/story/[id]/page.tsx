@@ -12,6 +12,8 @@ import AdultWarning from '../_components/adult-warning'
 import MisoPageView from '@/shared-components/miso-pageview'
 import { ENV, SITE_URL } from '@/constants/config'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
+import { getSectionPageUrl } from '@/utils/site-urls'
+import { getCategoryPageUrl } from '@/utils/site-urls'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 
@@ -34,7 +36,14 @@ export async function generateMetadata({
   const image = postData.postMainImage?.resized?.original || IMAGE_PATH
   const tags = postData.tags.map((tag) => tag.name)
   const algoTags = postData.algoTags.map((tag) => tag.name)
-  const newsKeywords = [postData.title, SITE_NAME, '新聞', ...tags, ...algoTags]
+  const newsKeywords = [
+    postData.title,
+    SITE_NAME,
+    '新聞',
+    '今日新聞',
+    ...tags,
+    ...algoTags,
+  ]
     .filter(Boolean)
     .join(', ')
   const keywords = [...tags, ...algoTags].filter(Boolean).join(', ')
@@ -98,15 +107,63 @@ export default async function Page({ params }: PageProps) {
     ? postData.writers.map((writer) => ({ name: writer.name }))
     : [{ name: SITE_NAME }]
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    headline: postData.title,
-    author: author,
-    image:
-      postData.postMainImage?.resized?.original || `${SITE_URL}${IMAGE_PATH}`,
-    datePublished: new Date(postData.publishedTime).toISOString(),
-  }
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      headline: postData.title,
+      author: author,
+      image:
+        postData.postMainImage?.resized?.original || `${SITE_URL}${IMAGE_PATH}`,
+      datePublished: new Date(postData.publishedTime).toISOString(),
+    },
+    ...postData.sections.map((section) => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: section.name,
+          item: `${SITE_URL}${getSectionPageUrl(section.slug)}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: postData.title,
+        },
+      ],
+    })),
+    ...postData.categories.map((category) => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: category.name,
+          item: `${SITE_URL}${getCategoryPageUrl(category.slug)}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: postData.title,
+        },
+      ],
+    })),
+  ]
 
   return (
     <>
