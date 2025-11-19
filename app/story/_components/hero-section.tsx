@@ -1,5 +1,4 @@
 import CustomImage from '@/shared-components/custom-image'
-import type { ItemInHeroSection } from '@/types/story'
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import type { Contact } from '@/types/story'
@@ -8,21 +7,14 @@ import IconMirrorDaily from '@/public/icons/logos/mirror-daily-black.svg'
 import NextImage from 'next/image'
 import { storyGtmEvents } from '@/constants/gtm'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
+import SocialShareBar from '@/shared-components/social-share-bar'
+import type { Post } from '@/types/story'
 
-export default function HeroSection({
-  title,
-  subtitle,
-  heroCaption,
-  publishedTime,
-  postMainImage,
-  sections,
-  writers,
-  photographers,
-  mainWriters,
-  editors,
-  tags,
-  algoTags,
-}: ItemInHeroSection) {
+type Props = {
+  postData: Post
+}
+
+export default function HeroSection({ postData }: Props) {
   const getAuthorsContent = (authors: Contact[]) => {
     const dotSeparator = (
       <span className="mx-1 inline-block size-0.5 bg-[#000928] align-middle opacity-20" />
@@ -43,27 +35,27 @@ export default function HeroSection({
     return elements
   }
 
-  const displayTags = [...tags, ...algoTags]
+  const displayTags = [...postData.tags, ...postData.algoTags]
 
   return (
     <section className="mb-4 flex max-w-screen-sm flex-col items-center md:mb-6 md:w-[600px] md:max-w-none lg:mb-4 lg:w-[720px] lg:items-start">
       <figure className="order-1 mb-6 flex w-full flex-col lg:order-2 lg:mb-0">
         <div className="relative aspect-[375/250] w-full overflow-hidden md:aspect-auto md:h-[400px] lg:h-[480px]">
           <CustomImage
-            images={postMainImage.resized}
-            imagesWebP={postMainImage.resizedWebp}
-            alt={title}
+            images={postData.postMainImage.resized}
+            imagesWebP={postData.postMainImage.resizedWebp}
+            alt={postData.title}
           />
         </div>
         <figcaption className="mt-2 flex justify-center px-5 text-[13px] font-normal leading-normal text-[#7F8493] md:px-0 lg:mt-4">
-          {heroCaption}
+          {postData.heroCaption}
         </figcaption>
       </figure>
 
       <div className="order-2 w-full px-5 md:px-0 lg:order-1">
-        {sections.length > 0 ? (
+        {postData.sections.length > 0 ? (
           <ul className="mb-1 flex text-sm/normal lg:mb-4 lg:font-bold lg:leading-none">
-            {sections.map((section) => (
+            {postData.sections.map((section) => (
               <Link
                 prefetch={false}
                 href={getSectionPageUrl(section.slug)}
@@ -83,46 +75,48 @@ export default function HeroSection({
           >{`｜${DEFAULT_SECTION_NAME}`}</p>
         )}
         <h1 className="mb-3 break-all text-[32px] font-normal leading-[45px] text-[#212944] md:mb-1 lg:mb-4">
-          {title}
+          {postData.title}
         </h1>
         <h2 className="mb-3 text-xl font-bold leading-[1.4] text-[#212944] lg:mb-4">
-          {subtitle}
+          {postData.subtitle}
         </h2>
-
+        <div className="fixed bottom-2 right-3 z-story-share-bar md:hidden">
+          <SocialShareBar title={postData.title} direction="vertical" />
+        </div>
         <div className="relative mb-3 h-7 w-[58px] lg:mb-4 lg:h-[42px] lg:w-[88px]">
           <NextImage src={IconMirrorDaily} fill alt="mirror-daily-logo" />
         </div>
 
         <div className="mb-4 flex flex-col gap-y-1 text-[13px] font-normal leading-normal text-[#7F8493] md:mb-3 lg:mb-4">
-          <p>{publishedTime}</p>
-          {!!writers.length && (
+          <p>{postData.publishedTime}</p>
+          {!!postData.writers.length && (
             <div className="flex">
               <p className="shrink-0">記者：</p>
               <p className="flex flex-wrap items-center break-all">
-                {getAuthorsContent(writers)}
+                {getAuthorsContent(postData.writers)}
               </p>
             </div>
           )}
-          {!!photographers.length && (
+          {!!postData.photographers.length && (
             <div className="flex">
               <p className="shrink-0">攝影：</p>
               <p className="flex flex-wrap items-center break-all">
-                {getAuthorsContent(photographers)}
+                {getAuthorsContent(postData.photographers)}
               </p>
             </div>
           )}
-          {!!editors.length && (
+          {!!postData.editors.length && (
             <div className="flex">
               <p className="shrink-0">編輯：</p>
               <p className="flex flex-wrap items-center break-all">
-                {getAuthorsContent(editors)}
+                {getAuthorsContent(postData.editors)}
               </p>
             </div>
           )}
-          {!!mainWriters.length && (
+          {!!postData.mainWriters.length && (
             <div className="flex">
               <p className="flex flex-wrap items-center break-all">
-                {getAuthorsContent(mainWriters)}
+                {getAuthorsContent(postData.mainWriters)}
               </p>
             </div>
           )}
