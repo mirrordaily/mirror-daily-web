@@ -160,8 +160,8 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
         </section>
-        <NonDesktopGptAd mode="sticky" pageType="external_mw" />
-        <DesktopGptAd mode="sticky" pageType="external_pc" />
+        <NonDesktopGptAd mode="sticky" pageType="article_mw" />
+        <DesktopGptAd mode="sticky" pageType="article_pc" />
       </main>
     </>
   )
