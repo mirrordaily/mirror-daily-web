@@ -80,6 +80,7 @@ export default function HeroSection({ postData }: Props) {
         <h2 className="mb-3 text-xl font-bold leading-[1.4] text-[#212944] lg:mb-4">
           {postData.subtitle}
         </h2>
+
         <div className="fixed bottom-2 right-3 z-story-share-bar md:hidden">
           <SocialShareBar title={postData.title} direction="vertical" />
         </div>
