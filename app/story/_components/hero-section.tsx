@@ -6,9 +6,9 @@ import { getTagPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import IconMirrorDaily from '@/public/icons/logos/mirror-daily-black.svg'
 import NextImage from 'next/image'
 import { storyGtmEvents } from '@/constants/gtm'
+import type { Post } from '@/types/story'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 import SocialShareBar from '@/shared-components/social-share-bar'
-import type { Post } from '@/types/story'
 
 type Props = {
   postData: Post
