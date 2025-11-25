@@ -7,7 +7,7 @@ import {
 } from '../actions'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { SITE_NAME } from '@/constants/misc'
+import { SITE_NAME, ENVIRONMENT } from '@/constants/misc'
 import { getSectionPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
@@ -15,8 +15,10 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 import { sectionGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
-import { SITE_URL } from '@/constants/config'
+import { SITE_URL, ENV } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
+
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENVIRONMENT.DEVELOPMENT
 
 type PageProps = { params: { slug: string } }
 
@@ -170,8 +172,8 @@ export default async function Page({
         customClasses="mt-8 mb-9 mx-auto"
         targetingId={slug}
       />
-      <NonDesktopGptAd mode="sticky" pageType="section_mw" />
-      <DesktopGptAd mode="sticky" pageType="section_pc" />
+      {isOnDev && <NonDesktopGptAd mode="sticky" pageType="section_mw" />}
+      {isOnDev && <DesktopGptAd mode="sticky" pageType="section_pc" />}
     </main>
   )
 }
