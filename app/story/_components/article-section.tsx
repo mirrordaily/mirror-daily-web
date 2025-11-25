@@ -10,7 +10,7 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import PopularNewsSection from './popular-news-section'
 import LatestNewsSection from './latest-news-section'
 import SocialSharePanel from './social-share-panel'
-
+import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import DableWidget from '@/shared-components/dable-widget'
 
 type Props = Post
@@ -82,6 +82,8 @@ export default async function ArticleSection({
               />
             </>
           )}
+
+          <NewsletterSubscription />
 
           <SocialSharePanel link={link} title={heroContent.title} />
 

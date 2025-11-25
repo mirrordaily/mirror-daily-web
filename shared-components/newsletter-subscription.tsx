@@ -36,7 +36,7 @@ export default function NewsletterSubscription(): ReactNode {
   }
 
   // TODO: Remove this line when back-end service is ready
-  return null
+  // return null
 
   return (
     <section className="flex w-full flex-col items-center bg-mirror-blue-600 px-[38px] pb-7 pt-8 text-white md:px-0 md:pb-[42px] md:pt-[54px] lg:pb-9">

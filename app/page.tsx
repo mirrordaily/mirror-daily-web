@@ -1,7 +1,6 @@
 import { fetchHeaderData } from './actions-general'
 
 import Header from '@/shared-components/header'
-import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import Footer from '@/shared-components/footer'
 import SectionDivider from './_components/divider'
 import EditorChoiceSection from './_components/editor-choice/section'
@@ -135,7 +134,6 @@ export default async function Home() {
       </div>
       <NonDesktopGptAd mode="sticky" pageType="homepage_mw" />
       <DesktopGptAd mode="sticky" pageType="homepage_pc" />
-      <NewsletterSubscription />
       <Footer />
     </>
   )
