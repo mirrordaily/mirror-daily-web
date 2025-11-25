@@ -6,16 +6,19 @@ import RelatedNewsList from './components/related-news-list'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import FeatureNewsList from './components/feature-news-list'
 import type { Metadata } from 'next'
-import { SITE_NAME } from '@/constants/misc'
+import { SITE_NAME, ENVIRONMENT } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
-import { SITE_URL } from '@/constants/config'
+import { SITE_URL, ENV } from '@/constants/config'
 import SocialSharePanel from '@/app/story/_components/social-share-panel'
+import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
+
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENVIRONMENT.DEVELOPMENT
 
 type PageProps = { params: { id: string } }
 
@@ -80,17 +83,74 @@ export default async function Page({ params }: PageProps) {
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
-  const { title, partner, thumb, publishedTime, brief, content, link } =
-    externalPost
+  const {
+    title,
+    partner,
+    thumb,
+    publishedTime,
+    brief,
+    content,
+    link,
+    sections,
+    categories,
+  } = externalPost
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    headline: title,
-    author: partner ? { name: partner } : { name: SITE_NAME },
-    image: thumb || `${SITE_URL}${IMAGE_PATH}`,
-    datePublished: new Date(publishedTime).toISOString(),
-  }
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'NewsArticle',
+      headline: title,
+      author: partner ? { name: partner } : { name: SITE_NAME },
+      image: thumb || `${SITE_URL}${IMAGE_PATH}`,
+      datePublished: new Date(publishedTime).toISOString(),
+    },
+    ...sections.map((section) => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: section.name,
+          item: `${SITE_URL}${getSectionPageUrl(section.slug)}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: title,
+        },
+      ],
+    })),
+    ...categories.map((category) => ({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: category.name,
+          item: `${SITE_URL}${getCategoryPageUrl(category.slug)}`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: title,
+        },
+      ],
+    })),
+  ]
 
   return (
     <>
@@ -110,10 +170,12 @@ export default async function Page({ params }: PageProps) {
             <Article brief={brief} content={content} />
 
             <DesktopGptAd
+              mode="normal"
               slotKey="mirrordaily_article_PC_728x90_in2"
               customClasses="mt-9 mx-auto"
             />
-            <MobileGptAd
+            <NonDesktopGptAd
+              mode="normal"
               slotKey="mirrordaily_article_MW_300x250_in2"
               customClasses="mt-8 mx-auto"
             />
@@ -143,6 +205,7 @@ export default async function Page({ params }: PageProps) {
                 type="latest"
               />
               <DesktopGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_PC_300x600_r2"
                 customClasses="mt-5"
               />
@@ -150,12 +213,15 @@ export default async function Page({ params }: PageProps) {
             <div>
               <FeatureNewsList title="熱門新聞" posts={popularPostsTopSix} />
               <DesktopGptAd
+                mode="normal"
                 slotKey="mirrordaily_article_PC_300x600_r3"
                 customClasses="mt-5"
               />
             </div>
           </div>
         </section>
+        {isOnDev && <NonDesktopGptAd mode="sticky" pageType="article_mw" />}
+        {isOnDev && <DesktopGptAd mode="sticky" pageType="article_pc" />}
       </main>
     </>
   )

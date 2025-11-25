@@ -6,10 +6,7 @@ import {
   GetPostByIdDocument,
   GetRelatedPostsByIdDocument,
 } from '@/graphql/__generated__/graphql'
-import type {
-  GetPostByIdQuery,
-  GetRelatedPostsByIdQuery,
-} from '@/graphql/__generated__/graphql'
+import type { GetPostByIdQuery } from '@/graphql/__generated__/graphql'
 import {
   dateFormatter,
   getHeroImage,
@@ -81,6 +78,12 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     slug: section.slug ?? '',
   }))
 
+  const categories =
+    rawData.categories?.map((category) => ({
+      name: category.name ?? '',
+      slug: category.slug ?? '',
+    })) ?? []
+
   return {
     id: rawData.id,
     link: getStoryPageUrl(rawData.id),
@@ -101,6 +104,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     tags,
     algoTags,
     warnings,
+    categories,
   }
 }
 
@@ -115,7 +119,7 @@ async function fetchPost(id: string) {
   })
 
   if (result) {
-    const { post } = result as GetPostByIdQuery
+    const { post } = result
     return transformPost(post)
   } else {
     return null
@@ -133,7 +137,7 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   })
 
   if (result) {
-    const { post } = result as GetRelatedPostsByIdQuery
+    const { post } = result
     return transformRawRelatedPosts(post)
   } else return []
 }

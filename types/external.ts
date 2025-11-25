@@ -15,6 +15,7 @@ export type ExternalPost = {
   }[]
   link: string
   sections: { name: string; color: string; slug: string }[]
+  categories: { name: string; slug: string }[]
 }
 
 export type PostIntro = Omit<ExternalPost, 'brief' | 'content' | 'link'>

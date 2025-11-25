@@ -1,7 +1,6 @@
 import Header from '@/shared-components/header'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import Footer from '@/shared-components/footer'
-
 export default function Layout({
   children,
 }: Readonly<{

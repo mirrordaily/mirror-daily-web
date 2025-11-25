@@ -30,20 +30,23 @@ export default async function PopularNewsSection({
               />
               {i === 0 && (
                 <DesktopGptAd
+                  mode="normal"
                   slotKey="mirrordaily_section_PC_300x250_r1"
-                  pageKey={slug}
+                  targetingId={slug}
                 />
               )}
               {i === 2 && (
                 <DesktopGptAd
+                  mode="normal"
                   slotKey="mirrordaily_section_PC_300x600_r2"
-                  pageKey={slug}
+                  targetingId={slug}
                 />
               )}
               {i === 5 && (
                 <DesktopGptAd
+                  mode="normal"
                   slotKey="mirrordaily_section_PC_300x600_r3"
-                  pageKey={slug}
+                  targetingId={slug}
                 />
               )}
             </>

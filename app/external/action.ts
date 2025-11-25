@@ -40,6 +40,13 @@ function transformExternal(
     color: section.color ?? '',
     slug: section.slug ?? '',
   }))
+
+  const categories =
+    rawData.categories?.map((category) => ({
+      name: category.name ?? '',
+      slug: category.slug ?? '',
+    })) ?? []
+
   return {
     title,
     thumb,
@@ -52,6 +59,7 @@ function transformExternal(
     tags,
     link,
     sections,
+    categories,
   }
 }
 

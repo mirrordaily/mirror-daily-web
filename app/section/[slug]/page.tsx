@@ -7,15 +7,18 @@ import {
 } from '../actions'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { SITE_NAME } from '@/constants/misc'
+import { SITE_NAME, ENVIRONMENT } from '@/constants/misc'
 import { getSectionPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
+import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/section'
 import { sectionGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
-import { SITE_URL } from '@/constants/config'
+import { SITE_URL, ENV } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
+
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENVIRONMENT.DEVELOPMENT
 
 type PageProps = { params: { slug: string } }
 
@@ -92,30 +95,50 @@ export default async function Page({
 
   const totalAmount = jsonPostsCount + postsCount
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: initialPosts.map((post, index) => {
-      let imageUrl: string | undefined
-      if (typeof post.postMainImage === 'string') {
-        imageUrl = post.postMainImage
-      } else {
-        imageUrl = post.postMainImage.resized?.original
-      }
-      return {
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'NewsArticle',
-          name: post.title,
-          image: imageUrl || `${SITE_URL}${IMAGE_PATH}`,
-          dateCreated: new Date(post.formattedDate).toISOString(),
-          description: post.brief,
-          url: `${SITE_URL}${post.link}`,
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: initialPosts.map((post, index) => {
+        let imageUrl: string | undefined
+        if (typeof post.postMainImage === 'string') {
+          imageUrl = post.postMainImage
+        } else {
+          imageUrl = post.postMainImage.resized?.original
+        }
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'NewsArticle',
+            name: post.title,
+            image: imageUrl || `${SITE_URL}${IMAGE_PATH}`,
+            dateCreated: new Date(post.formattedDate).toISOString(),
+            description: post.brief,
+            url: `${SITE_URL}${post.link}`,
+          },
+        }
+      }),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
         },
-      }
-    }),
-  }
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: slug,
+          item: `${SITE_URL}${getSectionPageUrl(slug)}`,
+        },
+      ],
+    },
+  ]
 
   return (
     <main>
@@ -143,11 +166,14 @@ export default async function Page({
           gtmClassName={sectionGtmEvents.popularArticle}
         />
       </div>
-      <MobileGptAd
+      <NonDesktopGptAd
+        mode="normal"
         slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto"
-        pageKey={slug}
+        targetingId={slug}
       />
+      {isOnDev && <NonDesktopGptAd mode="sticky" pageType="section_mw" />}
+      {isOnDev && <DesktopGptAd mode="sticky" pageType="section_pc" />}
     </main>
   )
 }
