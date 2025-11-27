@@ -14,10 +14,9 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
-import { SITE_URL, ENV } from '@/constants/config'
-import SocialSharePanel from '@/app/story/_components/social-share-panel'
-import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import SocialSharePanel from '@/shared-components/social-share-panel'
+import { SITE_URL, ENV } from '@/constants/config'
+import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 
 const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
