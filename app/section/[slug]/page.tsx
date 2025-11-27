@@ -18,7 +18,7 @@ import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 import { SITE_URL, ENV } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
 
-const isOnDev = ENV === ENVIRONMENT.LOCAL || ENVIRONMENT.DEVELOPMENT
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
 type PageProps = { params: { slug: string } }
 
