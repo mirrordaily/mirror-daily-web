@@ -19,7 +19,7 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 
 type PageProps = { params: { id: string } }
 
-const isOnDev = ENV === ENVIRONMENT.LOCAL || ENVIRONMENT.DEVELOPMENT
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
 export async function generateMetadata({
   params,
