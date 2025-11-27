@@ -17,6 +17,7 @@ import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 import { SITE_URL, ENV } from '@/constants/config'
 import SocialSharePanel from '@/app/story/_components/social-share-panel'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
+import SocialSharePanel from '@/shared-components/social-share-panel'
 
 const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
@@ -166,7 +167,7 @@ export default async function Page({ params }: PageProps) {
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <section className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
           <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
-            <ArticleIntro {...externalPost} />
+            <ArticleIntro externalPost={externalPost} />
             <Article brief={brief} content={content} />
 
             <DesktopGptAd
@@ -180,7 +181,12 @@ export default async function Page({ params }: PageProps) {
               customClasses="mt-8 mx-auto"
             />
 
-            <SocialSharePanel link={link} title={externalPost.title} />
+            <div className="md:hidden">
+              <SocialSharePanel link={link} hideShareButtons title={title} />
+            </div>
+            <div className="hidden md:block">
+              <SocialSharePanel link={link} title={title} />
+            </div>
 
             <RelatedNewsList posts={relatedPosts} />
 

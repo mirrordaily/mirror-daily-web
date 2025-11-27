@@ -149,14 +149,20 @@ function CopyLinkButton({
 export default function SocialSharePanel({
   link,
   title,
+  hideShareButtons = false,
 }: {
   link: string
   title: string
+  hideShareButtons?: boolean
 }) {
+  const filteredLinks = hideShareButtons
+    ? ExtendedSocialLinks.filter((item) => item.type == SOCIAL_TYPE.FOLLOW)
+    : ExtendedSocialLinks
+
   return (
     <div className="mx-auto mt-8 flex flex-col items-center justify-center gap-y-3 md:max-w-none">
       <div className="flex flex-wrap justify-center gap-x-2 gap-y-3">
-        {ExtendedSocialLinks.map((item, index) => {
+        {filteredLinks.map((item, index) => {
           if (item.type === SOCIAL_TYPE.COPY) {
             return (
               <CopyLinkButton
