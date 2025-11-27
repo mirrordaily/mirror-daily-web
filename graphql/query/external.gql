@@ -20,6 +20,10 @@ query GetExternalById($id: ID!) {
       color
       slug
     }
+    categories {
+      name
+      slug
+    }
   }
 }
 

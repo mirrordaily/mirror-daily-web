@@ -66,6 +66,23 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <Script
+          async
+          strategy="beforeInteractive"
+          src="https://cdn.jsdelivr.net/npm/@miso.ai/client-sdk@1.11.4/dist/umd/miso.min.js"
+        />
+        <Script
+          id="gpt-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.googletag = window.googletag || { cmd: [] };
+              googletag.cmd.push(function() {
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+              });
+            `,
+          }}
+        />
+        <Script
           src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"
           strategy="beforeInteractive"
         />
@@ -116,11 +133,6 @@ export default function RootLayout({
         />
       </head>
       <body className="app-layout">
-        <Script
-          async
-          strategy="beforeInteractive"
-          src="https://cdn.jsdelivr.net/npm/@miso.ai/client-sdk@1.11.4/dist/umd/miso.min.js"
-        />
         <StoreProvider>
           {children}
           <UploadModal />

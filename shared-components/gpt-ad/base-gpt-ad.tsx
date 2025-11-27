@@ -33,8 +33,6 @@ export default function BaseGptAd({
   useEffect(() => {
     if (typeof window === 'undefined' || isInitialed.current) return
 
-    window.googletag = window.googletag || { cmd: [] }
-
     window.googletag.cmd.push(function () {
       if (isDebugMode) {
         console.log(
@@ -50,13 +48,10 @@ export default function BaseGptAd({
         slot.setTargeting('cid', pageKey)
       }
 
-      window.googletag.pubads().enableSingleRequest()
-
       if (collapseEmptyDivs && !isDebugMode) {
         window.googletag.pubads().collapseEmptyDivs()
       }
 
-      window.googletag.enableServices()
       window.googletag.display(adDivId)
     })
     isInitialed.current = true

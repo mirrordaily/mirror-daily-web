@@ -149,6 +149,10 @@ query GetPostById($id: ID!) {
       color
       slug
     }
+    categories {
+      name
+      slug
+    }
     writers {
       id
       name

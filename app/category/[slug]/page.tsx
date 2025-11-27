@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 import { SITE_NAME } from '@/constants/misc'
 import { getCategoryPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
-import { MobileGptAd } from '@/shared-components/gpt-ad/mobile-gpt-ad'
+import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import { PAGE_SIZE, JSON_ITEMS_COUNT } from '@/constants/category'
 import { categoryGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
@@ -90,30 +90,50 @@ export default async function Page({ params }: PageProps) {
 
   const totalAmount = jsonPostsCount + postsCount
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: initialPosts.map((post, index) => {
-      let imageUrl: string | undefined
-      if (typeof post.postMainImage === 'string') {
-        imageUrl = post.postMainImage
-      } else {
-        imageUrl = post.postMainImage.resized?.original
-      }
-      return {
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'NewsArticle',
-          name: post.title,
-          image: imageUrl || `${SITE_URL}${IMAGE_PATH}`,
-          dateCreated: new Date(post.formattedDate).toISOString(),
-          description: post.brief,
-          url: `${SITE_URL}${post.link}`,
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: initialPosts.map((post, index) => {
+        let imageUrl: string | undefined
+        if (typeof post.postMainImage === 'string') {
+          imageUrl = post.postMainImage
+        } else {
+          imageUrl = post.postMainImage.resized?.original
+        }
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'NewsArticle',
+            name: post.title,
+            image: imageUrl || `${SITE_URL}${IMAGE_PATH}`,
+            dateCreated: new Date(post.formattedDate).toISOString(),
+            description: post.brief,
+            url: `${SITE_URL}${post.link}`,
+          },
+        }
+      }),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '首頁',
+          item: `${SITE_URL}`,
         },
-      }
-    }),
-  }
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: slug,
+          item: `${SITE_URL}${getCategoryPageUrl(slug)}`,
+        },
+      ],
+    },
+  ]
 
   return (
     <>
@@ -141,10 +161,11 @@ export default async function Page({ params }: PageProps) {
           gtmClassName={categoryGtmEvents.popularArticle}
         />
       </main>
-      <MobileGptAd
+      <NonDesktopGptAd
+        mode="normal"
         slotKey="mirrordaily_section_MW_300x250_list4"
         customClasses="mt-8 mb-9 mx-auto"
-        pageKey={slug}
+        targetingId={slug}
       />
     </>
   )

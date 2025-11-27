@@ -346,6 +346,17 @@ export const adSlots = {
   },
 } as const
 
+export const stickyAdUnitMap = {
+  homepage_pc: '/23304347674/mirrordaily_pc//homepage//sticky',
+  article_pc: '/23304347674/mirrordaily_pc//article//sticky',
+  section_pc: '/23304347674/mirrordaily_pc//section//sticky',
+  homepage_mw: '/23304347674/mirrordaily_mweb//homepage//sticky',
+  section_mw: '/23304347674/mirrordaily_mweb//section//sticky',
+  article_mw: '/23304347674/mirrordaily_mweb//article//sticky',
+} as const
+
+export type StickyAdUnit = keyof typeof stickyAdUnitMap
+
 export type DableWidgetType =
   | 'related' // 你可能也想看 (PC/Mobile)
   | 'articleBottomPC' // 其他人都在看 (PC only)

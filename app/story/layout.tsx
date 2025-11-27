@@ -1,7 +1,6 @@
 import Header from '@/shared-components/header'
 import Footer from '@/shared-components/footer'
 import Script from 'next/script'
-
 export default function Layout({
   children,
 }: Readonly<{

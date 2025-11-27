@@ -24,12 +24,18 @@ export default function LatestNewsSection({ posts, shouldShowAd }: Props) {
               gtmClassName={storyGtmEvents.latestArticle}
             />
             {i === 0 && shouldShowAd && (
-              <DesktopGptAd slotKey="mirrordaily_article_PC_300x250_r1" />
+              <DesktopGptAd
+                mode="normal"
+                slotKey="mirrordaily_article_PC_300x250_r1"
+              />
             )}
           </>
         ))}
         {shouldShowAd && (
-          <DesktopGptAd slotKey="mirrordaily_article_PC_300x600_r2" />
+          <DesktopGptAd
+            mode="normal"
+            slotKey="mirrordaily_article_PC_300x600_r2"
+          />
         )}
       </div>
     </section>
