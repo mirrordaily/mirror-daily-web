@@ -25,7 +25,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function Home() {
   const headerData = await fetchHeaderData()
-  const isOnDev = ENV === ENVIRONMENT.LOCAL || ENVIRONMENT.DEVELOPMENT
+  const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
   return (
     <>

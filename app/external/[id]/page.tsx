@@ -18,7 +18,7 @@ import { SITE_URL, ENV } from '@/constants/config'
 import SocialSharePanel from '@/app/story/_components/social-share-panel'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 
-const isOnDev = ENV === ENVIRONMENT.LOCAL || ENVIRONMENT.DEVELOPMENT
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
 type PageProps = { params: { id: string } }
 
