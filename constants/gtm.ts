@@ -11,6 +11,9 @@ const gtmEvents = {
     YouTube: 'GTM-header_click_YouTube_icon',
     spill: 'GTM-header_click_spill',
     email: 'GTM-header_click_email',
+    section: 'GTM-header_click_section',
+    category: 'GTM-header_click_category',
+    topic: 'GTM-header_click_topic',
   },
   //footer
   footer: {
