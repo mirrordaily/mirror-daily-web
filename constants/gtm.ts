@@ -34,10 +34,17 @@ const gtmEvents = {
   //首頁
   homepage: {
     editorChoice: 'GTM-home_click_editor_choice',
+    editorChoiceNumber: 'GTM-home_click_editor_choice_number',
     editorChoiceButton: 'GTM-home_click_editor_choice_button',
     liveStream: 'GTM-home_click_live',
     latestArticle: 'GTM-home_click_latest_article',
+    latestArticleTitle: 'GTM-home_click_latest_article_title',
+    latestArticleImage: 'GTM-home_click_latest_article_image',
+    latestTab: 'GTM-home_click_latest_tab',
     popularArticle: 'GTM-home_click_popular_article',
+    popularArticleTitle: 'GTM-home_click_popular_article_title',
+    popularArticleImage: 'GTM-home_click_popular_article_image',
+    popularTab: 'GTM-home_click_popular_tab',
     shortNews: 'GTM-home_click_short_news',
     shortNewsButton: 'GTM-home_click_short_news_button',
     weather: 'GTM-home_click_weather',
