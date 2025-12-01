@@ -1,4 +1,5 @@
 import NextImage from 'next/image'
+import Link from 'next/link'
 import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
 import MobileToggleAndNav from './mobile-toggle-and-nav'
 import DesktopNavList from './desktop-nav-list'
@@ -10,6 +11,7 @@ import IconInstagram from '@/public/icons/logos/instagram-black.svg'
 import IconThreads from '@/public/icons/logos/threads-black.svg'
 import IconYouTube from '@/public/icons/logos/youtube-black.svg'
 import IconLine from '@/public/icons/logos/line-black.svg'
+import IconChevronRight from '@/public/icons/chevron-right.svg'
 import type { HeaderData } from '@/types/common'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
@@ -61,7 +63,7 @@ export default function UiHeader({
     <header className="flex w-full shrink-0 flex-col items-center">
       <div className="flex h-[64px] w-full justify-center bg-mirror-blue-700 md:h-[95px] lg:h-[80px]">
         <div className="flex w-full max-w-screen-sm pl-4 pr-6 md:max-w-screen-md md:pl-5 lg:max-w-screen-lg lg:px-9">
-          <a
+          <Link
             href="/"
             className={`${headerGtmEvents.logo} relative mt-2 h-12 w-[161px] md:mt-5 md:h-[58px] md:w-[120px] lg:mt-3 lg:shrink-0`}
           >
@@ -71,11 +73,11 @@ export default function UiHeader({
               alt="Logo"
               className="aspect-[150/42] md:aspect-auto"
             />
-          </a>
+          </Link>
 
           <div className="flex w-full justify-end">
             <div className="ml-auto mr-4 mt-5 flex shrink-0 md:mt-10 md:gap-x-[5px] lg:mr-0 lg:mt-8 lg:gap-x-[7px]">
-              <a
+              <Link
                 className={`${headerGtmEvents.search} flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px]`}
                 href="/search"
               >
@@ -84,11 +86,11 @@ export default function UiHeader({
                 <span className="relative inline-block size-5">
                   <NextImage src={IconSearch} fill={true} alt="搜尋" />
                 </span>
-              </a>
+              </Link>
             </div>
             {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
               return (
-                <a
+                <Link
                   key={contactLink.href + contactLink.name}
                   className={`${
                     headerGtmEvents[contactLink?.gtmKey] || ''
@@ -96,7 +98,7 @@ export default function UiHeader({
                   href={contactLink.href}
                 >
                   {contactLink.headerSubmitButtonName}
-                </a>
+                </Link>
               )
             })}
           </div>
@@ -111,15 +113,26 @@ export default function UiHeader({
               .filter((item) => !isSectionItem(item))
               .map((item) => {
                 return (
-                  <a
+                  <Link
                     key={item.slug}
                     href={getTopicPageUrl(item.slug)}
                     className="inline-block truncate"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 )
               })}
+            <Link
+              href="/topic"
+              className="inline-flex items-center whitespace-nowrap text-primary-500"
+            >
+              看所有專題
+              <NextImage
+                src={IconChevronRight}
+                alt="右鍵"
+                className="shrink-0"
+              />
+            </Link>
           </div>
           <div className="hidden lg:flex lg:shrink-0 lg:grow-0 lg:gap-x-2">
             {ExtendedSocialLinks.map(({ name, href, icon }) => {
@@ -129,6 +142,7 @@ export default function UiHeader({
                   key={name}
                   href={href}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className={`${headerGtmEvents[name]}`}
                 >
                   <NextImage src={icon} alt={name} width={width} height={24} />
