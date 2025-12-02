@@ -2,7 +2,6 @@
 
 import type { HeaderData } from '@/types/common'
 import NextImage from 'next/image'
-import Link from 'next/link'
 import { useState } from 'react'
 import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
 import MobileNavList from './mobile-nav-list'
@@ -78,7 +77,7 @@ export default function MobileToggleAndNav({ data }: Props) {
             <div className="flex gap-4">
               {/* Filter out the first item and render remaining contact links */}
               {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => (
-                <Link
+                <a
                   key={`${contactLink.href}-${contactLink.headerSubmitButtonName}`}
                   className={`mobile-toggle-and-nav-submit-button ${
                     headerGtmEvents[contactLink?.gtmKey] || ''
@@ -86,7 +85,7 @@ export default function MobileToggleAndNav({ data }: Props) {
                   href={contactLink.href}
                 >
                   {contactLink.headerSubmitButtonName}
-                </Link>
+                </a>
               ))}
             </div>
             <button
@@ -105,22 +104,22 @@ export default function MobileToggleAndNav({ data }: Props) {
                 .filter((item) => !isSectionItem(item))
                 .map((item) => {
                   return (
-                    <Link
+                    <a
                       key={item.slug}
                       href={getTopicPageUrl(item.slug)}
                       className="inline-block max-w-full truncate"
                     >
                       {item.name}
-                    </Link>
+                    </a>
                   )
                 })}
-              <Link
+              <a
                 href="/topic"
                 className="inline-flex items-center text-primary-500"
               >
                 看所有專題
                 <NextImage src={IconChevronRight} alt="右鍵" />
-              </Link>
+              </a>
             </div>
             <MobileNavList data={data} />
             <div className="mt-5 flex shrink-0 items-center gap-x-4 self-center">
