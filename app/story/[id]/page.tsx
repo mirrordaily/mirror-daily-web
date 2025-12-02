@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { fetchPost } from '../actions'
 import ArticleSection from '../_components/article-section'
 import type { Metadata } from 'next'
-import { SITE_NAME } from '@/constants/misc'
+import { SITE_NAME, ENVIRONMENT } from '@/constants/misc'
 import { getFirstParagraphFromApiData } from '@/utils/data-process'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata } from '@/utils/common'
@@ -18,6 +18,8 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 
 type PageProps = { params: { id: string } }
+
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
 export async function generateMetadata({
   params,
@@ -180,10 +182,10 @@ export default async function Page({ params }: PageProps) {
         {shouldShowAd && <ArticlePageTopAd />}
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
-        <ArticleSection {...postData} id={id} />
+        <ArticleSection postData={postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
-        <NonDesktopGptAd mode="sticky" pageType="article_mw" />
-        <DesktopGptAd mode="sticky" pageType="article_pc" />
+        {isOnDev && <NonDesktopGptAd mode="sticky" pageType="article_mw" />}
+        {isOnDev && <DesktopGptAd mode="sticky" pageType="article_pc" />}
       </main>
     </>
   )

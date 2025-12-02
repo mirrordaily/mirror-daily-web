@@ -6,7 +6,7 @@ import RelatedNewsList from './components/related-news-list'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import FeatureNewsList from './components/feature-news-list'
 import type { Metadata } from 'next'
-import { SITE_NAME } from '@/constants/misc'
+import { SITE_NAME, ENVIRONMENT } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
@@ -14,9 +14,11 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
-import { SITE_URL } from '@/constants/config'
-import SocialSharePanel from '@/app/story/_components/social-share-panel'
+import SocialSharePanel from '@/shared-components/social-share-panel'
+import { SITE_URL, ENV } from '@/constants/config'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
+
+const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
 type PageProps = { params: { id: string } }
 
@@ -164,7 +166,7 @@ export default async function Page({ params }: PageProps) {
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <section className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
           <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
-            <ArticleIntro {...externalPost} />
+            <ArticleIntro externalPost={externalPost} />
             <Article brief={brief} content={content} />
 
             <DesktopGptAd
@@ -178,7 +180,12 @@ export default async function Page({ params }: PageProps) {
               customClasses="mt-8 mx-auto"
             />
 
-            <SocialSharePanel link={link} title={externalPost.title} />
+            <div className="md:hidden">
+              <SocialSharePanel link={link} hideShareButtons title={title} />
+            </div>
+            <div className="hidden md:block">
+              <SocialSharePanel link={link} title={title} />
+            </div>
 
             <RelatedNewsList posts={relatedPosts} />
 
@@ -218,8 +225,8 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
         </section>
-        <NonDesktopGptAd mode="sticky" pageType="article_mw" />
-        <DesktopGptAd mode="sticky" pageType="article_pc" />
+        {isOnDev && <NonDesktopGptAd mode="sticky" pageType="article_mw" />}
+        {isOnDev && <DesktopGptAd mode="sticky" pageType="article_pc" />}
       </main>
     </>
   )

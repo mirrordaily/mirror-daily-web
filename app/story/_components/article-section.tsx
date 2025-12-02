@@ -9,23 +9,17 @@ import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import PopularNewsSection from './popular-news-section'
 import LatestNewsSection from './latest-news-section'
-import SocialSharePanel from './social-share-panel'
-import NewsletterSubscription from '@/shared-components/newsletter-subscription'
+import SocialSharePanel from '@/shared-components/social-share-panel'
 import DableWidget from '@/shared-components/dable-widget'
 
-type Props = Post
+type Props = {
+  postData: Post
+  id: string
+}
 
 const MIN_RELATED_POSTS = 6
 
-export default async function ArticleSection({
-  warnings,
-  apiData,
-  apiDataBrief,
-  id,
-  link,
-  shouldShowAd,
-  ...heroContent
-}: Props) {
+export default async function ArticleSection({ postData, id }: Props) {
   let relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(20)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
@@ -48,18 +42,18 @@ export default async function ArticleSection({
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
       <div>
         <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
-          <HeroSection {...heroContent} />
+          <HeroSection postData={postData} />
 
-          <Article content={apiDataBrief} isBrief={true} />
+          <Article content={postData.apiDataBrief} isBrief={true} />
           {/* for dable */}
           <div itemProp="articleBody">
             <Article
-              content={apiData}
+              content={postData.apiData}
               isBrief={false}
-              shouldShowAd={shouldShowAd}
+              shouldShowAd={postData.shouldShowAd}
             />
           </div>
-          {warnings.map(({ id, content }) => (
+          {postData.warnings.map(({ id, content }) => (
             <p
               key={id}
               className="mt-3 whitespace-pre-wrap px-5 text-lg font-bold leading-loose text-[#212944] md:mt-8 md:px-0"
@@ -68,7 +62,7 @@ export default async function ArticleSection({
             </p>
           ))}
 
-          {shouldShowAd && (
+          {postData.shouldShowAd && (
             <>
               <DesktopGptAd
                 mode="normal"
@@ -83,9 +77,16 @@ export default async function ArticleSection({
             </>
           )}
 
-          <NewsletterSubscription />
-
-          <SocialSharePanel link={link} title={heroContent.title} />
+          <div className="md:hidden">
+            <SocialSharePanel
+              link={postData.link}
+              hideShareButtons
+              title={postData.title}
+            />
+          </div>
+          <div className="hidden md:block">
+            <SocialSharePanel link={postData.link} title={postData.title} />
+          </div>
 
           <RelatedNewsSection posts={relatedPosts} />
 
@@ -105,10 +106,13 @@ export default async function ArticleSection({
       <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
 
       <div className="flex flex-col items-center gap-y-[38px] md:gap-y-12 lg:min-w-[300px]">
-        <LatestNewsSection posts={latestPosts} shouldShowAd={shouldShowAd} />
+        <LatestNewsSection
+          posts={latestPosts}
+          shouldShowAd={postData.shouldShowAd}
+        />
         <PopularNewsSection
           posts={popularPostsTopSix}
-          shouldShowAd={shouldShowAd}
+          shouldShowAd={postData.shouldShowAd}
         />
       </div>
     </section>
