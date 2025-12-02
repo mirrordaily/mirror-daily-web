@@ -114,7 +114,7 @@ export default function UiHeader({
                   <a
                     key={item.slug}
                     href={getTopicPageUrl(item.slug)}
-                    className="inline-block truncate"
+                    className={`inline-block truncate ${headerGtmEvents.topic}`}
                   >
                     {item.name}
                   </a>

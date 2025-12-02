@@ -106,7 +106,7 @@ export default function MobileToggleAndNav({ data }: Props) {
                     <a
                       key={item.slug}
                       href={getTopicPageUrl(item.slug)}
-                      className="inline-block max-w-full truncate"
+                      className={`inline-block max-w-full truncate ${headerGtmEvents.topic}`}
                     >
                       {item.name}
                     </a>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
 import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
+import { headerGtmEvents } from '@/constants/gtm'
 
 type Props = {
   data: HeaderData[]
@@ -47,7 +48,11 @@ export default function DesktopNavList({ data }: Props) {
               onMouseEnter={() => setActiveItem(slug)}
               onFocus={() => setActiveItem(slug)}
             >
-              <a href={link} style={{ color }}>
+              <a
+                href={link}
+                style={{ color }}
+                className={`${headerGtmEvents.section}`}
+              >
                 {name}
               </a>
               <div
@@ -67,7 +72,10 @@ export default function DesktopNavList({ data }: Props) {
                         key={slug}
                         className="whitespace-nowrap focus-within:text-[color:var(--active-section-color)] hover-or-active:text-[color:var(--active-section-color)]"
                       >
-                        <a href={getCategoryPageUrl(slug, isShortsCategory)}>
+                        <a
+                          href={getCategoryPageUrl(slug, isShortsCategory)}
+                          className={`${headerGtmEvents.category}`}
+                        >
                           {name}
                         </a>
                       </li>
