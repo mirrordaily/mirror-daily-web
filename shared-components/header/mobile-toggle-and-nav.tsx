@@ -12,6 +12,7 @@ import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
+import IconChevronRight from '@/public/icons/chevron-right.svg'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
 import { headerGtmEvents } from '@/constants/gtm'
@@ -112,11 +113,23 @@ export default function MobileToggleAndNav({ data }: Props) {
                     </a>
                   )
                 })}
+              <a
+                href="/topic"
+                className="inline-flex items-center text-primary-500"
+              >
+                看所有專題
+                <NextImage src={IconChevronRight} alt="右鍵" />
+              </a>
             </div>
             <MobileNavList data={data} />
             <div className="mt-5 flex shrink-0 items-center gap-x-4 self-center">
               {ExtendedSocialLinks.map(({ name, href, icon }) => (
-                <a key={name} href={href} target="_blank">
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <NextImage src={icon} alt={name} />
                 </a>
               ))}
