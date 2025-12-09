@@ -6,7 +6,7 @@ import RelatedNewsList from './components/related-news-list'
 import { fetchPopularPost, fetchLatestPost } from '@/app/actions-general'
 import FeatureNewsList from './components/feature-news-list'
 import type { Metadata } from 'next'
-import { SITE_NAME, ENVIRONMENT } from '@/constants/misc'
+import { SITE_NAME } from '@/constants/misc'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
@@ -15,10 +15,8 @@ import MisoPageView from '@/shared-components/miso-pageview'
 import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 import SocialSharePanel from '@/shared-components/social-share-panel'
-import { SITE_URL, ENV } from '@/constants/config'
+import { SITE_URL } from '@/constants/config'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
-
-const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
 type PageProps = { params: { id: string } }
 
@@ -225,8 +223,8 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
         </section>
-        {isOnDev && <NonDesktopGptAd mode="sticky" pageType="article_mw" />}
-        {isOnDev && <DesktopGptAd mode="sticky" pageType="article_pc" />}
+        <NonDesktopGptAd mode="sticky" pageType="article_mw" />
+        <DesktopGptAd mode="sticky" pageType="article_pc" />
       </main>
     </>
   )
