@@ -9,6 +9,7 @@ import IconTogggle from '@/public/icons/sidebar-toggle.svg'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
 import { isSectionItem } from '@/utils/common'
+import { headerGtmEvents } from '@/constants/gtm'
 
 type Props = {
   data: HeaderData[]
@@ -59,7 +60,7 @@ export default function MobileNavList({ data }: Props) {
               <div className="flex items-center justify-between">
                 <a
                   href={link}
-                  className="grow text-xl font-bold leading-none tracking-normal"
+                  className={`grow text-xl font-bold leading-none tracking-normal ${headerGtmEvents.section}`}
                   style={{
                     color: color,
                   }}
@@ -93,7 +94,7 @@ export default function MobileNavList({ data }: Props) {
                         {/* category item */}
                         <a
                           href={getCategoryPageUrl(slug, isShortsCategory)}
-                          className="hover-or-active:text-[color:var(--active-section-color)]"
+                          className={`hover-or-active:text-[color:var(--active-section-color)] ${headerGtmEvents.category}`}
                         >
                           {name}
                         </a>

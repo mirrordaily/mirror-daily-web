@@ -182,7 +182,7 @@ export default async function Page({ params }: PageProps) {
         {shouldShowAd && <ArticlePageTopAd />}
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
-        <ArticleSection {...postData} id={id} />
+        <ArticleSection postData={postData} id={id} />
         <AdultWarning isAdult={postData.isAdult} />
         {isOnDev && <NonDesktopGptAd mode="sticky" pageType="article_mw" />}
         {isOnDev && <DesktopGptAd mode="sticky" pageType="article_pc" />}

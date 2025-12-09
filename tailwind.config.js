@@ -57,6 +57,7 @@ module.exports = {
         'over-slides': 10,
         'over-flashnews': 10,
         'city-selection-box': 10,
+        'story-share-bar': 10,
         'upload-modal': 1000000,
         'light-box': 10000000,
         'mobile-nav': 1000000000,
