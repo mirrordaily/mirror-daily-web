@@ -18,14 +18,11 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
-import { ENV } from '@/constants/config'
-import { ENVIRONMENT } from '@/constants/misc'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
   const headerData = await fetchHeaderData()
-  const isOnDev = ENV === ENVIRONMENT.LOCAL || ENV === ENVIRONMENT.DEVELOPMENT
 
   return (
     <>
@@ -137,8 +134,8 @@ export default async function Home() {
           <LatestNewsSection />
         </main>
       </div>
-      {isOnDev && <NonDesktopGptAd mode="sticky" pageType="homepage_mw" />}
-      {isOnDev && <DesktopGptAd mode="sticky" pageType="homepage_pc" />}
+      <NonDesktopGptAd mode="sticky" pageType="homepage_mw" />
+      <DesktopGptAd mode="sticky" pageType="homepage_pc" />
       <NewsletterSubscription />
       <Footer />
     </>
