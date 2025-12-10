@@ -85,12 +85,12 @@ function SocialButton({
   }, [link])
 
   const encodedUrl = encodeURIComponent(url)
+  console.log(encodedUrl)
   const href =
     item.type === SOCIAL_TYPE.SHARE ? `${item.href}${encodedUrl}` : item.href
   return (
     <a
       className={`${item.type === SOCIAL_TYPE.SHARE ? 'px-3 py-2' : 'px-2 py-1'} flex items-center gap-x-1 rounded border border-[#CCCED4] md:min-h-[42px]`}
-      target="_blank"
       href={href}
     >
       <NextImage
