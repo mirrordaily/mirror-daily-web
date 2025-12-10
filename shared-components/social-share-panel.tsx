@@ -83,8 +83,10 @@ function SocialButton({
     if (!link) setUrl(window.location.href)
     else setUrl(window.location.origin + link)
   }, [link])
+
+  const encodedUrl = encodeURIComponent(url)
   const href =
-    item.type === SOCIAL_TYPE.SHARE ? `${item.href}${url}` : item.href
+    item.type === SOCIAL_TYPE.SHARE ? `${item.href}${encodedUrl}` : item.href
   return (
     <a
       className={`${item.type === SOCIAL_TYPE.SHARE ? 'px-3 py-2' : 'px-2 py-1'} flex items-center gap-x-1 rounded border border-[#CCCED4] md:min-h-[42px]`}
