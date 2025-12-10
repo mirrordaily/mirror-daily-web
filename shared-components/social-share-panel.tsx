@@ -83,11 +83,16 @@ function SocialButton({
     if (!link) setUrl(window.location.href)
     else setUrl(window.location.origin + link)
   }, [link])
+
+  const encodedUrl = encodeURIComponent(url)
+
   const href =
-    item.type === SOCIAL_TYPE.SHARE ? `${item.href}${url}` : item.href
+    item.type === SOCIAL_TYPE.SHARE ? `${item.href}${encodedUrl}` : item.href
+
   return (
     <a
       className={`${item.type === SOCIAL_TYPE.SHARE ? 'px-3 py-2' : 'px-2 py-1'} flex items-center gap-x-1 rounded border border-[#CCCED4] md:min-h-[42px]`}
+      rel="noopener noreferrer"
       target="_blank"
       href={href}
     >
@@ -149,14 +154,20 @@ function CopyLinkButton({
 export default function SocialSharePanel({
   link,
   title,
+  hideShareButtons = false,
 }: {
   link: string
   title: string
+  hideShareButtons?: boolean
 }) {
+  const filteredLinks = hideShareButtons
+    ? ExtendedSocialLinks.filter((item) => item.type == SOCIAL_TYPE.FOLLOW)
+    : ExtendedSocialLinks
+
   return (
     <div className="mx-auto mt-8 flex flex-col items-center justify-center gap-y-3 md:max-w-none">
       <div className="flex flex-wrap justify-center gap-x-2 gap-y-3">
-        {ExtendedSocialLinks.map((item, index) => {
+        {filteredLinks.map((item, index) => {
           if (item.type === SOCIAL_TYPE.COPY) {
             return (
               <CopyLinkButton
