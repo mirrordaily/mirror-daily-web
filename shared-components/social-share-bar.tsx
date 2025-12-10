@@ -4,8 +4,9 @@ import NextImage from 'next/image'
 import { useShareHandler } from '@/hooks/use-share-handler'
 import { useEffect, useState } from 'react'
 import type { shortsGtmEvents } from '@/constants/gtm'
-import { FacebookShareButton, LineShareButton } from 'react-share'
-import { FacebookIcon, LineIcon } from 'react-share'
+import { FacebookShareButton } from 'react-share'
+import { FacebookIcon } from 'react-share'
+import IconLine from '@/public/icons/logos/line-green.svg'
 
 type Props = {
   title: string
@@ -27,6 +28,13 @@ export default function SocialShareBar({
     else setUrl(window.location.origin + link)
   }, [link])
 
+  const handleLineShare = () => {
+    const shareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
+      url
+    )}`
+    window.open(shareUrl, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <>
       <div
@@ -40,9 +48,12 @@ export default function SocialShareBar({
           <FacebookIcon size={35} round />
         </FacebookShareButton>
 
-        <LineShareButton url={url}>
-          <LineIcon size={35} round />
-        </LineShareButton>
+        <button
+          onClick={handleLineShare}
+          className={`${gtmEvents ? gtmEvents.lineShare : ''}`}
+        >
+          <NextImage src={IconLine} width={35} height={35} alt="Line 分享" />
+        </button>
 
         <button
           onClick={() => {
