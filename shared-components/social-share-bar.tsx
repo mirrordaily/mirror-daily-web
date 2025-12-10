@@ -1,12 +1,11 @@
 'use client'
-import { SHARE_URL_FACEBOOK, SHARE_URL_LINE } from '@/constants/misc'
-import IconFacebook from '@/public/icons/logos/facebook-blue.svg'
-import IconLine from '@/public/icons/logos/line-green.svg'
 import IconShare from '@/public/icons/share-gray.svg'
 import NextImage from 'next/image'
 import { useShareHandler } from '@/hooks/use-share-handler'
 import { useEffect, useState } from 'react'
 import type { shortsGtmEvents } from '@/constants/gtm'
+import { FacebookShareButton, LineShareButton } from 'react-share'
+import { FacebookIcon, LineIcon } from 'react-share'
 
 type Props = {
   title: string
@@ -37,30 +36,13 @@ export default function SocialShareBar({
             : `flex flex-col items-center gap-y-2`
         }
       >
-        <a
-          target="_blank"
-          href={`${SHARE_URL_FACEBOOK}${url}`}
-          className={`${gtmEvents ? gtmEvents.facebookShare : ''}`}
-        >
-          <button>
-            <NextImage
-              src={IconFacebook}
-              width={35}
-              height={35}
-              alt="Facebook 分享"
-            />
-          </button>
-        </a>
+        <FacebookShareButton url={url}>
+          <FacebookIcon size={35} round />
+        </FacebookShareButton>
 
-        <a
-          target="_blank"
-          href={`${SHARE_URL_LINE}${url}`}
-          className={`${gtmEvents ? gtmEvents.lineShare : ''}`}
-        >
-          <button>
-            <NextImage src={IconLine} width={35} height={35} alt="Line 分享" />
-          </button>
-        </a>
+        <LineShareButton url={url}>
+          <LineIcon size={35} round />
+        </LineShareButton>
 
         <button
           onClick={() => {
