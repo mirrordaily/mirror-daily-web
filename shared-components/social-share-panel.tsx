@@ -88,9 +88,21 @@ function SocialButton({
 
   const href =
     item.type === SOCIAL_TYPE.SHARE ? `${item.href}${encodedUrl}` : item.href
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (item.type === SOCIAL_TYPE.SHARE && item.name === 'LineShare') {
+      e.preventDefault()
+      window.open(href, '_blank', 'noopener,noreferrer')
+      return
+    }
+  }
+
   return (
     <a
       className={`${item.type === SOCIAL_TYPE.SHARE ? 'px-3 py-2' : 'px-2 py-1'} flex items-center gap-x-1 rounded border border-[#CCCED4] md:min-h-[42px]`}
+      onClick={handleClick}
+      rel="noopener noreferrer"
+      target="_blank"
       href={href}
     >
       <NextImage
