@@ -85,7 +85,7 @@ function SocialButton({
   }, [link])
 
   const encodedUrl = encodeURIComponent(url)
-  console.log(encodedUrl)
+
   const href =
     item.type === SOCIAL_TYPE.SHARE ? `${item.href}${encodedUrl}` : item.href
   return (
