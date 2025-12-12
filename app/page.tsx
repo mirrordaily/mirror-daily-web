@@ -83,7 +83,7 @@ export default async function Home() {
             slotKey="mirrordaily_home_MW_300x250_b2"
             customClasses="mt-9 mb-3 mx-auto"
           />
-          {/* Topic（4則）+ 天氣 */}
+          {/* Topic（6 則）+ 天氣 */}
           <Suspense
             fallback={
               <div className="h-[80vh] w-full">

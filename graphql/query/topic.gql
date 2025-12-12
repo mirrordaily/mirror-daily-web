@@ -5,8 +5,9 @@ query GetTopics {
   ) {
     name
     slug
+    ...ImageData
     posts(
-      take: 4
+      take: 6
       orderBy: [{ publishedDate: desc }]
       where: { state: { equals: "published" } }
     ) {
