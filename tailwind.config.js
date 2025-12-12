@@ -20,26 +20,28 @@ module.exports = {
       colors: {
         mirror: {
           blue: {
+            200: '#F3E2FD',
+            300: '#D6CBF1',
+            400: '#BDACE9',
+            500: '#9A82DA',
             600: '#896fcc',
             700: '#674ab1',
             800: '#3b1e86',
           },
-          red: '#FF5457',
+          red: {
+            400: '#FF9078',
+            500: '#FF5457',
+            600: '#E54B29',
+          },
         },
         primary: {
+          200: '#E5E6E9',
           300: '#CCCED4',
           400: '#B2B5BE',
           500: '#7F8493',
+          600: '#68666D',
+          700: '#4E4E4E',
           800: '#2B2B2B',
-        },
-      },
-      backgroundColor: {
-        mirror: {
-          blue: {
-            600: '#896fcc',
-            700: '#674ab1',
-            800: '#3b1e86',
-          },
         },
       },
       backgroundImage: {
