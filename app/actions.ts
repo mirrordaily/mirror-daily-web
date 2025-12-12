@@ -297,7 +297,6 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
       return result.topics
     }
   )
-  console.log(transformTopics(data), 'transformTopics(data) ===')
 
   return transformTopics(data)
 }
