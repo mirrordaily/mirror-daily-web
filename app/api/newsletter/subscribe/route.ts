@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import mailchimp from '@mailchimp/mailchimp_marketing'
+import crypto from 'crypto'
 import {
   MAILCHIMP_API_KEY,
   MAILCHIMP_SERVER_PREFIX,
@@ -26,31 +27,57 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'configuration error' })
   }
 
-  try {
-    const response = await mailchimp.lists.addListMember(MAILCHIMP_LIST_ID, {
-      email_address: email,
-      status: 'subscribed',
-    })
+  const subscriberHash = crypto
+    .createHash('md5')
+    .update(email.toLowerCase())
+    .digest('hex')
 
-    if ('id' in response) {
+  try {
+    const existingMember = await mailchimp.lists.getListMember(
+      MAILCHIMP_LIST_ID,
+      subscriberHash
+    )
+
+    if (existingMember.status === 'subscribed') {
       return NextResponse.json({
         success: true,
-        message: 'subscription successful',
+        message: 'already subscribed',
       })
     }
+
+    await mailchimp.lists.updateListMember(MAILCHIMP_LIST_ID, subscriberHash, {
+      status: 'pending',
+    })
+
+    return NextResponse.json({
+      success: true,
+      message: 'pending',
+    })
   } catch (error) {
     const mailchimpError = error as {
       response?: { text?: string }
+      status?: number
     }
-    const errorText = mailchimpError?.response?.text
 
-    if (errorText) {
-      const errorBody = JSON.parse(errorText)
-      if (errorBody?.title === 'Member Exists') {
-        return NextResponse.json({
-          success: true,
-          message: 'already subscribed',
-        })
+    if (mailchimpError.status === 404) {
+      try {
+        const response = await mailchimp.lists.addListMember(
+          MAILCHIMP_LIST_ID,
+          {
+            email_address: email,
+            status: 'pending',
+          }
+        )
+        if ('status' in response && response.status === 'pending') {
+          return NextResponse.json({
+            success: true,
+            message: 'pending',
+          })
+        }
+      } catch (addError) {
+        const message =
+          addError instanceof Error ? addError.message : 'Unknown error'
+        return NextResponse.json({ success: false, error: message })
       }
     }
     const message = error instanceof Error ? error.message : 'Unknown error'

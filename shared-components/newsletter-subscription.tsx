@@ -6,6 +6,7 @@ import { checkEmail } from '@/utils/common'
 enum RESULT {
   DEFAULT = 'default',
   SUCCESS = 'success',
+  PENDING_CONFIRMATION = 'pending_confirmation',
   FAIL = 'fail',
   INVALID = 'invalid',
 }
@@ -42,7 +43,14 @@ export default function NewsletterSubscription() {
       const data = await response.json()
 
       if (data.success) {
-        setSubscriptionResult(RESULT.SUCCESS)
+        if (data.message === 'pending') {
+          setSubscriptionResult(RESULT.PENDING_CONFIRMATION)
+        } else if (
+          data.message === 'subscribed' ||
+          data.message === 'already subscribed'
+        ) {
+          setSubscriptionResult(RESULT.SUCCESS)
+        }
       } else {
         setSubscriptionResult(RESULT.FAIL)
       }
@@ -55,11 +63,18 @@ export default function NewsletterSubscription() {
   }
 
   const buttonText =
-    subscriptionResult === RESULT.SUCCESS
-      ? '已成功訂閱'
+    subscriptionResult === RESULT.PENDING_CONFIRMATION
+      ? '已送出'
       : isPending
         ? '處理中...'
         : '訂閱'
+
+  const successMessage =
+    subscriptionResult === RESULT.PENDING_CONFIRMATION
+      ? '請至您的信箱確認訂閱'
+      : subscriptionResult === RESULT.SUCCESS
+        ? '已成功訂閱'
+        : ''
 
   const errorMessage =
     subscriptionResult === RESULT.INVALID
@@ -85,13 +100,17 @@ export default function NewsletterSubscription() {
           name="email"
           type="email"
           placeholder="請輸入電子郵件信箱"
-          disabled={isPending || subscriptionResult === RESULT.SUCCESS}
+          disabled={
+            isPending || subscriptionResult === RESULT.PENDING_CONFIRMATION
+          }
           className="w-full rounded-lg border border-solid border-black/[.87] p-3 text-[15px] font-normal leading-normal text-black outline-none placeholder:text-[#898f9c] disabled:cursor-not-allowed disabled:bg-gray-200 md:w-auto md:grow"
         />
         <button
-          disabled={isPending || subscriptionResult === RESULT.SUCCESS}
+          disabled={
+            isPending || subscriptionResult === RESULT.PENDING_CONFIRMATION
+          }
           className={`mt-[10px] w-full rounded-lg px-3 py-[10px] text-lg font-medium leading-normal text-white shadow-[0_4px_8px_0_rgba(0,0,0,0.1)] md:mt-0 md:w-auto ${
-            subscriptionResult === RESULT.SUCCESS
+            subscriptionResult === RESULT.PENDING_CONFIRMATION
               ? 'cursor-not-allowed bg-primary-400'
               : isPending
                 ? 'cursor-not-allowed bg-[#cab572]'
@@ -100,16 +119,19 @@ export default function NewsletterSubscription() {
         >
           {buttonText}
         </button>
-        <p
-          className={`mt-1 text-sm font-normal leading-[24px] text-[#F3E2FD] ${
-            subscriptionResult === RESULT.INVALID ||
-            subscriptionResult === RESULT.FAIL
-              ? 'visible'
-              : 'invisible'
-          }`}
-        >
-          {errorMessage}
-        </p>
+        <div className="mt-1 flex w-full flex-col text-sm font-normal leading-[24px] text-[#F3E2FD] md:flex-row md:justify-center">
+          {successMessage && <p>{successMessage}</p>}
+          <p
+            className={` ${
+              subscriptionResult === RESULT.INVALID ||
+              subscriptionResult === RESULT.FAIL
+                ? 'visible'
+                : 'invisible'
+            }`}
+          >
+            {errorMessage}
+          </p>
+        </div>
       </form>
     </section>
   )
