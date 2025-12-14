@@ -78,11 +78,12 @@ export default function NewsletterSubscription() {
       </p>
       <form
         className="mt-2 flex w-[315px] flex-col items-center md:w-[442px] md:flex-row md:flex-wrap md:justify-center md:gap-x-[15px]"
+        noValidate
         onSubmit={handleSubmit}
       >
         <input
           name="email"
-          type="text"
+          type="email"
           placeholder="請輸入電子郵件信箱"
           disabled={isPending || subscriptionResult === RESULT.SUCCESS}
           className="w-full rounded-lg border border-solid border-black/[.87] p-3 text-[15px] font-normal leading-normal text-black outline-none placeholder:text-[#898f9c] disabled:cursor-not-allowed disabled:bg-gray-200 md:w-auto md:grow"
