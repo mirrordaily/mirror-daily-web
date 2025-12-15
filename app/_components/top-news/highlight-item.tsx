@@ -7,21 +7,31 @@ import type { TAB } from './section'
 import { homepageGtmEvents } from '@/constants/gtm'
 
 export const gtmClassNameMap = {
-  Latest: homepageGtmEvents.latestArticle,
-  Hot: homepageGtmEvents.popularArticle,
+  Latest: {
+    image: homepageGtmEvents.latestArticleImage,
+    title: homepageGtmEvents.latestArticleTitle,
+  },
+  Hot: {
+    image: homepageGtmEvents.popularArticleImage,
+    title: homepageGtmEvents.popularArticleTitle,
+  },
 } as const
 
 // 標題與簡介
 const PostTitleAndBrief = ({
   postName,
   postBrief,
+  gtmTitleClass = '',
 }: {
   postName: PickupItemInTopNewsSection['postName']
   postBrief?: PickupItemInTopNewsSection['postBrief']
+  gtmTitleClass?: string
 }) => {
   return (
     <>
-      <p className="mt-4 line-clamp-3 text-base font-medium leading-none text-[#000928] group-hover/highlight-item:text-[#575D71] group-active/highlight-item:text-[#575D71] md:mt-2 md:line-clamp-2 lg:mt-2 lg:text-xl lg:font-bold">
+      <p
+        className={`mt-4 line-clamp-3 text-base font-medium leading-none text-[#000928] group-hover/highlight-item:text-[#575D71] group-active/highlight-item:text-[#575D71] md:mt-2 md:line-clamp-2 lg:mt-2 lg:text-xl lg:font-bold ${gtmTitleClass}`}
+      >
         {postName}
       </p>
       {postBrief && (
@@ -71,9 +81,13 @@ export default function HighlightItem({
     )
   }
 
+  const gtm = gtmClassNameMap[tab]
+
   return (
     <a
-      className={`${gtmClassNameMap[tab]} group/highlight-item w-full shrink-0 md:w-[312px] lg:w-[560px]`}
+      className={
+        'group/highlight-item w-full shrink-0 md:w-[312px] lg:w-[560px]'
+      }
       href={link}
       target="_blank"
     >
@@ -88,9 +102,14 @@ export default function HighlightItem({
             tablet: '100%',
             default: '100%',
           }}
+          className={gtm.image}
         />
       </div>
-      <PostTitleAndBrief postName={postName} postBrief={postBrief} />
+      <PostTitleAndBrief
+        postName={postName}
+        postBrief={postBrief}
+        gtmTitleClass={gtm.title}
+      />
     </a>
   )
 }

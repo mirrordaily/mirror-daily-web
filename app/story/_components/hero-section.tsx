@@ -81,7 +81,7 @@ export default function HeroSection({ postData }: Props) {
           {postData.subtitle}
         </h2>
 
-        <div className="fixed bottom-2 right-3 z-story-share-bar md:hidden">
+        <div className="fixed bottom-[135px] right-3 z-story-share-bar md:hidden">
           <SocialShareBar title={postData.title} direction="vertical" />
         </div>
 
@@ -94,7 +94,9 @@ export default function HeroSection({ postData }: Props) {
           {!!postData.writers.length && (
             <div className="flex">
               <p className="shrink-0">記者：</p>
-              <p className="flex flex-wrap items-center break-all">
+              <p
+                className={`flex flex-wrap items-center break-all ${storyGtmEvents.author}`}
+              >
                 {getAuthorsContent(postData.writers)}
               </p>
             </div>
@@ -102,7 +104,9 @@ export default function HeroSection({ postData }: Props) {
           {!!postData.photographers.length && (
             <div className="flex">
               <p className="shrink-0">攝影：</p>
-              <p className="flex flex-wrap items-center break-all">
+              <p
+                className={`flex flex-wrap items-center break-all ${storyGtmEvents.photographer}`}
+              >
                 {getAuthorsContent(postData.photographers)}
               </p>
             </div>
@@ -110,14 +114,18 @@ export default function HeroSection({ postData }: Props) {
           {!!postData.editors.length && (
             <div className="flex">
               <p className="shrink-0">編輯：</p>
-              <p className="flex flex-wrap items-center break-all">
+              <p
+                className={`flex flex-wrap items-center break-all ${storyGtmEvents.editor}`}
+              >
                 {getAuthorsContent(postData.editors)}
               </p>
             </div>
           )}
           {!!postData.mainWriters.length && (
             <div className="flex">
-              <p className="flex flex-wrap items-center break-all">
+              <p
+                className={`flex flex-wrap items-center break-all ${storyGtmEvents.writer}`}
+              >
                 {getAuthorsContent(postData.mainWriters)}
               </p>
             </div>

@@ -50,7 +50,7 @@ export default function ArticleIntro({ externalPost }: Props) {
         <h1 className="mb-3 text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
           {externalPost.title}
         </h1>
-        <div className="fixed bottom-2 right-3 z-story-share-bar md:hidden">
+        <div className="fixed bottom-[135px] right-3 z-story-share-bar md:hidden">
           <SocialShareBar title={externalPost.title} direction="vertical" />
         </div>
         <div className="relative mb-3 h-7 w-[58px] lg:mb-4 lg:h-[42px] lg:w-[88px]">

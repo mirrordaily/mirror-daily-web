@@ -25,7 +25,7 @@ export default function SwiperComponent({ list }: Props) {
         pagination={{
           clickable: true,
           el: '.custom-swiper-pagination',
-          bulletClass: 'homepage-editor-choice-bullet',
+          bulletClass: `homepage-editor-choice-bullet ${homepageGtmEvents.editorChoiceNumber}`,
           bulletActiveClass: 'homepage-editor-choice-bullet-active',
           horizontalClass: 'homepage-editor-choice-pagination-horizontal',
           renderBullet(index, className) {

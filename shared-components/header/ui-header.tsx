@@ -114,7 +114,7 @@ export default function UiHeader({
                   <a
                     key={item.slug}
                     href={getTopicPageUrl(item.slug)}
-                    className="inline-block truncate"
+                    className={`inline-block truncate ${headerGtmEvents.topic}`}
                   >
                     {item.name}
                   </a>
@@ -129,6 +129,7 @@ export default function UiHeader({
                   key={name}
                   href={href}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className={`${headerGtmEvents[name]}`}
                 >
                   <NextImage src={icon} alt={name} width={width} height={24} />
