@@ -15,7 +15,7 @@ export default async function TopicSection() {
   const latestSportsNewsData = await fetchLatestSportsNews()
 
   return (
-    <section className="section-in-homepage mb-9 mt-6 flex flex-col gap-y-6 md:my-9 md:gap-y-9 lg:my-10 lg:h-[768px] lg:gap-y-[50px]">
+    <section className="section-in-homepage mb-9 mt-6 flex flex-col gap-y-6 md:my-9 md:gap-y-9 lg:my-10 lg:gap-y-[50px]">
       <div className="flex max-w-full flex-col justify-between gap-y-6 lg:h-full lg:flex-row lg:gap-5">
         <div className="flex flex-col lg:order-3 lg:min-w-[370px] lg:max-w-[370px] lg:gap-5">
           {weatherData && <WeatherMain data={weatherData} />}
@@ -26,8 +26,8 @@ export default async function TopicSection() {
             />
           </span>
         </div>
-        <div className="hidden lg:order-2 lg:block lg:h-full lg:w-px lg:border lg:border-r-primary-800"></div>
-        {topicData && <TopicMain data={topicData} />}
+        <div className="hidden lg:order-2 lg:block lg:w-px lg:self-stretch lg:border lg:border-r-primary-800"></div>
+        {topicData && <TopicMain topicData={topicData} />}
       </div>
     </section>
   )

@@ -109,6 +109,7 @@ export const editorChoiceSchenma = z.object({
 export const topicsSchema = z.object({
   name: z.string(),
   slug: z.string(),
+  heroImage: heroImageSchema.nullable(),
   posts: z.array(
     rawLatestPostSchema.pick({
       id: true,

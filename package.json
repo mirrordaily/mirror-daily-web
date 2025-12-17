@@ -73,6 +73,9 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": "eslint --cache --fix"
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ]
   }
 }

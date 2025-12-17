@@ -1,13 +1,13 @@
 'use server'
 
-import {
-  type PickupItemInTopNewsSection,
-  type FlashNews,
-  type EditorChoice,
-  type TopicPost,
-  type CityAndWeather,
-  type SportsGameData,
-  type LatestSportsNewsData,
+import type {
+  PickupItemInTopNewsSection,
+  FlashNews,
+  EditorChoice,
+  TopicBundle,
+  CityAndWeather,
+  SportsGameData,
+  LatestSportsNewsData,
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
@@ -38,7 +38,6 @@ import {
 import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
 import type { ParameterOfComponent, HeroImage } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
-import type TopicMain from './_components/topic/topic-main'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
 import {
@@ -244,42 +243,36 @@ export const fetchEditorChoices = async (): Promise<
 
 const transformTopics = (
   rawData: z.infer<ZodArray<typeof topicsSchema>>
-): ParameterOfComponent<typeof TopicMain>['data'] | null => {
+): TopicBundle[] | null => {
   if (!rawData) return null
 
-  const convertedData = rawData.map((topic) => {
-    const topicName = topic.name || ''
-    const topicSlug = topic.slug || ''
-    const topicLink = getTopicPageUrl(topicSlug)
-    const posts: TopicPost[] =
-      topic.posts?.map((rawPost) => {
-        const postId = rawPost?.id ?? ''
-        return {
-          postId,
-          postName: rawPost?.title ?? '',
-          heroImage: getHeroImage(rawPost?.heroImage),
-          link: getStoryPageUrl(postId),
-          topicLink,
-        }
-      }) ?? []
+  const convertedData = rawData.map((topic, index) => {
+    const { name = '', slug = '', heroImage, posts } = topic
 
-    return [topicName, posts] as const
+    // Use top-level heroImage if available.
+    let finalHeroImage = heroImage ? getHeroImage(heroImage) : null
+
+    // Otherwise find the first post with a valid heroImage.
+    if (!finalHeroImage && Array.isArray(posts)) {
+      const found = posts.find((p) => p?.heroImage)
+      if (found?.heroImage) {
+        finalHeroImage = getHeroImage(found.heroImage)
+      }
+    }
+
+    return {
+      id: `${index}-${name}`,
+      name,
+      link: getTopicPageUrl(slug),
+      heroImage: finalHeroImage,
+    }
   })
 
-  const filteredData = convertedData.filter(
-    (data): data is [string, [TopicPost, ...TopicPost[]]] => {
-      const [, posts] = data
-      return posts.length > 0
-    }
-  )
-
-  if (filteredData.length === 0) return null
-  else return Object.fromEntries(filteredData)
+  if (!convertedData.length) return null
+  return convertedData
 }
 
-export const fetchTopics = async (): Promise<
-  ParameterOfComponent<typeof TopicMain>['data'] | null
-> => {
+export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching topics',
     getTraceObject()
