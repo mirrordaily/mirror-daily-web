@@ -268,7 +268,7 @@ const transformTopics = (
     }
   })
 
-  if (convertedData.length === 0) return null
+  if (!convertedData.length) return null
   return convertedData
 }
 
