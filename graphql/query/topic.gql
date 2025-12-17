@@ -5,7 +5,9 @@ query GetTopics {
   ) {
     name
     slug
-    ...ImageData
+    heroImage {
+      ...ImageData
+    }
     posts(
       take: 6
       orderBy: [{ publishedDate: desc }]
