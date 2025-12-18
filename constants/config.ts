@@ -9,8 +9,15 @@
 
 // environment variables is used by codegen script, so manually loading is required
 import dotenv from 'dotenv'
-dotenv.config({ path: '.env.local', override: true })
 import { ENVIRONMENT } from './misc'
+
+// Load env only if not already loaded by Next.js
+// This typically applies to Node.js tools like GraphQL Codegen
+if (!process.env.__NEXT_PRIVATE_RUNTIME_ENV) {
+  // Priority: existing env > .env.local > .env
+  dotenv.config({ path: '.env.local' })
+  dotenv.config({ path: '.env' })
+}
 
 const JSON_ROOT = '/json'
 const MISO_API_KEY = 'IHtn9b9tfPsO1EQpGV74OMf2syhELb6XVZe8u9FT'
@@ -93,6 +100,12 @@ const VIDEO_AD_BASE_URL = 'https://googleads.g.doubleclick.net/pagead/ads'
 const VIDEO_AD_CLIENT_ID = 'ca-video-pub-4968145218643279'
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
+
+if (!API_ENDPOINT) {
+  console.warn(
+    '[config] API_ENDPOINT is empty. This may break GraphQL Codegen or API requests.'
+  )
+}
 
 const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY ?? ''
 const MAILCHIMP_SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX ?? ''
