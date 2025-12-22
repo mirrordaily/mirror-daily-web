@@ -48,7 +48,10 @@ export default function WeatherMain({ data }: Props) {
   if (!info) return null
 
   return (
-    <div className="flex w-full justify-center">
+    <div className="relative flex w-full justify-center">
+      <span className="absolute -top-6 right-0 text-xs text-primary-500">
+        提供機關／交通部中央氣象署
+      </span>
       <div className="flex h-[50px] w-full items-center bg-[#f6f6fb] px-2 leading-none shadow-[0_2px_2px_0_rgba(0,0,0,0.1)] md:max-w-[680px] md:pl-5 md:pr-6 lg:px-4">
         <p className="mr-5 flex text-base font-medium text-[#7f8493] md:grow">
           今日天氣
