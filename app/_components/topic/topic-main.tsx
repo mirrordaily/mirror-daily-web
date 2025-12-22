@@ -1,35 +1,41 @@
 'use client'
 
-import type { TopicPost } from '@/types/homepage'
-import { useState } from 'react'
-import TopicSelector from './topic-selector'
-import TopicItem from './topic-item'
+import CustomImage from '@/shared-components/custom-image'
+import type { TopicBundle } from '@/types/homepage'
+import Link from 'next/link'
 
 type Props = {
-  data: Record<string, [TopicPost, ...TopicPost[]]>
+  topicData: TopicBundle[]
 }
 
-export default function TopicMain({ data }: Props) {
-  const topics = Object.keys(data)
-  const [topic, setTopic] = useState<string>(topics[0]!)
-  const topicData = data[topic]
-
+export default function TopicMain({ topicData }: Props) {
   return (
-    <div className="flex w-full shrink-0 flex-col lg:shrink">
-      <TopicSelector topics={topics} activeTopic={topic} setTopic={setTopic} />
-      {!!topicData && (
-        <div className="mt-6 flex w-full flex-col gap-y-4 md:mt-[11px] md:gap-y-7 lg:mt-[22px] lg:gap-x-6">
-          <div>
-            <TopicItem {...topicData[0]} isFirst key={topicData[0].postId} />
-          </div>
-          <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-[34px] lg:grid lg:grid-cols-3 lg:gap-x-3 lg:gap-y-5">
-            {/* TODO: turn image up and text bottom for only this block */}
-            {topicData.slice(1, 4).map((data) => (
-              <TopicItem {...data} key={data.postId} />
-            ))}
-          </div>
-        </div>
-      )}
+    <div className="flex w-full flex-col items-center justify-center gap-5">
+      <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-2">
+        {topicData.map((topicBundle) => {
+          const { id, name, link, heroImage } = topicBundle
+          return (
+            <Link key={id} href={link} className="flex flex-col gap-2">
+              <div className="aspect-[8/5] overflow-hidden">
+                <CustomImage
+                  images={heroImage?.resized}
+                  imagesWebP={heroImage?.resizedWebp}
+                  objectFit="cover"
+                  alt="topic 首圖"
+                  className="transition-transform duration-300 ease-out hover:scale-110 active:scale-110"
+                />
+              </div>
+              <span className="font-bold">{name}</span>
+            </Link>
+          )
+        })}
+      </div>
+      <Link
+        href="/topic"
+        className="rounded border-2 border-mirror-blue-600 p-[10px] text-lg font-bold leading-none text-mirror-blue-600"
+      >
+        看所有專題
+      </Link>
     </div>
   )
 }

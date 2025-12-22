@@ -5516,6 +5516,28 @@ export type GetTopicsQuery = {
     __typename?: 'Topic'
     name?: string | null
     slug?: string | null
+    heroImage?: {
+      __typename?: 'Photo'
+      id: string
+      resized?: {
+        __typename?: 'ResizedImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+      resizedWebp?: {
+        __typename?: 'ResizedWebPImages'
+        original?: string | null
+        w480?: string | null
+        w800?: string | null
+        w1200?: string | null
+        w1600?: string | null
+        w2400?: string | null
+      } | null
+    } | null
     posts?: Array<{
       __typename?: 'Post'
       id: string
@@ -10853,12 +10875,25 @@ export const GetTopicsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
                 {
                   kind: 'Field',
+                  name: { kind: 'Name', value: 'heroImage' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'FragmentSpread',
+                        name: { kind: 'Name', value: 'ImageData' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
                   name: { kind: 'Name', value: 'posts' },
                   arguments: [
                     {
                       kind: 'Argument',
                       name: { kind: 'Name', value: 'take' },
-                      value: { kind: 'IntValue', value: '4' },
+                      value: { kind: 'IntValue', value: '6' },
                     },
                     {
                       kind: 'Argument',

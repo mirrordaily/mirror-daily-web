@@ -3,13 +3,18 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:tailwindcss/recommended"
+    "plugin:tailwindcss/recommended",
+    "prettier"
   ],
   "plugins": ["check-file", "@typescript-eslint", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"
+  },
+  "settings": {
+    "tailwindcss": {
+      "config": "./tailwind.config.js"
+    }
   },
   "rules": {
     "max-lines": ["error", { "max": 500 }],

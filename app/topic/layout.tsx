@@ -1,5 +1,4 @@
 import Header from '@/shared-components/header'
-import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import Footer from '@/shared-components/footer'
 
 export default function Layout({
@@ -16,7 +15,6 @@ export default function Layout({
       <div className="flex w-full shrink-0 grow flex-col pt-36 md:pt-0">
         {children}
       </div>
-      <NewsletterSubscription />
       <Footer />
     </>
   )

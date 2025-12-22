@@ -1,4 +1,4 @@
-import type { LatestPost } from './common'
+import type { HeroImage, LatestPost } from './common'
 
 export type ItemInTopNewsSection = Pick<
   LatestPost,
@@ -27,11 +27,11 @@ export type EditorChoice = Pick<
   'postName' | 'postId' | 'link' | 'heroImage'
 >
 
-export type TopicPost = Pick<
-  LatestPost,
-  'postName' | 'postId' | 'link' | 'heroImage'
-> & {
-  topicLink: string
+export type TopicBundle = {
+  id: string
+  name: string
+  link: string
+  heroImage: HeroImage | null
 }
 
 export type CityAndWeather = {
