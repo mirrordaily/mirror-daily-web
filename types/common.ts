@@ -116,3 +116,5 @@ export type RelatedPost = {
 }
 
 export type SectionData = Pick<HeaderSection, 'slug' | 'color'>[]
+
+export type AdType = 'popIn' | 'dable'

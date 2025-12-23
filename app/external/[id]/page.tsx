@@ -12,11 +12,12 @@ import { getDefaultMetadata, getRandomItems } from '@/utils/common'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import MisoPageView from '@/shared-components/miso-pageview'
-import DableWidget from '@/shared-components/dable-widget'
 import ArticlePageTopAd from '@/shared-components/top-ads/article-page-top-ad'
 import SocialSharePanel from '@/shared-components/social-share-panel'
 import { SITE_URL } from '@/constants/config'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
+import RelatedAd from '@/shared-components/related-ad'
+import BottomAd from '@/shared-components/bottom-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -67,9 +68,6 @@ export default async function Page({ params }: PageProps) {
   const popularPosts = await fetchPopularPost(20)
   const popularPostsTopSix = popularPosts.slice(0, 6)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
-
-  const adTypeRelated = Math.random() < 0.5 ? 'popIn' : 'dable'
-  const adTypeBottom = Math.random() < 0.5 ? 'popIn' : 'dable'
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
     const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
@@ -187,16 +185,8 @@ export default async function Page({ params }: PageProps) {
 
             <RelatedNewsList posts={relatedPosts} />
 
-            {adTypeRelated === 'dable' ? (
-              <DableWidget type="related" customClasses="mt-4" />
-            ) : (
-              <div id="_popIn_recommend_word" className="mt-7" />
-            )}
-            {adTypeBottom === 'dable' ? (
-              <DableWidget type="articleBottomPC" customClasses="mt-4" />
-            ) : (
-              <div id="_popIn_recommend" className="mt-7" />
-            )}
+            <RelatedAd />
+            <BottomAd />
           </div>
 
           <hr className="hidden h-px w-full bg-[#CCCED4] md:my-12 md:block md:w-[588px] lg:hidden" />
