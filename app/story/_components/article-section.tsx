@@ -12,6 +12,7 @@ import LatestNewsSection from './latest-news-section'
 import SocialSharePanel from '@/shared-components/social-share-panel'
 import DableWidget from '@/shared-components/dable-widget'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
+import { SECTION_FORUM_SLUG } from '@/constants/misc'
 
 type Props = {
   postData: Post
@@ -77,9 +78,9 @@ export default async function ArticleSection({ postData, id }: Props) {
               />
             </>
           )}
-
-          <NewsletterSubscription />
-
+          {postData.sections.some(
+            ({ slug }) => slug === SECTION_FORUM_SLUG
+          ) && <NewsletterSubscription />}
           <div className="md:hidden">
             <SocialSharePanel
               link={postData.link}
