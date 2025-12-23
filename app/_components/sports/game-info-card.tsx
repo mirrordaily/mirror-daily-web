@@ -11,7 +11,7 @@ type GameInfoCardProps = {
 }
 
 const TriganleTag = () => (
-  <div className="absolute -right-5 top-[6px] w-2 border-y-8 border-r-[12px] border-y-transparent border-r-mirror-red"></div>
+  <div className="absolute -right-5 top-[6px] w-2 border-y-8 border-r-[12px] border-y-transparent border-r-mirror-red-500"></div>
 )
 const GlowingDot = () => (
   <div className="size-2 animate-glowing-red rounded-full bg-red-500" />

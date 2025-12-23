@@ -103,9 +103,18 @@ export default async function Page({ params }: PageProps) {
     mainWriters: postData.mainWriters.map((m) => m.name),
   }
 
-  const author = postData.writers?.[0]
-    ? postData.writers.map((writer) => ({ name: writer.name }))
-    : [{ name: SITE_NAME }]
+  const author =
+    postData.writers && postData.writers.length > 0
+      ? postData.writers.map((writer) => ({
+          '@type': 'Person',
+          name: writer.name,
+          url: `${SITE_URL}${writer.link}`,
+        }))
+      : {
+          '@type': 'Organization',
+          name: SITE_NAME,
+          url: SITE_URL,
+        }
 
   const jsonLd = [
     {

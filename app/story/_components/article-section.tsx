@@ -11,6 +11,7 @@ import PopularNewsSection from './popular-news-section'
 import LatestNewsSection from './latest-news-section'
 import SocialSharePanel from '@/shared-components/social-share-panel'
 import DableWidget from '@/shared-components/dable-widget'
+import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 
 type Props = {
   postData: Post
@@ -76,6 +77,8 @@ export default async function ArticleSection({ postData, id }: Props) {
               />
             </>
           )}
+
+          <NewsletterSubscription />
 
           <div className="md:hidden">
             <SocialSharePanel
