@@ -148,3 +148,5 @@ export const DEFAULT_SECTION_NAME = '時事'
 export const DEFAULT_SECTION_COLOR = '#4D8AA4'
 
 export const FLASH_NEWS_COUNT = 8
+
+export const SECTION_FORUM_SLUG = 'fight'
