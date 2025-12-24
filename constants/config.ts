@@ -107,6 +107,14 @@ if (!API_ENDPOINT) {
   )
 }
 
+const API_STORY_GQL_ENDPOINT = process.env.STORY_GQL_ENDPOINT ?? ''
+
+if (!API_STORY_GQL_ENDPOINT) {
+  console.warn(
+    '[config] API_STORY_GQL_ENDPOINT is empty. This may break GraphQL Codegen or API requests.'
+  )
+}
+
 const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY ?? ''
 const MAILCHIMP_SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX ?? ''
 const MAILCHIMP_LIST_ID = process.env.MAILCHIMP_LIST_ID ?? ''
@@ -116,6 +124,7 @@ export {
   CPBL_SITE_URL,
   TPBL_SITE_URL,
   API_ENDPOINT,
+  API_STORY_GQL_ENDPOINT,
   URL_STATIC_POPULAR_NEWS,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_HEADER,
