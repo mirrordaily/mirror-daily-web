@@ -10,9 +10,10 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import PopularNewsSection from './popular-news-section'
 import LatestNewsSection from './latest-news-section'
 import SocialSharePanel from '@/shared-components/social-share-panel'
-import DableWidget from '@/shared-components/dable-widget'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import { SECTION_FORUM_SLUG } from '@/constants/misc'
+import BottomAd from '@/shared-components/bottom-ad'
+import RelatedAd from '@/shared-components/related-ad'
 
 type Props = {
   postData: Post
@@ -26,9 +27,6 @@ export default async function ArticleSection({ postData, id }: Props) {
   const popularPosts = await fetchPopularPost(20)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
   const popularPostsTopSix = popularPosts.slice(0, 6)
-
-  const adTypeRelated = Math.random() < 0.5 ? 'popIn' : 'dable'
-  const adTypeBottom = Math.random() < 0.5 ? 'popIn' : 'dable'
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
     const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
@@ -93,17 +91,8 @@ export default async function ArticleSection({ postData, id }: Props) {
           </div>
 
           <RelatedNewsSection posts={relatedPosts} />
-
-          {adTypeRelated === 'dable' ? (
-            <DableWidget type="related" customClasses="mt-4" />
-          ) : (
-            <div id="_popIn_recommend_word" className="mt-7"></div>
-          )}
-          {adTypeBottom === 'dable' ? (
-            <DableWidget type="articleBottomPC" customClasses="mt-4" />
-          ) : (
-            <div id="_popIn_recommend" className="mt-7"></div>
-          )}
+          <RelatedAd />
+          <BottomAd />
         </div>
       </div>
 
