@@ -72,54 +72,57 @@ export default function ArticlesList<T extends PostData>({
                 {(posts) =>
                   posts.map((post, i) => (
                     <React.Fragment key={post.id}>
-                      <SecondaryArticleCard color={color} postItem={post} />
-                      {i === 0 && (
-                        <div key={post.id + 'ad-0'}>
-                          <DesktopGptAd
-                            mode="normal"
-                            slotKey="mirrordaily_section_PC_728x90_list1"
-                            targetingId={slug}
-                          />
-                          <div className="md:hidden">
+                      <div className="flex flex-col">
+                        <SecondaryArticleCard color={color} postItem={post} />
+                        {i === 0 && (
+                          <>
+                            <DesktopGptAd
+                              mode="normal"
+                              slotKey="mirrordaily_section_PC_728x90_list1"
+                              targetingId={slug}
+                              customClasses="md:mt-8"
+                            />
                             <NonDesktopGptAd
                               mode="normal"
                               slotKey="mirrordaily_section_MW_300x250_list1"
-                              customClasses="mx-auto"
+                              customClasses="mx-auto mt-5"
                               targetingId={slug}
                             />
-                          </div>
-                        </div>
-                      )}
-                      {i === 3 && (
-                        <div key={post.id + 'ad-3'}>
-                          <DesktopGptAd
-                            mode="normal"
-                            slotKey="mirrordaily_section_PC_728x90_list2"
-                            targetingId={slug}
-                          />
-                          <NonDesktopGptAd
-                            mode="normal"
-                            slotKey="mirrordaily_section_MW_300x250_list2"
-                            customClasses="mx-auto"
-                            targetingId={slug}
-                          />
-                        </div>
-                      )}
-                      {i === 6 && (
-                        <div key={post.id + 'ad-6'}>
-                          <DesktopGptAd
-                            mode="normal"
-                            slotKey="mirrordaily_section_PC_728x90_list3"
-                            targetingId={slug}
-                          />
-                          <NonDesktopGptAd
-                            mode="normal"
-                            slotKey="mirrordaily_section_MW_300x250_list3"
-                            customClasses="mx-auto"
-                            targetingId={slug}
-                          />
-                        </div>
-                      )}
+                          </>
+                        )}
+                        {i === 3 && (
+                          <>
+                            <DesktopGptAd
+                              mode="normal"
+                              slotKey="mirrordaily_section_PC_728x90_list2"
+                              targetingId={slug}
+                              customClasses="md:mt-8"
+                            />
+                            <NonDesktopGptAd
+                              mode="normal"
+                              slotKey="mirrordaily_section_MW_300x250_list2"
+                              customClasses="mx-auto mt-5"
+                              targetingId={slug}
+                            />
+                          </>
+                        )}
+                        {i === 6 && (
+                          <>
+                            <DesktopGptAd
+                              mode="normal"
+                              slotKey="mirrordaily_section_PC_728x90_list3"
+                              targetingId={slug}
+                              customClasses="md:mt-8"
+                            />
+                            <NonDesktopGptAd
+                              mode="normal"
+                              slotKey="mirrordaily_section_MW_300x250_list3"
+                              customClasses="mx-auto mt-5"
+                              targetingId={slug}
+                            />
+                          </>
+                        )}
+                      </div>
                     </React.Fragment>
                   ))
                 }
