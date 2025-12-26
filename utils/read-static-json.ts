@@ -1,3 +1,5 @@
+'use server'
+
 import fs from 'fs/promises'
 import { isServer } from '@/utils/common'
 import { STATIC_FILE_DOMAIN } from '@/constants/config'
