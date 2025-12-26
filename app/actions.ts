@@ -245,27 +245,29 @@ const transformTopics = (
 ): TopicBundle[] | null => {
   if (!rawData) return null
 
-  const convertedData = rawData.map((topic, index) => {
-    const { name = '', slug = '', heroImage, posts } = topic
+  const convertedData = rawData
+    .map((topic, index) => {
+      const { name = '', slug = '', heroImage, posts } = topic
 
-    // Use top-level heroImage if available.
-    let finalHeroImage = heroImage ? getHeroImage(heroImage) : null
+      // Use top-level heroImage if available.
+      let finalHeroImage = heroImage ? getHeroImage(heroImage) : null
 
-    // Otherwise find the first post with a valid heroImage.
-    if (!finalHeroImage && Array.isArray(posts)) {
-      const found = posts.find((p) => p?.heroImage)
-      if (found?.heroImage) {
-        finalHeroImage = getHeroImage(found.heroImage)
+      // Otherwise find the first post with a valid heroImage.
+      if (!finalHeroImage && Array.isArray(posts)) {
+        const found = posts.find((p) => p?.heroImage)
+        if (found?.heroImage) {
+          finalHeroImage = getHeroImage(found.heroImage)
+        }
       }
-    }
 
-    return {
-      id: `${index}-${name}`,
-      name,
-      link: getTopicPageUrl(slug),
-      heroImage: finalHeroImage,
-    }
-  })
+      return {
+        id: `${index}-${name}`,
+        name,
+        link: getTopicPageUrl(slug),
+        heroImage: finalHeroImage,
+      }
+    })
+    .slice(0, 6) // ensure at most 6 elements
 
   if (!convertedData.length) return null
   return convertedData
