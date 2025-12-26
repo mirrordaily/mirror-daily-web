@@ -18,9 +18,10 @@ import { fetchGQLData } from '@/utils/graphql'
 import type { Shorts } from '@/types/common'
 import { SHORTS_TYPE } from '@/types/common'
 import {
-  URL_STATIC_NEWS_SHORTSPAGE,
-  URL_STATIC_CREATIVTY_SHORTPAGE,
+  STATIC_JSON_NEWS_SHORTSPAGE,
+  STATIC_JSON_CREATIVITY_SHORTPAGE,
 } from '@/constants/config'
+import { readStaticJson } from '@/utils/read-static-json'
 
 export const fetchShortsData = async (
   videoId: string
@@ -75,9 +76,9 @@ export const fetchShortsRandom = async (
   )
   const schema = z.promise(z.object({ videos: z.array(latestShortsSchema) }))
 
-  const SHORTS_JSON_URL = {
-    [SHORTS_TYPE.NEWS]: URL_STATIC_NEWS_SHORTSPAGE,
-    [SHORTS_TYPE.DERIVATIVE]: URL_STATIC_CREATIVTY_SHORTPAGE,
+  const SHORTS_JSON_PATH = {
+    [SHORTS_TYPE.NEWS]: STATIC_JSON_NEWS_SHORTSPAGE,
+    [SHORTS_TYPE.DERIVATIVE]: STATIC_JSON_CREATIVITY_SHORTPAGE,
   }
 
   const data = await createDataFetchingChain<
@@ -86,11 +87,10 @@ export const fetchShortsRandom = async (
     errorLogger,
     [],
     async () => {
-      const baseUrl = SHORTS_JSON_URL[section]
-      const jsonUrl = `${baseUrl}01.json`
-      const resp = await fetch(jsonUrl)
+      const basePath = SHORTS_JSON_PATH[section]
+      const jsonPath = `${basePath}01.json`
+      const jsonData = await readStaticJson(jsonPath)
 
-      const jsonData = await resp.json()
       // Ensure jsonData is parsed against the schema for safety and type correctness
       const validationResult = z.array(latestShortsSchema).safeParse(jsonData)
 

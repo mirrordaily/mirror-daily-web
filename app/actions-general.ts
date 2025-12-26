@@ -24,12 +24,13 @@ import {
   jsonVideosSchema,
 } from '@/utils/data-schema'
 import {
-  URL_STATIC_LATEST_SHORTS,
-  URL_STATIC_LATEST_VIDEOS,
-  URL_STATIC_POPULAR_NEWS,
-  URL_STATIC_LATEST_NEWS,
-  URL_STATIC_HEADER,
+  STATIC_JSON_LATEST_SHORTS,
+  STATIC_JSON_LATEST_VIDEOS,
+  STATIC_JSON_POPULAR_NEWS,
+  STATIC_JSON_LATEST_NEWS,
+  STATIC_JSON_HEADER,
 } from '@/constants/config'
+import { readStaticJson } from '@/utils/read-static-json'
 import {
   CreateCreativityShortsDocument,
   CreateShortsPreviewDocument,
@@ -62,9 +63,9 @@ export const fetchLatestPost = async (
   )
 
   try {
-    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page}.json`)
-
-    const rawPostData = await resp.json()
+    const rawPostData = await readStaticJson<{ latest?: unknown }>(
+      `${STATIC_JSON_LATEST_NEWS}0${page}.json`
+    )
     const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
     const filteredData = latestPosts.filter(
       (rawPost) => !hasExternalLink(rawPost)
@@ -87,11 +88,10 @@ export const fetchPopularPost = async (
   )
 
   try {
-    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
-
+    const jsonData = await readStaticJson(STATIC_JSON_POPULAR_NEWS)
     const rawPostData = await z
       .promise(z.array(rawPopularPostSchema))
-      .parse(resp.json())
+      .parse(jsonData)
 
     const headerData = await fetchHeaderData()
 
@@ -128,9 +128,8 @@ export const fetchLatestShorts = async (
       [SHORTS_TYPE.DERIVATIVE]: [],
     },
     async () => {
-      const resp = await fetch(URL_STATIC_LATEST_SHORTS)
-
-      const result = await schema.parse(resp.json())
+      const jsonData = await readStaticJson(STATIC_JSON_LATEST_SHORTS)
+      const result = await schema.parse(jsonData)
       return result
     },
     async () => {
@@ -171,18 +170,7 @@ export const fetchLatestVideos = async (
       [LATEST_VIDEOS_TYPE.CREATIVITY]: [],
     },
     async () => {
-      const resp = await fetch(URL_STATIC_LATEST_VIDEOS)
-
-      if (!resp.ok) {
-        console.error(
-          'Failed to fetch YouTube data:',
-          resp.status,
-          resp.statusText
-        )
-        throw new Error(`HTTP error! status: ${resp.status}`)
-      }
-
-      const jsonData = await resp.json()
+      const jsonData = await readStaticJson(STATIC_JSON_LATEST_VIDEOS)
       const parseResult = jsonOriginal.safeParse(jsonData)
       if (!parseResult.success) {
         console.error('JSON Schema Validation Failed:', {
@@ -397,9 +385,8 @@ export const fetchHeaderData = cache(async (): Promise<HeaderData[]> => {
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_HEADER)
-
-      const result = await schema.parse(resp.json())
+      const jsonData = await readStaticJson(STATIC_JSON_HEADER)
+      const result = await schema.parse(jsonData)
       return result
     }
   )

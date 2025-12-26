@@ -10,15 +10,16 @@ import type {
   LatestSportsNewsData,
 } from '@/types/homepage'
 import {
-  URL_STATIC_EDITOR_CHOICE,
-  URL_STATIC_HOT_NEWS,
-  URL_STATIC_SPORTS_EVENTS,
-  URL_STATIC_TOPIC,
-  URL_STATIC_WEATHER,
-  URL_STATIC_LATEST_SPORTS_NEWS,
+  STATIC_JSON_EDITOR_CHOICE,
+  STATIC_JSON_HOT_NEWS,
+  STATIC_JSON_SPORTS_EVENTS,
+  STATIC_JSON_TOPIC,
+  STATIC_JSON_WEATHER,
+  STATIC_JSON_LATEST_SPORTS_NEWS,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
+import { readStaticJson } from '@/utils/read-static-json'
 import type {
   GetLiveEventForHomepageQuery,
   ImageDataFragment,
@@ -135,8 +136,8 @@ export const fetchHotNews = async (): Promise<FlashNews[]> => {
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_HOT_NEWS)
-      const result = await schema.parse(resp.json())
+      const jsonData = await readStaticJson(STATIC_JSON_HOT_NEWS)
+      const result = await schema.parse(jsonData)
       return result.hots
     },
     async () => {
@@ -206,7 +207,6 @@ const transformEditorChoices = (
 export const fetchEditorChoices = async (): Promise<
   ParameterOfComponent<typeof EditorChoiceMain>
 > => {
-  const param = String(Date.now()).slice(0, 8)
   const errorLogger = createErrorLogger(
     'Error occurs while fetching editor choices',
     getTraceObject()
@@ -221,9 +221,8 @@ export const fetchEditorChoices = async (): Promise<
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(`${URL_STATIC_EDITOR_CHOICE}?param=${param}`)
-
-      const result = await schema.parse(resp.json())
+      const jsonData = await readStaticJson(STATIC_JSON_EDITOR_CHOICE)
+      const result = await schema.parse(jsonData)
       return result.editorChoices
     },
     async () => {
@@ -285,9 +284,8 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_TOPIC)
-
-      const result = await schema.parse(resp.json())
+      const jsonData = await readStaticJson(STATIC_JSON_TOPIC)
+      const result = await schema.parse(jsonData)
       return result.topics
     },
     async () => {
@@ -327,8 +325,8 @@ export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
   )
 
   try {
-    const resp = await fetch(URL_STATIC_WEATHER)
-    const rawWeatherData = await z.promise(cityWeatherSchema).parse(resp.json())
+    const jsonData = await readStaticJson(STATIC_JSON_WEATHER)
+    const rawWeatherData = await z.promise(cityWeatherSchema).parse(jsonData)
 
     return transformWeather(rawWeatherData)
   } catch (e) {
@@ -385,8 +383,8 @@ export const fetchSportsEvents = async (): Promise<
   )
   const schema = z.promise(sportsEventsApiResponseSchema)
   try {
-    const resp = await fetch(URL_STATIC_SPORTS_EVENTS)
-    const rawSportsEventsData = await schema.parse(resp.json())
+    const jsonData = await readStaticJson(STATIC_JSON_SPORTS_EVENTS)
+    const rawSportsEventsData = await schema.parse(jsonData)
     return transformSportsEvents(rawSportsEventsData)
   } catch (e) {
     errorLogger(e)
@@ -479,8 +477,8 @@ export const fetchLatestSportsNews = async (): Promise<
   )
   const schema = z.promise(latestSportsNewsSchema)
   try {
-    const resp = await fetch(URL_STATIC_LATEST_SPORTS_NEWS)
-    const parseResult = await schema.safeParse(resp.json())
+    const jsonData = await readStaticJson(STATIC_JSON_LATEST_SPORTS_NEWS)
+    const parseResult = await schema.safeParse(jsonData)
     if (!parseResult.success) {
       errorLogger(parseResult.error)
       return []
