@@ -42,7 +42,8 @@ const RECAPTCHA_API_KEY = 'AIzaSyCCEuV8oEN0SZsU0Fg7E6e2gx-fdTCQLAQ'
 const RECAPTCHA_SCORE = 0.7
 /** section shorts must use specific key for navigation purpose */
 const FIXED_KEY_FOR_SECTION_SHORTS = 'shorts'
-const TIMESTAMP_FOR_CACHE = '?t=' + Date.now() / 100
+const STATIC_CACHE_TIMESTAMP = Math.floor(Date.now() / 100)
+const TIMESTAMP_FOR_CACHE = '?t=' + STATIC_CACHE_TIMESTAMP
 
 switch (ENV) {
   case ENVIRONMENT.PRODUCTION:
@@ -174,5 +175,5 @@ export {
   MAILCHIMP_API_KEY,
   MAILCHIMP_SERVER_PREFIX,
   MAILCHIMP_LIST_ID,
-  TIMESTAMP_FOR_CACHE,
+  STATIC_CACHE_TIMESTAMP,
 }

@@ -66,6 +66,11 @@ export const fetchLatestPost = async (
     const rawPostData = await readStaticJson<{ latest?: unknown }>(
       `${STATIC_JSON_LATEST_NEWS}0${page}.json`
     )
+    console.log(
+      `${STATIC_JSON_LATEST_NEWS}0${page}.json`,
+      '`${STATIC_JSON_LATEST_NEWS}0${page}.json` ==='
+    )
+
     const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
     const filteredData = latestPosts.filter(
       (rawPost) => !hasExternalLink(rawPost)
@@ -379,14 +384,12 @@ export const fetchHeaderData = cache(async (): Promise<HeaderData[]> => {
     'Error occurs while fetching header json',
     getTraceObject()
   )
-  const schema = z.promise(headerSchema)
-
   const data = await createDataFetchingChain<z.infer<typeof headerSchema>>(
     errorLogger,
     [],
     async () => {
       const jsonData = await readStaticJson(STATIC_JSON_HEADER)
-      const result = await schema.parse(jsonData)
+      const result = headerSchema.parse(jsonData)
       return result
     }
   )
