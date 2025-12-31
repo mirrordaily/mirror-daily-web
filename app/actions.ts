@@ -128,8 +128,6 @@ export const fetchHotNews = async (): Promise<FlashNews[]> => {
     'Error occurs while fetching hot news',
     getTraceObject()
   )
-  const schema = z.promise(z.object({ hots: z.array(rawHotNewsSchema) }))
-
   const data = await createDataFetchingChain<
     z.infer<ZodArray<typeof rawHotNewsSchema>>
   >(
@@ -137,14 +135,17 @@ export const fetchHotNews = async (): Promise<FlashNews[]> => {
     [],
     async () => {
       const jsonData = await readStaticJson(STATIC_JSON_HOT_NEWS)
-      const result = await schema.parse(jsonData)
+      const result = z
+        .object({ hots: z.array(rawHotNewsSchema) })
+        .parse(jsonData)
       return result.hots
     },
     async () => {
-      const result = await schema.parse(
-        fetchGQLData(errorLogger, GetFlashNewsDocument)
-      )
-      return result.hots
+      const result = await fetchGQLData(errorLogger, GetFlashNewsDocument)
+      const parsedResult = z
+        .object({ hots: z.array(rawHotNewsSchema) })
+        .parse(result)
+      return parsedResult.hots
     }
   )
   return transformRawHotNews(data)
@@ -211,10 +212,6 @@ export const fetchEditorChoices = async (): Promise<
     'Error occurs while fetching editor choices',
     getTraceObject()
   )
-  const schema = z.promise(
-    z.object({ editorChoices: z.array(editorChoiceSchenma) })
-  )
-
   const editorData = await createDataFetchingChain<
     z.infer<ZodArray<typeof editorChoiceSchenma>>
   >(
@@ -222,14 +219,17 @@ export const fetchEditorChoices = async (): Promise<
     [],
     async () => {
       const jsonData = await readStaticJson(STATIC_JSON_EDITOR_CHOICE)
-      const result = await schema.parse(jsonData)
+      const result = z
+        .object({ editorChoices: z.array(editorChoiceSchenma) })
+        .parse(jsonData)
       return result.editorChoices
     },
     async () => {
-      const result = await schema.parse(
-        fetchGQLData(errorLogger, GetEditorChoicesDocument)
-      )
-      return result.editorChoices
+      const result = await fetchGQLData(errorLogger, GetEditorChoicesDocument)
+      const parsedResult = z
+        .object({ editorChoices: z.array(editorChoiceSchenma) })
+        .parse(result)
+      return parsedResult.editorChoices
     }
   )
 
@@ -278,7 +278,7 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
     'Error occurs while fetching topics',
     getTraceObject()
   )
-  const schema = z.promise(z.object({ topics: z.array(topicsSchema) }))
+  const topicApiResponseSchema = z.object({ topics: z.array(topicsSchema) })
 
   const data = await createDataFetchingChain<
     z.infer<ZodArray<typeof topicsSchema>>
@@ -287,14 +287,11 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
     [],
     async () => {
       const jsonData = await readStaticJson(STATIC_JSON_TOPIC)
-      const result = await schema.parse(jsonData)
-      return result.topics
+      return topicApiResponseSchema.parse(jsonData).topics
     },
     async () => {
-      const result = await schema.parse(
-        fetchGQLData(errorLogger, GetTopicsDocument)
-      )
-      return result.topics
+      const result = await fetchGQLData(errorLogger, GetTopicsDocument)
+      return topicApiResponseSchema.parse(result).topics
     }
   )
 
@@ -328,7 +325,7 @@ export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
 
   try {
     const jsonData = await readStaticJson(STATIC_JSON_WEATHER)
-    const rawWeatherData = await z.promise(cityWeatherSchema).parse(jsonData)
+    const rawWeatherData = cityWeatherSchema.parse(jsonData)
 
     return transformWeather(rawWeatherData)
   } catch (e) {
@@ -383,10 +380,9 @@ export const fetchSportsEvents = async (): Promise<
     'Error occurs while fetching sports events',
     getTraceObject()
   )
-  const schema = z.promise(sportsEventsApiResponseSchema)
   try {
     const jsonData = await readStaticJson(STATIC_JSON_SPORTS_EVENTS)
-    const rawSportsEventsData = await schema.parse(jsonData)
+    const rawSportsEventsData = sportsEventsApiResponseSchema.parse(jsonData)
     return transformSportsEvents(rawSportsEventsData)
   } catch (e) {
     errorLogger(e)
@@ -477,15 +473,14 @@ export const fetchLatestSportsNews = async (): Promise<
     'Error occurs while fetching latest sports news',
     getTraceObject()
   )
-  const schema = z.promise(latestSportsNewsSchema)
   try {
     const jsonData = await readStaticJson(STATIC_JSON_LATEST_SPORTS_NEWS)
-    const parseResult = await schema.safeParse(jsonData)
+    const parseResult = latestSportsNewsSchema.safeParse(jsonData)
     if (!parseResult.success) {
       errorLogger(parseResult.error)
       return []
     }
-    const parsed = await parseResult.data
+    const parsed = parseResult.data
     return transformLatestSportsNews(parsed)
   } catch (e) {
     errorLogger(e)

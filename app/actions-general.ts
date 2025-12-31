@@ -66,10 +66,6 @@ export const fetchLatestPost = async (
     const rawPostData = await readStaticJson<{ latest?: unknown }>(
       `${STATIC_JSON_LATEST_NEWS}0${page}.json`
     )
-    console.log(
-      `${STATIC_JSON_LATEST_NEWS}0${page}.json`,
-      '`${STATIC_JSON_LATEST_NEWS}0${page}.json` ==='
-    )
 
     const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
     const filteredData = latestPosts.filter(
@@ -94,9 +90,7 @@ export const fetchPopularPost = async (
 
   try {
     const jsonData = await readStaticJson(STATIC_JSON_POPULAR_NEWS)
-    const rawPostData = await z
-      .promise(z.array(rawPopularPostSchema))
-      .parse(jsonData)
+    const rawPostData = z.array(rawPopularPostSchema).parse(jsonData)
 
     const headerData = await fetchHeaderData()
 
@@ -120,13 +114,11 @@ export const fetchLatestShorts = async (
     getTraceObject()
   )
 
-  const orignal = z.object({
+  const originalSchema = z.object({
     [SHORTS_TYPE.NEWS]: z.array(latestShortsSchema),
     [SHORTS_TYPE.DERIVATIVE]: z.array(latestShortsSchema),
   })
-  const schema = z.promise(orignal)
-
-  const data = await createDataFetchingChain<z.infer<typeof orignal>>(
+  const data = await createDataFetchingChain<z.infer<typeof originalSchema>>(
     errorLogger,
     {
       [SHORTS_TYPE.NEWS]: [],
@@ -134,14 +126,15 @@ export const fetchLatestShorts = async (
     },
     async () => {
       const jsonData = await readStaticJson(STATIC_JSON_LATEST_SHORTS)
-      const result = await schema.parse(jsonData)
+      const result = originalSchema.parse(jsonData)
       return result
     },
     async () => {
-      const result = await schema.parse(
-        fetchGQLData(errorLogger, GetLatestShortsDocument, { amount, start })
-      )
-      return result
+      const result = await fetchGQLData(errorLogger, GetLatestShortsDocument, {
+        amount,
+        start,
+      })
+      return originalSchema.parse(result)
     }
   )
   const matchedData = data[type].slice(start, amount)
@@ -158,17 +151,15 @@ export const fetchLatestVideos = async (
     getTraceObject()
   )
 
-  const original = z.object({
+  const originalSchema = z.object({
     [LATEST_VIDEOS_TYPE.NEWS]: z.array(graphqlVideosSchema),
     [LATEST_VIDEOS_TYPE.CREATIVITY]: z.array(graphqlVideosSchema),
   })
-  const jsonOriginal = z.object({
+  const jsonOriginalSchema = z.object({
     [LATEST_VIDEOS_TYPE.NEWS]: z.array(jsonVideosSchema),
   })
 
-  const schema = z.promise(original)
-
-  const data = await createDataFetchingChain<z.infer<typeof original>>(
+  const data = await createDataFetchingChain<z.infer<typeof originalSchema>>(
     errorLogger,
     {
       [LATEST_VIDEOS_TYPE.NEWS]: [],
@@ -176,7 +167,7 @@ export const fetchLatestVideos = async (
     },
     async () => {
       const jsonData = await readStaticJson(STATIC_JSON_LATEST_VIDEOS)
-      const parseResult = jsonOriginal.safeParse(jsonData)
+      const parseResult = jsonOriginalSchema.safeParse(jsonData)
       if (!parseResult.success) {
         console.error('JSON Schema Validation Failed:', {
           errors: parseResult.error.flatten(),
@@ -206,9 +197,11 @@ export const fetchLatestVideos = async (
       }
     },
     async () => {
-      const parseResult = await schema.safeParse(
-        fetchGQLData(errorLogger, GetLatestVideosDocument, { amount, start })
-      )
+      const result = await fetchGQLData(errorLogger, GetLatestVideosDocument, {
+        amount,
+        start,
+      })
+      const parseResult = originalSchema.safeParse(result)
       if (!parseResult.success) {
         errorLogger(parseResult.error)
         return {
