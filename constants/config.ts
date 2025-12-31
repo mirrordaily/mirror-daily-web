@@ -93,7 +93,7 @@ const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/${STATIC_JSON_LATEST_SHORTS}
 const STATIC_JSON_LATEST_VIDEOS = 'youtube/UCeN_H2EG1U6StWZhlBEWjjg_latest.json'
 const STATIC_JSON_WEATHER = 'weather.json'
 const STATIC_JSON_LATEST_SPORTS_NEWS =
-  'latest/latest_content_category_sport_1.json'
+  'latest/latest_content_section_sport_1.json'
 const STATIC_JSON_SPORTS_EVENTS = 'sports_schedule.json'
 const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/${STATIC_JSON_SPORTS_EVENTS}${TIMESTAMP_FOR_CACHE}`
 // shorts listing page

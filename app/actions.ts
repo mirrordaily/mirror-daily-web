@@ -441,9 +441,9 @@ const transformSportsNewsImage = (
 const transformLatestSportsNews = (
   rawData: z.infer<typeof latestSportsNewsSchema> | undefined
 ): LatestSportsNewsData[] => {
-  if (!rawData || !rawData.category) return []
+  if (!rawData || !rawData.section) return []
 
-  return rawData.category.items.map((item) => {
+  const convertedData = rawData.section.items?.map((item) => {
     if (item.type === 'external') {
       const { id, title, publishedDate, thumb } = item
       return {
@@ -464,6 +464,8 @@ const transformLatestSportsNews = (
       heroImage: transformSportsNewsImage(heroImage, og_image),
     }
   })
+
+  return convertedData.splice(0, 4)
 }
 
 export const fetchLatestSportsNews = async (): Promise<
