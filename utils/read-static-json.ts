@@ -43,9 +43,9 @@ export async function readStaticJson<T = unknown>(
     }
   }
 
-  // Fallback to HTTP fetch
-  const fallbackUrl = `https://${bucketDomain}/json/${cleanPath}?t=${Date.now() / 100}`
-  const res = await fetch(fallbackUrl)
+  // Fallback to HTTP fetch (disable cache to always get fresh data)
+  const fallbackUrl = `https://${bucketDomain}/json/${cleanPath}`
+  const res = await fetch(fallbackUrl, { cache: 'no-store' })
   if (!res.ok) {
     throw new Error(
       `Failed to fetch ${fallbackUrl}: ${res.status} ${res.statusText}`
