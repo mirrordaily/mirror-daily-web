@@ -2,7 +2,7 @@
 
 import fs from 'fs/promises'
 import { isServer } from '@/utils/common'
-import { STATIC_FILE_DOMAIN } from '@/constants/config'
+import { STATIC_FILE_DOMAIN, TIMESTAMP_FOR_CACHE } from '@/constants/config'
 
 /**
  * Read static JSON either from mounted filesystem (fs) or fallback to fetch from HTTPS
@@ -43,9 +43,9 @@ export async function readStaticJson<T = unknown>(
     }
   }
 
-  // Fallback to HTTP fetch (disable cache to always get fresh data)
-  const fallbackUrl = `https://${bucketDomain}/json/${cleanPath}`
-  const res = await fetch(fallbackUrl, { cache: 'no-store' })
+  // Fallback to HTTP fetch
+  const fallbackUrl = `https://${bucketDomain}/json/${cleanPath}?t=${TIMESTAMP_FOR_CACHE}`
+  const res = await fetch(fallbackUrl)
   if (!res.ok) {
     throw new Error(
       `Failed to fetch ${fallbackUrl}: ${res.status} ${res.statusText}`
