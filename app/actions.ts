@@ -447,7 +447,7 @@ const transformLatestSportsNews = (
 ): LatestSportsNewsData[] => {
   if (!rawData || !rawData.section) return []
 
-  const convertedData = rawData.section.items.map((item) => {
+  const convertedData = rawData.section.items?.map((item) => {
     if (item.type === 'external') {
       const { id, title, publishedDate, thumb } = item
       return {
