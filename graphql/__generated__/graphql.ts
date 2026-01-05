@@ -2372,6 +2372,7 @@ export type Post = {
   preview?: Maybe<Scalars['JSON']['output']>
   publishedDate?: Maybe<Scalars['DateTime']['output']>
   publishedDateString?: Maybe<Scalars['String']['output']>
+  pv?: Maybe<Scalars['Int']['output']>
   redirect?: Maybe<Scalars['String']['output']>
   related_videos?: Maybe<Array<Video>>
   related_videosCount?: Maybe<Scalars['Int']['output']>
@@ -2625,6 +2626,7 @@ export type PostCreateInput = {
   photographers?: InputMaybe<ContactRelateToManyForCreateInput>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
   publishedDateString?: InputMaybe<Scalars['String']['input']>
+  pv?: InputMaybe<Scalars['Int']['input']>
   redirect?: InputMaybe<Scalars['String']['input']>
   related_videos?: InputMaybe<VideoRelateToManyForCreateInput>
   relateds?: InputMaybe<PostRelateToManyForCreateInput>
@@ -2670,6 +2672,7 @@ export type PostOrderByInput = {
   og_title?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
   publishedDateString?: InputMaybe<OrderDirection>
+  pv?: InputMaybe<OrderDirection>
   redirect?: InputMaybe<OrderDirection>
   state?: InputMaybe<OrderDirection>
   style?: InputMaybe<OrderDirection>
@@ -2747,6 +2750,7 @@ export type PostUpdateInput = {
   photographers?: InputMaybe<ContactRelateToManyForUpdateInput>
   publishedDate?: InputMaybe<Scalars['DateTime']['input']>
   publishedDateString?: InputMaybe<Scalars['String']['input']>
+  pv?: InputMaybe<Scalars['Int']['input']>
   redirect?: InputMaybe<Scalars['String']['input']>
   related_videos?: InputMaybe<VideoRelateToManyForUpdateInput>
   relateds?: InputMaybe<PostRelateToManyForUpdateInput>
@@ -2798,6 +2802,7 @@ export type PostWhereInput = {
   photographers?: InputMaybe<ContactManyRelationFilter>
   publishedDate?: InputMaybe<DateTimeFilter>
   publishedDateString?: InputMaybe<StringFilter>
+  pv?: InputMaybe<IntNullableFilter>
   redirect?: InputMaybe<StringFilter>
   relateds?: InputMaybe<PostManyRelationFilter>
   relatedsOne?: InputMaybe<PostWhereInput>

@@ -82,7 +82,7 @@ const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json${TIMESTAMP_FOR_CACHE}`
 const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/latest-shorts-hp.json${TIMESTAMP_FOR_CACHE}`
 const URL_STATIC_LATEST_VIDEOS = `${JSON_FILE_PATH}/youtube/UCeN_H2EG1U6StWZhlBEWjjg_latest.json${TIMESTAMP_FOR_CACHE}`
 const URL_STATIC_WEATHER = `${JSON_FILE_PATH}/weather.json${TIMESTAMP_FOR_CACHE}`
-const URL_STATIC_LATEST_SPORTS_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category_sport_1.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_LATEST_SPORTS_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section_sport_1.json`
 const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/sports_schedule.json${TIMESTAMP_FOR_CACHE}`
 // shorts listing page
 const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
