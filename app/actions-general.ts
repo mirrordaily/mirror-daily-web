@@ -24,12 +24,13 @@ import {
   jsonVideosSchema,
 } from '@/utils/data-schema'
 import {
-  URL_STATIC_LATEST_SHORTS,
-  URL_STATIC_LATEST_VIDEOS,
-  URL_STATIC_POPULAR_NEWS,
-  URL_STATIC_LATEST_NEWS,
-  URL_STATIC_HEADER,
+  STATIC_JSON_LATEST_SHORTS,
+  STATIC_JSON_LATEST_VIDEOS,
+  STATIC_JSON_POPULAR_NEWS,
+  STATIC_JSON_LATEST_NEWS,
+  STATIC_JSON_HEADER,
 } from '@/constants/config'
+import { readStaticJson } from '@/utils/read-static-json'
 import {
   CreateCreativityShortsDocument,
   CreateShortsPreviewDocument,
@@ -62,9 +63,10 @@ export const fetchLatestPost = async (
   )
 
   try {
-    const resp = await fetch(`${URL_STATIC_LATEST_NEWS}0${page}.json`)
+    const rawPostData = await readStaticJson<{ latest?: unknown }>(
+      `${STATIC_JSON_LATEST_NEWS}0${page}.json`
+    )
 
-    const rawPostData = await resp.json()
     const latestPosts = z.array(rawLatestPostSchema).parse(rawPostData?.latest)
     const filteredData = latestPosts.filter(
       (rawPost) => !hasExternalLink(rawPost)
@@ -87,11 +89,8 @@ export const fetchPopularPost = async (
   )
 
   try {
-    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
-
-    const rawPostData = await z
-      .promise(z.array(rawPopularPostSchema))
-      .parse(resp.json())
+    const jsonData = await readStaticJson(STATIC_JSON_POPULAR_NEWS)
+    const rawPostData = z.array(rawPopularPostSchema).parse(jsonData)
 
     const headerData = await fetchHeaderData()
 
@@ -115,29 +114,27 @@ export const fetchLatestShorts = async (
     getTraceObject()
   )
 
-  const orignal = z.object({
+  const originalSchema = z.object({
     [SHORTS_TYPE.NEWS]: z.array(latestShortsSchema),
     [SHORTS_TYPE.DERIVATIVE]: z.array(latestShortsSchema),
   })
-  const schema = z.promise(orignal)
-
-  const data = await createDataFetchingChain<z.infer<typeof orignal>>(
+  const data = await createDataFetchingChain<z.infer<typeof originalSchema>>(
     errorLogger,
     {
       [SHORTS_TYPE.NEWS]: [],
       [SHORTS_TYPE.DERIVATIVE]: [],
     },
     async () => {
-      const resp = await fetch(URL_STATIC_LATEST_SHORTS)
-
-      const result = await schema.parse(resp.json())
+      const jsonData = await readStaticJson(STATIC_JSON_LATEST_SHORTS)
+      const result = originalSchema.parse(jsonData)
       return result
     },
     async () => {
-      const result = await schema.parse(
-        fetchGQLData(errorLogger, GetLatestShortsDocument, { amount, start })
-      )
-      return result
+      const result = await fetchGQLData(errorLogger, GetLatestShortsDocument, {
+        amount,
+        start,
+      })
+      return originalSchema.parse(result)
     }
   )
   const matchedData = data[type].slice(start, amount)
@@ -154,36 +151,23 @@ export const fetchLatestVideos = async (
     getTraceObject()
   )
 
-  const original = z.object({
+  const originalSchema = z.object({
     [LATEST_VIDEOS_TYPE.NEWS]: z.array(graphqlVideosSchema),
     [LATEST_VIDEOS_TYPE.CREATIVITY]: z.array(graphqlVideosSchema),
   })
-  const jsonOriginal = z.object({
+  const jsonOriginalSchema = z.object({
     [LATEST_VIDEOS_TYPE.NEWS]: z.array(jsonVideosSchema),
   })
 
-  const schema = z.promise(original)
-
-  const data = await createDataFetchingChain<z.infer<typeof original>>(
+  const data = await createDataFetchingChain<z.infer<typeof originalSchema>>(
     errorLogger,
     {
       [LATEST_VIDEOS_TYPE.NEWS]: [],
       [LATEST_VIDEOS_TYPE.CREATIVITY]: [],
     },
     async () => {
-      const resp = await fetch(URL_STATIC_LATEST_VIDEOS)
-
-      if (!resp.ok) {
-        console.error(
-          'Failed to fetch YouTube data:',
-          resp.status,
-          resp.statusText
-        )
-        throw new Error(`HTTP error! status: ${resp.status}`)
-      }
-
-      const jsonData = await resp.json()
-      const parseResult = jsonOriginal.safeParse(jsonData)
+      const jsonData = await readStaticJson(STATIC_JSON_LATEST_VIDEOS)
+      const parseResult = jsonOriginalSchema.safeParse(jsonData)
       if (!parseResult.success) {
         console.error('JSON Schema Validation Failed:', {
           errors: parseResult.error.flatten(),
@@ -213,9 +197,11 @@ export const fetchLatestVideos = async (
       }
     },
     async () => {
-      const parseResult = await schema.safeParse(
-        fetchGQLData(errorLogger, GetLatestVideosDocument, { amount, start })
-      )
+      const result = await fetchGQLData(errorLogger, GetLatestVideosDocument, {
+        amount,
+        start,
+      })
+      const parseResult = originalSchema.safeParse(result)
       if (!parseResult.success) {
         errorLogger(parseResult.error)
         return {
@@ -391,15 +377,12 @@ export const fetchHeaderData = cache(async (): Promise<HeaderData[]> => {
     'Error occurs while fetching header json',
     getTraceObject()
   )
-  const schema = z.promise(headerSchema)
-
   const data = await createDataFetchingChain<z.infer<typeof headerSchema>>(
     errorLogger,
     [],
     async () => {
-      const resp = await fetch(URL_STATIC_HEADER)
-
-      const result = await schema.parse(resp.json())
+      const jsonData = await readStaticJson(STATIC_JSON_HEADER)
+      const result = headerSchema.parse(jsonData)
       return result
     }
   )
