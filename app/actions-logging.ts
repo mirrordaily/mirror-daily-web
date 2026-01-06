@@ -11,6 +11,21 @@ import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
+/**
+ * Determine whether the current runtime has Application Default Credentials (ADC).
+ * ADC is available only when running on Google Cloud managed environments
+ * (Cloud Run, GCE, or GKE) with a Service Account attached.
+ * This guard prevents unexpected authentication errors in local environments.
+ */
+function canUseCloudLogging(): boolean {
+  return (
+    // Cloud Run
+    !!process.env.K_SERVICE ||
+    // GCE / GKE
+    !!process.env.GCE_METADATA_HOST
+  )
+}
+
 export async function logPageView({
   referrer,
   screenSize,
@@ -20,6 +35,8 @@ export async function logPageView({
   screenSize: { width: number; height: number }
   extra?: Record<string, unknown>
 }) {
+  if (!canUseCloudLogging()) return
+
   const eventType = 'page-view'
   const logName = `${GCP_PROJECT_ID}-${ENV}-web-${eventType}`
   const logging = new Logging({ projectId: GCP_PROJECT_ID })
@@ -83,6 +100,8 @@ export async function logVideoView({
   screenSize: { width: number; height: number }
   extra?: Record<string, unknown>
 }) {
+  if (!canUseCloudLogging()) return
+
   const eventType = 'video-view'
   const logName = `${GCP_PROJECT_ID}-${ENV}-web-${eventType}`
   const logging = new Logging({ projectId: GCP_PROJECT_ID })

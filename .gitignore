@@ -49,3 +49,7 @@ certificates
 # editor
 .cursor/
 .vscode/
+
+# gemini
+.gemini
+GEMINI.md
