@@ -82,7 +82,11 @@ export default function HeroSection({ postData }: Props) {
         </h2>
 
         <div className="fixed bottom-[135px] right-3 z-story-share-bar md:hidden">
-          <SocialShareBar title={postData.title} direction="vertical" />
+          <SocialShareBar
+            title={postData.title}
+            link={postData.link}
+            direction="vertical"
+          />
         </div>
 
         <div className="relative mb-3 h-7 w-[58px] lg:mb-4 lg:h-[42px] lg:w-[88px]">

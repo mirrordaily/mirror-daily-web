@@ -39,7 +39,10 @@ export default async function ArticleSection({ postData, id }: Props) {
   }
 
   return (
-    <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
+    <section
+      className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]"
+      data-story-id={postData.id}
+    >
       <div>
         <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
           <HeroSection postData={postData} />
