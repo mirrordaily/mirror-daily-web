@@ -67,7 +67,8 @@ async function fetchStoryGQLData<
     return data
   } catch (error) {
     errorLogger(error)
-    return null
+    // If the primary story endpoint fails, fallback to the default endpoint.
+    return fetchGQLData(errorLogger, query, variables)
   }
 }
 
