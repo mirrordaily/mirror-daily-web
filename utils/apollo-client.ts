@@ -9,7 +9,7 @@ import { onError } from '@apollo/client/link/error'
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
 import { isServer } from '@/utils/common'
 
-import { API_ENDPOINT, API_STORY_GQL_ENDPOINT } from '@/constants/config'
+import { API_ENDPOINT } from '@/constants/config'
 import { createErrorLogger } from './log/common'
 
 // reference: https://www.apollographql.com/blog/how-to-use-apollo-client-with-next-js-13
@@ -19,7 +19,6 @@ import { createErrorLogger } from './log/common'
 // rather than reusing the same long-lived instance for multiple users’ data.
 
 let client: ApolloClient<NormalizedCacheObject> | null = null
-let storyClient: ApolloClient<NormalizedCacheObject> | null = null
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (isServer()) {
@@ -57,30 +56,4 @@ export const getClient = () => {
     })
   }
   return client
-}
-
-// Story-specific client using API_STORY_GQL_ENDPOINT
-export const getStoryClient = () => {
-  // create a new client if there's no existing one
-  // or if we are running on the server.
-  if (!storyClient || isServer()) {
-    const storyUploadLink = createUploadLink({
-      uri: API_STORY_GQL_ENDPOINT,
-      headers: {
-        'Apollo-Require-Preflight': 'true',
-      },
-    }) as unknown as ApolloLink
-
-    storyClient = new ApolloClient({
-      link: from([errorLink, storyUploadLink]),
-      cache: new InMemoryCache(),
-      defaultOptions: {
-        query: {
-          fetchPolicy: 'no-cache',
-          errorPolicy: 'all',
-        },
-      },
-    })
-  }
-  return storyClient
 }

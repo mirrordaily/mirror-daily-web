@@ -10,16 +10,15 @@ import type {
   LatestSportsNewsData,
 } from '@/types/homepage'
 import {
-  STATIC_JSON_EDITOR_CHOICE,
-  STATIC_JSON_HOT_NEWS,
-  STATIC_JSON_SPORTS_EVENTS,
-  STATIC_JSON_TOPIC,
-  STATIC_JSON_WEATHER,
-  STATIC_JSON_LATEST_SPORTS_NEWS,
+  URL_STATIC_EDITOR_CHOICE,
+  URL_STATIC_HOT_NEWS,
+  URL_STATIC_SPORTS_EVENTS,
+  URL_STATIC_TOPIC,
+  URL_STATIC_WEATHER,
+  URL_STATIC_LATEST_SPORTS_NEWS,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
-import { readStaticJson } from '@/utils/read-static-json'
 import type {
   GetLiveEventForHomepageQuery,
   ImageDataFragment,
@@ -128,24 +127,23 @@ export const fetchHotNews = async (): Promise<FlashNews[]> => {
     'Error occurs while fetching hot news',
     getTraceObject()
   )
+  const schema = z.promise(z.object({ hots: z.array(rawHotNewsSchema) }))
+
   const data = await createDataFetchingChain<
     z.infer<ZodArray<typeof rawHotNewsSchema>>
   >(
     errorLogger,
     [],
     async () => {
-      const jsonData = await readStaticJson(STATIC_JSON_HOT_NEWS)
-      const result = z
-        .object({ hots: z.array(rawHotNewsSchema) })
-        .parse(jsonData)
+      const resp = await fetch(URL_STATIC_HOT_NEWS)
+      const result = await schema.parse(resp.json())
       return result.hots
     },
     async () => {
-      const result = await fetchGQLData(errorLogger, GetFlashNewsDocument)
-      const parsedResult = z
-        .object({ hots: z.array(rawHotNewsSchema) })
-        .parse(result)
-      return parsedResult.hots
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetFlashNewsDocument)
+      )
+      return result.hots
     }
   )
   return transformRawHotNews(data)
@@ -208,28 +206,31 @@ const transformEditorChoices = (
 export const fetchEditorChoices = async (): Promise<
   ParameterOfComponent<typeof EditorChoiceMain>
 > => {
+  const param = String(Date.now()).slice(0, 8)
   const errorLogger = createErrorLogger(
     'Error occurs while fetching editor choices',
     getTraceObject()
   )
+  const schema = z.promise(
+    z.object({ editorChoices: z.array(editorChoiceSchenma) })
+  )
+
   const editorData = await createDataFetchingChain<
     z.infer<ZodArray<typeof editorChoiceSchenma>>
   >(
     errorLogger,
     [],
     async () => {
-      const jsonData = await readStaticJson(STATIC_JSON_EDITOR_CHOICE)
-      const result = z
-        .object({ editorChoices: z.array(editorChoiceSchenma) })
-        .parse(jsonData)
+      const resp = await fetch(`${URL_STATIC_EDITOR_CHOICE}?param=${param}`)
+
+      const result = await schema.parse(resp.json())
       return result.editorChoices
     },
     async () => {
-      const result = await fetchGQLData(errorLogger, GetEditorChoicesDocument)
-      const parsedResult = z
-        .object({ editorChoices: z.array(editorChoiceSchenma) })
-        .parse(result)
-      return parsedResult.editorChoices
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetEditorChoicesDocument)
+      )
+      return result.editorChoices
     }
   )
 
@@ -245,29 +246,27 @@ const transformTopics = (
 ): TopicBundle[] | null => {
   if (!rawData) return null
 
-  const convertedData = rawData
-    .map((topic, index) => {
-      const { name = '', slug = '', heroImage, posts } = topic
+  const convertedData = rawData.map((topic, index) => {
+    const { name = '', slug = '', heroImage, posts } = topic
 
-      // Use top-level heroImage if available.
-      let finalHeroImage = heroImage ? getHeroImage(heroImage) : null
+    // Use top-level heroImage if available.
+    let finalHeroImage = heroImage ? getHeroImage(heroImage) : null
 
-      // Otherwise find the first post with a valid heroImage.
-      if (!finalHeroImage && Array.isArray(posts)) {
-        const found = posts.find((p) => p?.heroImage)
-        if (found?.heroImage) {
-          finalHeroImage = getHeroImage(found.heroImage)
-        }
+    // Otherwise find the first post with a valid heroImage.
+    if (!finalHeroImage && Array.isArray(posts)) {
+      const found = posts.find((p) => p?.heroImage)
+      if (found?.heroImage) {
+        finalHeroImage = getHeroImage(found.heroImage)
       }
+    }
 
-      return {
-        id: `${index}-${name}`,
-        name,
-        link: getTopicPageUrl(slug),
-        heroImage: finalHeroImage,
-      }
-    })
-    .slice(0, 6) // ensure at most 6 elements
+    return {
+      id: `${index}-${name}`,
+      name,
+      link: getTopicPageUrl(slug),
+      heroImage: finalHeroImage,
+    }
+  })
 
   if (!convertedData.length) return null
   return convertedData
@@ -278,7 +277,7 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
     'Error occurs while fetching topics',
     getTraceObject()
   )
-  const topicApiResponseSchema = z.object({ topics: z.array(topicsSchema) })
+  const schema = z.promise(z.object({ topics: z.array(topicsSchema) }))
 
   const data = await createDataFetchingChain<
     z.infer<ZodArray<typeof topicsSchema>>
@@ -286,12 +285,16 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
     errorLogger,
     [],
     async () => {
-      const jsonData = await readStaticJson(STATIC_JSON_TOPIC)
-      return topicApiResponseSchema.parse(jsonData).topics
+      const resp = await fetch(URL_STATIC_TOPIC)
+
+      const result = await schema.parse(resp.json())
+      return result.topics
     },
     async () => {
-      const result = await fetchGQLData(errorLogger, GetTopicsDocument)
-      return topicApiResponseSchema.parse(result).topics
+      const result = await schema.parse(
+        fetchGQLData(errorLogger, GetTopicsDocument)
+      )
+      return result.topics
     }
   )
 
@@ -324,8 +327,8 @@ export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
   )
 
   try {
-    const jsonData = await readStaticJson(STATIC_JSON_WEATHER)
-    const rawWeatherData = cityWeatherSchema.parse(jsonData)
+    const resp = await fetch(URL_STATIC_WEATHER)
+    const rawWeatherData = await z.promise(cityWeatherSchema).parse(resp.json())
 
     return transformWeather(rawWeatherData)
   } catch (e) {
@@ -380,9 +383,10 @@ export const fetchSportsEvents = async (): Promise<
     'Error occurs while fetching sports events',
     getTraceObject()
   )
+  const schema = z.promise(sportsEventsApiResponseSchema)
   try {
-    const jsonData = await readStaticJson(STATIC_JSON_SPORTS_EVENTS)
-    const rawSportsEventsData = sportsEventsApiResponseSchema.parse(jsonData)
+    const resp = await fetch(URL_STATIC_SPORTS_EVENTS)
+    const rawSportsEventsData = await schema.parse(resp.json())
     return transformSportsEvents(rawSportsEventsData)
   } catch (e) {
     errorLogger(e)
@@ -476,13 +480,16 @@ export const fetchLatestSportsNews = async (): Promise<
     getTraceObject()
   )
   try {
-    const jsonData = await readStaticJson(STATIC_JSON_LATEST_SPORTS_NEWS)
-    const parseResult = latestSportsNewsSchema.safeParse(jsonData)
+    const resp = await fetch(URL_STATIC_LATEST_SPORTS_NEWS)
+    const json = await resp.json()
+
+    const parseResult = latestSportsNewsSchema.safeParse(json)
+
     if (!parseResult.success) {
       errorLogger(parseResult.error)
       return []
     }
-    const parsed = parseResult.data
+    const parsed = await parseResult.data
     return transformLatestSportsNews(parsed)
   } catch (e) {
     errorLogger(e)

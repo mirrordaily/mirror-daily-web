@@ -24,7 +24,7 @@ import {
 } from '@/utils/data-process'
 import type { PostDataWithTags, Topic } from '@/types/topic'
 import { getStoryPageUrl, getExternalPageUrl } from '@/utils/site-urls'
-import { STATIC_JSON_TOPIC_NEWS } from '@/constants/config'
+import { URL_STATIC_TOPIC_NEWS } from '@/constants/config'
 import {
   sectionPostSchema,
   countsSchema,
@@ -32,7 +32,6 @@ import {
 } from '@/utils/data-schema'
 import { z } from 'zod'
 import { PAGE_SIZE } from '@/constants/topic'
-import { readStaticJson } from '@/utils/read-static-json'
 
 async function fetchTopicBasicInfo(
   slug: string
@@ -80,9 +79,8 @@ async function fetchListTypeTopicPostBySlug({
       postsCount: 0,
     },
     async () => {
-      const rawData = await readStaticJson<{ topic?: unknown }>(
-        `${STATIC_JSON_TOPIC_NEWS}_${slug}_${page}.json`
-      )
+      const resp = await fetch(`${URL_STATIC_TOPIC_NEWS}_${slug}_${page}.json`)
+      const rawData = await resp.json()
 
       const schema = z.object({
         items: z.array(sectionPostSchema),
@@ -200,9 +198,11 @@ async function fetchGorupTypeTopicPostBySlug(
     errorLogger,
     [],
     async () => {
-      const firstPageData = await readStaticJson<{ topic?: unknown }>(
-        `${STATIC_JSON_TOPIC_NEWS}_${slug}_1.json`
+      const firstPageResp = await fetch(
+        `${URL_STATIC_TOPIC_NEWS}_${slug}_1.json`
       )
+
+      const firstPageData = await firstPageResp.json()
 
       const schema = z.object({
         items: z.array(topicPostSchema),
@@ -223,10 +223,11 @@ async function fetchGorupTypeTopicPostBySlug(
       allPosts.push(...firstPagePosts)
 
       for (let page = 2; page <= totalPages; page++) {
-        const rawData = await readStaticJson<{ topic?: unknown }>(
-          `${STATIC_JSON_TOPIC_NEWS}_${slug}_${page}.json`
+        const resp = await fetch(
+          `${URL_STATIC_TOPIC_NEWS}_${slug}_${page}.json`
         )
 
+        const rawData = await resp.json()
         const result = schema.parse(rawData?.topic)
 
         const pagePosts = result.items.map(transformRawPostWithTags)
