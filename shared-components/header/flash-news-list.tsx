@@ -1,7 +1,7 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { SECOND } from '@/constants/time-unit'
 import type { FlashNews } from '@/types/homepage'
+import useCarouselIndex from '@/hooks/use-carousel-index'
 
 const DISPLAY_TIMING = SECOND * 3
 
@@ -11,19 +11,7 @@ type Props = {
 
 export default function FlashNewsList({ items }: Props) {
   const amountOfItems = items.length
-
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    const task = setInterval(
-      () => setCurrentIndex((i) => (i + 1) % amountOfItems),
-      DISPLAY_TIMING
-    )
-
-    return () => {
-      clearInterval(task)
-    }
-  }, [amountOfItems])
+  const currentIndex = useCarouselIndex(amountOfItems, DISPLAY_TIMING)
 
   const baseStyles =
     'absolute left-0 top-0 h-full line-clamp-3 [transition:transform_0.7s,opacity_0.25s_0.25s] md:line-clamp-1'

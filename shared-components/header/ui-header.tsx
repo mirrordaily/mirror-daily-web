@@ -15,6 +15,7 @@ import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
 import type { FlashNews } from '@/types/homepage'
 import { headerGtmEvents } from '@/constants/gtm'
+import ImagesAd from './images-ad'
 
 const ExtendedSocialLinks = [
   {
@@ -105,7 +106,7 @@ export default function UiHeader({
       </div>
       <hr className="h-px w-full bg-[#ccced4] md:hidden" />
       <div className="flex w-full max-w-screen-sm grow pb-[3px] pl-[17px] pr-[23px] pt-4 md:max-w-screen-md md:pb-[9px] md:pl-5 md:pr-6 md:pt-2 lg:max-w-screen-lg lg:flex-col lg:px-9 lg:pb-[17px] lg:pt-[13px]">
-        <div className="flex">
+        <div className="flex items-center">
           <div className="hidden gap-x-4 overflow-hidden text-[22px] font-medium leading-[26px] text-[#2B2B2B] lg:flex lg:grow">
             {data
               .filter((item) => !isSectionItem(item))
@@ -120,6 +121,9 @@ export default function UiHeader({
                   </a>
                 )
               })}
+          </div>
+          <div className="hidden lg:mr-[7px] lg:block">
+            <ImagesAd />
           </div>
           <div className="hidden lg:flex lg:shrink-0 lg:grow-0 lg:gap-x-2">
             {ExtendedSocialLinks.map(({ name, href, icon }) => {

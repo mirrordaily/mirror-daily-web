@@ -16,6 +16,7 @@ import IconChevronRight from '@/public/icons/chevron-right.svg'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { isSectionItem } from '@/utils/common'
 import { headerGtmEvents } from '@/constants/gtm'
+import ImagesAd from './images-ad'
 
 const ExtendedSocialLinks = [
   {
@@ -99,7 +100,7 @@ export default function MobileToggleAndNav({ data }: Props) {
                 height={20}
               />
             </button>
-            <div className="mb-4 mt-[34px] flex w-full max-w-[calc(375px-46px*2)] flex-wrap gap-x-6 gap-y-4 self-center text-xl font-medium leading-[24px] text-[#E5E6E9]">
+            <div className="mb-3 mt-[34px] flex w-full max-w-[calc(375px-46px*2)] flex-wrap gap-x-6 gap-y-4 self-center text-xl font-medium leading-[24px] text-[#E5E6E9]">
               {data
                 .filter((item) => !isSectionItem(item))
                 .map((item) => {
@@ -120,6 +121,9 @@ export default function MobileToggleAndNav({ data }: Props) {
                 看所有專題
                 <NextImage src={IconChevronRight} alt="右鍵" />
               </a>
+            </div>
+            <div className="mb-6 w-full max-w-[calc(375px-46px*2)] grow self-center">
+              <ImagesAd />
             </div>
             <MobileNavList data={data} />
             <div className="mt-5 flex shrink-0 items-center gap-x-4 self-center">
