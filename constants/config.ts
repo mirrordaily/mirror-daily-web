@@ -42,8 +42,7 @@ const RECAPTCHA_API_KEY = 'AIzaSyCCEuV8oEN0SZsU0Fg7E6e2gx-fdTCQLAQ'
 const RECAPTCHA_SCORE = 0.7
 /** section shorts must use specific key for navigation purpose */
 const FIXED_KEY_FOR_SECTION_SHORTS = 'shorts'
-const STATIC_CACHE_TIMESTAMP = Math.floor(Date.now() / 100)
-const TIMESTAMP_FOR_CACHE = '?t=' + STATIC_CACHE_TIMESTAMP
+const TIMESTAMP_FOR_CACHE = '?t=' + Date.now() / 100
 
 switch (ENV) {
   case ENVIRONMENT.PRODUCTION:
@@ -74,40 +73,26 @@ switch (ENV) {
     GTM_ID = 'GTM-MG9V2TJC'
     break
 }
-
-/**
- * Static JSON file paths (relative to /json root)
- * These are used with readStaticJson() utility which handles fs/fetch automatically
- */
-const STATIC_JSON_POPULAR_NEWS = 'popular.json'
-const URL_STATIC_POPULAR_NEWS = `${JSON_FILE_PATH}/${STATIC_JSON_POPULAR_NEWS}${TIMESTAMP_FOR_CACHE}`
-const STATIC_JSON_LATEST_NEWS = 'latest_posts'
-const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/${STATIC_JSON_LATEST_NEWS}`
-const STATIC_JSON_HEADER = 'header.json'
-const STATIC_JSON_HOT_NEWS = 'flash-news.json'
-const STATIC_JSON_EDITOR_CHOICE = 'editor-choice.json'
-const URL_STATIC_EDITOR_CHOICE = `${JSON_FILE_PATH}/${STATIC_JSON_EDITOR_CHOICE}${TIMESTAMP_FOR_CACHE}`
-const STATIC_JSON_TOPIC = 'topics.json'
-const STATIC_JSON_LATEST_SHORTS = 'latest-shorts-hp.json'
-const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/${STATIC_JSON_LATEST_SHORTS}${TIMESTAMP_FOR_CACHE}`
-const STATIC_JSON_LATEST_VIDEOS = 'youtube/UCeN_H2EG1U6StWZhlBEWjjg_latest.json'
-const STATIC_JSON_WEATHER = 'weather.json'
-const STATIC_JSON_LATEST_SPORTS_NEWS =
-  'latest/latest_content_section_sport_1.json'
-const STATIC_JSON_SPORTS_EVENTS = 'sports_schedule.json'
-const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/${STATIC_JSON_SPORTS_EVENTS}${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_POPULAR_NEWS = `${JSON_FILE_PATH}/popular.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_LATEST_NEWS = `${JSON_FILE_PATH}/latest_posts`
+const URL_STATIC_HEADER = `${JSON_FILE_PATH}/header.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_HOT_NEWS = `${JSON_FILE_PATH}/flash-news.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_EDITOR_CHOICE = `${JSON_FILE_PATH}/editor-choice.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_TOPIC = `${JSON_FILE_PATH}/topics.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_LATEST_SHORTS = `${JSON_FILE_PATH}/latest-shorts-hp.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_LATEST_VIDEOS = `${JSON_FILE_PATH}/youtube/UCeN_H2EG1U6StWZhlBEWjjg_latest.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_WEATHER = `${JSON_FILE_PATH}/weather.json${TIMESTAMP_FOR_CACHE}`
+const URL_STATIC_LATEST_SPORTS_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section_sport_1.json`
+const URL_STATIC_SPORTS_EVENTS = `${JSON_FILE_PATH}/sports_schedule.json${TIMESTAMP_FOR_CACHE}`
 // shorts listing page
-const STATIC_JSON_NEWS_SHORTSPAGE = 'shortpage_news'
-const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/${STATIC_JSON_NEWS_SHORTSPAGE}`
-const STATIC_JSON_CREATIVITY_SHORTPAGE = 'shortpage_creativity'
-const URL_STATIC_CREATIVITY_SHORTPAGE = `${JSON_FILE_PATH}/${STATIC_JSON_CREATIVITY_SHORTPAGE}`
+const URL_STATIC_NEWS_SHORTSPAGE = `${JSON_FILE_PATH}/shortpage_news`
+const URL_STATIC_CREATIVTY_SHORTPAGE = `${JSON_FILE_PATH}/shortpage_creativity`
 // section page
-const STATIC_JSON_SECTION_NEWS = 'latest/latest_content_section'
+const URL_STATIC_SECTION_NEWS = `${JSON_FILE_PATH}/latest/latest_content_section`
 // category page
-const STATIC_JSON_CATEGORY_NEWS = 'latest/latest_content_category'
+const URL_STATIC_CATEGORY_NEWS = `${JSON_FILE_PATH}/latest/latest_content_category`
 // topic page
-const STATIC_JSON_TOPIC_NEWS = 'latest/latest_content_topic'
-
+const URL_STATIC_TOPIC_NEWS = `${JSON_FILE_PATH}/latest/latest_content_topic`
 const CPBL_SITE_URL = 'https://www.cpbl.com.tw'
 const TPBL_SITE_URL = 'https://tpbl.basketball'
 
@@ -115,16 +100,10 @@ const VIDEO_AD_BASE_URL = 'https://googleads.g.doubleclick.net/pagead/ads'
 const VIDEO_AD_CLIENT_ID = 'ca-video-pub-4968145218643279'
 
 const API_ENDPOINT = process.env.API_ENDPOINT ?? ''
+
 if (!API_ENDPOINT) {
   console.warn(
     '[config] API_ENDPOINT is empty. This may break GraphQL Codegen or API requests.'
-  )
-}
-
-const API_STORY_GQL_ENDPOINT = process.env.STORY_GQL_ENDPOINT ?? ''
-if (!API_STORY_GQL_ENDPOINT) {
-  console.warn(
-    '[config] API_STORY_GQL_ENDPOINT is empty. This may break GraphQL Codegen or API requests.'
   )
 }
 
@@ -137,31 +116,22 @@ export {
   CPBL_SITE_URL,
   TPBL_SITE_URL,
   API_ENDPOINT,
-  API_STORY_GQL_ENDPOINT,
-  STATIC_FILE_DOMAIN,
-  STATIC_JSON_POPULAR_NEWS,
   URL_STATIC_POPULAR_NEWS,
-  STATIC_JSON_LATEST_NEWS,
   URL_STATIC_LATEST_NEWS,
-  STATIC_JSON_HEADER,
-  STATIC_JSON_HOT_NEWS,
-  STATIC_JSON_EDITOR_CHOICE,
+  URL_STATIC_HEADER,
+  URL_STATIC_HOT_NEWS,
   URL_STATIC_EDITOR_CHOICE,
-  STATIC_JSON_TOPIC,
-  STATIC_JSON_LATEST_SHORTS,
+  URL_STATIC_TOPIC,
   URL_STATIC_LATEST_SHORTS,
-  STATIC_JSON_LATEST_VIDEOS,
-  STATIC_JSON_WEATHER,
-  STATIC_JSON_NEWS_SHORTSPAGE,
-  STATIC_JSON_CREATIVITY_SHORTPAGE,
+  URL_STATIC_LATEST_VIDEOS,
+  URL_STATIC_WEATHER,
   URL_STATIC_NEWS_SHORTSPAGE,
-  URL_STATIC_CREATIVITY_SHORTPAGE,
-  STATIC_JSON_SPORTS_EVENTS,
+  URL_STATIC_CREATIVTY_SHORTPAGE,
   URL_STATIC_SPORTS_EVENTS,
-  STATIC_JSON_LATEST_SPORTS_NEWS,
-  STATIC_JSON_SECTION_NEWS,
-  STATIC_JSON_CATEGORY_NEWS,
-  STATIC_JSON_TOPIC_NEWS,
+  URL_STATIC_LATEST_SPORTS_NEWS,
+  URL_STATIC_SECTION_NEWS,
+  URL_STATIC_CATEGORY_NEWS,
+  URL_STATIC_TOPIC_NEWS,
   GCP_PROJECT_ID,
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_API_KEY,
@@ -175,5 +145,4 @@ export {
   MAILCHIMP_API_KEY,
   MAILCHIMP_SERVER_PREFIX,
   MAILCHIMP_LIST_ID,
-  STATIC_CACHE_TIMESTAMP,
 }
