@@ -21,7 +21,7 @@ export default function ImagesAd() {
       href="https://mnews.oen.tw/"
       target="_blank"
       rel="noopener noreferrer"
-      className="relative inline-block h-[60px] w-[200px] lg:my-0 lg:h-8 lg:w-[107px]"
+      className="relative block h-[60px] w-[200px] lg:my-0 lg:h-8 lg:w-[107px]"
     >
       {images.map((item, index) => (
         <div
