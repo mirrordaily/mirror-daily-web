@@ -11,7 +11,7 @@ type Props = { externalPost: ExternalPost }
 export default function ArticleIntro({ externalPost }: Props) {
   return (
     <section className="flex max-w-screen-sm flex-col items-center md:w-[600px] md:max-w-none lg:w-[720px]">
-      <figure className="order-1 mb-6 w-full md:mb-2 lg:order-2 lg:mb-4">
+      <figure className="order-2 mb-6 w-full md:order-1 md:mb-2 lg:order-3 lg:mb-4">
         <div className="relative aspect-[3/2] w-full">
           <Image
             src={externalPost.thumb || IMAGE_PATH}
@@ -25,7 +25,8 @@ export default function ArticleIntro({ externalPost }: Props) {
           {externalPost.thumbCaption}
         </figcaption>
       </figure>
-      <div className="order-2 w-full px-5 md:px-0 lg:order-1">
+
+      <div className="order-1 mb-6 w-full px-5 md:order-2 md:mb-3 md:px-0 lg:order-1 lg:mb-4">
         {externalPost.sections.length > 0 ? (
           <ul className="mb-1 flex text-sm/normal lg:mb-4 lg:font-bold lg:leading-none">
             {externalPost.sections.map((section) => (
@@ -47,13 +48,16 @@ export default function ArticleIntro({ externalPost }: Props) {
             className="mb-1 text-sm/normal lg:mb-4 lg:font-bold lg:leading-none"
           >{`｜${DEFAULT_SECTION_NAME}`}</div>
         )}
-        <h1 className="mb-3 text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
+        <h1 className="text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
           {externalPost.title}
         </h1>
         <div className="fixed bottom-[135px] right-3 z-story-share-bar md:hidden">
           <SocialShareBar title={externalPost.title} direction="vertical" />
         </div>
-        <div className="relative mb-3 h-7 w-[58px] lg:mb-4 lg:h-[42px] lg:w-[88px]">
+      </div>
+
+      <div className="order-3 mb-4 w-full md:mb-6 lg:order-2 lg:mb-4">
+        <div className="relative h-7 w-[58px] lg:h-[42px] lg:w-[88px]">
           <Image src={IconMirrorDaily} fill alt="mirror-daily-logo" />
         </div>
         <div className="mb-4 flex flex-col gap-y-1 text-[13px] font-normal leading-normal text-[#7F8493] md:mb-3 lg:mb-4">
@@ -65,7 +69,7 @@ export default function ArticleIntro({ externalPost }: Props) {
           )}
         </div>
         {externalPost.tags.length > 0 && (
-          <div className="mb-4 flex flex-wrap gap-x-2 gap-y-4 md:mb-6 md:grid-cols-6 md:gap-x-3 lg:mb-4">
+          <div className="flex flex-wrap gap-x-2 gap-y-4 md:grid-cols-6 md:gap-x-3">
             {externalPost.tags.map((tag) => (
               <Link
                 prefetch={false}

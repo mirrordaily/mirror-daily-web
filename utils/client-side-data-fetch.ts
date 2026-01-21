@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import {
-  URL_STATIC_CREATIVITY_SHORTPAGE,
+  URL_STATIC_CREATIVTY_SHORTPAGE,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_NEWS_SHORTSPAGE,
   URL_STATIC_POPULAR_NEWS,
@@ -84,7 +84,7 @@ const fetchShortsForShortpage = async (
     const baseUrl =
       type === SHORTS_TYPE.NEWS
         ? URL_STATIC_NEWS_SHORTSPAGE
-        : URL_STATIC_CREATIVITY_SHORTPAGE
+        : URL_STATIC_CREATIVTY_SHORTPAGE
     const jsonUrl = `${baseUrl}0${page}.json`
     const resp = await fetch(jsonUrl)
 

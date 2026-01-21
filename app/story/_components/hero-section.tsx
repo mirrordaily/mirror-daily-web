@@ -38,8 +38,8 @@ export default function HeroSection({ postData }: Props) {
   const displayTags = [...postData.tags, ...postData.algoTags]
 
   return (
-    <section className="mb-4 flex max-w-screen-sm flex-col items-center md:mb-6 md:w-[600px] md:max-w-none lg:mb-4 lg:w-[720px] lg:items-start">
-      <figure className="order-1 mb-6 flex w-full flex-col lg:order-2 lg:mb-0">
+    <section className="flex max-w-screen-sm flex-col items-center md:w-[600px] md:max-w-none lg:w-[720px] lg:items-start">
+      <figure className="order-2 mb-6 flex w-full flex-col md:order-1 md:mb-2 lg:order-3 lg:mb-4">
         <div className="relative aspect-[375/250] w-full overflow-hidden md:aspect-auto md:h-[400px] lg:h-[480px]">
           <CustomImage
             images={postData.postMainImage.resized}
@@ -47,12 +47,14 @@ export default function HeroSection({ postData }: Props) {
             alt={postData.title}
           />
         </div>
-        <figcaption className="mt-2 flex justify-center px-5 text-[13px] font-normal leading-normal text-[#7F8493] md:px-0 lg:mt-4">
-          {postData.heroCaption}
-        </figcaption>
+        {postData.heroCaption && (
+          <figcaption className="mt-2 flex justify-center px-5 text-[13px] font-normal leading-normal text-[#7F8493] md:px-0 lg:mt-4">
+            {postData.heroCaption}
+          </figcaption>
+        )}
       </figure>
 
-      <div className="order-2 w-full px-5 md:px-0 lg:order-1">
+      <div className="order-1 mb-6 w-full px-5 md:order-2 md:mb-3 md:px-0 lg:order-1 lg:mb-4">
         {postData.sections.length > 0 ? (
           <ul className="mb-1 flex text-sm/normal lg:mb-4 lg:font-bold lg:leading-none">
             {postData.sections.map((section) => (
@@ -74,12 +76,14 @@ export default function HeroSection({ postData }: Props) {
             className="mb-1 text-sm/normal lg:mb-4 lg:font-bold lg:leading-none"
           >{`｜${DEFAULT_SECTION_NAME}`}</p>
         )}
-        <h1 className="mb-3 break-all text-[32px] font-normal leading-[45px] text-[#212944] md:mb-1 lg:mb-4">
+        <h1 className="break-all text-[32px] font-normal leading-[45px] text-[#212944]">
           {postData.title}
         </h1>
-        <h2 className="mb-3 text-xl font-bold leading-[1.4] text-[#212944] lg:mb-4">
-          {postData.subtitle}
-        </h2>
+        {postData.subtitle && (
+          <h2 className="mt-3 text-xl font-bold leading-[1.4] text-[#212944]">
+            {postData.subtitle}
+          </h2>
+        )}
 
         <div className="fixed bottom-[135px] right-3 z-story-share-bar md:hidden">
           <SocialShareBar
@@ -88,7 +92,9 @@ export default function HeroSection({ postData }: Props) {
             direction="vertical"
           />
         </div>
+      </div>
 
+      <div className="order-3 mb-4 w-full px-5 md:mb-6 md:px-0 lg:order-2 lg:mb-4">
         <div className="relative mb-3 h-7 w-[58px] lg:mb-4 lg:h-[42px] lg:w-[88px]">
           <NextImage src={IconMirrorDaily} fill alt="mirror-daily-logo" />
         </div>
