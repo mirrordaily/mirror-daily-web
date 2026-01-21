@@ -12,8 +12,7 @@ import LatestNewsSection from './latest-news-section'
 import SocialSharePanel from '@/shared-components/social-share-panel'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import { SECTION_FORUM_SLUG } from '@/constants/misc'
-import BottomAd from '@/shared-components/bottom-ad'
-import RelatedAd from '@/shared-components/related-ad'
+import DableWidget from '@/shared-components/dable-widget'
 
 type Props = {
   postData: Post
@@ -39,7 +38,10 @@ export default async function ArticleSection({ postData, id }: Props) {
   }
 
   return (
-    <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
+    <section
+      className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]"
+      data-story-id={postData.id}
+    >
       <div>
         <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">
           <HeroSection postData={postData} />
@@ -91,8 +93,7 @@ export default async function ArticleSection({ postData, id }: Props) {
           </div>
 
           <RelatedNewsSection posts={relatedPosts} />
-          <RelatedAd />
-          <BottomAd />
+          <DableWidget type="related" customClasses="mt-4" />
         </div>
       </div>
 

@@ -5,8 +5,12 @@ import { fetchGQLData } from '@/utils/graphql'
 import {
   GetPostByIdDocument,
   GetRelatedPostsByIdDocument,
+  GetPostsBySameSectionDocument,
 } from '@/graphql/__generated__/graphql'
-import type { GetPostByIdQuery } from '@/graphql/__generated__/graphql'
+import type {
+  GetPostByIdQuery,
+  PostDetailFragment,
+} from '@/graphql/__generated__/graphql'
 import {
   dateFormatter,
   getHeroImage,
@@ -17,7 +21,9 @@ import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
 
-function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
+function transformPost(
+  rawData: GetPostByIdQuery['post'] | PostDetailFragment
+): Post | null {
   if (!rawData) return null
 
   const heroImage = getHeroImage(rawData.heroImage)
@@ -90,6 +96,7 @@ function transformPost(rawData: GetPostByIdQuery['post']): Post | null {
     title: rawData.title ?? '',
     subtitle: rawData.subtitle ?? '',
     heroCaption: rawData.heroCaption ?? '',
+    publishedDateRaw: rawData.publishedDate ?? '',
     publishedTime: dateFormatter(rawData.publishedDate) ?? '',
     postMainImage,
     sections,
@@ -126,6 +133,32 @@ async function fetchPost(id: string) {
   }
 }
 
+async function fetchNextPostBySameSectionAction(
+  id: string,
+  slug: string,
+  publishedDate: string
+): Promise<Post | null> {
+  const errorLogger = createErrorLogger(
+    `Error occurs while fetching next post by same section with id: ${id}, slug: ${slug} and published date: ${publishedDate} on story page`,
+    getTraceObject()
+  )
+
+  const result = await fetchGQLData(
+    errorLogger,
+    GetPostsBySameSectionDocument,
+    {
+      take: 1,
+      slug,
+      publishedDate,
+    }
+  )
+
+  const rawPost = result?.posts?.[0]
+  if (!rawPost) return null
+
+  return transformPost(rawPost)
+}
+
 async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching related posts using post id ${id} on story page`,
@@ -142,4 +175,4 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   } else return []
 }
 
-export { fetchPost, fetchRelatedPosts }
+export { fetchPost, fetchRelatedPosts, fetchNextPostBySameSectionAction }
