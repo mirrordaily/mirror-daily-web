@@ -8,9 +8,9 @@ import { fetchNextPostBySameSectionAction } from '../actions'
 import { PopInRecommendWord, DableArticleBottomPC, PopInRecommend } from './ads'
 
 const articleAds = [
+  <PopInRecommend key="popin-recommend" />,
   <PopInRecommendWord key="popin-word" />,
   <DableArticleBottomPC key="dable-bottom" />,
-  <PopInRecommend key="popin-recommend" />,
 ]
 
 export default function StoryInfiniteArticles({
