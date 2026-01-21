@@ -5,6 +5,13 @@ import type { Post } from '@/types/story'
 import { StoryScrollSpy } from './story-scroll-spy'
 import ArticleSectionClient from './story-infinite-article-section-client'
 import { fetchNextPostBySameSectionAction } from '../actions'
+import { PopInRecommendWord, DableArticleBottomPC, PopInRecommend } from './ads'
+
+const articleAds = [
+  <PopInRecommendWord key="popin-word" />,
+  <DableArticleBottomPC key="dable-bottom" />,
+  <PopInRecommend key="popin-recommend" />,
+]
 
 export default function StoryInfiniteArticles({
   initialPost,
@@ -97,9 +104,17 @@ export default function StoryInfiniteArticles({
       {/* sentinel：滑到底時觸發下一篇 */}
       <div ref={sentinelRef} className="h-px w-full" />
 
-      {posts.map((post) => (
-        <ArticleSectionClient postData={post} key={post.id} />
-      ))}
+      {posts.map((post, index) => {
+        const AdComponent = articleAds[index]
+
+        return (
+          <ArticleSectionClient
+            postData={post}
+            key={post.id}
+            AdComponent={AdComponent}
+          />
+        )
+      })}
     </>
   )
 }

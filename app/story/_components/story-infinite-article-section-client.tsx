@@ -5,7 +5,12 @@ import HeroSection from './hero-section'
 import Article from './article'
 import SocialSharePanel from '@/shared-components/social-share-panel'
 
-export default function ArticleSectionClient({ postData }: { postData: Post }) {
+type Props = {
+  postData: Post
+  AdComponent: JSX.Element | undefined
+}
+
+export default function ArticleSectionClient({ postData, AdComponent }: Props) {
   return (
     <section
       className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]"
@@ -45,6 +50,8 @@ export default function ArticleSectionClient({ postData }: { postData: Post }) {
           <div className="hidden md:block">
             <SocialSharePanel link={postData.link} title={postData.title} />
           </div>
+
+          {AdComponent}
         </div>
       </div>
 
