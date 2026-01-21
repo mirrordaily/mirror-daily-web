@@ -20,8 +20,7 @@ export default function StoryInfiniteArticles({
   initialPost: Post
   maxFetch?: number
 }) {
-  const slug =
-    initialPost.sections?.[1]?.slug || initialPost.sections?.[0]?.slug
+  const slug = initialPost.sections[1]?.slug || initialPost.sections[0]?.slug
   const [cursorPublishedDate, setCursorPublishedDate] = useState(
     initialPost.publishedDateRaw
   )
