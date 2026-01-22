@@ -33,7 +33,7 @@ export default async function Home() {
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
           <TopAdSection />
-          <FullScreenAd shouldShowAd={true} slotKey="homepage_mw" />
+          <FullScreenAd slotKey="homepage_mw" />
           <SectionDivider customClasses="hidden md:block lg:hidden" />
           {/* 編輯精選 */}
           <Suspense
