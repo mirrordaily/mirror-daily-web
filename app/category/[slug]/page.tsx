@@ -16,6 +16,7 @@ import { categoryGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
+import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
 type PageProps = { params: { slug: string } }
 
@@ -146,6 +147,7 @@ export default async function Page({ params }: PageProps) {
       <ListPageTopAd slug={slug} />
 
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
+        <FullScreenAd slotKey="section_mw" />
         <ArticlesList
           initialPosts={initialPosts}
           color={color}
