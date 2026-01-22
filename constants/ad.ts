@@ -355,6 +355,23 @@ export const stickyAdUnitMap = {
   article_mw: '/23304347674/mirrordaily_mweb//article//sticky',
 } as const
 
+export const fullScreenAdMap = {
+  homepage_mw: {
+    adUnitPath: '/23304347674/mirrordaily_pc//homepage//incover',
+    divId: 'div-gpt-ad-1768185177391-0',
+  },
+  section_mw: {
+    adUnitPath: '/23304347674/mirrordaily_mweb//section//incover',
+    divId: 'div-gpt-ad-1768185216440-0',
+  },
+  article_mw: {
+    adUnitPath: '/23304347674/mirrordaily_mweb//article//incover',
+    divId: 'div-gpt-ad-1768185245703-0',
+  },
+} as const
+
+export type FullScreenAdUnit = keyof typeof fullScreenAdMap
+
 export type StickyAdUnit = keyof typeof stickyAdUnitMap
 
 export type DableWidgetType =

@@ -17,6 +17,7 @@ import { getCategoryPageUrl } from '@/utils/site-urls'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import StoryInfiniteArticles from '../_components/story-infinite-articles'
+import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -188,6 +189,7 @@ export default async function Page({ params }: PageProps) {
       </Suspense>
       <main className="flex flex-col items-center">
         {shouldShowAd && <ArticlePageTopAd />}
+        <FullScreenAd slotKey="article_mw" />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <ArticleSection postData={postData} id={id} />
