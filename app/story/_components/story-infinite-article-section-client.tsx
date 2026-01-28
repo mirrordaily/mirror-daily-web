@@ -13,7 +13,7 @@ type Props = {
 export default function ArticleSectionClient({ postData, AdComponent }: Props) {
   return (
     <section
-      className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]"
+      className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px]"
       data-story-id={postData.id}
     >
       <div>
@@ -54,9 +54,6 @@ export default function ArticleSectionClient({ postData, AdComponent }: Props) {
           {AdComponent}
         </div>
       </div>
-
-      {/* 右側保留 sidebar 的寬度，讓主欄位在桌機上跟第一篇一樣偏左 */}
-      <div className="hidden lg:block lg:min-w-[300px]" />
     </section>
   )
 }

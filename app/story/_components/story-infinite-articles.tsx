@@ -5,12 +5,13 @@ import type { Post } from '@/types/story'
 import { StoryScrollSpy } from './story-scroll-spy'
 import ArticleSectionClient from './story-infinite-article-section-client'
 import { fetchNextPostBySameSectionAction } from '../actions'
-import { PopInRecommendWord, DableArticleBottomPC, PopInRecommend } from './ads'
+import { DableWordSecond, PopInRecommendWord } from './ads'
+import BottomAd from '@/shared-components/bottom-ad'
 
 const articleAds = [
-  <PopInRecommend key="popin-recommend" />,
   <PopInRecommendWord key="popin-word" />,
-  <DableArticleBottomPC key="dable-bottom" />,
+  <DableWordSecond key="dable-word-second" />,
+  <BottomAd key="bottom-ad" />,
 ]
 
 export default function StoryInfiniteArticles({
