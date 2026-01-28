@@ -17,6 +17,7 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
+import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,7 +33,7 @@ export default async function Home() {
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
           <TopAdSection />
-
+          <FullScreenAd slotKey="homepage_mw" />
           <SectionDivider customClasses="hidden md:block lg:hidden" />
           {/* 編輯精選 */}
           <Suspense

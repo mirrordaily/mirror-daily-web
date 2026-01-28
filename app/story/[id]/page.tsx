@@ -19,6 +19,7 @@ import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import StoryInfiniteArticles from '../_components/story-infinite-articles'
 import { fetchLatestPost, fetchPopularPost } from '@/app/actions-general'
 import StorySidebar from '../_components/story-sidebar'
+import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -193,6 +194,7 @@ export default async function Page({ params }: PageProps) {
       </Suspense>
       <main className="flex flex-col items-center">
         {shouldShowAd && <ArticlePageTopAd />}
+        <FullScreenAd slotKey="article_mw" />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <div className="w-full lg:flex lg:items-start lg:justify-center lg:gap-x-[104px]">
