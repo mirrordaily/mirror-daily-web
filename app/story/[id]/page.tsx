@@ -17,6 +17,8 @@ import { getCategoryPageUrl } from '@/utils/site-urls'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
 import StoryInfiniteArticles from '../_components/story-infinite-articles'
+import { fetchLatestPost, fetchPopularPost } from '@/app/actions-general'
+import StorySidebar from '../_components/story-sidebar'
 
 type PageProps = { params: { id: string } }
 
@@ -92,6 +94,9 @@ export default async function Page({ params }: PageProps) {
   if (!postData) notFound()
 
   const shouldShowAd = postData.shouldShowAd
+  const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const popularPosts = await fetchPopularPost(20)
+  const popularPostsTopSix = popularPosts.slice(0, 6)
 
   const extra = {
     storyId: postData.id,
@@ -190,8 +195,25 @@ export default async function Page({ params }: PageProps) {
         {shouldShowAd && <ArticlePageTopAd />}
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
-        <ArticleSection postData={postData} id={id} />
-        <StoryInfiniteArticles initialPost={postData} maxFetch={3} />
+        <div className="w-full lg:flex lg:items-start lg:justify-center lg:gap-x-[104px]">
+          <div className="flex w-full flex-col items-center">
+            <ArticleSection
+              postData={postData}
+              id={id}
+              latestPosts={latestPosts}
+              popularPosts={popularPosts}
+            />
+            <StoryInfiniteArticles initialPost={postData} maxFetch={3} />
+          </div>
+          <aside className="hidden lg:block">
+            <StorySidebar
+              latestPosts={latestPosts}
+              popularPosts={popularPostsTopSix}
+              shouldShowAd={shouldShowAd}
+              className="mb-[92px]"
+            />
+          </aside>
+        </div>
         <AdultWarning isAdult={postData.isAdult} />
         <NonDesktopGptAd mode="sticky" pageType="article_mw" />
         <DesktopGptAd mode="sticky" pageType="article_pc" />
