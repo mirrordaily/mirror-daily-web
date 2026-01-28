@@ -30,7 +30,12 @@ export function StoryScrollSpy({ articles }: { articles: Article[] }) {
           if (activeIdRef.current !== ssrFirstId) {
             activeIdRef.current = ssrFirstId
             if (window.location.pathname !== `/story/${ssrFirstId}`) {
-              window.history.replaceState({}, '', `/story/${ssrFirstId}`)
+              window.history.replaceState(
+                //for GTM tracking
+                { articleId: ssrFirstId },
+                '',
+                `/story/${ssrFirstId}`
+              )
               const title = titleById.get(ssrFirstId)
               if (title) document.title = `${title} - ${SITE_NAME}`
             }
@@ -50,7 +55,12 @@ export function StoryScrollSpy({ articles }: { articles: Article[] }) {
         activeIdRef.current = a.id
 
         if (window.location.pathname !== `/story/${a.id}`) {
-          window.history.replaceState({}, '', `/story/${a.id}`)
+          window.history.replaceState(
+            //for GTM tracking
+            { articleId: a.id },
+            '',
+            `/story/${a.id}`
+          )
           const title = titleById.get(a.id)
           if (title) document.title = `${title} - ${SITE_NAME}`
         }
