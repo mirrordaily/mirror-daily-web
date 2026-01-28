@@ -358,7 +358,8 @@ export const stickyAdUnitMap = {
 export type StickyAdUnit = keyof typeof stickyAdUnitMap
 
 export type DableWidgetType =
-  | 'related' // 你可能也想看 (PC/Mobile)
+  | 'relatedFirst' // 你可能也想看 (PC/Mobile)
+  | 'relatedSecond' // 你可能也想看 (PC/Mobile)
   | 'articleBottomPC' // 其他人都在看 (PC only)
 
 export type DableCommand =
@@ -375,39 +376,23 @@ export type DableWidgetConfig = {
   device: 'pc' | 'mobile' | 'both'
 }
 
-export const DABLE_PROD_WIDGET_CONFIG: Record<
-  DableWidgetType,
-  DableWidgetConfig
-> = {
+export const DABLE_WIDGET_CONFIG: Record<DableWidgetType, DableWidgetConfig> = {
   // 你可能會喜歡
-  related: {
+  relatedFirst: {
     widgetId: '3703Za2o_1XDgJMMl',
     pcWidgetId: '3703Za2o',
     moWidgetId: '1XDgJMMl',
+    renderType: 'renderWidgetByWidth',
+    device: 'both',
+  },
+  relatedSecond: {
+    widgetId: 'Gokz5g6X_jobwK1x7',
+    pcWidgetId: 'Gokz5g6X',
+    moWidgetId: 'jobwK1x7',
     renderType: 'renderWidgetByWidth',
     device: 'both',
   },
   // 其他人都在看
-  articleBottomPC: {
-    widgetId: 'goB9q42X_wXQ2PDRo',
-    pcWidgetId: 'goB9q42X',
-    moWidgetId: 'wXQ2PDRo',
-    renderType: 'renderWidgetByWidth',
-    device: 'both',
-  },
-}
-
-export const DABLE_DEV_WIDGET_CONFIG: Record<
-  DableWidgetType,
-  DableWidgetConfig
-> = {
-  related: {
-    widgetId: '3703Za2o_1XDgJMMl',
-    pcWidgetId: '3703Za2o',
-    moWidgetId: '1XDgJMMl',
-    renderType: 'renderWidgetByWidth',
-    device: 'both',
-  },
   articleBottomPC: {
     widgetId: 'goB9q42X_wXQ2PDRo',
     pcWidgetId: 'goB9q42X',

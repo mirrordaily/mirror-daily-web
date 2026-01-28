@@ -12,7 +12,7 @@ import LatestNewsSection from './latest-news-section'
 import SocialSharePanel from '@/shared-components/social-share-panel'
 import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import { SECTION_FORUM_SLUG } from '@/constants/misc'
-import DableWidget from '@/shared-components/dable-widget'
+import { DableWordFirst } from './ads'
 
 type Props = {
   postData: Post
@@ -93,7 +93,7 @@ export default async function ArticleSection({ postData, id }: Props) {
           </div>
 
           <RelatedNewsSection posts={relatedPosts} />
-          <DableWidget type="related" customClasses="mt-4" />
+          <DableWordFirst />
         </div>
       </div>
 
