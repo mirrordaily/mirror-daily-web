@@ -18,6 +18,7 @@ import { SITE_URL } from '@/constants/config'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import RelatedAd from '@/shared-components/related-ad'
 import BottomAd from '@/shared-components/bottom-ad'
+import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
 type PageProps = { params: { id: string } }
 
@@ -159,6 +160,7 @@ export default async function Page({ params }: PageProps) {
       <main className="flex flex-col items-center">
         <MisoPageView productIds={`external_${id}`} />
         <ArticlePageTopAd />
+        <FullScreenAd slotKey="article_mw" />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <section className="mb-[72px] mt-5 flex flex-col items-center md:mb-[76px] md:mt-9 lg:mb-[92px] lg:mt-[6px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
           <div className="max-w-screen-sm md:max-w-[600px] lg:max-w-screen-md">

@@ -3,10 +3,8 @@
 import {
   type DableWidgetType,
   type DableCommand,
-  DABLE_PROD_WIDGET_CONFIG,
-  DABLE_DEV_WIDGET_CONFIG,
+  DABLE_WIDGET_CONFIG,
 } from '@/constants/ad'
-import { ENV } from '@/constants/config'
 import { useEffect, useState, useMemo } from 'react'
 import { useWindowSize } from 'usehooks-ts'
 
@@ -25,10 +23,7 @@ type DableWidgetProps = {
 export default function DableWidget({ type, customClasses }: DableWidgetProps) {
   const { width = 0 } = useWindowSize()
   const [shouldRender, setShouldRender] = useState(false)
-  const isProd = ENV === 'prod'
-  const config = isProd
-    ? DABLE_PROD_WIDGET_CONFIG[type]
-    : DABLE_DEV_WIDGET_CONFIG[type]
+  const config = DABLE_WIDGET_CONFIG[type]
 
   const isMobile = useMemo(() => width <= 768, [width])
 
