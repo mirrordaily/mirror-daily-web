@@ -9,10 +9,12 @@ export default function Article({
   content,
   isBrief = false,
   shouldShowAd = true,
+  hasBrief = true,
 }: {
   content: ApiData
   isBrief?: boolean
   shouldShowAd?: boolean
+  hasBrief?: boolean
 }) {
   return (
     <ApiDataRenderer
@@ -20,6 +22,7 @@ export default function Article({
       apiData={content}
       sourceCustomId={sourceCustomId}
       shouldShowAd={shouldShowAd}
+      hasBrief={hasBrief}
     />
   )
 }

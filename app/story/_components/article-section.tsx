@@ -38,6 +38,8 @@ export default async function ArticleSection({ postData, id }: Props) {
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
+  const hasBrief = postData.apiDataBrief.length > 0
+
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
       <div>
@@ -51,6 +53,7 @@ export default async function ArticleSection({ postData, id }: Props) {
               content={postData.apiData}
               isBrief={false}
               shouldShowAd={postData.shouldShowAd}
+              hasBrief={hasBrief}
             />
           </div>
           {postData.warnings.map(({ id, content }) => (
