@@ -41,6 +41,8 @@ export default async function ArticleSection({
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
+  const hasBrief = postData.apiDataBrief.length > 0
+
   return (
     <section
       className="flex w-full flex-col items-center lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]"
@@ -57,6 +59,7 @@ export default async function ArticleSection({
               content={postData.apiData}
               isBrief={false}
               shouldShowAd={postData.shouldShowAd}
+              hasBrief={hasBrief}
             />
           </div>
           {postData.warnings.map(({ id, content }) => (
