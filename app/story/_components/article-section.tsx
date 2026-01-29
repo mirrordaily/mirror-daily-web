@@ -24,8 +24,8 @@ const MIN_RELATED_POSTS = 6
 
 export default async function ArticleSection({ postData, id }: Props) {
   let relatedPosts = await fetchRelatedPosts(id)
-  const popularPosts = await fetchPopularPost(20)
   const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const popularPosts = await fetchPopularPost(20)
   const popularPostsTopSix = popularPosts.slice(0, 6)
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
@@ -38,7 +38,8 @@ export default async function ArticleSection({ postData, id }: Props) {
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
-  const hasBrief = postData.apiDataBrief.length > 0
+  const hasBrief =
+    postData.apiDataBrief.length > 0 && !postData.apiDataBrief[0]?.content
 
   return (
     <section className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]">
