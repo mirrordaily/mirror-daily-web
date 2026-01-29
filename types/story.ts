@@ -12,6 +12,7 @@ export type Post = {
   title: string
   subtitle: string
   heroCaption: string
+  publishedDateRaw: string
   publishedTime: string
   postMainImage: HeroImage
   sections: { name: string; color: string; slug: string }[]

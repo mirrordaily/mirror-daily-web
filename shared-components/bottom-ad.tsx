@@ -1,8 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import DableWidget from './dable-widget'
 import type { AdType } from '@/types/common'
+import {
+  DableArticleBottomPC,
+  PopInRecommend,
+} from '@/app/story/_components/ads'
 
 export default function BottomAd() {
   const [adType, setAdType] = useState<AdType | null>(null)
@@ -13,9 +16,5 @@ export default function BottomAd() {
 
   if (!adType) return null
 
-  return adType === 'dable' ? (
-    <DableWidget type="articleBottomPC" customClasses="mt-4" />
-  ) : (
-    <div id="_popIn_recommend" className="mt-7" />
-  )
+  return adType === 'dable' ? <DableArticleBottomPC /> : <PopInRecommend />
 }

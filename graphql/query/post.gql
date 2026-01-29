@@ -124,62 +124,25 @@ query GetPostsByTagSlug(
 
 query GetPostById($id: ID!) {
   post(where: { id: $id }) {
-    id
-    title
-    subtitle
-    heroCaption
-    publishedDate
-    hiddenAdvertised
-    heroImage {
-      ...ImageData
+    ...PostDetail
+  }
+}
+
+query GetPostsBySameSection(
+  $take: Int!
+  $slug: String
+  $publishedDate: DateTime
+) {
+  posts(
+    take: $take
+    where: {
+      state: { equals: "published" }
+      sections: { some: { slug: { equals: $slug } } }
+      publishedDate: { lt: $publishedDate }
     }
-    og_image {
-      ...ImageData
-    }
-    tags {
-      slug
-      name
-    }
-    tags_algo {
-      slug
-      name
-    }
-    sections {
-      name
-      color
-      slug
-    }
-    categories {
-      name
-      slug
-    }
-    writers {
-      id
-      name
-    }
-    photographers {
-      id
-      name
-    }
-    designers {
-      id
-      name
-    }
-    engineers {
-      id
-      name
-    }
-    apiData
-    apiDataBrief
-    Warning {
-      id
-      content
-    }
-    Warnings {
-      id
-      content
-    }
-    isAdult
+    orderBy: [{ createdAt: desc }]
+  ) {
+    ...PostDetail
   }
 }
 
