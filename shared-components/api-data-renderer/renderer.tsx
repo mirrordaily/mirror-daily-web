@@ -163,7 +163,7 @@ export default function ApiDataRenderer({
   }
 
   /**
-   * in1 廣告規則：
+   * story 頁 in1 廣告規則：
    * 前言+兩段內文之後出現
    * 沒有前言時，第三段內文之後再出現
    */

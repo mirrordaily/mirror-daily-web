@@ -42,7 +42,7 @@ export default async function ArticleSection({
   }
 
   const hasBrief =
-    postData.apiDataBrief.length > 0 && !postData.apiDataBrief[0]?.content
+    postData.apiDataBrief.length > 0 && !!postData.apiDataBrief[0]?.content[0]
 
   return (
     <section
