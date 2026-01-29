@@ -30,11 +30,13 @@ export default function ApiDataRenderer({
   sourceCustomId,
   isBrief,
   shouldShowAd,
+  hasBrief,
 }: {
   apiData: ApiData
   sourceCustomId: string
   isBrief: boolean
   shouldShowAd: boolean
+  hasBrief: boolean
 }) {
   const organization =
     getOrganizationFromSourceCustomId(sourceCustomId) || 'mirror-media'
@@ -160,14 +162,22 @@ export default function ApiDataRenderer({
     }
   }
 
+  /**
+   * story 頁 in1 廣告規則：
+   * 前言+兩段內文之後出現
+   * 沒有前言時，第三段內文之後再出現
+   */
+  const adIndex = hasBrief ? 1 : 2
+
   return (
     <article className={`${isBrief ? 'brief' : 'content'} story-renderer`}>
       {apiData.map((apiDataBlock, i) => {
         const apiDataBlockJsx = getApiDataBlockJsx(apiDataBlock)
+
         return (
           <Fragment key={i}>
             {apiDataBlockJsx}
-            {!isBrief && i === 0 && shouldShowAd && (
+            {!isBrief && shouldShowAd && i === adIndex && (
               <>
                 <DesktopGptAd
                   mode="normal"

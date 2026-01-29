@@ -47,3 +47,62 @@ fragment RelatedPost on Post {
     color
   }
 }
+
+fragment PostDetail on Post {
+  id
+  title
+  subtitle
+  heroCaption
+  publishedDate
+  hiddenAdvertised
+  heroImage {
+    ...ImageData
+  }
+  og_image {
+    ...ImageData
+  }
+  tags {
+    slug
+    name
+  }
+  tags_algo {
+    slug
+    name
+  }
+  sections {
+    name
+    color
+    slug
+  }
+  categories {
+    name
+    slug
+  }
+  writers {
+    id
+    name
+  }
+  photographers {
+    id
+    name
+  }
+  designers {
+    id
+    name
+  }
+  engineers {
+    id
+    name
+  }
+  apiData
+  apiDataBrief
+  Warning {
+    id
+    content
+  }
+  Warnings {
+    id
+    content
+  }
+  isAdult
+}
