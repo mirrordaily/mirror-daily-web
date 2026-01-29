@@ -41,7 +41,8 @@ export default async function ArticleSection({
     relatedPosts = [...relatedPosts, ...randomPopularPosts]
   }
 
-  const hasBrief = postData.apiDataBrief.length > 0
+  const hasBrief =
+    postData.apiDataBrief.length > 0 && !postData.apiDataBrief[0]?.content
 
   return (
     <section
