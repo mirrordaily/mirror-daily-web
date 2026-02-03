@@ -355,19 +355,23 @@ export const stickyAdUnitMap = {
   article_mw: '/23304347674/mirrordaily_mweb//article//sticky',
 } as const
 
+/**
+ * 全螢幕廣告固定使用 homepage 設定，
+ * 不依頁型更換 ad unit，目的是統一管理顯示時間
+ */
 export const fullScreenAdMap = {
   homepage_mw: {
     adUnitPath: '/23304347674/mirrordaily_mweb//homepage//incover',
     divId: 'div-gpt-ad-1768185177391-0',
   },
-  section_mw: {
-    adUnitPath: '/23304347674/mirrordaily_mweb//section//incover',
-    divId: 'div-gpt-ad-1768185216440-0',
-  },
-  article_mw: {
-    adUnitPath: '/23304347674/mirrordaily_mweb//article//incover',
-    divId: 'div-gpt-ad-1768185245703-0',
-  },
+  // section_mw: {
+  //   adUnitPath: '/23304347674/mirrordaily_mweb//section//incover',
+  //   divId: 'div-gpt-ad-1768185216440-0',
+  // },
+  // article_mw: {
+  //   adUnitPath: '/23304347674/mirrordaily_mweb//article//incover',
+  //   divId: 'div-gpt-ad-1768185245703-0',
+  // },
 } as const
 
 export type FullScreenAdUnit = keyof typeof fullScreenAdMap
