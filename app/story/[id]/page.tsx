@@ -194,7 +194,7 @@ export default async function Page({ params }: PageProps) {
       </Suspense>
       <main className="flex flex-col items-center">
         {shouldShowAd && <ArticlePageTopAd />}
-        <FullScreenAd slotKey="article_mw" />
+        <FullScreenAd slotKey="homepage_mw" />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <div className="w-full lg:flex lg:items-start lg:justify-center lg:gap-x-[104px]">
