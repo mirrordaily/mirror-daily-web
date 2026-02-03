@@ -357,7 +357,7 @@ export const stickyAdUnitMap = {
 
 export const fullScreenAdMap = {
   homepage_mw: {
-    adUnitPath: '/23304347674/mirrordaily_pc//homepage//incover',
+    adUnitPath: '/23304347674/mirrordaily_mweb//homepage//incover ',
     divId: 'div-gpt-ad-1768185177391-0',
   },
   section_mw: {
