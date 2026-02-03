@@ -76,7 +76,7 @@ export default function FullScreenAd({ slotKey }: Props) {
         if (hasAd) {
           setIsAdVisible(true)
         } else {
-          clearTimerForCloseBtn()
+          closeAd()
         }
       }
     }
@@ -108,7 +108,7 @@ export default function FullScreenAd({ slotKey }: Props) {
         pubads?.removeEventListener('slotRenderEnded', handleSlotRenderEnded)
       })
     }
-  }, [divId, adUnitPath, setTimerForCloseBtn, clearTimerForCloseBtn])
+  }, [divId, adUnitPath, setTimerForCloseBtn, clearTimerForCloseBtn, closeAd])
 
   if (!isAdEnabled) {
     return null
