@@ -147,7 +147,7 @@ export default async function Page({ params }: PageProps) {
       <ListPageTopAd slug={slug} />
 
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
-        <FullScreenAd slotKey="section_mw" />
+        <FullScreenAd slotKey="homepage_mw" />
         <ArticlesList
           initialPosts={initialPosts}
           color={color}
