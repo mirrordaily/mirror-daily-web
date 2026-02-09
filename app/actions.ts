@@ -235,7 +235,7 @@ export const fetchEditorChoices = async (): Promise<
   )
 
   return {
-    editor: transformEditorChoices(editorData).slice(0, 10),
+    editor: transformEditorChoices(editorData).slice(0, 15),
     // TODO: fetch AI data from JSON file (different to `editor`)
     ai: [],
   }
