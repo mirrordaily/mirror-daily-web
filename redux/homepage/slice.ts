@@ -10,6 +10,7 @@ import { fetchLiveEvent } from '@/app/actions'
 
 type LatestPostState = {
   isInitialized: boolean
+  isPopularInitialized: boolean
   liveEvent: PickupItemInTopNewsSection | null
   latestPosts: LatestPost[]
   popularNews: PopularNews[]
@@ -17,6 +18,7 @@ type LatestPostState = {
 
 const initialState: LatestPostState = {
   isInitialized: false,
+  isPopularInitialized: false,
   liveEvent: null,
   latestPosts: [],
   popularNews: [],
@@ -70,6 +72,7 @@ const homepageSlice = createSlice({
     })
 
     builder.addCase(fetchPopularNews.fulfilled, (state, action) => {
+      state.isPopularInitialized = true
       state.popularNews = action.payload
     })
   },
