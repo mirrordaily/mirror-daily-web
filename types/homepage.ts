@@ -10,6 +10,8 @@ export type ItemInTopNewsSection = Pick<
   | 'postId'
   | 'publishedDate'
   | 'link'
+  | 'heroImage'
+  | 'postBrief'
 >
 
 export type PickupItemInTopNewsSection = Pick<
