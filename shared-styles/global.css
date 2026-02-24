@@ -32,8 +32,8 @@
     @apply w-full max-w-[375px] px-[23px] md:max-w-screen-md md:px-5 lg:max-w-none lg:px-9;
   }
   .homepage-editor-choice-bullet {
-    @apply hidden md:block h-5 w-5 cursor-pointer rounded-full border-[1px] border-[#000928] text-center text-sm font-medium leading-[18px] text-[#000928];
-    @apply md:h-3 md:w-3 md:border-[0.5px] md:border-white md:text-[8px] md:leading-[10px] md:text-white;
+    @apply hidden h-5 w-5 cursor-pointer rounded-full border-[1px] border-[#000928] text-center text-sm font-medium leading-[18px] text-[#000928];
+    @apply md:block md:h-3 md:w-3 md:border-[0.5px] md:border-white md:text-[8px] md:leading-[10px] md:text-white;
     @apply lg:h-5 lg:w-5 lg:border-[1px] lg:text-sm lg:leading-[18px];
   }
   .homepage-editor-choice-bullet-active {
