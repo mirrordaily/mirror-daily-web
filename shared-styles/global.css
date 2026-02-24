@@ -40,7 +40,7 @@
     @apply homepage-editor-choice-bullet border-white bg-mirror-blue-600 text-white md:bg-mirror-blue-800;
   }
   .homepage-editor-choice-pagination-horizontal {
-    @apply z-over-editor-choice mt-8 flex w-full justify-center space-x-[6px];
+    @apply z-over-editor-choice flex w-full justify-center space-x-[6px];
     @apply md:absolute md:!bottom-3 md:!right-4 md:!w-auto md:justify-end md:space-x-1 lg:!bottom-[26px] lg:!right-3;
     @apply lg:space-x-[6px];
   }
