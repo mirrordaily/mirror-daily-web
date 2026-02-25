@@ -1,21 +1,16 @@
 'use client'
 import type { ReactNode } from 'react'
-import type { PickupItemInTopNewsSection } from '@/types/homepage'
+import type {
+  ItemInTopNewsSection,
+  PickupItemInTopNewsSection,
+} from '@/types/homepage'
 import CustomImage from '@/shared-components/custom-image'
-import ReactPlayer from 'react-player/lazy'
-import type { TAB } from './section'
 import { homepageGtmEvents } from '@/constants/gtm'
 
-export const gtmClassNameMap = {
-  Latest: {
-    image: homepageGtmEvents.latestArticleImage,
-    title: homepageGtmEvents.latestArticleTitle,
-  },
-  Hot: {
-    image: homepageGtmEvents.popularArticleImage,
-    title: homepageGtmEvents.popularArticleTitle,
-  },
-} as const
+const gtm = {
+  title: homepageGtmEvents.popularArticleTitle,
+  image: homepageGtmEvents.popularArticleImage,
+}
 
 // 標題與簡介
 const PostTitleAndBrief = ({
@@ -35,7 +30,7 @@ const PostTitleAndBrief = ({
         {postName}
       </p>
       {postBrief && (
-        <p className="mt-3 hidden text-sm font-normal leading-normal text-[#68666D] md:line-clamp-3 lg:text-base lg:font-bold">
+        <p className="mt-3 line-clamp-3 text-sm font-normal leading-normal text-[#68666D]">
           {postBrief}
         </p>
       )}
@@ -43,46 +38,13 @@ const PostTitleAndBrief = ({
   )
 }
 
-type Props = PickupItemInTopNewsSection & {
-  tab: keyof typeof TAB
-}
+type Props = ItemInTopNewsSection
 export default function HighlightItem({
   heroImage,
   postName,
   postBrief,
   link,
-  isVideoType,
-  tab,
 }: Props): ReactNode {
-  if (isVideoType) {
-    return (
-      <div className="flex flex-col">
-        <div
-          className={`${homepageGtmEvents.liveStream} aspect-[330/220] w-full shrink-0 md:aspect-auto md:h-[208px] md:w-[312px] lg:h-[374px] lg:w-[560px]`}
-        >
-          <ReactPlayer
-            url={link}
-            width="100%"
-            height="100%"
-            muted={false}
-            playing={false}
-            playsinline={true}
-            config={{
-              file: {
-                attributes: {
-                  preload: 'none',
-                },
-              },
-            }}
-          />
-        </div>
-        <PostTitleAndBrief postName={postName} postBrief={postBrief} />
-      </div>
-    )
-  }
-
-  const gtm = gtmClassNameMap[tab]
-
   return (
     <a
       className={

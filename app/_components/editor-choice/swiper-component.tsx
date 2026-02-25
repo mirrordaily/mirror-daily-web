@@ -64,7 +64,7 @@ export default function SwiperComponent({ list }: Props) {
                   />
                   <div className="absolute inset-0 md:bg-[linear-gradient(180deg,rgba(0,0,0,0.48)_6.69%,rgba(110,110,110,0.24)_17.20%,rgba(217,217,217,0.00)_20.52%,rgba(255,255,255,0)_23.25%,rgba(255,255,255,0)_74.52%,rgba(217,217,217,0.00)_74.52%,rgba(43,43,43,0.64)_83.44%,rgba(0,0,0,0.80)_96.18%)]" />
                 </div>
-                <p className="mt-5 line-clamp-3 h-[84px] text-xl font-bold leading-normal text-[#000928] group-hover/slide:text-[#575D71] group-active/slide:text-[#575D71] md:absolute md:bottom-3 md:left-5 md:m-0 md:line-clamp-2 md:h-auto md:max-h-[58px] md:w-[440px] md:text-white md:group-hover/slide:text-white md:group-hover/slide:underline md:group-active/slide:text-white md:group-active/slide:underline lg:bottom-7 lg:left-7 lg:max-h-[69px] lg:w-[654px] lg:text-3xl lg:font-normal">
+                <p className="mt-5 line-clamp-3 h-[85px] text-xl font-bold leading-normal text-[#000928] group-hover/slide:text-[#575D71] group-active/slide:text-[#575D71] md:absolute md:bottom-3 md:left-5 md:m-0 md:line-clamp-2 md:h-auto md:max-h-[58px] md:w-[440px] md:text-white md:group-hover/slide:text-white md:group-hover/slide:underline md:group-active/slide:text-white md:group-active/slide:underline lg:bottom-7 lg:left-7 lg:max-h-[69px] lg:w-[654px] lg:text-3xl lg:font-normal">
                   {postName}
                 </p>
               </a>
