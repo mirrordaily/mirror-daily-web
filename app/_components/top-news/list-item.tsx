@@ -1,7 +1,7 @@
 import type { ItemInTopNewsSection } from '@/types/homepage'
 import type { CSSProperties } from 'react'
-import type { TAB } from './section'
-import { gtmClassNameMap } from './highlight-item'
+import type { TOP_NEWS_LABELS } from './section'
+import { homepageGtmEvents } from '@/constants/gtm'
 
 type Props = Pick<
   ItemInTopNewsSection,
@@ -12,8 +12,17 @@ type Props = Pick<
   | 'publishedDate'
   | 'link'
 > & {
-  tab: keyof typeof TAB
+  tab: keyof typeof TOP_NEWS_LABELS
 }
+
+const gtmClassNameMap = {
+  Latest: {
+    title: homepageGtmEvents.latestArticleTitle,
+  },
+  Hot: {
+    title: homepageGtmEvents.popularArticleTitle,
+  },
+} as const
 
 export default function ListItem({
   sectionName,
