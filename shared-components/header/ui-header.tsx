@@ -80,8 +80,8 @@ export default function UiHeader({
                 className={`${headerGtmEvents.search} flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px]`}
                 href="/search"
               >
-                <span className="md:hidden">搜尋</span>
-                <span className="hidden md:block">搜尋</span>
+                <span className="md:hidden">AI 搜尋</span>
+                <span className="hidden md:block">AI 智慧搜尋</span>
                 <span className="relative inline-block size-5">
                   <NextImage src={IconSearch} fill={true} alt="搜尋" />
                 </span>
