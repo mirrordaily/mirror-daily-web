@@ -119,6 +119,23 @@ export const topicsSchema = z.object({
   ),
 })
 
+export const promoteTopicSchema = z.object({
+  id: z.string(),
+  topics: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+      slug: z.string(),
+      heroImage: z.union([
+        heroImageSchema,
+        z.string(),
+        z.null(),
+        z.undefined(),
+      ]),
+    })
+    .nullable(),
+})
+
 const weatherSchema = z.object({
   date: z.string(),
   max_temp: z.number(),
