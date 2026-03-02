@@ -8,6 +8,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import { getDefaultMetadata } from '@/utils/common'
 import { headers } from 'next/headers'
+import PromoteTopicSection from './_components/promote-topic/section'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
@@ -136,6 +137,7 @@ export default function RootLayout({
         <StoreProvider>
           {children}
           <UploadModal />
+          <PromoteTopicSection />
         </StoreProvider>
       </body>
     </html>

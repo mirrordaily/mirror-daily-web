@@ -18,7 +18,6 @@ import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
 import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
-import PromoteTopicSection from './_components/promote-topic/section'
 
 export const dynamic = 'force-dynamic'
 
@@ -57,8 +56,6 @@ export default async function Home() {
           <SectionDivider />
           {/* 即時新聞/熱門新聞（10則） */}
           <TopNewsSection headerData={headerData} />
-          {/* 專題推廣區 */}
-          <PromoteTopicSection />
           <DesktopGptAd
             mode="normal"
             slotKey="mirrordaily_home_PC_970x90_b2"
