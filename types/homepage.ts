@@ -94,3 +94,13 @@ export type LatestSportsNewsData = {
     }
   }
 }
+
+export type PromoteTopicData = {
+  id: string
+  topics: {
+    id: string
+    name: string
+    slug: string
+    heroImage: HeroImage
+  } | null
+}

@@ -3,11 +3,11 @@
 import type {
   PickupItemInTopNewsSection,
   FlashNews,
-  EditorChoice,
   TopicBundle,
   CityAndWeather,
   SportsGameData,
   LatestSportsNewsData,
+  PromoteTopicData,
 } from '@/types/homepage'
 import {
   URL_STATIC_EDITOR_CHOICE,
@@ -16,13 +16,10 @@ import {
   URL_STATIC_TOPIC,
   URL_STATIC_WEATHER,
   URL_STATIC_LATEST_SPORTS_NEWS,
+  URL_STATIC_PROMOTE_TOPICS,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
-import type {
-  GetLiveEventForHomepageQuery,
-  ImageDataFragment,
-} from '@/graphql/__generated__/graphql'
 import {
   GetEditorChoicesDocument,
   GetLiveEventForHomepageDocument,
@@ -30,13 +27,8 @@ import {
   GetFlashNewsDocument,
 } from '@/graphql/__generated__/graphql'
 import dayjs from 'dayjs'
-import {
-  getExternalPageUrl,
-  getStoryPageUrl,
-  getTopicPageUrl,
-} from '@/utils/site-urls'
-import { createDataFetchingChain, getHeroImage } from '@/utils/data-process'
-import type { ParameterOfComponent, HeroImage } from '@/types/common'
+import { createDataFetchingChain } from '@/utils/data-process'
+import type { ParameterOfComponent } from '@/types/common'
 import type EditorChoiceMain from './_components/editor-choice/main'
 import type { ZodArray } from 'zod'
 import { z } from 'zod'
@@ -47,22 +39,18 @@ import {
   cityWeatherSchema,
   sportsEventsApiResponseSchema,
   latestSportsNewsSchema,
+  promoteTopicSchema,
 } from '@/utils/data-schema'
-
-const transformRawLiveEvents = (
-  rawLiveEvents: GetLiveEventForHomepageQuery['events']
-): PickupItemInTopNewsSection | null => {
-  const event = (rawLiveEvents ? rawLiveEvents[0] : null) ?? null
-
-  if (!event) return event
-
-  return {
-    postName: event.name ?? '',
-    link: event.link ?? '',
-    heroImage: getHeroImage(event.heroImage),
-    isVideoType: true,
-  }
-}
+import {
+  transformRawLiveEvents,
+  transformRawHotNews,
+  transformEditorChoices,
+  transformTopics,
+  transformWeather,
+  transformSportsEvents,
+  transformLatestSportsNews,
+  transformRawPromoteTopic,
+} from '@/utils/transform-homepage'
 
 export const fetchLiveEvent =
   async (): Promise<PickupItemInTopNewsSection | null> => {
@@ -86,41 +74,6 @@ export const fetchLiveEvent =
     }
     return null
   }
-
-const transformRawHotNews = (
-  rawData: z.infer<ZodArray<typeof rawHotNewsSchema>>
-): FlashNews[] => {
-  if (!rawData) return []
-  return rawData.map(({ hotnews, hotexternal, outlink }) => {
-    if (outlink) {
-      return {
-        link: outlink,
-        postName: '快訊',
-      }
-    }
-
-    if (hotnews) {
-      const postId = hotnews?.id ?? ''
-      return {
-        link: getStoryPageUrl(postId),
-        postName: hotnews?.title ?? '',
-      }
-    }
-
-    if (hotexternal) {
-      const postId = hotexternal?.id ?? ''
-      return {
-        link: getExternalPageUrl(postId),
-        postName: hotexternal?.title ?? '',
-      }
-    }
-
-    return {
-      link: '',
-      postName: '',
-    }
-  })
-}
 
 export const fetchHotNews = async (): Promise<FlashNews[]> => {
   const errorLogger = createErrorLogger(
@@ -147,60 +100,6 @@ export const fetchHotNews = async (): Promise<FlashNews[]> => {
     }
   )
   return transformRawHotNews(data)
-}
-
-const transformEditorChoices = (
-  rawData: z.infer<ZodArray<typeof editorChoiceSchenma>>
-): EditorChoice[] => {
-  if (!rawData) return []
-
-  // NOTE: outlink, external, choices 只會擇一出現，因此總共有三種情況
-  return rawData.map(
-    (
-      { outlink, heroImage, choices: rawPost, choiceexternal: externalRawPost },
-      index
-    ) => {
-      const postId = rawPost?.id ?? ''
-      const externalId = externalRawPost?.id ?? ''
-
-      /**除了choiceexternal, choices 編輯精選也可以設定首圖，如果有設定的話會優先使用。 */
-      const getHeroImageByPostType = (
-        imageParam:
-          | Pick<ImageDataFragment, 'resized' | 'resizedWebp'>
-          | string
-          | null
-          | undefined
-      ) => {
-        const editorChoiceHeroImage = heroImage ? getHeroImage(heroImage) : null
-        return editorChoiceHeroImage || getHeroImage(imageParam)
-      }
-
-      if (outlink) {
-        return {
-          postId: '',
-          postName: '',
-          link: outlink,
-          heroImage: getHeroImageByPostType(heroImage),
-        }
-      }
-
-      if (externalId) {
-        return {
-          postId: `${index}-${externalId}`,
-          postName: externalRawPost?.title ?? '',
-          link: getExternalPageUrl(externalId),
-          heroImage: getHeroImageByPostType(externalRawPost?.thumb),
-        }
-      }
-
-      return {
-        postId: `${index}-${postId}`,
-        postName: rawPost?.title ?? '',
-        link: getStoryPageUrl(postId),
-        heroImage: getHeroImageByPostType(rawPost?.heroImage),
-      }
-    }
-  )
 }
 
 export const fetchEditorChoices = async (): Promise<
@@ -241,37 +140,6 @@ export const fetchEditorChoices = async (): Promise<
   }
 }
 
-const transformTopics = (
-  rawData: z.infer<ZodArray<typeof topicsSchema>>
-): TopicBundle[] | null => {
-  if (!rawData) return null
-
-  const convertedData = rawData.map((topic, index) => {
-    const { name = '', slug = '', heroImage, posts } = topic
-
-    // Use top-level heroImage if available.
-    let finalHeroImage = heroImage ? getHeroImage(heroImage) : null
-
-    // Otherwise find the first post with a valid heroImage.
-    if (!finalHeroImage && Array.isArray(posts)) {
-      const found = posts.find((p) => p?.heroImage)
-      if (found?.heroImage) {
-        finalHeroImage = getHeroImage(found.heroImage)
-      }
-    }
-
-    return {
-      id: `${index}-${name}`,
-      name,
-      link: getTopicPageUrl(slug),
-      heroImage: finalHeroImage,
-    }
-  })
-
-  if (!convertedData.length) return null
-  return convertedData
-}
-
 export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching topics',
@@ -301,25 +169,6 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
   return transformTopics(data)
 }
 
-const transformWeather = (
-  rawData: z.infer<typeof cityWeatherSchema>
-): CityAndWeather => {
-  return Object.fromEntries(
-    Object.entries(rawData).map(([city, info]) => [
-      city,
-      {
-        date: info.date,
-        maxTemp: info.max_temp,
-        minTemp: info.min_temp,
-        weatherDesc: info.weather_desc,
-        weatherCode: info.weather_code,
-        weather: info.weather,
-        fetchTime: info.fetch_time,
-      },
-    ])
-  )
-}
-
 export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching weather',
@@ -334,46 +183,6 @@ export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
   } catch (e) {
     errorLogger(e)
   }
-}
-
-const transformSportsEvents = (
-  rawData: z.infer<typeof sportsEventsApiResponseSchema> | undefined
-): SportsGameData[] => {
-  if (!rawData) return []
-
-  const allGames: SportsGameData[] = []
-
-  for (const leagueName of Object.keys(rawData) as Array<
-    keyof typeof rawData
-  >) {
-    const leagueData = rawData[leagueName]
-
-    if (!Array.isArray(leagueData)) return []
-    leagueData.forEach((dailySchedule) => {
-      if (!dailySchedule || !Array.isArray(dailySchedule.games)) return []
-      dailySchedule.games.forEach((game) => {
-        allGames.push({
-          id: `${leagueName}-${game.game_sno}`,
-          league: leagueName,
-          startTime: game.datetime,
-          endTime: game.end_datetime ?? '',
-          result: game.game_result,
-          gameResultName: game.game_result_name,
-          isGameStop: game.is_game_stop === '0',
-          presentStatus: game.present_status,
-          homeTeamName: game.home_team,
-          homeTeamScore: game.home_score,
-          homeTeamLogo: game.home_logo,
-          visitingTeamName: game.visiting_team,
-          visitingTeamScore: game.visiting_score,
-          visitingTeamLogo: game.visiting_logo,
-          currentPlay: game.currentPlay ? game.currentPlay : undefined,
-        })
-      })
-    })
-  }
-
-  return allGames
 }
 
 export const fetchSportsEvents = async (): Promise<
@@ -391,85 +200,6 @@ export const fetchSportsEvents = async (): Promise<
   } catch (e) {
     errorLogger(e)
   }
-}
-
-type ImageSizeVariants = {
-  original: string
-  w480: string
-  w800: string
-  w1200: string
-  w1600: string
-  w2400: string
-}
-
-type GetHeroParam = Parameters<typeof getHeroImage>[0]
-
-const createImageSizeVariants = (
-  primaryImage: HeroImage,
-  fallbackImage?: HeroImage,
-  isWebp = false
-): ImageSizeVariants => {
-  const imageType = isWebp ? 'resizedWebp' : 'resized'
-  const sizes = ['original', 'w480', 'w800', 'w1200', 'w1600', 'w2400'] as const
-
-  return sizes.reduce((variants, size) => {
-    variants[size] =
-      primaryImage?.[imageType]?.[size] ??
-      fallbackImage?.[imageType]?.[size] ??
-      ''
-    return variants
-  }, {} as ImageSizeVariants)
-}
-
-const transformSportsNewsImage = (
-  heroImage: GetHeroParam,
-  ogImage: GetHeroParam
-): LatestSportsNewsData['heroImage'] => {
-  const transformedHeroImage = getHeroImage(heroImage)
-  const transformedOgImage = getHeroImage(ogImage)
-
-  return {
-    resized: createImageSizeVariants(
-      transformedHeroImage,
-      transformedOgImage,
-      false
-    ),
-    resizedWebp: createImageSizeVariants(
-      transformedHeroImage,
-      transformedOgImage,
-      true
-    ),
-  }
-}
-
-const transformLatestSportsNews = (
-  rawData: z.infer<typeof latestSportsNewsSchema> | undefined
-): LatestSportsNewsData[] => {
-  if (!rawData || !rawData.section) return []
-
-  const convertedData = rawData.section.items?.map((item) => {
-    if (item.type === 'external') {
-      const { id, title, publishedDate, thumb } = item
-      return {
-        id,
-        type: item.type,
-        title,
-        publishedDate,
-        heroImage: transformSportsNewsImage(thumb, undefined),
-      }
-    }
-
-    const { id, type, title, publishedDate, heroImage, og_image } = item
-    return {
-      id,
-      type,
-      title,
-      publishedDate,
-      heroImage: transformSportsNewsImage(heroImage, og_image),
-    }
-  })
-
-  return convertedData.splice(0, 4)
 }
 
 export const fetchLatestSportsNews = async (): Promise<
@@ -493,5 +223,24 @@ export const fetchLatestSportsNews = async (): Promise<
     return transformLatestSportsNews(parsed)
   } catch (e) {
     errorLogger(e)
+  }
+}
+
+export const fetchPromoteTopics = async (): Promise<PromoteTopicData[]> => {
+  const errorLogger = createErrorLogger(
+    'Error occurs while fetching promote topics',
+    getTraceObject()
+  )
+
+  const schema = z.array(promoteTopicSchema)
+
+  try {
+    const resp = await fetch(URL_STATIC_PROMOTE_TOPICS)
+    const json = await resp.json()
+    const result = schema.parse(json.promoteTopics)
+    return result.map(transformRawPromoteTopic)
+  } catch (e) {
+    errorLogger(e)
+    return []
   }
 }

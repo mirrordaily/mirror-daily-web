@@ -1,0 +1,328 @@
+import type {
+  GetLiveEventForHomepageQuery,
+  ImageDataFragment,
+} from '@/graphql/__generated__/graphql'
+import type {
+  PickupItemInTopNewsSection,
+  FlashNews,
+  EditorChoice,
+  TopicBundle,
+  CityAndWeather,
+  SportsGameData,
+  LatestSportsNewsData,
+  PromoteTopicData,
+} from '@/types/homepage'
+import type { HeroImage } from '@/types/common'
+import {
+  getExternalPageUrl,
+  getStoryPageUrl,
+  getTopicPageUrl,
+} from './site-urls'
+import { getHeroImage } from './data-process'
+import type {
+  rawHotNewsSchema,
+  editorChoiceSchenma,
+  topicsSchema,
+  cityWeatherSchema,
+  sportsEventsApiResponseSchema,
+  latestSportsNewsSchema,
+  promoteTopicSchema,
+} from './data-schema'
+import type { z } from 'zod'
+import type { ZodArray } from 'zod'
+
+export const transformRawLiveEvents = (
+  rawLiveEvents: GetLiveEventForHomepageQuery['events']
+): PickupItemInTopNewsSection | null => {
+  const event = (rawLiveEvents ? rawLiveEvents[0] : null) ?? null
+
+  if (!event) return event
+
+  return {
+    postName: event.name ?? '',
+    link: event.link ?? '',
+    heroImage: getHeroImage(event.heroImage),
+    isVideoType: true,
+  }
+}
+
+export const transformRawHotNews = (
+  rawData: z.infer<ZodArray<typeof rawHotNewsSchema>>
+): FlashNews[] => {
+  if (!rawData) return []
+  return rawData.map(({ hotnews, hotexternal, outlink }) => {
+    if (outlink) {
+      return {
+        link: outlink,
+        postName: '快訊',
+      }
+    }
+
+    if (hotnews) {
+      const postId = hotnews?.id ?? ''
+      return {
+        link: getStoryPageUrl(postId),
+        postName: hotnews?.title ?? '',
+      }
+    }
+
+    if (hotexternal) {
+      const postId = hotexternal?.id ?? ''
+      return {
+        link: getExternalPageUrl(postId),
+        postName: hotexternal?.title ?? '',
+      }
+    }
+
+    return {
+      link: '',
+      postName: '',
+    }
+  })
+}
+
+export const transformEditorChoices = (
+  rawData: z.infer<ZodArray<typeof editorChoiceSchenma>>
+): EditorChoice[] => {
+  if (!rawData) return []
+
+  // NOTE: outlink, external, choices 只會擇一出現，因此總共有三種情況
+  return rawData.map(
+    (
+      { outlink, heroImage, choices: rawPost, choiceexternal: externalRawPost },
+      index
+    ) => {
+      const postId = rawPost?.id ?? ''
+      const externalId = externalRawPost?.id ?? ''
+
+      /**除了choiceexternal, choices 編輯精選也可以設定首圖，如果有設定的話會優先使用。 */
+      const getHeroImageByPostType = (
+        imageParam:
+          | Pick<ImageDataFragment, 'resized' | 'resizedWebp'>
+          | string
+          | null
+          | undefined
+      ) => {
+        const editorChoiceHeroImage = heroImage ? getHeroImage(heroImage) : null
+        return editorChoiceHeroImage || getHeroImage(imageParam)
+      }
+
+      if (outlink) {
+        return {
+          postId: '',
+          postName: '',
+          link: outlink,
+          heroImage: getHeroImageByPostType(heroImage),
+        }
+      }
+
+      if (externalId) {
+        return {
+          postId: `${index}-${externalId}`,
+          postName: externalRawPost?.title ?? '',
+          link: getExternalPageUrl(externalId),
+          heroImage: getHeroImageByPostType(externalRawPost?.thumb),
+        }
+      }
+
+      return {
+        postId: `${index}-${postId}`,
+        postName: rawPost?.title ?? '',
+        link: getStoryPageUrl(postId),
+        heroImage: getHeroImageByPostType(rawPost?.heroImage),
+      }
+    }
+  )
+}
+
+export const transformTopics = (
+  rawData: z.infer<ZodArray<typeof topicsSchema>>
+): TopicBundle[] | null => {
+  if (!rawData) return null
+
+  const convertedData = rawData.map((topic, index) => {
+    const { name = '', slug = '', heroImage, posts } = topic
+
+    // Use top-level heroImage if available.
+    let finalHeroImage = heroImage ? getHeroImage(heroImage) : null
+
+    // Otherwise find the first post with a valid heroImage.
+    if (!finalHeroImage && Array.isArray(posts)) {
+      const found = posts.find((p) => p?.heroImage)
+      if (found?.heroImage) {
+        finalHeroImage = getHeroImage(found.heroImage)
+      }
+    }
+
+    return {
+      id: `${index}-${name}`,
+      name,
+      link: getTopicPageUrl(slug),
+      heroImage: finalHeroImage,
+    }
+  })
+
+  if (!convertedData.length) return null
+  return convertedData
+}
+
+export const transformWeather = (
+  rawData: z.infer<typeof cityWeatherSchema>
+): CityAndWeather => {
+  return Object.fromEntries(
+    Object.entries(rawData).map(([city, info]) => [
+      city,
+      {
+        date: info.date,
+        maxTemp: info.max_temp,
+        minTemp: info.min_temp,
+        weatherDesc: info.weather_desc,
+        weatherCode: info.weather_code,
+        weather: info.weather,
+        fetchTime: info.fetch_time,
+      },
+    ])
+  )
+}
+
+export const transformSportsEvents = (
+  rawData: z.infer<typeof sportsEventsApiResponseSchema> | undefined
+): SportsGameData[] => {
+  if (!rawData) return []
+
+  const allGames: SportsGameData[] = []
+
+  for (const leagueName of Object.keys(rawData) as Array<
+    keyof typeof rawData
+  >) {
+    const leagueData = rawData[leagueName]
+
+    if (!Array.isArray(leagueData)) return []
+    leagueData.forEach((dailySchedule) => {
+      if (!dailySchedule || !Array.isArray(dailySchedule.games)) return []
+      dailySchedule.games.forEach((game) => {
+        allGames.push({
+          id: `${leagueName}-${game.game_sno}`,
+          league: leagueName,
+          startTime: game.datetime,
+          endTime: game.end_datetime ?? '',
+          result: game.game_result,
+          gameResultName: game.game_result_name,
+          isGameStop: game.is_game_stop === '0',
+          presentStatus: game.present_status,
+          homeTeamName: game.home_team,
+          homeTeamScore: game.home_score,
+          homeTeamLogo: game.home_logo,
+          visitingTeamName: game.visiting_team,
+          visitingTeamScore: game.visiting_score,
+          visitingTeamLogo: game.visiting_logo,
+          currentPlay: game.currentPlay ? game.currentPlay : undefined,
+        })
+      })
+    })
+  }
+
+  return allGames
+}
+
+type ImageSizeVariants = {
+  original: string
+  w480: string
+  w800: string
+  w1200: string
+  w1600: string
+  w2400: string
+}
+
+type GetHeroParam = Parameters<typeof getHeroImage>[0]
+
+const createImageSizeVariants = (
+  primaryImage: HeroImage,
+  fallbackImage?: HeroImage,
+  isWebp = false
+): ImageSizeVariants => {
+  const imageType = isWebp ? 'resizedWebp' : 'resized'
+  const sizes = ['original', 'w480', 'w800', 'w1200', 'w1600', 'w2400'] as const
+
+  return sizes.reduce((variants, size) => {
+    variants[size] =
+      primaryImage?.[imageType]?.[size] ??
+      fallbackImage?.[imageType]?.[size] ??
+      ''
+    return variants
+  }, {} as ImageSizeVariants)
+}
+
+const transformSportsNewsImage = (
+  heroImage: GetHeroParam,
+  ogImage: GetHeroParam
+): LatestSportsNewsData['heroImage'] => {
+  const transformedHeroImage = getHeroImage(heroImage)
+  const transformedOgImage = getHeroImage(ogImage)
+
+  return {
+    resized: createImageSizeVariants(
+      transformedHeroImage,
+      transformedOgImage,
+      false
+    ),
+    resizedWebp: createImageSizeVariants(
+      transformedHeroImage,
+      transformedOgImage,
+      true
+    ),
+  }
+}
+
+export const transformLatestSportsNews = (
+  rawData: z.infer<typeof latestSportsNewsSchema> | undefined
+): LatestSportsNewsData[] => {
+  if (!rawData || !rawData.section) return []
+
+  const convertedData = rawData.section.items?.map((item) => {
+    if (item.type === 'external') {
+      const { id, title, publishedDate, thumb } = item
+      return {
+        id,
+        type: item.type,
+        title,
+        publishedDate,
+        heroImage: transformSportsNewsImage(thumb, undefined),
+      }
+    }
+
+    const { id, type, title, publishedDate, heroImage, og_image } = item
+    return {
+      id,
+      type,
+      title,
+      publishedDate,
+      heroImage: transformSportsNewsImage(heroImage, og_image),
+    }
+  })
+
+  return convertedData.splice(0, 4)
+}
+
+export const transformRawPromoteTopic = (
+  rawData: z.infer<typeof promoteTopicSchema>
+): PromoteTopicData => {
+  if (!rawData.topics) {
+    return {
+      id: rawData.id,
+      topics: null,
+    }
+  }
+
+  const { id, name, slug, heroImage } = rawData.topics
+
+  return {
+    id: rawData.id,
+    topics: {
+      id,
+      name,
+      slug,
+      heroImage: getHeroImage(heroImage),
+    },
+  }
+}
