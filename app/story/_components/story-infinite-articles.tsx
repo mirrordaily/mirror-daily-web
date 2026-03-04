@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Post } from '@/types/story'
+import type { PopularNews } from '@/types/common'
 import { StoryScrollSpy } from './story-scroll-spy'
 import ArticleSectionClient from './story-infinite-article-section-client'
 import { fetchNextPostBySameSectionAction } from '../actions'
@@ -16,9 +17,11 @@ const articleAds = [
 
 export default function StoryInfiniteArticles({
   initialPost,
+  popularPosts,
   maxFetch = 3,
 }: {
   initialPost: Post
+  popularPosts: PopularNews[]
   maxFetch?: number
 }) {
   const slug = initialPost.sections[1]?.slug || initialPost.sections[0]?.slug
@@ -113,6 +116,7 @@ export default function StoryInfiniteArticles({
             postData={post}
             key={post.id}
             AdComponent={AdComponent}
+            popularPosts={popularPosts}
           />
         )
       })}
