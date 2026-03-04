@@ -7,6 +7,8 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import type { PromoteTopicData } from '@/types/homepage'
 import { useState } from 'react'
+import IConClose from '@/public/icons/close.svg'
+import NextImage from 'next/image'
 
 type Props = {
   list: PromoteTopicData[]
@@ -20,12 +22,14 @@ export default function SwiperComponent({ list }: Props) {
 
   return (
     <div className="fixed right-[20px] top-1/2 z-promote-topic w-[75px] lg:w-[120px]">
-      <button
+      <NextImage
         onClick={() => setVisible(false)}
-        className="absolute right-0 top-0 z-20 flex size-5 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-mirror-blue-200 p-[5px] text-black shadow-[0_2.47px_2.47px_0_#00000040]"
-      >
-        X
-      </button>
+        width={20}
+        height={20}
+        alt="promote-topic 關閉按鈕"
+        src={IConClose}
+        className="absolute right-0 top-0 z-promote-topic-close-button -translate-y-1/2 translate-x-1/2 cursor-pointer rounded-full shadow-[0_2.47px_2.47px_0_#00000040]"
+      />
       <Swiper
         modules={[Autoplay, Pagination]}
         pagination={{

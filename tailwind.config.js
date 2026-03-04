@@ -61,6 +61,7 @@ module.exports = {
         'city-selection-box': 10,
         'story-share-bar': 10,
         'promote-topic': 10,
+        'promote-topic-close-button': 100,
         'upload-modal': 1000000,
         'light-box': 10000000,
         'mobile-nav': 1000000000,
