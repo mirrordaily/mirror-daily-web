@@ -1,16 +1,45 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import type { Post } from '@/types/story'
+import type { RelatedPost } from '@/types/common'
+import type { PopularNews } from '@/types/common'
 import HeroSection from './hero-section'
 import Article from './article'
+import RelatedNewsSection from './related-news-section'
 import SocialSharePanel from '@/shared-components/social-share-panel'
+import { fetchRelatedPosts } from '../actions'
+import { enrichRelatedPosts } from '@/utils/related-posts'
 
 type Props = {
   postData: Post
   AdComponent: JSX.Element | undefined
+  popularPosts: PopularNews[]
 }
 
-export default function ArticleSectionClient({ postData, AdComponent }: Props) {
+export default function ArticleSectionClient({
+  postData,
+  AdComponent,
+  popularPosts,
+}: Props) {
+  const [relatedPosts, setRelatedPosts] = useState<RelatedPost[]>([])
+
+  useEffect(() => {
+    let isMounted = true
+
+    const fetchRelated = async () => {
+      const result = await fetchRelatedPosts(postData.id)
+      if (!isMounted) return
+      setRelatedPosts(enrichRelatedPosts(result, popularPosts))
+    }
+
+    fetchRelated()
+
+    return () => {
+      isMounted = false
+    }
+  }, [popularPosts, postData.id])
+
   return (
     <section
       className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px]"
@@ -50,6 +79,8 @@ export default function ArticleSectionClient({ postData, AdComponent }: Props) {
           <div className="hidden md:block">
             <SocialSharePanel link={postData.link} title={postData.title} />
           </div>
+
+          <RelatedNewsSection posts={relatedPosts} />
 
           {AdComponent}
         </div>

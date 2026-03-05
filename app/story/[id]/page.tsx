@@ -205,7 +205,11 @@ export default async function Page({ params }: PageProps) {
               latestPosts={latestPosts}
               popularPosts={popularPosts}
             />
-            <StoryInfiniteArticles initialPost={postData} maxFetch={3} />
+            <StoryInfiniteArticles
+              initialPost={postData}
+              popularPosts={popularPosts}
+              maxFetch={3}
+            />
           </div>
           <aside className="hidden lg:block">
             <StorySidebar

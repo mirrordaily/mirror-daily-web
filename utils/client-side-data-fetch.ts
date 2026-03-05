@@ -3,6 +3,7 @@ import {
   URL_STATIC_CREATIVTY_SHORTPAGE,
   URL_STATIC_LATEST_NEWS,
   URL_STATIC_NEWS_SHORTSPAGE,
+  URL_STATIC_POPULAR_NEWS,
 } from '@/constants/config'
 import { SHORTS_TYPE } from '@/types/common'
 import type {
@@ -54,10 +55,7 @@ const fetchPopularPost = async (
   amount: number = 10
 ): Promise<PopularNews[]> => {
   try {
-    // TODO: 推上 prod 時改回 config URL
-    const resp = await fetch(
-      'https://statics-prod.mirrordaily.news/json/popular.json'
-    )
+    const resp = await fetch(URL_STATIC_POPULAR_NEWS)
 
     const json = await resp.json()
 
