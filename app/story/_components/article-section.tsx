@@ -2,7 +2,7 @@ import HeroSection from '../_components/hero-section'
 import RelatedNewsSection from '../_components/related-news-section'
 import Article from '../_components/article'
 import { fetchRelatedPosts } from '../actions'
-import { getRandomItems } from '@/utils/common'
+import { enrichRelatedPosts } from '@/utils/related-posts'
 import type { Post } from '@/types/story'
 import { DesktopGptAd } from '@/shared-components/gpt-ad/desktop-gpt-ad'
 import { NonDesktopGptAd } from '@/shared-components/gpt-ad/non-desktop-gpt-ad'
@@ -20,26 +20,15 @@ type Props = {
   popularPosts: PopularNews[]
 }
 
-const MIN_RELATED_POSTS = 6
-
 export default async function ArticleSection({
   postData,
   id,
   latestPosts,
   popularPosts,
 }: Props) {
-  let relatedPosts = await fetchRelatedPosts(id)
+  const rawRelatedPosts = await fetchRelatedPosts(id)
+  const relatedPosts = enrichRelatedPosts(rawRelatedPosts, popularPosts)
   const popularPostsTopSix = popularPosts.slice(0, 6)
-
-  if (relatedPosts.length < MIN_RELATED_POSTS) {
-    const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
-    const relatedIds = new Set(relatedPosts.map((post) => post.postId))
-    const remainingPopularPosts = popularPosts
-      .slice(6)
-      .filter((post) => !relatedIds.has(post.postId))
-    const randomPopularPosts = getRandomItems(remainingPopularPosts, postsToAdd)
-    relatedPosts = [...relatedPosts, ...randomPopularPosts]
-  }
 
   const hasBrief =
     postData.apiDataBrief.length > 0 && !!postData.apiDataBrief[0]?.content[0]

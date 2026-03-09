@@ -95,7 +95,9 @@ export default async function Page({ params }: PageProps) {
   if (!postData) notFound()
 
   const shouldShowAd = postData.shouldShowAd
-  const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const latestPosts = (await fetchLatestPost(1))
+    .filter((post) => post.postId !== postData.id)
+    .slice(0, 6)
   const popularPosts = await fetchPopularPost(20)
   const popularPostsTopSix = popularPosts.slice(0, 6)
 
@@ -205,7 +207,11 @@ export default async function Page({ params }: PageProps) {
               latestPosts={latestPosts}
               popularPosts={popularPosts}
             />
-            <StoryInfiniteArticles initialPost={postData} maxFetch={3} />
+            <StoryInfiniteArticles
+              initialPost={postData}
+              popularPosts={popularPosts}
+              maxFetch={3}
+            />
           </div>
           <aside className="hidden lg:block">
             <StorySidebar
