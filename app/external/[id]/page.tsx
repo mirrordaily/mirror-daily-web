@@ -68,7 +68,9 @@ export default async function Page({ params }: PageProps) {
   let relatedPosts = await fetchRelatedPosts(id)
   const popularPosts = await fetchPopularPost(20)
   const popularPostsTopSix = popularPosts.slice(0, 6)
-  const latestPosts = (await fetchLatestPost(1)).slice(0, 6)
+  const latestPosts = (await fetchLatestPost(1))
+    .filter((post) => post.postId !== id)
+    .slice(0, 6)
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
     const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
