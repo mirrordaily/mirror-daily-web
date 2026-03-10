@@ -14,14 +14,14 @@ export default function TopAdSection() {
         <DesktopGptAd
           mode="normal"
           slotKey="mirrordaily_home_PC_970x250_top"
-          customClasses="mt-5 mb-9"
+          customClasses="mt-5 mb-4"
         />
       </div>
       <div className="block min-h-[286px] lg:hidden">
         <NonDesktopGptAd
           mode="normal"
           slotKey="mirrordaily_home_MW_300x250_top"
-          customClasses="mb-9 mx-auto"
+          customClasses="mb-4 mx-auto"
         />
       </div>
     </div>
