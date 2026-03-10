@@ -11,9 +11,10 @@ import type {
 } from '@/graphql/__generated__/graphql'
 import { transformRawPost } from '@/utils/data-process'
 import type { SectionPost } from '@/types/section'
-import { URL_STATIC_SECTION_NEWS } from '@/constants/config'
+import { STATIC_JSON_SECTION_NEWS } from '@/constants/config'
 import { sectionPostSchema, countsSchema } from '@/utils/data-schema'
 import { z } from 'zod'
+import { readStaticJson } from '@/utils/read-static-json'
 
 function transformSectionPost(
   rawData: GetPostsBySectionSlugQuery['posts']
@@ -87,14 +88,9 @@ async function fetchSectionPostsFromJSON({
   })
 
   try {
-    const resp = await fetch(`${URL_STATIC_SECTION_NEWS}_${slug}_${page}.json`)
-    if (!resp.ok) {
-      return {
-        postsData: [],
-        jsonPostsCount: 0,
-      }
-    }
-    const rawData = await resp.json()
+    const rawData = await readStaticJson<{ section?: unknown }>(
+      `${STATIC_JSON_SECTION_NEWS}_${slug}_${page}.json`
+    )
     const data = schema.parse(rawData?.section)
     const { posts, externals } = data.counts
     const postsData = data.items.map((post) => transformRawPost(post))
