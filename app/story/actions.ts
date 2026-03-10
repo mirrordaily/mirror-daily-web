@@ -143,7 +143,7 @@ async function fetchNextPostBySameSectionAction(
     getTraceObject()
   )
 
-  const result = await fetchGQLData(
+  const result = await fetchStoryGQLData(
     errorLogger,
     GetPostsBySameSectionDocument,
     {
