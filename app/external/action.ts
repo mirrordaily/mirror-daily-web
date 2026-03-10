@@ -1,7 +1,7 @@
 'use server'
 
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { fetchGQLData } from '@/utils/graphql'
+import { fetchStoryGQLData } from '@/utils/graphql'
 import {
   GetExternalByIdDocument,
   GetRelatedPostsByExternalIdDocument,
@@ -68,7 +68,7 @@ async function fetchExternal(id: string): Promise<ExternalPost | null> {
     `Error occurs while fetching external with id:${id} on external page`,
     getTraceObject()
   )
-  const result = await fetchGQLData(errorLogger, GetExternalByIdDocument, {
+  const result = await fetchStoryGQLData(errorLogger, GetExternalByIdDocument, {
     id,
   })
   if (result) {
@@ -84,7 +84,7 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
     `Error occurs while fetching related posts using external id:${id} on external page`,
     getTraceObject()
   )
-  const result = await fetchGQLData(
+  const result = await fetchStoryGQLData(
     errorLogger,
     GetRelatedPostsByExternalIdDocument,
     {
