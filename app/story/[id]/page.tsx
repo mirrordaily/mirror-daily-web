@@ -194,13 +194,13 @@ export default async function Page({ params }: PageProps) {
       <Suspense>
         <PageLogger extra={extra} />
       </Suspense>
-      <main className="flex flex-col items-center">
+      <main className="mb-[60px] flex flex-col items-center">
         {shouldShowAd && <ArticlePageTopAd />}
         <FullScreenAd slotKey="homepage_mw" />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <div className="w-full lg:flex lg:items-start lg:justify-center lg:gap-x-[104px]">
-          <div className="flex w-full flex-col items-center">
+          <div className="mb-[60px] flex w-full flex-col items-center gap-y-[72px] md:gap-y-[76px] lg:gap-y-[92px]">
             <ArticleSection
               postData={postData}
               id={id}
@@ -213,7 +213,7 @@ export default async function Page({ params }: PageProps) {
               maxFetch={3}
             />
           </div>
-          <aside className="hidden lg:block">
+          <aside>
             <StorySidebar
               latestPosts={latestPosts}
               popularPosts={popularPostsTopSix}

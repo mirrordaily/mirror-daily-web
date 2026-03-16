@@ -42,7 +42,7 @@ export default function ArticleSectionClient({
 
   return (
     <section
-      className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px]"
+      className="flex w-full flex-col items-center gap-y-[72px] md:gap-y-[76px] lg:gap-y-[92px]"
       data-story-id={postData.id}
     >
       <div>
