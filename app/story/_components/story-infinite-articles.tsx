@@ -106,7 +106,7 @@ export default function StoryInfiniteArticles({
       <StoryScrollSpy articles={articlesForSpy} />
 
       {/* sentinel：滑到底時觸發下一篇 */}
-      <div ref={sentinelRef} className="h-px w-full" />
+      <div ref={sentinelRef} className="absolute bottom-0 h-0 w-full" />
 
       {posts.map((post, index) => {
         const AdComponent = articleAds[index]

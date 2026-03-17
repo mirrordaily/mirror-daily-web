@@ -11,7 +11,6 @@ import NewsletterSubscription from '@/shared-components/newsletter-subscription'
 import { SECTION_FORUM_SLUG } from '@/constants/misc'
 import { DableWordFirst } from './ads'
 import type { LatestPost, PopularNews } from '@/types/common'
-import StorySidebar from './story-sidebar'
 
 type Props = {
   postData: Post
@@ -23,19 +22,17 @@ type Props = {
 export default async function ArticleSection({
   postData,
   id,
-  latestPosts,
   popularPosts,
 }: Props) {
   const rawRelatedPosts = await fetchRelatedPosts(id)
   const relatedPosts = enrichRelatedPosts(rawRelatedPosts, popularPosts)
-  const popularPostsTopSix = popularPosts.slice(0, 6)
 
   const hasBrief =
     postData.apiDataBrief.length > 0 && !!postData.apiDataBrief[0]?.content[0]
 
   return (
     <section
-      className="flex w-full flex-col items-center lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center lg:gap-x-[104px]"
+      className="flex w-full flex-col items-center lg:flex-row lg:items-start lg:justify-center"
       data-story-id={postData.id}
     >
       <div>
@@ -93,15 +90,6 @@ export default async function ArticleSection({
           <DableWordFirst />
         </div>
       </div>
-
-      <hr className="my-8 w-full max-w-[238px] border-[0.5px] border-[#7F8493] md:my-12 md:w-[588px] md:max-w-none lg:hidden" />
-
-      <StorySidebar
-        className="mb-[72px] lg:hidden"
-        latestPosts={latestPosts}
-        popularPosts={popularPostsTopSix}
-        shouldShowAd={postData.shouldShowAd}
-      />
     </section>
   )
 }
