@@ -16,7 +16,7 @@ export default async function EditorChoiceSection() {
   }
 
   return (
-    <section className="section-in-homepage mb-7 mt-[6px] md:my-5 md:px-5 lg:mb-0 lg:px-9">
+    <section className="section-in-homepage mb-7 md:mb-5 md:px-5 lg:mb-0 lg:px-9">
       <EditorChoiceMain {...data} />
     </section>
   )
