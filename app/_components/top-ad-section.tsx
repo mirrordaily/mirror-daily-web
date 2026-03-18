@@ -13,7 +13,7 @@ export default function TopAdSection() {
       <div className="mb-4 mt-5 hidden min-h-[250px] lg:flex lg:items-center">
         <DesktopGptAd mode="normal" slotKey="mirrordaily_home_PC_970x250_top" />
       </div>
-      <div className="block min-h-[286px] lg:hidden">
+      <div className="block min-h-[250px] lg:hidden">
         <NonDesktopGptAd
           mode="normal"
           slotKey="mirrordaily_home_MW_300x250_top"

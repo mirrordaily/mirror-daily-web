@@ -16,7 +16,7 @@ export default function ArticlePageTopAd() {
           slotKey="mirrordaily_article_PC_970x250_top"
         />
       </div>
-      <div className="block min-h-[286px] md:hidden">
+      <div className="block min-h-[250px] md:hidden">
         <NonDesktopGptAd
           mode="normal"
           slotKey="mirrordaily_article_MW_300x250_top"
