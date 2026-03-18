@@ -200,7 +200,7 @@ export default async function Page({ params }: PageProps) {
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:mt-4 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <div className="w-full lg:flex lg:items-start lg:justify-center lg:gap-x-[104px]">
-          <div className="mb-[60px] flex w-full flex-col items-center gap-y-[72px] md:gap-y-[76px] lg:gap-y-[92px]">
+          <div className="mb-[60px] flex w-full flex-col items-center">
             <ArticleSection
               postData={postData}
               id={id}
