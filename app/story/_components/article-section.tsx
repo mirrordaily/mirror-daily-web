@@ -32,7 +32,7 @@ export default async function ArticleSection({
 
   return (
     <section
-      className="flex w-full flex-col items-center lg:flex-row lg:items-start lg:justify-center"
+      className="mb-[72px] flex w-full flex-col items-center md:mb-[76px] lg:mb-[92px] lg:flex-row lg:items-start lg:justify-center"
       data-story-id={postData.id}
     >
       <div>
