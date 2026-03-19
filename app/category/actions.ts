@@ -12,8 +12,9 @@ import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import type { CategoryPost } from '@/types/category'
 import { transformRawPost } from '@/utils/data-process'
 import { sectionPostSchema, countsSchema } from '@/utils/data-schema'
-import { URL_STATIC_CATEGORY_NEWS } from '@/constants/config'
+import { STATIC_JSON_CATEGORY_NEWS } from '@/constants/config'
 import { z } from 'zod'
+import { readStaticJson } from '@/utils/read-static-json'
 
 function transformCategoryPost(
   rawData: GetPostsByCategorySlugQuery['posts']
@@ -89,14 +90,9 @@ async function fetchCategoryPostsFromJSON({
   })
 
   try {
-    const resp = await fetch(`${URL_STATIC_CATEGORY_NEWS}_${slug}_${page}.json`)
-    if (!resp.ok) {
-      return {
-        postsData: [],
-        jsonPostsCount: 0,
-      }
-    }
-    const rawData = await resp.json()
+    const rawData = await readStaticJson<{ category?: unknown }>(
+      `${STATIC_JSON_CATEGORY_NEWS}_${slug}_${page}.json`
+    )
     const data = schema.parse(rawData?.category)
     const { posts, externals } = data.counts
     const postsData = data.items.map((post) => transformRawPost(post))

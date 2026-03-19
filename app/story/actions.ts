@@ -1,7 +1,7 @@
 'use server'
 
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { fetchGQLData } from '@/utils/graphql'
+import { fetchGQLData, fetchStoryGQLData } from '@/utils/graphql'
 import {
   GetPostByIdDocument,
   GetRelatedPostsByIdDocument,
@@ -121,7 +121,7 @@ async function fetchPost(id: string) {
     getTraceObject()
   )
 
-  const result = await fetchGQLData(errorLogger, GetPostByIdDocument, {
+  const result = await fetchStoryGQLData(errorLogger, GetPostByIdDocument, {
     id: id,
   })
 
@@ -165,9 +165,13 @@ async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
     getTraceObject()
   )
 
-  const result = await fetchGQLData(errorLogger, GetRelatedPostsByIdDocument, {
-    id: id,
-  })
+  const result = await fetchStoryGQLData(
+    errorLogger,
+    GetRelatedPostsByIdDocument,
+    {
+      id: id,
+    }
+  )
 
   if (result) {
     const { post } = result
