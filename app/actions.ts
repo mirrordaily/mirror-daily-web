@@ -230,7 +230,6 @@ export const fetchPromoteTopics = async (): Promise<PromoteTopicData[]> => {
   try {
     const jsonData = await readStaticJson(STATIC_JSON_PROMOTE_TOPICS)
     const result = schema.parse(jsonData)
-    console.log(result.promoteTopics)
     return result.promoteTopics.map(transformRawPromoteTopic)
   } catch (e) {
     errorLogger(e)
