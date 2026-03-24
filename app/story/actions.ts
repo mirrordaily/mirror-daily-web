@@ -1,7 +1,7 @@
 'use server'
 
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
-import { fetchGQLData, fetchStoryGQLData } from '@/utils/graphql'
+import { fetchStoryGQLData } from '@/utils/graphql'
 import {
   GetPostByIdDocument,
   GetRelatedPostsByIdDocument,
@@ -143,7 +143,7 @@ async function fetchNextPostBySameSectionAction(
     getTraceObject()
   )
 
-  const result = await fetchGQLData(
+  const result = await fetchStoryGQLData(
     errorLogger,
     GetPostsBySameSectionDocument,
     {
