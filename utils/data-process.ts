@@ -401,6 +401,12 @@ const removeHtmlTags = (content: string) => {
   return content.replaceAll(regex, '')
 }
 
+const getDescriptionFromTagPosts = (posts: TagPost[]) => {
+  if (posts.length === 0) return undefined
+  const titles = posts.map((post) => post.title.trim()).join('、')
+  return titles
+}
+
 export {
   getHeroImage,
   dateFormatter,
@@ -416,4 +422,5 @@ export {
   getSectionColor,
   getCategoryColor,
   removeHtmlTags,
+  getDescriptionFromTagPosts,
 }
