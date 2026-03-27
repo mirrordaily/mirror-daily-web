@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { isServer } from '@/utils/common'
 import { SITE_NAME } from '@/constants/misc'
 import { useDebounceCallback } from 'usehooks-ts'
+import { SITE_BASE_PATH } from '@/constants/preview-mode'
 
 type Article = {
   id: string
@@ -19,6 +20,8 @@ export function StoryScrollSpy({ articles }: { articles: Article[] }) {
 
   const ssrFirstId = articles[0]?.id
 
+  const getStoryPath = (id: string) => `${SITE_BASE_PATH}/story/${id}`
+
   const update = () => {
     const y = window.innerHeight * 0.35
 
@@ -29,12 +32,13 @@ export function StoryScrollSpy({ articles }: { articles: Article[] }) {
         if (rect.bottom > 0 && rect.top < window.innerHeight) {
           if (activeIdRef.current !== ssrFirstId) {
             activeIdRef.current = ssrFirstId
-            if (window.location.pathname !== `/story/${ssrFirstId}`) {
+            const nextPath = getStoryPath(ssrFirstId)
+            if (window.location.pathname !== nextPath) {
               window.history.replaceState(
                 //for GTM tracking
                 { articleId: ssrFirstId },
                 '',
-                `/story/${ssrFirstId}`
+                nextPath
               )
               const title = titleById.get(ssrFirstId)
               if (title) document.title = `${title} - ${SITE_NAME}`
@@ -54,12 +58,13 @@ export function StoryScrollSpy({ articles }: { articles: Article[] }) {
         if (activeIdRef.current === a.id) return
         activeIdRef.current = a.id
 
-        if (window.location.pathname !== `/story/${a.id}`) {
+        const nextPath = getStoryPath(a.id)
+        if (window.location.pathname !== nextPath) {
           window.history.replaceState(
             //for GTM tracking
             { articleId: a.id },
             '',
-            `/story/${a.id}`
+            nextPath
           )
           const title = titleById.get(a.id)
           if (title) document.title = `${title} - ${SITE_NAME}`
