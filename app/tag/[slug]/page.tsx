@@ -55,6 +55,7 @@ export async function generateMetadata({
         ...(defaultMetadata.openGraph ?? {}),
         title,
         url: getTagPageUrl(slug),
+        ...(description && { description }),
       },
     }
   )
