@@ -7,6 +7,7 @@ import { SITE_NAME } from '@/constants/misc'
 import { getTagPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
 import { tagClickGtmEvents } from '@/constants/gtm'
+import { getDescriptionFromTagPosts } from '@/utils/data-process'
 
 type PageProps = {
   params: { slug: string }
@@ -22,8 +23,8 @@ export async function generateMetadata({
     notFound()
   }
 
-  const { totalAmount } = await fetchTagPosts({
-    take: 0,
+  const { totalAmount, posts } = await fetchTagPosts({
+    take: 3,
     skip: 0,
     slug,
     withAmount: true,
@@ -41,6 +42,7 @@ export async function generateMetadata({
       : {}
 
   const title = `${tagInfo.name} - ${SITE_NAME}`
+  const description = getDescriptionFromTagPosts(posts)
 
   const metaData = Object.assign(
     {},
@@ -48,10 +50,12 @@ export async function generateMetadata({
       ...defaultMetadata,
       ...robotsMetaData,
       title,
+      ...(description && { description }),
       openGraph: {
         ...(defaultMetadata.openGraph ?? {}),
         title,
         url: getTagPageUrl(slug),
+        ...(description && { description }),
       },
     }
   )
