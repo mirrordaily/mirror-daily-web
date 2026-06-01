@@ -1,6 +1,6 @@
 import type { GetTopicBasicInfoQuery } from '@/graphql/__generated__/graphql'
 import { notFound } from 'next/navigation'
-import { fetchGorupTypeTopicPostBySlug } from '../../../action'
+import { fetchGroupTypeTopicPostBySlug } from '../../../action'
 import List from './list'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default async function GroupTypeListing({ slug, tags }: Props) {
-  const posts = await fetchGorupTypeTopicPostBySlug(slug)
+  const posts = await fetchGroupTypeTopicPostBySlug(slug)
 
   if (posts.length === 0) notFound()
 

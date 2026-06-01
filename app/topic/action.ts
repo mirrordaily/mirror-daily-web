@@ -188,7 +188,7 @@ const transformRawPostWithTags = (
   }
 }
 
-async function fetchGorupTypeTopicPostBySlug(
+async function fetchGroupTypeTopicPostBySlug(
   slug: string
 ): Promise<PostDataWithTags[]> {
   const errorLogger = createErrorLogger(
@@ -319,6 +319,6 @@ async function fetchTopicListingByPage({
 export {
   fetchTopicBasicInfo,
   fetchListTypeTopicPostBySlug,
-  fetchGorupTypeTopicPostBySlug,
+  fetchGroupTypeTopicPostBySlug,
   fetchTopicListingByPage,
 }
