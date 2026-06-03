@@ -69,6 +69,7 @@ export default function SwiperComponent({ list }: Props) {
           )
         })}
         <button
+          type="button"
           className={`${homepageGtmEvents.editorChoiceButton} custom-swiper-navigation-prev`}
         >
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
@@ -80,6 +81,7 @@ export default function SwiperComponent({ list }: Props) {
           />
         </button>
         <button
+          type="button"
           className={`${homepageGtmEvents.editorChoiceButton} custom-swiper-navigation-next`}
         >
           {/* Use sr-only to hide an element visually without hiding it from screen readers */}
