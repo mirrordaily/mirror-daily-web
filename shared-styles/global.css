@@ -61,7 +61,7 @@
   .swiper {
     .custom-swiper-navigation-next,
     .custom-swiper-navigation-prev {
-      @apply absolute top-[calc((100%_-_105px)_/_2)] z-20 flex size-6 -translate-y-1/2 items-center justify-center md:top-1/2 lg:size-14;
+      @apply absolute top-[calc((100%_-_105px)_/_2)] z-20 flex size-6 -translate-y-1/2 items-center justify-center md:top-1/2 md:hidden lg:flex lg:size-14;
     }
 
     .custom-swiper-navigation-next {
