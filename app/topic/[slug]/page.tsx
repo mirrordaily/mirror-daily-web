@@ -22,6 +22,10 @@ import ListTypeListing from './_components/list-type'
 import GroupTypeListing from './_components/group-type'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
+import {
+  fetchGroupTypeTopicPostBySlug,
+  fetchListTypeTopicPostBySlug,
+} from '../action'
 
 type PageProps = {
   params: { slug: string }
@@ -40,14 +44,37 @@ export async function generateMetadata({
   const defaultMetadata = getDefaultMetadata()
 
   const title = `${topic.og_title || topic.name} - ${SITE_NAME}`
-  const description =
-    topic.og_description ||
-    getFirstParagraphFromApiData(topic.apiDataBrief) ||
-    ''
   const heroImage = getHeroImage(topic.heroImage)
   const ogImage = getHeroImage(topic.og_image)
   const mainImage = selectMainImage(heroImage, ogImage)
   const image = mainImage.resized?.original || IMAGE_PATH
+
+  let posts: { title: string }[] = []
+
+  switch (topic.type) {
+    case TOPIC_LIST_TYPE.GROUP:
+      posts = await fetchGroupTypeTopicPostBySlug(slug)
+      break
+    case TOPIC_LIST_TYPE.LIST: {
+      const { postsData } = await fetchListTypeTopicPostBySlug({
+        slug,
+        take: 3,
+      })
+      posts = postsData
+      break
+    }
+  }
+
+  const firstThreePostTitles = posts
+    .slice(0, 3)
+    .map((post) => post.title)
+    .join('、')
+
+  const description =
+    topic.og_description ||
+    getFirstParagraphFromApiData(topic.apiDataBrief) ||
+    firstThreePostTitles ||
+    ''
 
   const metaData = Object.assign(
     {},
