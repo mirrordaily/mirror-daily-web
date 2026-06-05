@@ -76,6 +76,10 @@ export async function generateMetadata({
     firstThreePostTitles ||
     ''
 
+  const other = {
+    'article-description': description,
+  }
+
   const metaData = Object.assign(
     {},
     {
@@ -89,6 +93,7 @@ export async function generateMetadata({
         url: getTopicPageUrl(slug),
         images: image,
       },
+      other,
     }
   )
 
