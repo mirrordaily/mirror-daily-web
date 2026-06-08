@@ -53,7 +53,7 @@ export async function generateMetadata({
 
   switch (topic.type) {
     case TOPIC_LIST_TYPE.GROUP:
-      posts = await fetchGroupTypeTopicPostBySlug(slug)
+      posts = await fetchGroupTypeTopicPostBySlug(slug, 3)
       break
     case TOPIC_LIST_TYPE.LIST: {
       const { postsData } = await fetchListTypeTopicPostBySlug({
