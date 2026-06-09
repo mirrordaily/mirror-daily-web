@@ -1425,6 +1425,8 @@ export type Mutation = {
   createPopularTags?: Maybe<Array<Maybe<PopularTag>>>
   createPost?: Maybe<Post>
   createPosts?: Maybe<Array<Maybe<Post>>>
+  createPromoteTopic?: Maybe<PromoteTopic>
+  createPromoteTopics?: Maybe<Array<Maybe<PromoteTopic>>>
   createSection?: Maybe<Section>
   createSections?: Maybe<Array<Maybe<Section>>>
   createTag?: Maybe<Tag>
@@ -1465,6 +1467,8 @@ export type Mutation = {
   deletePopularTags?: Maybe<Array<Maybe<PopularTag>>>
   deletePost?: Maybe<Post>
   deletePosts?: Maybe<Array<Maybe<Post>>>
+  deletePromoteTopic?: Maybe<PromoteTopic>
+  deletePromoteTopics?: Maybe<Array<Maybe<PromoteTopic>>>
   deleteSection?: Maybe<Section>
   deleteSections?: Maybe<Array<Maybe<Section>>>
   deleteTag?: Maybe<Tag>
@@ -1506,6 +1510,8 @@ export type Mutation = {
   updatePopularTags?: Maybe<Array<Maybe<PopularTag>>>
   updatePost?: Maybe<Post>
   updatePosts?: Maybe<Array<Maybe<Post>>>
+  updatePromoteTopic?: Maybe<PromoteTopic>
+  updatePromoteTopics?: Maybe<Array<Maybe<PromoteTopic>>>
   updateSection?: Maybe<Section>
   updateSections?: Maybe<Array<Maybe<Section>>>
   updateTag?: Maybe<Tag>
@@ -1639,6 +1645,14 @@ export type MutationCreatePostArgs = {
 
 export type MutationCreatePostsArgs = {
   data: Array<PostCreateInput>
+}
+
+export type MutationCreatePromoteTopicArgs = {
+  data: PromoteTopicCreateInput
+}
+
+export type MutationCreatePromoteTopicsArgs = {
+  data: Array<PromoteTopicCreateInput>
 }
 
 export type MutationCreateSectionArgs = {
@@ -1799,6 +1813,14 @@ export type MutationDeletePostArgs = {
 
 export type MutationDeletePostsArgs = {
   where: Array<PostWhereUniqueInput>
+}
+
+export type MutationDeletePromoteTopicArgs = {
+  where: PromoteTopicWhereUniqueInput
+}
+
+export type MutationDeletePromoteTopicsArgs = {
+  where: Array<PromoteTopicWhereUniqueInput>
 }
 
 export type MutationDeleteSectionArgs = {
@@ -1973,6 +1995,15 @@ export type MutationUpdatePostArgs = {
 
 export type MutationUpdatePostsArgs = {
   data: Array<PostUpdateArgs>
+}
+
+export type MutationUpdatePromoteTopicArgs = {
+  data: PromoteTopicUpdateInput
+  where: PromoteTopicWhereUniqueInput
+}
+
+export type MutationUpdatePromoteTopicsArgs = {
+  data: Array<PromoteTopicUpdateArgs>
 }
 
 export type MutationUpdateSectionArgs = {
@@ -2826,6 +2857,70 @@ export type PostWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>
 }
 
+export type PromoteTopic = {
+  __typename?: 'PromoteTopic'
+  createdAt?: Maybe<Scalars['DateTime']['output']>
+  createdBy?: Maybe<User>
+  id: Scalars['ID']['output']
+  order?: Maybe<Scalars['Int']['output']>
+  state?: Maybe<Scalars['String']['output']>
+  topics?: Maybe<Topic>
+  updatedAt?: Maybe<Scalars['DateTime']['output']>
+  updatedBy?: Maybe<User>
+}
+
+export type PromoteTopicCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>
+  createdBy?: InputMaybe<UserRelateToOneForCreateInput>
+  order?: InputMaybe<Scalars['Int']['input']>
+  state?: InputMaybe<Scalars['String']['input']>
+  topics?: InputMaybe<TopicRelateToOneForCreateInput>
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>
+  updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
+}
+
+export type PromoteTopicOrderByInput = {
+  createdAt?: InputMaybe<OrderDirection>
+  id?: InputMaybe<OrderDirection>
+  order?: InputMaybe<OrderDirection>
+  state?: InputMaybe<OrderDirection>
+  updatedAt?: InputMaybe<OrderDirection>
+}
+
+export type PromoteTopicUpdateArgs = {
+  data: PromoteTopicUpdateInput
+  where: PromoteTopicWhereUniqueInput
+}
+
+export type PromoteTopicUpdateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>
+  createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
+  order?: InputMaybe<Scalars['Int']['input']>
+  state?: InputMaybe<Scalars['String']['input']>
+  topics?: InputMaybe<TopicRelateToOneForUpdateInput>
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>
+  updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
+}
+
+export type PromoteTopicWhereInput = {
+  AND?: InputMaybe<Array<PromoteTopicWhereInput>>
+  NOT?: InputMaybe<Array<PromoteTopicWhereInput>>
+  OR?: InputMaybe<Array<PromoteTopicWhereInput>>
+  createdAt?: InputMaybe<DateTimeNullableFilter>
+  createdBy?: InputMaybe<UserWhereInput>
+  id?: InputMaybe<IdFilter>
+  order?: InputMaybe<IntNullableFilter>
+  state?: InputMaybe<StringNullableFilter>
+  topics?: InputMaybe<TopicWhereInput>
+  updatedAt?: InputMaybe<DateTimeNullableFilter>
+  updatedBy?: InputMaybe<UserWhereInput>
+}
+
+export type PromoteTopicWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>
+  order?: InputMaybe<Scalars['Int']['input']>
+}
+
 export type Query = {
   __typename?: 'Query'
   audioFile?: Maybe<AudioFile>
@@ -2872,6 +2967,9 @@ export type Query = {
   post?: Maybe<Post>
   posts?: Maybe<Array<Post>>
   postsCount?: Maybe<Scalars['Int']['output']>
+  promoteTopic?: Maybe<PromoteTopic>
+  promoteTopics?: Maybe<Array<PromoteTopic>>
+  promoteTopicsCount?: Maybe<Scalars['Int']['output']>
   section?: Maybe<Section>
   sections?: Maybe<Array<Section>>
   sectionsCount?: Maybe<Scalars['Int']['output']>
@@ -2881,6 +2979,7 @@ export type Query = {
   topic?: Maybe<Topic>
   topics?: Maybe<Array<Topic>>
   topicsCount?: Maybe<Scalars['Int']['output']>
+  trafficDashboardEnabled: Scalars['Boolean']['output']
   user?: Maybe<User>
   users?: Maybe<Array<User>>
   usersCount?: Maybe<Scalars['Int']['output']>
@@ -3114,6 +3213,22 @@ export type QueryPostsArgs = {
 
 export type QueryPostsCountArgs = {
   where?: PostWhereInput
+}
+
+export type QueryPromoteTopicArgs = {
+  where: PromoteTopicWhereUniqueInput
+}
+
+export type QueryPromoteTopicsArgs = {
+  cursor?: InputMaybe<PromoteTopicWhereUniqueInput>
+  orderBy?: Array<PromoteTopicOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: PromoteTopicWhereInput
+}
+
+export type QueryPromoteTopicsCountArgs = {
+  where?: PromoteTopicWhereInput
 }
 
 export type QuerySectionArgs = {
@@ -4514,6 +4629,7 @@ export type PostDetailFragment = {
   subtitle?: string | null
   heroCaption?: string | null
   publishedDate?: any | null
+  updatedAt?: any | null
   hiddenAdvertised?: boolean | null
   apiData?: any | null
   apiDataBrief?: any | null
@@ -4849,6 +4965,7 @@ export type GetExternalByIdQuery = {
     thumb?: string | null
     thumbCaption?: string | null
     publishedDate?: any | null
+    updatedAt?: any | null
     brief?: string | null
     content?: string | null
     tags?: Array<{
@@ -5264,6 +5381,7 @@ export type GetPostByIdQuery = {
     subtitle?: string | null
     heroCaption?: string | null
     publishedDate?: any | null
+    updatedAt?: any | null
     hiddenAdvertised?: boolean | null
     apiData?: any | null
     apiDataBrief?: any | null
@@ -5381,6 +5499,7 @@ export type GetPostsBySameSectionQuery = {
     subtitle?: string | null
     heroCaption?: string | null
     publishedDate?: any | null
+    updatedAt?: any | null
     hiddenAdvertised?: boolean | null
     apiData?: any | null
     apiDataBrief?: any | null
@@ -6904,6 +7023,7 @@ export const PostDetailFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'subtitle' } },
           { kind: 'Field', name: { kind: 'Name', value: 'heroCaption' } },
           { kind: 'Field', name: { kind: 'Name', value: 'publishedDate' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'hiddenAdvertised' } },
           {
             kind: 'Field',
@@ -8225,6 +8345,7 @@ export const GetExternalByIdDocument = {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'publishedDate' },
                 },
+                { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'brief' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'content' } },
                 {
@@ -10763,6 +10884,7 @@ export const GetPostByIdDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'subtitle' } },
           { kind: 'Field', name: { kind: 'Name', value: 'heroCaption' } },
           { kind: 'Field', name: { kind: 'Name', value: 'publishedDate' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'hiddenAdvertised' } },
           {
             kind: 'Field',
@@ -11128,6 +11250,7 @@ export const GetPostsBySameSectionDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'subtitle' } },
           { kind: 'Field', name: { kind: 'Name', value: 'heroCaption' } },
           { kind: 'Field', name: { kind: 'Name', value: 'publishedDate' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'hiddenAdvertised' } },
           {
             kind: 'Field',

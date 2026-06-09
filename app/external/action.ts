@@ -23,6 +23,7 @@ function transformExternal(
   const partnerSlug = rawData.partner?.slug ?? ''
   const externalsLink = getExternalsPageUrl(partnerSlug)
   const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
+  const updatedTime = dateFormatter(rawData.updatedAt) ?? ''
   const brief = rawData.brief ?? ''
   const content = rawData.content ?? ''
   const tags =
@@ -54,6 +55,7 @@ function transformExternal(
     partner,
     externalsLink,
     publishedTime,
+    updatedTime,
     brief,
     content,
     tags,
