@@ -7,6 +7,7 @@ export type ExternalPost = {
   partner: string
   externalsLink: string
   publishedTime: string
+  updatedTime: string
   brief: string
   content: string
   tags: {

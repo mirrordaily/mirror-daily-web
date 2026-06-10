@@ -54,6 +54,7 @@ fragment PostDetail on Post {
   subtitle
   heroCaption
   publishedDate
+  updatedAt
   hiddenAdvertised
   heroImage {
     ...ImageData
