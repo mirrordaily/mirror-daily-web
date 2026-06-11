@@ -98,6 +98,7 @@ function transformPost(
     heroCaption: rawData.heroCaption ?? '',
     publishedDateRaw: rawData.publishedDate ?? '',
     publishedTime: dateFormatter(rawData.publishedDate) ?? '',
+    updatedTime: rawData.updatedAt ? dateFormatter(rawData.updatedAt) : '',
     postMainImage,
     sections,
     isAdult: rawData.isAdult ?? false,

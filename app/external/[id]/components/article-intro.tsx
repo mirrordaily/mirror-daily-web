@@ -61,7 +61,12 @@ export default function ArticleIntro({ externalPost }: Props) {
           <Image src={IconMirrorDaily} fill alt="mirror-daily-logo" />
         </div>
         <div className="mb-4 flex flex-col gap-y-1 text-[13px] font-normal leading-normal text-[#7F8493] md:mb-3 lg:mb-4">
-          <p>{externalPost.publishedTime}</p>
+          <p>
+            <span>{externalPost.publishedTime}</span>
+            {externalPost.updatedTime && (
+              <span className="ml-1">最後更新 {externalPost.updatedTime}</span>
+            )}
+          </p>
           {externalPost.partner && (
             <a href={externalPost.externalsLink} target="_blank">
               記者：{externalPost.partner}
