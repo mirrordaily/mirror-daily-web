@@ -5,6 +5,7 @@ query GetExternalById($id: ID!) {
     thumb
     thumbCaption
     publishedDate
+    updatedAt
     brief
     content
     tags {

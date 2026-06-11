@@ -14,6 +14,7 @@ export type Post = {
   heroCaption: string
   publishedDateRaw: string
   publishedTime: string
+  updatedTime: string
   postMainImage: HeroImage
   sections: { name: string; color: string; slug: string }[]
   categories: { name: string; slug: string }[]
