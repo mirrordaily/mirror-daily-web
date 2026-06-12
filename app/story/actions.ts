@@ -15,6 +15,7 @@ import {
   dateFormatter,
   getHeroImage,
   selectMainImage,
+  toIsoStringWithTaipeiOffset,
   transformRawRelatedPosts,
 } from '@/utils/data-process'
 import type { Post } from '@/types/story'
@@ -99,6 +100,10 @@ function transformPost(
     publishedDateRaw: rawData.publishedDate ?? '',
     publishedTime: dateFormatter(rawData.publishedDate) ?? '',
     updatedTime: rawData.updatedAt ? dateFormatter(rawData.updatedAt) : '',
+    publishedTimeIso: toIsoStringWithTaipeiOffset(rawData.publishedDate),
+    updatedTimeIso: rawData.updatedAt
+      ? toIsoStringWithTaipeiOffset(rawData.updatedAt)
+      : '',
     postMainImage,
     sections,
     isAdult: rawData.isAdult ?? false,

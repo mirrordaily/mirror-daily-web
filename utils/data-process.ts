@@ -113,6 +113,12 @@ const dateFormatter = (date: string) => {
   return dayjs(date).utc().tz('Asia/Taipei').format('YYYY/MM/DD HH:mm:ss')
 }
 
+const toIsoStringWithTaipeiOffset = (date: dayjs.ConfigType) => {
+  dayjs.extend(utc)
+  dayjs.extend(timezone)
+  return dayjs(date).utc().tz('Asia/Taipei').format('YYYY-MM-DDTHH:mm:ssZ')
+}
+
 type DataFetchFunction<T> = () => Promise<T>
 
 const createDataFetchingChain = async <T>(
@@ -410,6 +416,7 @@ const getDescriptionFromTagPosts = (posts: TagPost[]) => {
 export {
   getHeroImage,
   dateFormatter,
+  toIsoStringWithTaipeiOffset,
   createDataFetchingChain,
   selectMainImage,
   transformLatestShorts,

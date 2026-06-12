@@ -8,6 +8,8 @@ export type ExternalPost = {
   externalsLink: string
   publishedTime: string
   updatedTime: string
+  publishedTimeIso: string
+  updatedTimeIso: string
   brief: string
   content: string
   tags: {

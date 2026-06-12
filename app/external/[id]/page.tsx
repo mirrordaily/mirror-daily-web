@@ -37,6 +37,16 @@ export async function generateMetadata({
   const title = `${externalPost.title} - ${SITE_NAME}`
   const description = externalPost.brief
   const image = externalPost.thumb || IMAGE_PATH
+  const publishedTime = externalPost.publishedTimeIso
+  const updatedTime = externalPost.updatedTimeIso
+  const other: Record<string, string> = {
+    pubdate: publishedTime,
+    'article:published_time': publishedTime,
+    ...(updatedTime && {
+      lastmod: updatedTime,
+      'article:modified_time': updatedTime,
+    }),
+  }
 
   const metaData = Object.assign(
     {},
@@ -52,6 +62,7 @@ export async function generateMetadata({
         images: image,
         type: 'website',
       },
+      other,
     }
   )
 
@@ -86,7 +97,8 @@ export default async function Page({ params }: PageProps) {
     title,
     partner,
     thumb,
-    publishedTime,
+    publishedTimeIso,
+    updatedTimeIso,
     brief,
     content,
     link,
@@ -101,7 +113,8 @@ export default async function Page({ params }: PageProps) {
       headline: title,
       author: partner ? { name: partner } : { name: SITE_NAME },
       image: thumb || `${SITE_URL}${IMAGE_PATH}`,
-      datePublished: new Date(publishedTime).toISOString(),
+      datePublished: publishedTimeIso,
+      ...(updatedTimeIso && { dateModified: updatedTimeIso }),
     },
     ...sections.map((section) => ({
       '@context': 'https://schema.org',

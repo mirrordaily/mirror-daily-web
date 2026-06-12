@@ -51,8 +51,15 @@ export async function generateMetadata({
     .filter(Boolean)
     .join(', ')
   const keywords = [...tags, ...algoTags].filter(Boolean).join(', ')
+  const publishedTime = postData.publishedTimeIso
+  const updatedTime = postData.updatedTimeIso
   const other: Record<string, string> = {
-    'article:published_time': new Date(postData.publishedTime).toISOString(),
+    pubdate: publishedTime,
+    'article:published_time': publishedTime,
+    ...(updatedTime && {
+      lastmod: updatedTime,
+      'article:modified_time': updatedTime,
+    }),
     'article:section': postData.sections?.[0]?.name || 'UnCategorized',
     'dable:author': postData.writers?.[0]
       ? postData.writers[0].name
@@ -133,7 +140,10 @@ export default async function Page({ params }: PageProps) {
       author: author,
       image:
         postData.postMainImage?.resized?.original || `${SITE_URL}${IMAGE_PATH}`,
-      datePublished: new Date(postData.publishedTime).toISOString(),
+      datePublished: postData.publishedTimeIso,
+      ...(postData.updatedTimeIso && {
+        dateModified: postData.updatedTimeIso,
+      }),
     },
     ...postData.sections.map((section) => ({
       '@context': 'https://schema.org',
