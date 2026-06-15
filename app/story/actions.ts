@@ -98,9 +98,13 @@ function transformPost(
     subtitle: rawData.subtitle ?? '',
     heroCaption: rawData.heroCaption ?? '',
     publishedDateRaw: rawData.publishedDate ?? '',
-    publishedTime: dateFormatter(rawData.publishedDate) ?? '',
+    publishedTime: rawData.publishedDate
+      ? dateFormatter(rawData.publishedDate)
+      : '',
     updatedTime: rawData.updatedAt ? dateFormatter(rawData.updatedAt) : '',
-    publishedTimeIso: toIsoStringWithTaipeiOffset(rawData.publishedDate),
+    publishedTimeIso: rawData.publishedDate
+      ? toIsoStringWithTaipeiOffset(rawData.publishedDate)
+      : '',
     updatedTimeIso: rawData.updatedAt
       ? toIsoStringWithTaipeiOffset(rawData.updatedAt)
       : '',

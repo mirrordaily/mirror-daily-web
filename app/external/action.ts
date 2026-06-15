@@ -26,9 +26,13 @@ function transformExternal(
   const partner = rawData.partner?.name ?? ''
   const partnerSlug = rawData.partner?.slug ?? ''
   const externalsLink = getExternalsPageUrl(partnerSlug)
-  const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
+  const publishedTime = rawData.publishedDate
+    ? dateFormatter(rawData.publishedDate)
+    : ''
   const updatedTime = rawData.updatedAt ? dateFormatter(rawData.updatedAt) : ''
-  const publishedTimeIso = toIsoStringWithTaipeiOffset(rawData.publishedDate)
+  const publishedTimeIso = rawData.publishedDate
+    ? toIsoStringWithTaipeiOffset(rawData.publishedDate)
+    : ''
   const updatedTimeIso = rawData.updatedAt
     ? toIsoStringWithTaipeiOffset(rawData.updatedAt)
     : ''
