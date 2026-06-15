@@ -40,8 +40,10 @@ export async function generateMetadata({
   const publishedTime = externalPost.publishedTimeIso
   const updatedTime = externalPost.updatedTimeIso
   const other: Record<string, string> = {
-    pubdate: publishedTime,
-    'article:published_time': publishedTime,
+    ...(publishedTime && {
+      pubdate: publishedTime,
+      'article:published_time': publishedTime,
+    }),
     ...(updatedTime && {
       lastmod: updatedTime,
       'article:modified_time': updatedTime,
@@ -113,7 +115,7 @@ export default async function Page({ params }: PageProps) {
       headline: title,
       author: partner ? { name: partner } : { name: SITE_NAME },
       image: thumb || `${SITE_URL}${IMAGE_PATH}`,
-      datePublished: publishedTimeIso,
+      ...(publishedTimeIso && { datePublished: publishedTimeIso }),
       ...(updatedTimeIso && { dateModified: updatedTimeIso }),
     },
     ...sections.map((section) => ({
