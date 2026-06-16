@@ -73,10 +73,7 @@ export async function generateMetadata({
     }
   }
 
-  const firstThreePostTitles = posts
-    .slice(0, 3)
-    .map((post) => post.title)
-    .join('、')
+  const firstThreePostTitles = posts.map((post) => post.title).join('、')
 
   const description =
     topic.og_description ||
