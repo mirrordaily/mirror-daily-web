@@ -52,9 +52,17 @@ export async function generateMetadata({
   let posts: { title: string }[] = []
 
   switch (topic.type) {
-    case TOPIC_LIST_TYPE.GROUP:
-      posts = await fetchGroupTypeTopicPostBySlug(slug, 3)
+    case TOPIC_LIST_TYPE.GROUP: {
+      const allPosts = await fetchGroupTypeTopicPostBySlug(slug)
+      posts = (topic.tags || [])
+        .flatMap((tag) =>
+          allPosts.filter((post) =>
+            post.tags.some((postTag) => postTag.id === tag.id)
+          )
+        )
+        .slice(0, 3)
       break
+    }
     case TOPIC_LIST_TYPE.LIST: {
       const { postsData } = await fetchListTypeTopicPostBySlug({
         slug,
