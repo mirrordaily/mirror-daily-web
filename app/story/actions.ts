@@ -12,12 +12,14 @@ import type {
   PostDetailFragment,
 } from '@/graphql/__generated__/graphql'
 import {
-  dateFormatter,
   getHeroImage,
   selectMainImage,
-  toIsoStringWithTaipeiOffset,
   transformRawRelatedPosts,
 } from '@/utils/data-process'
+import {
+  toDisplayDateTimeInTaipei,
+  toIsoStringWithTaipeiOffset,
+} from '@/utils/date'
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
@@ -99,9 +101,11 @@ function transformPost(
     heroCaption: rawData.heroCaption ?? '',
     publishedDateRaw: rawData.publishedDate ?? '',
     publishedTime: rawData.publishedDate
-      ? dateFormatter(rawData.publishedDate)
+      ? toDisplayDateTimeInTaipei(rawData.publishedDate)
       : '',
-    updatedTime: rawData.updatedAt ? dateFormatter(rawData.updatedAt) : '',
+    updatedTime: rawData.updatedAt
+      ? toDisplayDateTimeInTaipei(rawData.updatedAt)
+      : '',
     publishedTimeIso: rawData.publishedDate
       ? toIsoStringWithTaipeiOffset(rawData.publishedDate)
       : '',
