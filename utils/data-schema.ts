@@ -340,19 +340,23 @@ export const countsSchema = z.object({
 })
 
 const topicStorySchema = sectionStorySchema.extend({
-  tags: z.array(
-    z.object({
-      id: z.string(),
-    })
-  ),
+  tags: z
+    .array(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .optional(),
 })
 
 const topicExternalSchema = sectionExternalSchema.extend({
-  tags: z.array(
-    z.object({
-      id: z.string(),
-    })
-  ),
+  tags: z
+    .array(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .optional(),
 })
 
 export const topicPostSchema = z.union([topicStorySchema, topicExternalSchema])
