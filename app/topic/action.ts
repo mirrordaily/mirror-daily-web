@@ -191,8 +191,7 @@ const transformRawPostWithTags = (
 }
 
 async function fetchGroupTypeTopicPostBySlug(
-  slug: string,
-  take?: number
+  slug: string
 ): Promise<PostDataWithTags[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching group type topic posts (slug: ${slug})`,
@@ -245,7 +244,6 @@ async function fetchGroupTypeTopicPostBySlug(
         GetGroupTypeTopicPostsDocument,
         {
           slug,
-          take,
         }
       )
       if (rawData && rawData.topic && Array.isArray(rawData.topic.posts)) {
