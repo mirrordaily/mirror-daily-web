@@ -8,7 +8,11 @@ import {
 } from '@/graphql/__generated__/graphql'
 import type { GetExternalByIdQuery } from '@/graphql/__generated__/graphql'
 import type { ExternalPost } from '@/types/external'
-import { dateFormatter, transformRawRelatedPosts } from '@/utils/data-process'
+import { transformRawRelatedPosts } from '@/utils/data-process'
+import {
+  toDisplayDateTimeInTaipei,
+  toIsoStringWithTaipeiOffset,
+} from '@/utils/date'
 import { getExternalPageUrl, getExternalsPageUrl } from '@/utils/site-urls'
 import type { RelatedPost } from '@/types/common'
 
@@ -22,8 +26,18 @@ function transformExternal(
   const partner = rawData.partner?.name ?? ''
   const partnerSlug = rawData.partner?.slug ?? ''
   const externalsLink = getExternalsPageUrl(partnerSlug)
-  const publishedTime = dateFormatter(rawData.publishedDate) ?? ''
-  const updatedTime = rawData.updatedAt ? dateFormatter(rawData.updatedAt) : ''
+  const publishedTime = rawData.publishedDate
+    ? toDisplayDateTimeInTaipei(rawData.publishedDate)
+    : ''
+  const updatedTime = rawData.updatedAt
+    ? toDisplayDateTimeInTaipei(rawData.updatedAt)
+    : ''
+  const publishedTimeIso = rawData.publishedDate
+    ? toIsoStringWithTaipeiOffset(rawData.publishedDate)
+    : ''
+  const updatedTimeIso = rawData.updatedAt
+    ? toIsoStringWithTaipeiOffset(rawData.updatedAt)
+    : ''
   const brief = rawData.brief ?? ''
   const content = rawData.content ?? ''
   const tags =
@@ -56,6 +70,8 @@ function transformExternal(
     externalsLink,
     publishedTime,
     updatedTime,
+    publishedTimeIso,
+    updatedTimeIso,
     brief,
     content,
     tags,
