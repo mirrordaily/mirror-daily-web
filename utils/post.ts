@@ -5,7 +5,7 @@ import type { HeaderData, LatestPost, PopularNews } from '@/types/common'
 import { DEFAULT_SECTION_NAME } from '@/constants/misc'
 import { getHeroImage, getSectionColor, getCategoryColor } from './data-process'
 import { getPostPageUrl } from './site-urls'
-import { dateFormatter } from './data-process'
+import { toDisplayDateTimeInTaipei } from './date'
 
 const hasExternalLink = (
   rawPost: z.infer<typeof rawLatestPostSchema>
@@ -90,7 +90,7 @@ const transformRawLatestPost = (
     postName: title,
     postBrief: brief,
     heroImage: getHeroImage(heroImage),
-    publishedDate: dateFormatter(publishedDate),
+    publishedDate: toDisplayDateTimeInTaipei(publishedDate),
     link: getPostPageUrl(id, !!partner),
   }
 }
@@ -120,7 +120,7 @@ const transformRawPopularPost = (
     postName: title,
     postBrief: brief,
     heroImage: getHeroImage(heroImage),
-    publishedDate: dateFormatter(publishedDate),
+    publishedDate: toDisplayDateTimeInTaipei(publishedDate),
     link: getPostPageUrl(id),
   }
 }

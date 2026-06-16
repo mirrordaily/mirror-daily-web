@@ -14,8 +14,7 @@ import type {
   Shorts,
 } from '@/types/common'
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
+import { toDisplayDateTimeInTaipei } from './date'
 import type { createErrorLogger } from './log/common'
 import type {
   latestShortsSchema,
@@ -105,12 +104,6 @@ const getHeroImage = (
       },
     }
   }
-}
-
-const dateFormatter = (date: string) => {
-  dayjs.extend(utc)
-  dayjs.extend(timezone)
-  return dayjs(date).utc().tz('Asia/Taipei').format('YYYY/MM/DD HH:mm:ss')
 }
 
 type DataFetchFunction<T> = () => Promise<T>
@@ -232,7 +225,7 @@ const transformRawPost = (rawPost: RawPost): PostData => {
 
   const id = rawPost.id
   const title = rawPost.title ?? ''
-  const formattedDate = dateFormatter(rawPost.publishedDate)
+  const formattedDate = toDisplayDateTimeInTaipei(rawPost.publishedDate)
 
   if (isPostFromGQL || isPostFromJSON) {
     const link = getStoryPageUrl(id)
@@ -285,7 +278,7 @@ const transformRawPostWithSection = (
   const id = rawPost.id
   const title = rawPost.title ?? ''
   const link = getStoryPageUrl(id)
-  const publishedDate = dateFormatter(rawPost.publishedDate) ?? ''
+  const publishedDate = toDisplayDateTimeInTaipei(rawPost.publishedDate) ?? ''
   const heroImage = getHeroImage(rawPost.heroImage)
   const brief = getFirstParagraphFromApiData(rawPost.apiDataBrief) ?? ''
   const sectionName = rawPost.sections?.[0]?.name ?? DEFAULT_SECTION_NAME
@@ -409,7 +402,6 @@ const getDescriptionFromTagPosts = (posts: TagPost[]) => {
 
 export {
   getHeroImage,
-  dateFormatter,
   createDataFetchingChain,
   selectMainImage,
   transformLatestShorts,

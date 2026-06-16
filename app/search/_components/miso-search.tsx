@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useMemo } from 'react'
-import { dateFormatter } from '@/utils/data-process'
+import { toDisplayDateTimeInTaipei } from '@/utils/date'
 import { MISO_API_KEY } from '@/constants/config'
 import '@/shared-styles/search.css'
 import { searchGtmEvents } from '@/constants/gtm'
@@ -90,7 +90,9 @@ export default function MisoSearch() {
             <div class="miso-list__item-info-container">
               <div class='miso-list__item-time'>${
                 product['published_at']?.toString()
-                  ? dateFormatter(product['published_at']?.toString())
+                  ? toDisplayDateTimeInTaipei(
+                      product['published_at']?.toString()
+                    )
                   : ''
               }</div>
               <div class="miso-list__item-title">${product.title}</div>

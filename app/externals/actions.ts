@@ -12,7 +12,7 @@ import type {
 import { getExternalPageUrl } from '@/utils/site-urls'
 import { DEFAULT_SECTION_NAME, DEFAULT_SECTION_COLOR } from '@/constants/misc'
 import type { External } from '@/types/externals'
-import { dateFormatter } from '@/utils/data-process'
+import { toDisplayDateTimeInTaipei } from '@/utils/date'
 
 function transformPartnerInformation(
   rawData: GetPartnerInformationQuery['partner']
@@ -55,7 +55,9 @@ function transformExternal(
     const link = getExternalPageUrl(rawExternal.id)
     const title = rawExternal.title ?? ''
     const thumb = rawExternal.thumb ?? ''
-    const publishedDate = dateFormatter(rawExternal.publishedDate ?? '')
+    const publishedDate = toDisplayDateTimeInTaipei(
+      rawExternal.publishedDate ?? ''
+    )
     const textContent = rawExternal.brief ?? ''
     const sectionName = DEFAULT_SECTION_NAME
     const sectionColor = DEFAULT_SECTION_COLOR
