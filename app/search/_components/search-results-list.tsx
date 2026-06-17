@@ -1,6 +1,6 @@
 'use client'
 import InfiniteScrollList from '@readr-media/react-infinite-scroll-list'
-import { dateFormatter } from '@/utils/data-process'
+import { toDisplayDateTimeInTaipei } from '@/utils/date'
 import { searchGtmEvents } from '@/constants/gtm'
 import { IMAGE_PATH } from '@/constants/default-path'
 
@@ -64,7 +64,7 @@ export default function SearchResultsList({
                 <div className="p-2.5">
                   <div className="mt-2 font-['Noto_Sans_CJK_TC'] text-sm font-normal leading-normal tracking-[0.5px] text-[#2B2B2B] [font-feature-settings:'liga'_off,'clig'_off]">
                     {product.published_at
-                      ? dateFormatter(product.published_at)
+                      ? toDisplayDateTimeInTaipei(product.published_at)
                       : ''}
                   </div>
                   <div className="mt-3 line-clamp-2 text-justify font-['Noto_Sans_CJK_TC'] text-lg font-bold leading-normal text-[#4A4A4A] [font-feature-settings:'liga'_off,'clig'_off]">
