@@ -22,7 +22,7 @@ export default function PromoteTopicItem({ post }: Props) {
           />
         </div>
         <div className="h-14">
-          <p className="line-clamp-1 px-3 pt-[10px] text-base font-medium leading-[1.2] text-mirror-blue-200 lg:leading-[1.2]">
+          <p className="line-clamp-1 px-3 pt-[10px] text-base font-medium leading-[1.2] text-mirror-blue-200">
             {name}
           </p>
         </div>
