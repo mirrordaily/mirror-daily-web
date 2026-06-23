@@ -13,16 +13,16 @@ export default function PromoteTopicItem({ post }: Props) {
 
   return (
     <a href={getTopicPageUrl(slug)} className="block" target="_blank">
-      <div className="relative w-[75px] overflow-hidden rounded-[10px] bg-mirror-blue-700 shadow-[0_2.47px_2.47px_0_#00000040] lg:w-[120px]">
-        <div className="aspect-[74/74] lg:aspect-[120/120]">
+      <div className="relative w-[124px] overflow-hidden rounded-[10px] bg-mirror-blue-700">
+        <div className="aspect-[3/2]">
           <CustomImage
             images={heroImage.resized}
             alt={`推廣專題-${name}`}
             className="size-full object-cover"
           />
         </div>
-        <div className="h-10 lg:h-16">
-          <p className="line-clamp-2 px-[7px] pt-[2px] text-[10px] font-medium leading-[1.2] text-mirror-blue-200 lg:pt-[5px] lg:text-base lg:leading-[1.2]">
+        <div className="h-14">
+          <p className="line-clamp-1 px-3 pt-[10px] text-base font-medium leading-[1.2] text-mirror-blue-200 lg:leading-[1.2]">
             {name}
           </p>
         </div>
