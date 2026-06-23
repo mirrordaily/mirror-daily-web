@@ -67,7 +67,8 @@ export async function generateMetadata({
           .slice(0, 3)
         break
       }
-      case TOPIC_LIST_TYPE.LIST: {
+      case TOPIC_LIST_TYPE.LIST:
+      default: {
         const { postsData } = await fetchListTypeTopicPostBySlug({
           slug,
           take: 3,
