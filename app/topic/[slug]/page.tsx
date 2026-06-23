@@ -49,37 +49,36 @@ export async function generateMetadata({
   const mainImage = selectMainImage(heroImage, ogImage)
   const image = mainImage.resized?.original || IMAGE_PATH
 
-  let posts: { title: string }[] = []
+  let description =
+    topic.og_description || getFirstParagraphFromApiData(topic.apiDataBrief)
 
-  switch (topic.type) {
-    case TOPIC_LIST_TYPE.GROUP: {
-      const allPosts = await fetchGroupTypeTopicPostBySlug(slug)
-      posts = (topic.tags || [])
-        .flatMap((tag) =>
-          allPosts.filter((post) =>
-            post.tags.some((postTag) => postTag.id === tag.id)
+  if (!description) {
+    let posts: { title: string }[] = []
+
+    switch (topic.type) {
+      case TOPIC_LIST_TYPE.GROUP: {
+        const allPosts = await fetchGroupTypeTopicPostBySlug(slug)
+        posts = (topic.tags || [])
+          .flatMap((tag) =>
+            allPosts.filter((post) =>
+              post.tags.some((postTag) => postTag.id === tag.id)
+            )
           )
-        )
-        .slice(0, 3)
-      break
+          .slice(0, 3)
+        break
+      }
+      case TOPIC_LIST_TYPE.LIST: {
+        const { postsData } = await fetchListTypeTopicPostBySlug({
+          slug,
+          take: 3,
+        })
+        posts = postsData
+        break
+      }
     }
-    case TOPIC_LIST_TYPE.LIST: {
-      const { postsData } = await fetchListTypeTopicPostBySlug({
-        slug,
-        take: 3,
-      })
-      posts = postsData
-      break
-    }
+
+    description = posts.map((post) => post.title).join('、') || ''
   }
-
-  const firstThreePostTitles = posts.map((post) => post.title).join('、')
-
-  const description =
-    topic.og_description ||
-    getFirstParagraphFromApiData(topic.apiDataBrief) ||
-    firstThreePostTitles ||
-    ''
 
   const metaData = Object.assign(
     {},
