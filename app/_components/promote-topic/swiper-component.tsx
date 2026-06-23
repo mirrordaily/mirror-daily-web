@@ -21,7 +21,7 @@ export default function SwiperComponent({ list }: Props) {
   if (!visible || !validList.length) return null
 
   return (
-    <div className="fixed right-[20px] top-1/2 z-promote-topic w-[75px] lg:w-[120px]">
+    <div className="fixed right-[20px] top-1/4 z-promote-topic w-[124px] lg:top-[45%]">
       <NextImage
         onClick={() => setVisible(false)}
         width={20}
@@ -44,7 +44,7 @@ export default function SwiperComponent({ list }: Props) {
           delay: 5000,
         }}
         loop={validList.length > 1}
-        className="relative"
+        className="relative overflow-hidden rounded-[10px] shadow-[0_2.47px_2.47px_0_#00000040]"
       >
         {validList.map((item) => (
           <SwiperSlide key={item.id} className="relative">
