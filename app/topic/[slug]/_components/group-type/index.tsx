@@ -4,6 +4,7 @@ import { fetchGroupTypeTopicPostBySlug } from '../../../action'
 import List from './list'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
+import { filterPostsByTag } from '@/utils/topic'
 
 type Tag = NonNullable<NonNullable<GetTopicBasicInfoQuery['topic']>['tags']>[0]
 
@@ -45,9 +46,7 @@ export default async function GroupTypeListing({ slug, tags }: Props) {
     <List
       key={tag.id}
       groupName={tag.name || ''}
-      posts={posts.filter((post) =>
-        post.tags.some((postTag) => postTag.id === tag.id)
-      )}
+      posts={filterPostsByTag(posts, tag)}
     />
   ))
 

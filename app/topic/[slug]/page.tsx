@@ -26,6 +26,7 @@ import {
   fetchGroupTypeTopicPostBySlug,
   fetchListTypeTopicPostBySlug,
 } from '../action'
+import { filterPostsByTag } from '@/utils/topic'
 
 type PageProps = {
   params: { slug: string }
@@ -59,11 +60,7 @@ export async function generateMetadata({
       case TOPIC_LIST_TYPE.GROUP: {
         const allPosts = await fetchGroupTypeTopicPostBySlug(slug)
         posts = (topic.tags || [])
-          .flatMap((tag) =>
-            allPosts.filter((post) =>
-              post.tags.some((postTag) => postTag.id === tag.id)
-            )
-          )
+          .flatMap((tag) => filterPostsByTag(allPosts, tag))
           .slice(0, 3)
         break
       }

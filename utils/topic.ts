@@ -1,3 +1,5 @@
+import type { PostDataWithTags } from '@/types/topic'
+
 export function getUrlFromTopicKeywords(keyword?: string | null) {
   if (!keyword) return undefined
 
@@ -6,4 +8,13 @@ export function getUrlFromTopicKeywords(keyword?: string | null) {
   }
 
   return undefined
+}
+
+export function filterPostsByTag(
+  posts: PostDataWithTags[],
+  tag: { id: string }
+) {
+  return posts.filter((post) =>
+    post.tags.some((postTag) => postTag.id === tag.id)
+  )
 }
