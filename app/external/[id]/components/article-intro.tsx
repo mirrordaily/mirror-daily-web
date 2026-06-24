@@ -6,6 +6,7 @@ import IconMirrorDaily from '@/public/icons/logos/mirror-daily-black.svg'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 import type { ExternalPost } from '@/types/external'
 import SocialShareBar from '@/shared-components/social-share-bar'
+import PreferredSourceIcon from '@/app/_components/preferred-source/preferred-source-icon'
 
 type Props = { externalPost: ExternalPost }
 export default function ArticleIntro({ externalPost }: Props) {
@@ -51,7 +52,8 @@ export default function ArticleIntro({ externalPost }: Props) {
         <h1 className="text-2xl font-black leading-[1.2] text-[#212944] lg:mb-4">
           {externalPost.title}
         </h1>
-        <div className="fixed bottom-[135px] right-3 z-story-share-bar md:hidden">
+        <div className="fixed bottom-[135px] right-3 z-story-share-bar space-y-2 md:hidden">
+          <PreferredSourceIcon variant="mobile" />
           <SocialShareBar title={externalPost.title} direction="vertical" />
         </div>
       </div>
