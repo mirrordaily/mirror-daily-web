@@ -47,14 +47,12 @@ export default function SocialShareBar({
           href={`${SHARE_URL_FACEBOOK}${url}`}
           className={`${gtmEvents ? gtmEvents.facebookShare : ''}`}
         >
-          <button className="block">
-            <NextImage
-              src={IconFacebook}
-              width={35}
-              height={35}
-              alt="Facebook 分享"
-            />
-          </button>
+          <NextImage
+            src={IconFacebook}
+            width={35}
+            height={35}
+            alt="Facebook 分享"
+          />
         </a>
         <button
           onClick={handleLineShare}

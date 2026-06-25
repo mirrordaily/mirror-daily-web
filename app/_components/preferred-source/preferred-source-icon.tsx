@@ -22,6 +22,7 @@ export default function PreferredSourceIcon({ className, variant }: Props) {
     <a
       href={`https://google.com/preferences/source?q=${SITE_URL.replace('https://', '')}`}
       target="_blank"
+      rel="noopener noreferrer"
       className={className}
     >
       <NextImage
