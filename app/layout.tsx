@@ -9,6 +9,7 @@ import Script from 'next/script'
 import { getDefaultMetadata } from '@/utils/common'
 import { headers } from 'next/headers'
 import PromoteTopicSection from './_components/promote-topic/section'
+import PreferredSourceIcon from './_components/preferred-source/preferred-source-icon'
 
 const notoSans = Noto_Sans_TC({
   preload: true,
@@ -138,6 +139,10 @@ export default function RootLayout({
           {children}
           <UploadModal />
           <PromoteTopicSection />
+          <PreferredSourceIcon
+            variant="desktop"
+            className="fixed right-[20px] top-[65%] z-preferred-source hidden drop-shadow-[0px_4px_4px_#00000040] md:block"
+          />
         </StoreProvider>
       </body>
     </html>
