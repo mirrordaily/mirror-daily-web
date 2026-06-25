@@ -143,6 +143,9 @@ export const SHARE_URL_FACEBOOK = 'https://www.facebook.com/share.php?u='
 
 export const SHARE_URL_LINE = 'https://social-plugins.line.me/lineit/share?url='
 
+// PreferredSourceIcon 在手機版，與 SocialShareBar 共用相同寬度
+export const SHARE_BAR_ICON_SIZE = 35
+
 export const DEFAULT_SECTION_NAME = '時事'
 
 export const DEFAULT_SECTION_COLOR = '#4D8AA4'

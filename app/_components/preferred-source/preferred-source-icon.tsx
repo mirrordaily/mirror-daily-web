@@ -1,9 +1,10 @@
 import NextImage from 'next/image'
 import { SITE_URL } from '@/constants/config'
+import { SHARE_BAR_ICON_SIZE } from '@/constants/misc'
 
 const VARIANT = {
   mobile: {
-    size: 35,
+    size: SHARE_BAR_ICON_SIZE,
   },
   desktop: {
     size: 48,
