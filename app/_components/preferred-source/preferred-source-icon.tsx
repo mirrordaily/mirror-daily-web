@@ -1,5 +1,4 @@
 import NextImage from 'next/image'
-import { SITE_URL } from '@/constants/config'
 import { SHARE_BAR_ICON_SIZE } from '@/constants/misc'
 
 const VARIANT = {
@@ -21,7 +20,7 @@ export default function PreferredSourceIcon({ className, variant }: Props) {
 
   return (
     <a
-      href={`https://google.com/preferences/source?q=${SITE_URL.replace('https://', '')}`}
+      href="https://www.google.com/preferences/source?q=mirrordaily.news"
       target="_blank"
       rel="noopener noreferrer"
       className={className}
