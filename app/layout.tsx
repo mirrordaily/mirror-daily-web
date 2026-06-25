@@ -141,7 +141,7 @@ export default function RootLayout({
           <PromoteTopicSection />
           <PreferredSourceIcon
             variant="desktop"
-            className="fixed right-[20px] top-[65%] z-preferred-source hidden drop-shadow-[0px_4px_4px_#00000040] md:block"
+            className="fixed right-[20px] top-[65%] z-preferred-source hidden drop-shadow-[0px_4px_4px_#00000040] md:block lg:top-[calc(45%_+_155px)]"
           />
         </StoreProvider>
       </body>
