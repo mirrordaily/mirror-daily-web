@@ -9,6 +9,7 @@ import { storyGtmEvents } from '@/constants/gtm'
 import type { Post } from '@/types/story'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
 import SocialShareBar from '@/shared-components/social-share-bar'
+import PreferredSourceIcon from '@/app/_components/preferred-source/preferred-source-icon'
 
 type Props = {
   postData: Post
@@ -85,7 +86,8 @@ export default function HeroSection({ postData }: Props) {
           </h2>
         )}
 
-        <div className="fixed bottom-[135px] right-3 z-story-share-bar md:hidden">
+        <div className="fixed bottom-[135px] right-3 z-story-share-bar space-y-2 [filter:drop-shadow(0px_1px_2px_#0000004D)_drop-shadow(0px_2px_8px_#0000001A)] md:hidden">
+          <PreferredSourceIcon variant="mobile" />
           <SocialShareBar
             title={postData.title}
             link={postData.link}

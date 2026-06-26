@@ -1,9 +1,10 @@
 import type { GetTopicBasicInfoQuery } from '@/graphql/__generated__/graphql'
 import { notFound } from 'next/navigation'
-import { fetchGorupTypeTopicPostBySlug } from '../../../action'
+import { fetchGroupTypeTopicPostBySlug } from '../../../action'
 import List from './list'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
+import { filterPostsByTag } from '@/utils/topic'
 
 type Tag = NonNullable<NonNullable<GetTopicBasicInfoQuery['topic']>['tags']>[0]
 
@@ -13,7 +14,7 @@ type Props = {
 }
 
 export default async function GroupTypeListing({ slug, tags }: Props) {
-  const posts = await fetchGorupTypeTopicPostBySlug(slug)
+  const posts = await fetchGroupTypeTopicPostBySlug(slug)
 
   if (posts.length === 0) notFound()
 
@@ -45,9 +46,7 @@ export default async function GroupTypeListing({ slug, tags }: Props) {
     <List
       key={tag.id}
       groupName={tag.name || ''}
-      posts={posts.filter((post) =>
-        post.tags.some((postTag) => postTag.id === tag.id)
-      )}
+      posts={filterPostsByTag(posts, tag)}
     />
   ))
 

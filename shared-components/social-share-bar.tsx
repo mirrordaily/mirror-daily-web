@@ -6,7 +6,11 @@ import { useEffect, useState } from 'react'
 import type { shortsGtmEvents } from '@/constants/gtm'
 import IconLine from '@/public/icons/logos/line-green.svg'
 import IconFacebook from '@/public/icons/logos/facebook-blue.svg'
-import { SHARE_URL_FACEBOOK, SHARE_URL_LINE } from '@/constants/misc'
+import {
+  SHARE_URL_FACEBOOK,
+  SHARE_URL_LINE,
+  SHARE_BAR_ICON_SIZE,
+} from '@/constants/misc'
 
 type Props = {
   title: string
@@ -47,20 +51,23 @@ export default function SocialShareBar({
           href={`${SHARE_URL_FACEBOOK}${url}`}
           className={`${gtmEvents ? gtmEvents.facebookShare : ''}`}
         >
-          <button>
-            <NextImage
-              src={IconFacebook}
-              width={35}
-              height={35}
-              alt="Facebook 分享"
-            />
-          </button>
+          <NextImage
+            src={IconFacebook}
+            width={SHARE_BAR_ICON_SIZE}
+            height={SHARE_BAR_ICON_SIZE}
+            alt="Facebook 分享"
+          />
         </a>
         <button
           onClick={handleLineShare}
           className={`${gtmEvents ? gtmEvents.lineShare : ''}`}
         >
-          <NextImage src={IconLine} width={35} height={35} alt="Line 分享" />
+          <NextImage
+            src={IconLine}
+            width={SHARE_BAR_ICON_SIZE}
+            height={SHARE_BAR_ICON_SIZE}
+            alt="Line 分享"
+          />
         </button>
         <button
           onClick={() => {
@@ -71,7 +78,12 @@ export default function SocialShareBar({
           }}
           className={`${gtmEvents ? gtmEvents.copyUrl : ''}`}
         >
-          <NextImage src={IconShare} width={35} height={35} alt="分享連結" />
+          <NextImage
+            src={IconShare}
+            width={SHARE_BAR_ICON_SIZE}
+            height={SHARE_BAR_ICON_SIZE}
+            alt="分享連結"
+          />
         </button>
       </div>
       {getPopupJsx({ children: undefined })}
