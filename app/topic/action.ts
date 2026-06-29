@@ -91,7 +91,9 @@ async function fetchListTypeTopicPostBySlug({
 
       const result = schema.parse(rawData?.topic)
 
-      const postsData = result.items.map(transformRawPost)
+      const postsData = take
+        ? result.items.map(transformRawPost).slice(0, take)
+        : result.items.map(transformRawPost)
       const postsCount = result.counts.posts + result.counts.externals
 
       return {
@@ -188,7 +190,7 @@ const transformRawPostWithTags = (
   }
 }
 
-async function fetchGorupTypeTopicPostBySlug(
+async function fetchGroupTypeTopicPostBySlug(
   slug: string
 ): Promise<PostDataWithTags[]> {
   const errorLogger = createErrorLogger(
@@ -319,6 +321,6 @@ async function fetchTopicListingByPage({
 export {
   fetchTopicBasicInfo,
   fetchListTypeTopicPostBySlug,
-  fetchGorupTypeTopicPostBySlug,
+  fetchGroupTypeTopicPostBySlug,
   fetchTopicListingByPage,
 }
