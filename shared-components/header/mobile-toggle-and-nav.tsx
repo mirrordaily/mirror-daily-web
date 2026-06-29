@@ -1,6 +1,6 @@
 'use client'
 
-import type { HeaderData } from '@/types/common'
+import type { HeaderSection } from '@/types/common'
 import NextImage from 'next/image'
 import { useState } from 'react'
 import { CONTACT_LINKS, SOCIAL_LINKS } from '@/constants/misc'
@@ -12,9 +12,6 @@ import IconInstagram from '@/public/icons/logos/instagram-white.svg'
 import IconThreads from '@/public/icons/logos/threads-white.svg'
 import IconYouTube from '@/public/icons/logos/youtube-white.svg'
 import IconLine from '@/public/icons/logos/line-white.svg'
-import IconChevronRight from '@/public/icons/chevron-right.svg'
-import { getTopicPageUrl } from '@/utils/site-urls'
-import { isSectionItem } from '@/utils/common'
 import { headerGtmEvents } from '@/constants/gtm'
 import ImagesAd from './images-ad'
 
@@ -42,12 +39,12 @@ const ExtendedSocialLinks = [
 ] as const
 
 type Props = {
-  data: HeaderData[]
+  sections: HeaderSection[]
 }
 
 const [, ...CONTACT_LINKS_WITHOUT_FIRST] = CONTACT_LINKS
 
-export default function MobileToggleAndNav({ data }: Props) {
+export default function MobileToggleAndNav({ sections }: Props) {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleOpen = () => {
@@ -55,7 +52,7 @@ export default function MobileToggleAndNav({ data }: Props) {
   }
 
   return (
-    <div className="ml-auto mt-5 max-w-screen-sm shrink-0 md:mt-10 lg:hidden">
+    <div className="max-w-screen-sm shrink-0 lg:hidden">
       <button
         className="relative flex h-6 w-[26px] md:size-5"
         onClick={toggleOpen}
@@ -100,32 +97,10 @@ export default function MobileToggleAndNav({ data }: Props) {
                 height={20}
               />
             </button>
-            <div className="mb-3 mt-[34px] flex w-full max-w-[calc(375px-46px*2)] flex-wrap gap-x-6 gap-y-4 self-center text-xl font-medium leading-[24px] text-[#E5E6E9]">
-              {data
-                .filter((item) => !isSectionItem(item))
-                .map((item) => {
-                  return (
-                    <a
-                      key={item.slug}
-                      href={getTopicPageUrl(item.slug)}
-                      className={`inline-block max-w-full truncate ${headerGtmEvents.topic}`}
-                    >
-                      {item.name}
-                    </a>
-                  )
-                })}
-              <a
-                href="/topic"
-                className="inline-flex items-center text-primary-500"
-              >
-                看所有專題
-                <NextImage src={IconChevronRight} alt="右鍵" />
-              </a>
-            </div>
-            <div className="mb-6 w-full max-w-[calc(375px-46px*2)] grow self-center">
+            <div className="mb-6 mt-[34px] w-full max-w-[calc(375px-46px*2)] self-center">
               <ImagesAd />
             </div>
-            <MobileNavList data={data} />
+            <MobileNavList sections={sections} />
             <div className="mt-5 flex shrink-0 items-center gap-x-4 self-center">
               {ExtendedSocialLinks.map(({ name, href, icon }) => (
                 <a

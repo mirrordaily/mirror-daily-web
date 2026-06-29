@@ -1,6 +1,6 @@
 'use client'
 
-import type { HeaderData } from '@/types/common'
+import type { HeaderSection } from '@/types/common'
 import { useEffect, useState } from 'react'
 import NextImage from 'next/image'
 import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
@@ -8,14 +8,13 @@ import { useWindowSize } from 'usehooks-ts'
 import IconTogggle from '@/public/icons/sidebar-toggle.svg'
 import { getTailwindConfig } from '@/utils/tailwind'
 import { FIXED_KEY_FOR_SECTION_SHORTS } from '@/constants/config'
-import { isSectionItem } from '@/utils/common'
 import { headerGtmEvents } from '@/constants/gtm'
 
 type Props = {
-  data: HeaderData[]
+  sections: HeaderSection[]
 }
 
-export default function MobileNavList({ data }: Props) {
+export default function MobileNavList({ sections }: Props) {
   const config = getTailwindConfig()
   const desktopLowerBound = Number(config.theme.screens.lg.split('px')[0])
   const { width } = useWindowSize()
@@ -41,7 +40,7 @@ export default function MobileNavList({ data }: Props) {
   return (
     <nav className="w-full max-w-[calc(375px-46px*2)] grow self-center overflow-y-scroll">
       <ul className="flex w-[188px] flex-col">
-        {data.filter(isSectionItem).map((section) => {
+        {sections.map((section) => {
           const { name, slug } = section
 
           const hasCategories = section.categories.length > 0
