@@ -17,7 +17,7 @@ type Props = {
 
 const LG_BREAKPOINT = getTailwindConfigBreakpointNumber('lg')
 
-export default function DesktopNavList({ sections, topics }: Props) {
+export default function NavList({ sections, topics }: Props) {
   const [activeItem, setActiveItem] = useState('')
   const section = sections.find((section) => section.slug === activeItem)
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
