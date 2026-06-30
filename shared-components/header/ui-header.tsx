@@ -88,36 +88,34 @@ export default function UiHeader({
             />
           </a>
           <div className="ml-auto lg:ml-[initial]">
-            <div className="flex space-x-4">
-              <div className="ml-auto mr-5 flex shrink-0 md:gap-x-[5px] lg:mr-0 lg:gap-x-[7px]">
-                <a
-                  className={`${headerGtmEvents.search} flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px]`}
-                  href="/search"
-                >
-                  <span className="md:hidden">AI 搜尋</span>
-                  <span className="hidden md:block">AI 智慧搜尋</span>
-                  <span className="relative inline-block size-5">
-                    <NextImage src={IconSearch} fill={true} alt="搜尋" />
-                  </span>
-                </a>
-              </div>
-              {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
-                return (
-                  <a
-                    key={contactLink.href + contactLink.name}
-                    className={`${
-                      headerGtmEvents[contactLink?.gtmKey] || ''
-                    } header-submit-button`}
-                    href={contactLink.href}
-                  >
-                    {contactLink.headerSubmitButtonName}
-                  </a>
-                )
-              })}
+            <div className="ml-auto mr-5 flex lg:mr-0">
+              <a
+                className={`${headerGtmEvents.search} flex h-[26px] w-24 items-center justify-center gap-x-[10px] rounded-[29px] border-2 border-white text-sm leading-normal text-white md:w-[124px] lg:w-full`}
+                href="/search"
+              >
+                <span className="md:hidden">AI 搜尋</span>
+                <span className="hidden md:block">AI 智慧搜尋</span>
+                <span className="relative inline-block size-5">
+                  <NextImage src={IconSearch} fill={true} alt="搜尋" />
+                </span>
+              </a>
             </div>
             <div className="mt-[13px] hidden items-center justify-between lg:flex">
-              <div className="flex lg:mr-[7px]">
+              <div className="flex items-center space-x-[18px] lg:mr-[18px]">
                 <ImagesAd />
+                {CONTACT_LINKS_WITHOUT_FIRST.map((contactLink) => {
+                  return (
+                    <a
+                      key={contactLink.href + contactLink.name}
+                      className={`${
+                        headerGtmEvents[contactLink?.gtmKey] || ''
+                      } header-submit-button`}
+                      href={contactLink.href}
+                    >
+                      {contactLink.headerSubmitButtonName}
+                    </a>
+                  )
+                })}
               </div>
               <div className="flex lg:shrink-0 lg:grow-0 lg:gap-x-2">
                 {ExtendedSocialLinks.map(({ name, href, icon }) => {
