@@ -12,7 +12,7 @@ export default function Layout({
         <Header />
       </div>
       {/* main content */}
-      <div className="flex w-full shrink-0 grow flex-col pt-36 md:pt-0">
+      <div className="flex w-full shrink-0 grow flex-col pt-44 md:pt-0">
         {children}
       </div>
       <Footer />
