@@ -9,6 +9,7 @@ import type { PromoteTopicData } from '@/types/homepage'
 import { useState } from 'react'
 import IConClose from '@/public/icons/close.svg'
 import NextImage from 'next/image'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   list: PromoteTopicData[]
@@ -16,9 +17,11 @@ type Props = {
 
 export default function SwiperComponent({ list }: Props) {
   const [visible, setVisible] = useState(true)
+  const pathname = usePathname()
+  const isSearchPage = pathname.startsWith('/search')
   const validList = list.filter((item) => item.topics)
 
-  if (!visible || !validList.length) return null
+  if (!visible || !validList.length || isSearchPage) return null
 
   return (
     <div className="fixed right-[20px] top-1/4 z-promote-topic w-[124px] lg:top-[45%]">
