@@ -8,8 +8,6 @@ import NextImage from 'next/image'
 import { storyGtmEvents } from '@/constants/gtm'
 import type { Post } from '@/types/story'
 import { DEFAULT_SECTION_COLOR, DEFAULT_SECTION_NAME } from '@/constants/misc'
-import SocialShareBar from '@/shared-components/social-share-bar'
-import PreferredSourceIcon from '@/app/_components/preferred-source/preferred-source-icon'
 
 type Props = {
   postData: Post
@@ -85,15 +83,6 @@ export default function HeroSection({ postData }: Props) {
             {postData.subtitle}
           </h2>
         )}
-
-        <div className="fixed bottom-[135px] right-3 z-story-share-bar space-y-2 [filter:drop-shadow(0px_1px_2px_#0000004D)_drop-shadow(0px_2px_8px_#0000001A)] md:hidden">
-          <PreferredSourceIcon variant="mobile" />
-          <SocialShareBar
-            title={postData.title}
-            link={postData.link}
-            direction="vertical"
-          />
-        </div>
       </div>
 
       <div className="order-3 mb-4 w-full px-5 md:mb-6 md:px-0 lg:order-2 lg:mb-4">
