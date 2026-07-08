@@ -11,7 +11,13 @@ type Article = {
   title: string
 }
 
-export function StoryScrollSpy({ articles }: { articles: Article[] }) {
+export function StoryScrollSpy({
+  articles,
+  onActiveIdChange,
+}: {
+  articles: Article[]
+  onActiveIdChange?: (id: string) => void
+}) {
   const activeIdRef = useRef<string | null>(null)
   const titleById = useMemo(
     () => new Map(articles.map((a) => [a.id, a.title])),
@@ -32,6 +38,7 @@ export function StoryScrollSpy({ articles }: { articles: Article[] }) {
         if (rect.bottom > 0 && rect.top < window.innerHeight) {
           if (activeIdRef.current !== ssrFirstId) {
             activeIdRef.current = ssrFirstId
+            onActiveIdChange?.(ssrFirstId)
             const nextPath = getStoryPath(ssrFirstId)
             if (window.location.pathname !== nextPath) {
               window.history.replaceState(
@@ -57,6 +64,7 @@ export function StoryScrollSpy({ articles }: { articles: Article[] }) {
       if (rect.top <= y && rect.bottom > y) {
         if (activeIdRef.current === a.id) return
         activeIdRef.current = a.id
+        onActiveIdChange?.(a.id)
 
         const nextPath = getStoryPath(a.id)
         if (window.location.pathname !== nextPath) {
