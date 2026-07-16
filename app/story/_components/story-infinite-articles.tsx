@@ -8,6 +8,8 @@ import ArticleSectionClient from './story-infinite-article-section-client'
 import { fetchNextPostBySameSectionAction } from '../actions'
 import { DableWordSecond, PopInRecommendWord } from './ads'
 import BottomAd from '@/shared-components/bottom-ad'
+import SocialShareBar from '@/shared-components/social-share-bar'
+import PreferredSourceIcon from '@/app/_components/preferred-source/preferred-source-icon'
 
 const articleAds = [
   <PopInRecommendWord key="popin-word" />,
@@ -31,6 +33,7 @@ export default function StoryInfiniteArticles({
   const [posts, setPosts] = useState<Post[]>([])
   const [fetchCount, setFetchCount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
+  const [activeArticleId, setActiveArticleId] = useState(initialPost.id)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
 
   const articlesForSpy = useMemo(
@@ -40,6 +43,8 @@ export default function StoryInfiniteArticles({
     ],
     [initialPost.id, initialPost.title, posts]
   )
+
+  const activePost = posts.find((p) => p.id === activeArticleId) ?? initialPost
 
   useEffect(() => {
     if (!sentinelRef.current) return
@@ -103,7 +108,20 @@ export default function StoryInfiniteArticles({
 
   return (
     <>
-      <StoryScrollSpy articles={articlesForSpy} />
+      <StoryScrollSpy
+        articles={articlesForSpy}
+        onActiveIdChange={setActiveArticleId}
+      />
+
+      {/* 分享按鈕 fixed 在 viewport 上，統一渲染一份，分享目前捲動到的文章 */}
+      <div className="fixed bottom-[135px] right-3 z-story-share-bar space-y-2 [filter:drop-shadow(0px_1px_2px_#0000004D)_drop-shadow(0px_2px_8px_#0000001A)] md:hidden">
+        <PreferredSourceIcon variant="mobile" />
+        <SocialShareBar
+          title={activePost.title}
+          link={activePost.link}
+          direction="vertical"
+        />
+      </div>
 
       {/* sentinel：滑到底時觸發下一篇 */}
       <div ref={sentinelRef} className="h-px w-full" />
