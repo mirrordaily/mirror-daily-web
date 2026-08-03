@@ -8,9 +8,7 @@ export default function Layout({
 }>) {
   return (
     <>
-      <div className="fixed inset-x-0 top-0 z-topic-header-mobile w-full bg-white md:static">
-        <Header />
-      </div>
+      <Header />
       {/* main content */}
       <div className="flex w-full shrink-0 grow flex-col pt-44 md:pt-0">
         {children}
