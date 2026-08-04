@@ -103,12 +103,14 @@ async function fetchListTypeTopicPostBySlug({
     },
     async () => {
       const skip = PAGE_SIZE * (page - 1)
+      // take=0 代表「取整個 JSON 檔」，但 GQL 不適用此約定，改用 PAGE_SIZE
+      const gqlTake = take || PAGE_SIZE
       const rawData = await fetchGQLData(
         errorLogger,
         GetListTypeTopcPostsDocument,
         {
           slug,
-          take,
+          take: gqlTake,
           skip,
           withAmount,
         }
