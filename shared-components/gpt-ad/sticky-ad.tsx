@@ -142,7 +142,7 @@ export default function StickyAd({
   return (
     <div
       id="md-sticky"
-      className="fixed inset-x-0 bottom-0 z-[9999] h-[100px] items-center justify-center bg-white shadow-[0_-2px_8px_rgba(0,0,0,0.1)] lg:h-[90px]"
+      className="fixed inset-x-0 bottom-0 z-ad h-[100px] items-center justify-center bg-white shadow-[0_-2px_8px_rgba(0,0,0,0.1)] lg:h-[90px]"
       style={{ display: shouldShow ? 'flex' : 'none' }}
     >
       <div id="gpt-sticky" className="flex items-center justify-center"></div>

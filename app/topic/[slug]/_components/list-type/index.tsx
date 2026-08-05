@@ -13,7 +13,7 @@ export default async function ListTypeListing({ slug }: Props) {
   const { postsData: initialPosts, postsCount } =
     await fetchListTypeTopicPostBySlug({
       slug,
-      take: PAGE_SIZE,
+      take: 0, // 載入整個 file 1，讓 library 緩衝多餘項目
       page: 1,
       withAmount: true,
     })
@@ -22,9 +22,11 @@ export default async function ListTypeListing({ slug }: Props) {
 
   const fetchMorePosts = async (page: number) => {
     'use server'
+    // library 的 page 直接對應 JSON 檔編號
+    // library 內部緩衝機制會在有剩餘資料時跳過 fetch，因此頁碼不會跳號
     const { postsData } = await fetchListTypeTopicPostBySlug({
       slug,
-      take: PAGE_SIZE,
+      take: 0,
       page,
     })
     return postsData
