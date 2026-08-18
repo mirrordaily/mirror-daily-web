@@ -65,6 +65,7 @@ module.exports = {
         'promote-topic-close-button': 100,
         ad: 9999,
         'global-header': 10000,
+        'full-screen-ad': 11000,
         'upload-modal': 1000000,
         'light-box': 10000000,
         'mobile-nav': 1000000000,
