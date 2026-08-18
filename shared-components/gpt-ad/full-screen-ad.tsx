@@ -118,7 +118,7 @@ export default function FullScreenAd({ slotKey }: Props) {
     <>
       {/* 蓋板廣告容器 */}
       <div
-        className={`fixed inset-0 z-ad items-center justify-center overflow-hidden bg-black/70 md:hidden ${
+        className={`fixed inset-0 z-full-screen-ad items-center justify-center overflow-hidden bg-black/70 md:hidden ${
           isAdVisible ? 'flex' : 'hidden'
         }`}
       >
