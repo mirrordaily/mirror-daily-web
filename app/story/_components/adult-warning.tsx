@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 type Props = {
   isAdult: boolean
@@ -38,12 +39,12 @@ export default function AdultWarning({ isAdult }: Props) {
           >
             是，我已年滿十八歲
           </button>
-          <a
+          <Link
             href="/"
             className="rounded-lg border border-solid border-[#68666D] bg-white px-5 py-[6px] hover-or-active:bg-[#F6F6FB]"
           >
             離開
-          </a>
+          </Link>
         </div>
       </div>
     </div>
