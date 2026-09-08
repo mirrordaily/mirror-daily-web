@@ -41,7 +41,7 @@ export async function logPageView({
   const logName = `${GCP_PROJECT_ID}-${ENV}-web-${eventType}`
   const logging = new Logging({ projectId: GCP_PROJECT_ID })
   const log = logging.log(logName)
-  const userAgentInfo = parseUserAgentInfo()
+  const userAgentInfo = await parseUserAgentInfo()
   const taipeiNow = dayjs().tz('Asia/Taipei')
   const formattedDate = taipeiNow.format('YYYY/MM/DD')
   const formattedTime = taipeiNow.format('HH:mm')
@@ -106,7 +106,7 @@ export async function logVideoView({
   const logName = `${GCP_PROJECT_ID}-${ENV}-web-${eventType}`
   const logging = new Logging({ projectId: GCP_PROJECT_ID })
   const log = logging.log(logName)
-  const userAgentInfo = parseUserAgentInfo()
+  const userAgentInfo = await parseUserAgentInfo()
   const taipeiNow = dayjs().tz('Asia/Taipei')
   const formattedDate = taipeiNow.format('YYYY/MM/DD')
   const formattedTime = taipeiNow.format('HH:mm')

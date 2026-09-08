@@ -39,7 +39,7 @@ async function fetchSectionPosts({
 }> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching section posts on section page',
-    getTraceObject()
+    await getTraceObject()
   )
   const result = await fetchGQLData(
     errorLogger,
@@ -79,7 +79,7 @@ async function fetchSectionPostsFromJSON({
 }): Promise<{ postsData: SectionPost[]; jsonPostsCount: number }> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching section posts, section slug: ${slug}`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const schema = z.object({
@@ -129,7 +129,7 @@ function transformSectionInformation(
 async function fetchSectionInformation(slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching sections information',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(

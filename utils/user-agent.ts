@@ -1,10 +1,10 @@
 import 'server-only'
 
-import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
+import { headers } from 'next/headers'
 import { UAParser } from 'ua-parser-js'
 
-export function parseUserAgentInfo() {
-  const headersList = headers() as unknown as UnsafeUnwrappedHeaders
+export async function parseUserAgentInfo() {
+  const headersList = await headers()
   const userAgent = headersList.get('user-agent') || ''
   const ipAddress =
     headersList.get('x-forwarded-for') || headersList.get('remote-addr') || ''

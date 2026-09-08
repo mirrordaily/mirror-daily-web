@@ -40,7 +40,7 @@ async function fetchCategoryPosts({
 }> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching category posts on category page',
-    getTraceObject()
+    await getTraceObject()
   )
   const result = await fetchGQLData(
     errorLogger,
@@ -81,7 +81,7 @@ async function fetchCategoryPostsFromJSON({
 }): Promise<{ postsData: CategoryPost[]; jsonPostsCount: number }> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching category posts, category slug: ${slug}`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const schema = z.object({
@@ -131,7 +131,7 @@ function transformCategoryInformation(
 async function fetchCategoryInformation(slug: string) {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching category information',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(

@@ -3,7 +3,7 @@ import 'server-only'
 import { ApolloError } from '@apollo/client'
 import errors from '@twreporter/errors'
 import { GCP_PROJECT_ID } from '@/constants/config'
-import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
+import { headers } from 'next/headers'
 
 const createErrorLogger = (
   errorMessage: string,
@@ -84,12 +84,11 @@ const createErrorLogger = (
   }
 }
 
-const getTraceObject = () => {
+const getTraceObject = async () => {
   const globalLogFields: Record<string, string> = {}
   try {
-    const traceHeader = (headers() as unknown as UnsafeUnwrappedHeaders).get(
-      'x-cloud-trace-context'
-    )
+    const headersList = await headers()
+    const traceHeader = headersList.get('x-cloud-trace-context')
     if (traceHeader) {
       const [trace] = traceHeader.split('/')
       globalLogFields['logging.googleapis.com/trace'] =
