@@ -29,12 +29,11 @@ import {
 import { filterPostsByTag } from '@/utils/topic'
 
 type PageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { slug } = params
   const topic = await fetchTopicBasicInfo(slug)
 
@@ -97,9 +96,8 @@ export async function generateMetadata({
   return metaData
 }
 
-export default async function Page({
-  params,
-}: PageProps): Promise<JSX.Element> {
+export default async function Page(props: PageProps): Promise<JSX.Element> {
+  const params = await props.params
   const { slug } = params
   const topic = await fetchTopicBasicInfo(slug)
 

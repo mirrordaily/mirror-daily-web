@@ -9,12 +9,11 @@ import VideoBlock from '@/shared-components/shorts/video-block'
 import { IMAGE_PATH } from '@/constants/default-path'
 import { SITE_URL } from '@/constants/config'
 type PageProps = {
-  params: { id?: string }
+  params: Promise<{ id?: string }>
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { id = '' } = params
   const shortsData = await fetchShortsData(id)
 
@@ -44,7 +43,8 @@ export async function generateMetadata({
   return metaData
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params
   const videoId = params.id ?? ''
   const shortsData = await fetchShortsData(videoId)
 

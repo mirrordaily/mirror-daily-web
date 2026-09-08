@@ -18,11 +18,10 @@ import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
 import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
-type PageProps = { params: { slug: string } }
+type PageProps = { params: Promise<{ slug: string }> }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { slug } = params
   const categoryInfo = await fetchCategoryInformation(slug)
 
@@ -50,7 +49,8 @@ export async function generateMetadata({
   return metaData
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params
   const slug = params.slug
 
   const categoryInfo = await fetchCategoryInformation(slug)
@@ -145,7 +145,6 @@ export default async function Page({ params }: PageProps) {
         }}
       />
       <ListPageTopAd slug={slug} />
-
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <FullScreenAd slotKey="homepage_mw" />
         <ArticlesList

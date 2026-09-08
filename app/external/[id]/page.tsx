@@ -20,11 +20,10 @@ import RelatedAd from '@/shared-components/related-ad'
 import BottomAd from '@/shared-components/bottom-ad'
 import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
-type PageProps = { params: { id: string } }
+type PageProps = { params: Promise<{ id: string }> }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { id } = params
   const externalPost = await fetchExternal(id)
 
@@ -73,7 +72,8 @@ export async function generateMetadata({
 
 const MIN_RELATED_POSTS = 6
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params
   const id = params.id
   const externalPost = await fetchExternal(id)
   if (!externalPost) notFound()
