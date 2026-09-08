@@ -34,6 +34,11 @@ export default async function Home() {
         <main className="flex w-full grow flex-col items-center justify-center">
           <TopAdSection />
           <FullScreenAd slotKey="homepage_mw" />
+          <NonDesktopGptAd
+            mode="normal"
+            slotKey="mirrordaily_home_MW_1x1_incover_AD2"
+            customClasses="!w-px !min-h-px overflow-visible"
+          />
           <SectionDivider customClasses="hidden md:block lg:hidden" />
           {/* 編輯精選 */}
           <Suspense

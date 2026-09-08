@@ -110,6 +110,13 @@ export const adSlots = {
     adId: '1749702185287-0',
     collapseEmptyDivs: true,
   },
+  mirrordaily_home_MW_1x1_incover_AD2: {
+    slotId: '/23304347674/mirrordaily_mweb//homepage//incover_AD2',
+    sizes: [[1, 1]],
+    minSize: [1, 1],
+    adId: '1788838561824-0',
+    collapseEmptyDivs: true,
+  },
   // 分類頁(section、category)桌機版
   mirrordaily_section_PC_970x250_top: {
     slotId: '/23304347674/mirrordaily_pc//section//top',
