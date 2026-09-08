@@ -148,6 +148,11 @@ export default async function Page({ params }: PageProps) {
 
       <main className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <FullScreenAd slotKey="homepage_mw" />
+        <NonDesktopGptAd
+          mode="normal"
+          slotKey="mirrordaily_home_MW_1x1_incover_AD2"
+          customClasses="!w-px !min-h-px overflow-visible"
+        />
         <ArticlesList
           initialPosts={initialPosts}
           color={color}

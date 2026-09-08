@@ -211,6 +211,11 @@ export default async function Page({ params }: PageProps) {
       <main className="mb-[60px] flex flex-col items-center">
         {shouldShowAd && <ArticlePageTopAd />}
         <FullScreenAd slotKey="homepage_mw" />
+        <NonDesktopGptAd
+          mode="normal"
+          slotKey="mirrordaily_home_MW_1x1_incover_AD2"
+          customClasses="!w-px !min-h-px overflow-visible"
+        />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <div className="w-full lg:flex lg:items-start lg:justify-center lg:gap-x-[104px]">
