@@ -37,7 +37,7 @@ async function fetchAuthorPosts({
 }> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching author posts on author page',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetPostsByAuthorIdDocument, {
@@ -82,7 +82,7 @@ function transformAuthorInformation(
 async function fetchAuthorInformation(id: string): Promise<AuthorInfo | null> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching author information in author page',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetAuthorInformationDocument, {
