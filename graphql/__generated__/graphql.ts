@@ -469,6 +469,83 @@ export type DateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>
 }
 
+export type EditLog = {
+  __typename?: 'EditLog'
+  brief?: Maybe<Scalars['JSON']['output']>
+  briefPreview?: Maybe<Scalars['String']['output']>
+  changedList?: Maybe<Scalars['String']['output']>
+  content?: Maybe<Scalars['JSON']['output']>
+  contentPreview?: Maybe<Scalars['String']['output']>
+  createdAt?: Maybe<Scalars['DateTime']['output']>
+  createdBy?: Maybe<User>
+  id: Scalars['ID']['output']
+  name?: Maybe<Scalars['String']['output']>
+  operation?: Maybe<Scalars['String']['output']>
+  postId?: Maybe<Scalars['String']['output']>
+  updatedAt?: Maybe<Scalars['DateTime']['output']>
+  updatedBy?: Maybe<User>
+}
+
+export type EditLogCreateInput = {
+  brief?: InputMaybe<Scalars['JSON']['input']>
+  changedList?: InputMaybe<Scalars['String']['input']>
+  content?: InputMaybe<Scalars['JSON']['input']>
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>
+  createdBy?: InputMaybe<UserRelateToOneForCreateInput>
+  name?: InputMaybe<Scalars['String']['input']>
+  operation?: InputMaybe<Scalars['String']['input']>
+  postId?: InputMaybe<Scalars['String']['input']>
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>
+  updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
+}
+
+export type EditLogOrderByInput = {
+  changedList?: InputMaybe<OrderDirection>
+  createdAt?: InputMaybe<OrderDirection>
+  id?: InputMaybe<OrderDirection>
+  name?: InputMaybe<OrderDirection>
+  operation?: InputMaybe<OrderDirection>
+  postId?: InputMaybe<OrderDirection>
+  updatedAt?: InputMaybe<OrderDirection>
+}
+
+export type EditLogUpdateArgs = {
+  data: EditLogUpdateInput
+  where: EditLogWhereUniqueInput
+}
+
+export type EditLogUpdateInput = {
+  brief?: InputMaybe<Scalars['JSON']['input']>
+  changedList?: InputMaybe<Scalars['String']['input']>
+  content?: InputMaybe<Scalars['JSON']['input']>
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>
+  createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
+  name?: InputMaybe<Scalars['String']['input']>
+  operation?: InputMaybe<Scalars['String']['input']>
+  postId?: InputMaybe<Scalars['String']['input']>
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>
+  updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
+}
+
+export type EditLogWhereInput = {
+  AND?: InputMaybe<Array<EditLogWhereInput>>
+  NOT?: InputMaybe<Array<EditLogWhereInput>>
+  OR?: InputMaybe<Array<EditLogWhereInput>>
+  changedList?: InputMaybe<StringFilter>
+  createdAt?: InputMaybe<DateTimeNullableFilter>
+  createdBy?: InputMaybe<UserWhereInput>
+  id?: InputMaybe<IdFilter>
+  name?: InputMaybe<StringFilter>
+  operation?: InputMaybe<StringFilter>
+  postId?: InputMaybe<StringFilter>
+  updatedAt?: InputMaybe<DateTimeNullableFilter>
+  updatedBy?: InputMaybe<UserWhereInput>
+}
+
+export type EditLogWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>
+}
+
 export type EditorChoice = {
   __typename?: 'EditorChoice'
   choiceexternal?: Maybe<External>
@@ -1402,6 +1479,8 @@ export type Mutation = {
   createCategory?: Maybe<Category>
   createContact?: Maybe<Contact>
   createContacts?: Maybe<Array<Maybe<Contact>>>
+  createEditLog?: Maybe<EditLog>
+  createEditLogs?: Maybe<Array<Maybe<EditLog>>>
   createEditorChoice?: Maybe<EditorChoice>
   createEditorChoices?: Maybe<Array<Maybe<EditorChoice>>>
   createEvent?: Maybe<Event>
@@ -1445,6 +1524,8 @@ export type Mutation = {
   deleteCategory?: Maybe<Category>
   deleteContact?: Maybe<Contact>
   deleteContacts?: Maybe<Array<Maybe<Contact>>>
+  deleteEditLog?: Maybe<EditLog>
+  deleteEditLogs?: Maybe<Array<Maybe<EditLog>>>
   deleteEditorChoice?: Maybe<EditorChoice>
   deleteEditorChoices?: Maybe<Array<Maybe<EditorChoice>>>
   deleteEvent?: Maybe<Event>
@@ -1488,6 +1569,8 @@ export type Mutation = {
   updateCategory?: Maybe<Category>
   updateContact?: Maybe<Contact>
   updateContacts?: Maybe<Array<Maybe<Contact>>>
+  updateEditLog?: Maybe<EditLog>
+  updateEditLogs?: Maybe<Array<Maybe<EditLog>>>
   updateEditorChoice?: Maybe<EditorChoice>
   updateEditorChoices?: Maybe<Array<Maybe<EditorChoice>>>
   updateEvent?: Maybe<Event>
@@ -1553,6 +1636,14 @@ export type MutationCreateContactArgs = {
 
 export type MutationCreateContactsArgs = {
   data: Array<ContactCreateInput>
+}
+
+export type MutationCreateEditLogArgs = {
+  data: EditLogCreateInput
+}
+
+export type MutationCreateEditLogsArgs = {
+  data: Array<EditLogCreateInput>
 }
 
 export type MutationCreateEditorChoiceArgs = {
@@ -1727,6 +1818,14 @@ export type MutationDeleteContactsArgs = {
   where: Array<ContactWhereUniqueInput>
 }
 
+export type MutationDeleteEditLogArgs = {
+  where: EditLogWhereUniqueInput
+}
+
+export type MutationDeleteEditLogsArgs = {
+  where: Array<EditLogWhereUniqueInput>
+}
+
 export type MutationDeleteEditorChoiceArgs = {
   where: EditorChoiceWhereUniqueInput
 }
@@ -1896,6 +1995,15 @@ export type MutationUpdateContactArgs = {
 
 export type MutationUpdateContactsArgs = {
   data: Array<ContactUpdateArgs>
+}
+
+export type MutationUpdateEditLogArgs = {
+  data: EditLogUpdateInput
+  where: EditLogWhereUniqueInput
+}
+
+export type MutationUpdateEditLogsArgs = {
+  data: Array<EditLogUpdateArgs>
 }
 
 export type MutationUpdateEditorChoiceArgs = {
@@ -2199,6 +2307,8 @@ export type Photo = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>
   updatedBy?: Maybe<User>
   waterMark?: Maybe<Scalars['Boolean']['output']>
+  waterMarkDescription?: Maybe<Scalars['String']['output']>
+  watermarkType?: Maybe<Scalars['String']['output']>
 }
 
 export type PhotoCreateInput = {
@@ -2212,6 +2322,7 @@ export type PhotoCreateInput = {
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForCreateInput>
   waterMark?: InputMaybe<Scalars['Boolean']['input']>
+  watermarkType?: InputMaybe<Scalars['String']['input']>
 }
 
 export type PhotoManyRelationFilter = {
@@ -2229,6 +2340,7 @@ export type PhotoOrderByInput = {
   topicKeywords?: InputMaybe<OrderDirection>
   updatedAt?: InputMaybe<OrderDirection>
   waterMark?: InputMaybe<OrderDirection>
+  watermarkType?: InputMaybe<OrderDirection>
 }
 
 export type PhotoRelateToManyForCreateInput = {
@@ -2270,6 +2382,7 @@ export type PhotoUpdateInput = {
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>
   updatedBy?: InputMaybe<UserRelateToOneForUpdateInput>
   waterMark?: InputMaybe<Scalars['Boolean']['input']>
+  watermarkType?: InputMaybe<Scalars['String']['input']>
 }
 
 export type PhotoWhereInput = {
@@ -2286,6 +2399,7 @@ export type PhotoWhereInput = {
   updatedAt?: InputMaybe<DateTimeNullableFilter>
   updatedBy?: InputMaybe<UserWhereInput>
   waterMark?: InputMaybe<BooleanFilter>
+  watermarkType?: InputMaybe<StringNullableFilter>
 }
 
 export type PhotoWhereUniqueInput = {
@@ -2390,6 +2504,7 @@ export type Post = {
   isMember?: Maybe<Scalars['Boolean']['output']>
   lockBy?: Maybe<User>
   lockExpireAt?: Maybe<Scalars['DateTime']['output']>
+  lockStatus?: Maybe<Scalars['String']['output']>
   manualOrderOfCategories?: Maybe<Scalars['JSON']['output']>
   manualOrderOfRelatedVideos?: Maybe<Scalars['JSON']['output']>
   manualOrderOfRelateds?: Maybe<Scalars['JSON']['output']>
@@ -2933,6 +3048,9 @@ export type Query = {
   contact?: Maybe<Contact>
   contacts?: Maybe<Array<Contact>>
   contactsCount?: Maybe<Scalars['Int']['output']>
+  editLog?: Maybe<EditLog>
+  editLogs?: Maybe<Array<EditLog>>
+  editLogsCount?: Maybe<Scalars['Int']['output']>
   editorChoice?: Maybe<EditorChoice>
   editorChoices?: Maybe<Array<EditorChoice>>
   editorChoicesCount?: Maybe<Scalars['Int']['output']>
@@ -3037,6 +3155,22 @@ export type QueryContactsArgs = {
 
 export type QueryContactsCountArgs = {
   where?: ContactWhereInput
+}
+
+export type QueryEditLogArgs = {
+  where: EditLogWhereUniqueInput
+}
+
+export type QueryEditLogsArgs = {
+  cursor?: InputMaybe<EditLogWhereUniqueInput>
+  orderBy?: Array<EditLogOrderByInput>
+  skip?: Scalars['Int']['input']
+  take?: InputMaybe<Scalars['Int']['input']>
+  where?: EditLogWhereInput
+}
+
+export type QueryEditLogsCountArgs = {
+  where?: EditLogWhereInput
 }
 
 export type QueryEditorChoiceArgs = {
@@ -4024,8 +4158,7 @@ export type UserAuthenticationWithPasswordFailure = {
 }
 
 export type UserAuthenticationWithPasswordResult =
-  | UserAuthenticationWithPasswordFailure
-  | UserAuthenticationWithPasswordSuccess
+  UserAuthenticationWithPasswordFailure | UserAuthenticationWithPasswordSuccess
 
 export type UserAuthenticationWithPasswordSuccess = {
   __typename?: 'UserAuthenticationWithPasswordSuccess'
