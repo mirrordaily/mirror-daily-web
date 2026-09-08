@@ -16,7 +16,6 @@
   "packageManager": "pnpm@10.28.2",
   "dependencies": {
     "@apollo/client": "^3.14.1",
-    "@faker-js/faker": "^8.4.1",
     "@google-cloud/logging": "^11.4.0",
     "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@next/third-parties": "^15.5.25",
@@ -35,7 +34,7 @@
     "react-player": "^2.16.1",
     "react-redux": "^9.3.0",
     "server-only": "^0.0.1",
-    "swiper": "^11.2.10",
+    "swiper": "^14.2.0",
     "tailwind-merge": "^2.6.1",
     "ts-import": "4.0.0-beta.10",
     "ua-parser-js": "^2.0.10",
