@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '@/shared-components/list/articles-list'
 import {

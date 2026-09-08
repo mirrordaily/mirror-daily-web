@@ -1,6 +1,5 @@
 'use client'
 
-import { useFormState } from 'react-dom'
 import { createCreativityShorts } from '@/app/actions-general'
 import type { FormActionResponse } from '@/types/shorts'
 import { FormState } from '@/types/shorts'
@@ -15,7 +14,7 @@ import BackButton from './back-button'
 import { useAppDispatch } from '@/redux/hooks'
 import { shortsUploadActions } from '@/redux/shorts-upload/slice'
 import { useModalClose } from './upload-modal'
-import { useOptimistic } from 'react'
+import { useActionState, useOptimistic } from 'react'
 import StateContainer from './state-container'
 import NextImage from 'next/image'
 import IconClose from '@/public/icons/shorts-upload/close.svg'
@@ -30,7 +29,7 @@ export default function ModalBody() {
     false,
     (currentState, newValue) => newValue
   )
-  const [response, formAction] = useFormState(
+  const [response, formAction] = useActionState(
     async (prev: FormActionResponse, formData: FormData) => {
       setIsProcessing(true)
       const response = await createCreativityShorts(formData)

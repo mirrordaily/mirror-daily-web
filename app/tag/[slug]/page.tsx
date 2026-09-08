@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import ArticlesSection from '../_components/articles-section'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import { fetchTagInformation, fetchTagPosts } from '../actions'
