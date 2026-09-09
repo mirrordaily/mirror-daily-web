@@ -1,5 +1,6 @@
 import '@/shared-styles/topic.css'
 import type { Metadata } from 'next'
+import type { JSX } from 'react'
 import { fetchTopicBasicInfo } from '../action'
 import {
   getHeroImage,
