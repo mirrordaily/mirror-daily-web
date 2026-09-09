@@ -1,4 +1,4 @@
-ARG NODE_VERSION=18.18.0
+ARG NODE_VERSION=24.20.0
 
 # Install dependencies only when needed
 FROM node:${NODE_VERSION} AS deps
