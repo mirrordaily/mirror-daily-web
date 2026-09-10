@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import ArticlesList from '@/shared-components/list/articles-list'
 import {
@@ -19,11 +20,10 @@ import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
 import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
-type PageProps = { params: { slug: string } }
+type PageProps = { params: Promise<{ slug: string }> }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { slug } = params
   const sectionInfo = await fetchSectionInformation(slug)
 
@@ -51,9 +51,8 @@ export async function generateMetadata({
   return metaData
 }
 
-export default async function Page({
-  params,
-}: PageProps): Promise<JSX.Element> {
+export default async function Page(props: PageProps): Promise<JSX.Element> {
+  const params = await props.params
   const slug = params.slug
 
   const sectionInfo = await fetchSectionInformation(slug)

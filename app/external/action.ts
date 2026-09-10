@@ -84,7 +84,7 @@ function transformExternal(
 async function fetchExternal(id: string): Promise<ExternalPost | null> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching external with id:${id} on external page`,
-    getTraceObject()
+    await getTraceObject()
   )
   const result = await fetchStoryGQLData(errorLogger, GetExternalByIdDocument, {
     id,
@@ -100,7 +100,7 @@ async function fetchExternal(id: string): Promise<ExternalPost | null> {
 async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching related posts using external id:${id} on external page`,
-    getTraceObject()
+    await getTraceObject()
   )
   const result = await fetchStoryGQLData(
     errorLogger,

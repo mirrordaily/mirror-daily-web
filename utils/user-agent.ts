@@ -3,8 +3,8 @@ import 'server-only'
 import { headers } from 'next/headers'
 import { UAParser } from 'ua-parser-js'
 
-export function parseUserAgentInfo() {
-  const headersList = headers()
+export async function parseUserAgentInfo() {
+  const headersList = await headers()
   const userAgent = headersList.get('user-agent') || ''
   const ipAddress =
     headersList.get('x-forwarded-for') || headersList.get('remote-addr') || ''

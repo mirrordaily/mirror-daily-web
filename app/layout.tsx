@@ -19,7 +19,7 @@ const notoSans = Noto_Sans_TC({
 
 export async function generateMetadata(): Promise<Metadata> {
   const defaultMetadata = getDefaultMetadata()
-  const headersList = headers()
+  const headersList = await headers()
   const pathname = headersList.get('x-current-pathname')
   const isSearchPage = pathname === '/search'
 

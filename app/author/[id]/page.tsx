@@ -11,11 +11,10 @@ import { authorClickGtmEvents } from '@/constants/gtm'
 // add segment config to prevent data fetch during build
 export const dynamic = 'force-dynamic'
 
-type PageProps = { params: { id: string } }
+type PageProps = { params: Promise<{ id: string }> }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { id } = params
   const authorInfo = await fetchAuthorInformation(id)
 
@@ -45,7 +44,8 @@ export async function generateMetadata({
 
 const PAGE_SIZE = 12
 
-export default async function Home({ params }: PageProps) {
+export default async function Home(props: PageProps) {
+  const params = await props.params
   const id = params.id
 
   const authorInfo = await fetchAuthorInformation(id)
