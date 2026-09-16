@@ -84,10 +84,11 @@ const createErrorLogger = (
   }
 }
 
-const getTraceObject = () => {
+const getTraceObject = async () => {
   const globalLogFields: Record<string, string> = {}
   try {
-    const traceHeader = headers().get('x-cloud-trace-context')
+    const headersList = await headers()
+    const traceHeader = headersList.get('x-cloud-trace-context')
     if (traceHeader) {
       const [trace] = traceHeader.split('/')
       globalLogFields['logging.googleapis.com/trace'] =

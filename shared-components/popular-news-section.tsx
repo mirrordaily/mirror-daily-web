@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import FeaturedNewsCard from './featured-news-card'
 import { fetchPopularPost } from '@/app/actions-general'
 import { DesktopGptAd } from './gpt-ad/desktop-gpt-ad'

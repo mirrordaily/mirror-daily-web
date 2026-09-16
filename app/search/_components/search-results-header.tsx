@@ -24,7 +24,8 @@ export default function SearchResultsHeader({
   activeSort,
   onSortChange,
 }: SearchResultsHeaderProps) {
-  const displayTotal = isLoading && total === null ? '???' : total ?? itemsCount
+  const displayTotal =
+    isLoading && total === null ? '???' : (total ?? itemsCount)
 
   return (
     <div className="mb-10 mt-8 md:mb-6 md:flex md:items-end md:justify-between lg:mx-auto lg:mb-5 lg:max-w-[1024px]">

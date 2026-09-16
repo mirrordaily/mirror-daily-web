@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import ArticlesSection from '../_components/articles-section'
 import PopularNewsSection from '@/shared-components/popular-news-section'
 import { fetchTagInformation, fetchTagPosts } from '../actions'
@@ -10,12 +11,11 @@ import { tagClickGtmEvents } from '@/constants/gtm'
 import { getDescriptionFromTagPosts } from '@/utils/data-process'
 
 type PageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { slug } = params
   const tagInfo = await fetchTagInformation(slug)
 
@@ -65,9 +65,8 @@ export async function generateMetadata({
 
 const PAGE_SIZE = 12
 
-export default async function Page({
-  params,
-}: PageProps): Promise<JSX.Element> {
+export default async function Page(props: PageProps): Promise<JSX.Element> {
+  const params = await props.params
   const slug = params.slug
 
   const tagInfo = await fetchTagInformation(slug)

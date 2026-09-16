@@ -26,7 +26,7 @@ function transformPartnerInformation(
 async function fetchPartnerInformation(slug: string) {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching partner information (slug:${slug}) on externals page`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(
@@ -88,7 +88,7 @@ async function fetchExternals({
 }): Promise<{ posts: External[]; totalAmount?: number }> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching external posts by partner slug: ${slug} on externals page`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(
