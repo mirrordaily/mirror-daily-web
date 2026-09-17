@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import type { JSX } from 'react'
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
 import type { PopularNews } from '@/types/common'

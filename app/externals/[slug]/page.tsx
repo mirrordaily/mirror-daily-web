@@ -6,11 +6,12 @@ import { notFound } from 'next/navigation'
 const PAGE_SIZE = 12
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
   const { slug } = params
   const partnerName = await fetchPartnerInformation(slug)
   if (!partnerName) notFound()

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useRef } from 'react'
+import type { JSX } from 'react'
 
 import { type ApiData } from '../../renderer'
 import { ApiDataBlockType } from '../../types'
@@ -177,8 +178,7 @@ export default function SideIndexContainer({
         )
         .map((apiDatalock) => {
           const apiDataSideIndex = apiDatalock as
-            | ApiDataHeader2
-            | ApiDataHeader3
+            ApiDataHeader2 | ApiDataHeader3
           return {
             title: apiDataSideIndex.content[0],
             id: genMMSideIndexHeaderId(apiDataSideIndex.id),

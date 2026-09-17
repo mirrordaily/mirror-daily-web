@@ -21,11 +21,10 @@ import { fetchLatestPost, fetchPopularPost } from '@/app/actions-general'
 import StorySidebar from '../_components/story-sidebar'
 import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
 
-type PageProps = { params: { id: string } }
+type PageProps = { params: Promise<{ id: string }> }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params
   const { id } = params
   const postData = await fetchPost(id)
 
@@ -97,7 +96,8 @@ export async function generateMetadata({
   return metaData
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params
   const id = params.id
 
   const postData = await fetchPost(id)
@@ -211,6 +211,11 @@ export default async function Page({ params }: PageProps) {
       <main className="mb-[60px] flex flex-col items-center">
         {shouldShowAd && <ArticlePageTopAd />}
         <FullScreenAd slotKey="homepage_mw" />
+        <NonDesktopGptAd
+          mode="normal"
+          slotKey="mirrordaily_home_MW_1x1_incover_AD2"
+          customClasses="!w-px !min-h-px overflow-visible"
+        />
         <hr className="hidden w-[680px] border border-[#000000] md:mb-9 md:block lg:mb-12 lg:w-[1128px]" />
         <MisoPageView productIds={`story_${id}`} />
         <div className="w-full lg:flex lg:items-start lg:justify-center lg:gap-x-[104px]">

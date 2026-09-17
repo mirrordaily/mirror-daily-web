@@ -28,7 +28,7 @@ export const fetchShortsData = async (
 ): Promise<ShortsData | null> => {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching shorts data (vidoeId: ${videoId})`,
-    getTraceObject()
+    await getTraceObject()
   )
   const schema = z.promise(z.object({ video: shortsDataSchema }))
 
@@ -72,7 +72,7 @@ export const fetchShortsRandom = async (
 ): Promise<Shorts[]> => {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching shorts (originalVideoId: ${originalVideoId}, section: ${section})`,
-    getTraceObject()
+    await getTraceObject()
   )
   const schema = z.promise(z.object({ videos: z.array(latestShortsSchema) }))
 

@@ -57,7 +57,7 @@ export const fetchLiveEvent =
   async (): Promise<PickupItemInTopNewsSection | null> => {
     const errorLogger = createErrorLogger(
       'Error occurs while fetching live event data in homepage',
-      getTraceObject()
+      await getTraceObject()
     )
 
     const result = await fetchGQLData(
@@ -79,7 +79,7 @@ export const fetchLiveEvent =
 export const fetchHotNews = async (): Promise<FlashNews[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching hot news',
-    getTraceObject()
+    await getTraceObject()
   )
   const data = await createDataFetchingChain<
     z.infer<ZodArray<typeof rawHotNewsSchema>>
@@ -109,7 +109,7 @@ export const fetchEditorChoices = async (): Promise<
 > => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching editor choices',
-    getTraceObject()
+    await getTraceObject()
   )
   const editorData = await createDataFetchingChain<
     z.infer<ZodArray<typeof editorChoiceSchenma>>
@@ -142,7 +142,7 @@ export const fetchEditorChoices = async (): Promise<
 export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching topics',
-    getTraceObject()
+    await getTraceObject()
   )
   const topicApiResponseSchema = z.object({ topics: z.array(topicsSchema) })
 
@@ -167,7 +167,7 @@ export const fetchTopics = async (): Promise<TopicBundle[] | null> => {
 export const fetchWeather = async (): Promise<CityAndWeather | undefined> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching weather',
-    getTraceObject()
+    await getTraceObject()
   )
 
   try {
@@ -185,7 +185,7 @@ export const fetchSportsEvents = async (): Promise<
 > => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching sports events',
-    getTraceObject()
+    await getTraceObject()
   )
   try {
     const jsonData = await readStaticJson(STATIC_JSON_SPORTS_EVENTS)
@@ -201,7 +201,7 @@ export const fetchLatestSportsNews = async (): Promise<
 > => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest sports news',
-    getTraceObject()
+    await getTraceObject()
   )
   try {
     const jsonData = await readStaticJson(STATIC_JSON_LATEST_SPORTS_NEWS)
@@ -220,7 +220,7 @@ export const fetchLatestSportsNews = async (): Promise<
 export const fetchPromoteTopics = async (): Promise<PromoteTopicData[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching promote topics',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const schema = z.object({

@@ -59,7 +59,7 @@ export const fetchLatestPost = async (
 ): Promise<LatestPost[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest posts',
-    getTraceObject()
+    await getTraceObject()
   )
 
   try {
@@ -85,7 +85,7 @@ export const fetchPopularPost = async (
 ): Promise<PopularNews[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching popular posts',
-    getTraceObject()
+    await getTraceObject()
   )
 
   try {
@@ -111,7 +111,7 @@ export const fetchLatestShorts = async (
 ): Promise<Shorts[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest shorts',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const originalSchema = z.object({
@@ -148,7 +148,7 @@ export const fetchLatestVideos = async (
 ): Promise<LatestVideos[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching latest videos',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const originalSchema = z.object({
@@ -221,7 +221,7 @@ export const createCreativityShorts = async (
 ): Promise<FormActionResponse> => {
   const errorLogger = createErrorLogger(
     'Error occurs while creating creativity shorts',
-    getTraceObject()
+    await getTraceObject()
   )
 
   /** File is not available in Node.js 18 environment, so we need to create schema to validate it */
@@ -375,7 +375,7 @@ const transformHeaderData = (
 export const fetchHeaderData = cache(async (): Promise<HeaderData[]> => {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching header json',
-    getTraceObject()
+    await getTraceObject()
   )
   const data = await createDataFetchingChain<z.infer<typeof headerSchema>>(
     errorLogger,

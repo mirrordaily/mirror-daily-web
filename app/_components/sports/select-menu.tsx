@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useRef, useState, type RefObject } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 
 interface Option {
@@ -29,7 +29,7 @@ export default function SelectMenu({
     setIsOpen(!isOpen)
   }
 
-  useOnClickOutside(wrapperRef, () => {
+  useOnClickOutside(wrapperRef as RefObject<HTMLDivElement>, () => {
     if (isOpen) {
       setIsOpen(false)
     }

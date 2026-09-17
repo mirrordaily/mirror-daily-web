@@ -45,7 +45,6 @@ const cacheControlAssets = {
 const nextConfig = {
   basePath: SITE_BASE_PATH,
   reactStrictMode: true,
-  swcMinify: true,
   output: 'standalone',
   experimental: {
     serverActions: {

@@ -39,7 +39,7 @@ async function fetchTopicBasicInfo(
 ): Promise<GetTopicBasicInfoQuery['topic']> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching topic basic info (slug: ${slug})`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetTopicBasicInfoDocument, {
@@ -67,7 +67,7 @@ async function fetchListTypeTopicPostBySlug({
 }) {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching list type topic posts (slug: ${slug})`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const data = await createDataFetchingChain<{
@@ -197,7 +197,7 @@ async function fetchGroupTypeTopicPostBySlug(
 ): Promise<PostDataWithTags[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching group type topic posts (slug: ${slug})`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const data = await createDataFetchingChain<PostDataWithTags[]>(
@@ -291,7 +291,7 @@ async function fetchTopicListingByPage({
 }> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching topic listing`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetTopicListDocument, {

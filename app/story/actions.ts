@@ -132,7 +132,7 @@ function transformPost(
 async function fetchPost(id: string) {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching post with id: ${id} on story page`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchStoryGQLData(errorLogger, GetPostByIdDocument, {
@@ -154,7 +154,7 @@ async function fetchNextPostBySameSectionAction(
 ): Promise<Post | null> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching next post by same section with id: ${id}, slug: ${slug} and published date: ${publishedDate} on story page`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchStoryGQLData(
@@ -176,7 +176,7 @@ async function fetchNextPostBySameSectionAction(
 async function fetchRelatedPosts(id: string): Promise<RelatedPost[]> {
   const errorLogger = createErrorLogger(
     `Error occurs while fetching related posts using post id ${id} on story page`,
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchStoryGQLData(

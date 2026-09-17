@@ -28,7 +28,7 @@ function transformTagInformation(
 async function fetchTagInformation(slug: string): Promise<TagInfo | null> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching tag information',
-    getTraceObject()
+    await getTraceObject()
   )
 
   const result = await fetchGQLData(errorLogger, GetTagInformationDocument, {
@@ -65,7 +65,7 @@ async function fetchTagPosts({
 }> {
   const errorLogger = createErrorLogger(
     'Error occurs while fetching posts on tag page',
-    getTraceObject()
+    await getTraceObject()
   )
   const result = await fetchGQLData(errorLogger, GetPostsByTagSlugDocument, {
     skip,
