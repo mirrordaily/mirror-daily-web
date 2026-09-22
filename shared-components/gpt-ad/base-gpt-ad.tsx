@@ -21,28 +21,19 @@ export default function BaseGptAd({
   slotKey,
   customClasses,
   pageKey,
-  fetchMode = 'display',
 }: {
   slotKey: AdSlotKey
   customClasses: string
   pageKey: string
-  /** `refresh`：SRA 已發出後才掛上的 slot，display 不會再抓廣告，要另外 refresh。 */
-  fetchMode?: 'display' | 'refresh'
 }) {
   const isInitialed = useRef(false)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const slotRef = useRef<any>(null)
   const { slotId, sizes, adId, collapseEmptyDivs, minSize } = adSlots[slotKey]
   const adDivId = `div-gpt-ad-${adId}`
 
   useEffect(() => {
     if (typeof window === 'undefined' || isInitialed.current) return
 
-    let cancelled = false
-
     window.googletag.cmd.push(function () {
-      if (cancelled) return
-
       if (isDebugMode) {
         console.log(
           `[GPT-AD DEBUG] Registering ad slot: ${slotId}, divId: ${adDivId}`
@@ -53,8 +44,6 @@ export default function BaseGptAd({
         .defineSlot(slotId, sizes, adDivId)
         .addService(window.googletag.pubads())
 
-      slotRef.current = slot
-
       if (pageKey) {
         slot.setTargeting('cid', pageKey)
       }
@@ -64,26 +53,9 @@ export default function BaseGptAd({
       }
 
       window.googletag.display(adDivId)
-
-      if (fetchMode === 'refresh') {
-        window.googletag.pubads().refresh([slot])
-      }
     })
     isInitialed.current = true
-
-    if (fetchMode !== 'refresh') return
-
-    return () => {
-      cancelled = true
-      isInitialed.current = false
-      window.googletag?.cmd?.push(() => {
-        if (slotRef.current) {
-          window.googletag.destroySlots([slotRef.current])
-          slotRef.current = null
-        }
-      })
-    }
-  }, [slotId, adDivId, sizes, collapseEmptyDivs, pageKey, fetchMode])
+  }, [slotId, adDivId, sizes, collapseEmptyDivs, pageKey])
 
   return (
     <>

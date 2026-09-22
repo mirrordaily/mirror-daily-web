@@ -13,7 +13,6 @@ type NonDesktopGptAdProps =
       slotKey: AdSlotKey
       customClasses?: string
       targetingId?: string
-      fetchMode?: 'display' | 'refresh'
     }
   | {
       mode: 'sticky'
@@ -57,14 +56,13 @@ export function NonDesktopGptAd(props: NonDesktopGptAdProps) {
     )
   }
 
-  const { slotKey, customClasses = '', targetingId = '', fetchMode } = props
+  const { slotKey, customClasses = '', targetingId = '' } = props
 
   return (
     <BaseGptAd
       slotKey={slotKey}
       customClasses={customClasses}
       pageKey={targetingId}
-      fetchMode={fetchMode}
     />
   )
 }

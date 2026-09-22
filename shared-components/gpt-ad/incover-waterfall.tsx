@@ -18,7 +18,6 @@ export default function IncoverWaterfall() {
           mode="normal"
           slotKey="mirrordaily_home_MW_1x1_incover_AD2"
           customClasses="!w-px !min-h-px overflow-visible"
-          fetchMode="refresh"
         />
       )}
     </>
