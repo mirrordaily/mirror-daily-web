@@ -21,19 +21,28 @@ export default function BaseGptAd({
   slotKey,
   customClasses,
   pageKey,
+  fetchMode = 'display',
 }: {
   slotKey: AdSlotKey
   customClasses: string
   pageKey: string
+  /** `refresh`：SRA 已發出後才掛上的 slot，display 不會再抓廣告，要另外 refresh。 */
+  fetchMode?: 'display' | 'refresh'
 }) {
   const isInitialed = useRef(false)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const slotRef = useRef<any>(null)
   const { slotId, sizes, adId, collapseEmptyDivs, minSize } = adSlots[slotKey]
   const adDivId = `div-gpt-ad-${adId}`
 
   useEffect(() => {
     if (typeof window === 'undefined' || isInitialed.current) return
 
+    let cancelled = false
+
     window.googletag.cmd.push(function () {
+      if (cancelled) return
+
       if (isDebugMode) {
         console.log(
           `[GPT-AD DEBUG] Registering ad slot: ${slotId}, divId: ${adDivId}`
@@ -44,6 +53,8 @@ export default function BaseGptAd({
         .defineSlot(slotId, sizes, adDivId)
         .addService(window.googletag.pubads())
 
+      slotRef.current = slot
+
       if (pageKey) {
         slot.setTargeting('cid', pageKey)
       }
@@ -53,9 +64,26 @@ export default function BaseGptAd({
       }
 
       window.googletag.display(adDivId)
+
+      if (fetchMode === 'refresh') {
+        window.googletag.pubads().refresh([slot])
+      }
     })
     isInitialed.current = true
-  }, [slotId, adDivId, sizes, collapseEmptyDivs, pageKey])
+
+    if (fetchMode !== 'refresh') return
+
+    return () => {
+      cancelled = true
+      isInitialed.current = false
+      window.googletag?.cmd?.push(() => {
+        if (slotRef.current) {
+          window.googletag.destroySlots([slotRef.current])
+          slotRef.current = null
+        }
+      })
+    }
+  }, [slotId, adDivId, sizes, collapseEmptyDivs, pageKey, fetchMode])
 
   return (
     <>
@@ -71,7 +99,10 @@ export default function BaseGptAd({
         )}
       >
         {isDebugMode && (
-          <span className="absolute left-0 top-0 z-ad bg-red-500 px-1 py-0.5 text-[12px] text-white">
+          <span
+            title={slotId}
+            className="absolute left-0 top-0 z-ad block max-w-full truncate bg-red-500 px-1 py-0.5 text-[12px] text-white"
+          >
             {slotId}
           </span>
         )}
