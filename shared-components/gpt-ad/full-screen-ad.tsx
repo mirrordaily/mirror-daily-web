@@ -13,6 +13,7 @@ declare global {
 
 type Props = {
   slotKey: FullScreenAdUnit
+  onEmpty?: () => void
 }
 
 const adSize = [
@@ -20,13 +21,15 @@ const adSize = [
   [320, 480],
 ]
 
-export default function FullScreenAd({ slotKey }: Props) {
+export default function FullScreenAd({ slotKey, onEmpty }: Props) {
   const [isAdVisible, setIsAdVisible] = useState(false)
   const [isCloseBtnVisible, setIsCloseBtnVisible] = useState(false)
   const [isAdEnabled, setIsAdEnabled] = useState(true)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const adSlotRef = useRef<any>(null)
+  const onEmptyRef = useRef(onEmpty)
+  onEmptyRef.current = onEmpty
 
   const { adUnitPath, divId } = fullScreenAdMap[slotKey]
 
@@ -76,6 +79,7 @@ export default function FullScreenAd({ slotKey }: Props) {
         if (hasAd) {
           setIsAdVisible(true)
         } else {
+          onEmptyRef.current?.()
           closeAd()
         }
       }

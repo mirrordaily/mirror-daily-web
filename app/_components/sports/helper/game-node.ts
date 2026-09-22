@@ -3,7 +3,10 @@ import dayjs from 'dayjs'
 import { SportsEvents } from '../main'
 
 export type GameDisplayStatus =
-  'UPCOMING' | 'ONGOING' | 'FINISHED' | 'POSTPONED'
+  | 'UPCOMING'
+  | 'ONGOING'
+  | 'FINISHED'
+  | 'POSTPONED'
 // --- End of Type Definitions ---
 
 export class GameNode {
