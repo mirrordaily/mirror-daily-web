@@ -17,6 +17,7 @@ import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
 import IncoverWaterfall from '@/shared-components/gpt-ad/incover-waterfall'
+import { GoogleTagPageLevel } from '@/utils/googletag-page-level'
 
 type PageProps = { params: Promise<{ slug: string }> }
 
@@ -57,6 +58,7 @@ export default async function Page(props: PageProps) {
   if (!categoryInfo) notFound()
   const color = categoryInfo.color
   const name = categoryInfo.name
+  const googleTagTargeting: string[] = ['category', slug]
 
   const { postsData: initialPosts, jsonPostsCount } =
     await fetchCategoryPostsFromJSON({ slug })
@@ -138,6 +140,11 @@ export default async function Page(props: PageProps) {
 
   return (
     <>
+      <GoogleTagPageLevel
+        targeting={{
+          section: googleTagTargeting,
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
