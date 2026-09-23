@@ -48,6 +48,7 @@
     "@graphql-typed-document-node/core": "^3.2.0",
     "@parcel/watcher": "^2.6.0",
     "@types/apollo-upload-client": "^18.0.1",
+    "@types/google-publisher-tag": "^1.20260907.0",
     "@types/google_interactive_media_ads_types": "^3.697.1",
     "@types/lodash-es": "^4.17.12",
     "@types/mailchimp__mailchimp_marketing": "^3.0.22",
