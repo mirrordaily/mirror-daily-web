@@ -19,6 +19,7 @@ import { getCategoryPageUrl, getSectionPageUrl } from '@/utils/site-urls'
 import RelatedAd from '@/shared-components/related-ad'
 import BottomAd from '@/shared-components/bottom-ad'
 import IncoverWaterfall from '@/shared-components/gpt-ad/incover-waterfall'
+import { GoogleTagPageLevel } from '@/utils/googletag-page-level'
 
 type PageProps = { params: Promise<{ id: string }> }
 
@@ -76,6 +77,7 @@ export default async function Page(props: PageProps) {
   const params = await props.params
   const id = params.id
   const externalPost = await fetchExternal(id)
+
   if (!externalPost) notFound()
 
   let relatedPosts = await fetchRelatedPosts(id)
@@ -84,6 +86,7 @@ export default async function Page(props: PageProps) {
   const latestPosts = (await fetchLatestPost(1))
     .filter((post) => post.postId !== id)
     .slice(0, 6)
+  const googleTagTargeting: string[] = ['external', id]
 
   if (relatedPosts.length < MIN_RELATED_POSTS) {
     const postsToAdd = MIN_RELATED_POSTS - relatedPosts.length
@@ -166,8 +169,25 @@ export default async function Page(props: PageProps) {
     })),
   ]
 
+  if (sections.length > 0) {
+    sections.forEach((section) => {
+      googleTagTargeting.push(section.slug)
+    })
+  }
+
+  if (categories.length > 0) {
+    categories.forEach((category) => {
+      googleTagTargeting.push(category.slug)
+    })
+  }
+
   return (
     <>
+      <GoogleTagPageLevel
+        targeting={{
+          section: googleTagTargeting,
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

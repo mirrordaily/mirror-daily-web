@@ -20,6 +20,7 @@ import StoryInfiniteArticles from '../_components/story-infinite-articles'
 import { fetchLatestPost, fetchPopularPost } from '@/app/actions-general'
 import StorySidebar from '../_components/story-sidebar'
 import IncoverWaterfall from '@/shared-components/gpt-ad/incover-waterfall'
+import { GoogleTagPageLevel } from '@/utils/googletag-page-level'
 
 type PageProps = { params: Promise<{ id: string }> }
 
@@ -109,6 +110,7 @@ export default async function Page(props: PageProps) {
     .slice(0, 6)
   const popularPosts = await fetchPopularPost(20)
   const popularPostsTopSix = popularPosts.slice(0, 6)
+  const googleTagTargeting: string[] = ['story', id]
 
   const extra = {
     storyId: postData.id,
@@ -197,8 +199,25 @@ export default async function Page(props: PageProps) {
     })),
   ]
 
+  if (postData.sections.length > 0) {
+    postData.sections.forEach((section) => {
+      googleTagTargeting.push(section.slug)
+    })
+  }
+
+  if (postData.categories.length > 0) {
+    postData.categories.forEach((category) => {
+      googleTagTargeting.push(category.slug)
+    })
+  }
+
   return (
     <>
+      <GoogleTagPageLevel
+        targeting={{
+          section: googleTagTargeting,
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
