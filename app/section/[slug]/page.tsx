@@ -18,7 +18,7 @@ import { sectionGtmEvents } from '@/constants/gtm'
 import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
-import FullScreenAd from '@/shared-components/gpt-ad/full-screen-ad'
+import IncoverWaterfall from '@/shared-components/gpt-ad/incover-waterfall'
 
 type PageProps = { params: Promise<{ slug: string }> }
 
@@ -147,12 +147,7 @@ export default async function Page(props: PageProps): Promise<JSX.Element> {
         }}
       />
       <ListPageTopAd slug={slug} />
-      <FullScreenAd slotKey="homepage_mw" />
-      <NonDesktopGptAd
-        mode="normal"
-        slotKey="mirrordaily_home_MW_1x1_incover_AD2"
-        customClasses="!w-px !min-h-px overflow-visible"
-      />
+      <IncoverWaterfall />
       <div className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
         <ArticlesList
           initialPosts={initialPosts}
