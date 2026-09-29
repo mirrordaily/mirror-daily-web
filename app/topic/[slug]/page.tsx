@@ -15,12 +15,14 @@ import {
   // TOPIC_LEADING,
   TOPIC_LIST_TYPE,
 } from '@/types/topic'
+import CustomImage from '@/shared-components/custom-image'
 // import type { ImageKeys } from '@/utils/data-schema'
 // import LeadingVideo from './_components/leading-video'
 // import CustomImage from '@/shared-components/custom-image'
 // import LeadingSlideshow from './_components/leading-slideshow'
 import ListTypeListing from './_components/list-type'
 import GroupTypeListing from './_components/group-type'
+import TopicBrief from './_components/topic-brief'
 import { getTopicPageUrl } from '@/utils/site-urls'
 import { getDefaultMetadata } from '@/utils/common'
 import {
@@ -209,6 +211,15 @@ export default async function Page(props: PageProps): Promise<JSX.Element> {
   //   }
   // }
 
+  // 名稱、首圖、前言缺任何一項就不顯示 hero 區塊
+  const shouldShowHero =
+    Boolean(topic.name) &&
+    Boolean(topic.heroImage) &&
+    Array.isArray(topic.apiDataBrief) &&
+    topic.apiDataBrief.some((apiDataBlock) =>
+      Boolean(apiDataBlock.content?.[0])
+    )
+
   let listingJsx: React.ReactNode
 
   switch (type) {
@@ -230,7 +241,29 @@ export default async function Page(props: PageProps): Promise<JSX.Element> {
       <div className="topic">
         {/* 因為該需求先註解掉：https://app.asana.com/1/614399484723017/project/1210077071799813/task/1210066204142622?focus=true */}
         {/* {leadingJsx} */}
-        <h1 className="topic-name">{topic.name}</h1>
+        {shouldShowHero && (
+          <div className="w-full bg-mirror-blue-800">
+            <div className="mx-auto flex max-w-screen-lg flex-wrap items-center gap-6 px-6 py-8 md:flex-nowrap md:px-[60px] md:py-12 lg:gap-12">
+              <div className="order-2 flex-[1_1_50%] md:order-1">
+                <h1 className="topic-name">{topic.name}</h1>
+                <TopicBrief apiDataBrief={topic.apiDataBrief} />
+              </div>
+              <div className="order-1 aspect-[3/2] w-full md:order-2 md:max-w-[50%]">
+                <CustomImage
+                  images={topic.heroImage?.resized}
+                  imagesWebP={topic.heroImage?.resizedWebp}
+                  alt={topic.name || ''}
+                  priority
+                  rwd={{
+                    mobile: '100vw',
+                    tablet: '50vw',
+                    default: '540px',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
         <main className="topic-list">{listingJsx}</main>
       </div>
     </>

@@ -4158,7 +4158,8 @@ export type UserAuthenticationWithPasswordFailure = {
 }
 
 export type UserAuthenticationWithPasswordResult =
-  UserAuthenticationWithPasswordFailure | UserAuthenticationWithPasswordSuccess
+  | UserAuthenticationWithPasswordFailure
+  | UserAuthenticationWithPasswordSuccess
 
 export type UserAuthenticationWithPasswordSuccess = {
   __typename?: 'UserAuthenticationWithPasswordSuccess'

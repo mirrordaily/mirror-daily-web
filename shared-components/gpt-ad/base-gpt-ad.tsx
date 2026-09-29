@@ -71,7 +71,10 @@ export default function BaseGptAd({
         )}
       >
         {isDebugMode && (
-          <span className="absolute left-0 top-0 z-ad bg-red-500 px-1 py-0.5 text-[12px] text-white">
+          <span
+            title={slotId}
+            className="absolute left-0 top-0 z-ad block max-w-full truncate bg-red-500 px-1 py-0.5 text-[12px] text-white"
+          >
             {slotId}
           </span>
         )}
