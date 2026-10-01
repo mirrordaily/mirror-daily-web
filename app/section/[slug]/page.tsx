@@ -19,6 +19,7 @@ import ListPageTopAd from '@/shared-components/top-ads/list-page-top-ad'
 import { SITE_URL } from '@/constants/config'
 import { IMAGE_PATH } from '@/constants/default-path'
 import IncoverWaterfall from '@/shared-components/gpt-ad/incover-waterfall'
+import { GoogleTagPageLevel } from '@/utils/googletag-page-level'
 
 type PageProps = { params: Promise<{ slug: string }> }
 
@@ -59,6 +60,7 @@ export default async function Page(props: PageProps): Promise<JSX.Element> {
   if (!sectionInfo) notFound()
   const color = sectionInfo.color
   const name = sectionInfo.name
+  const googleTagTargeting: string[] = ['section', slug]
 
   const { postsData: initialPosts, jsonPostsCount } =
     await fetchSectionPostsFromJSON({ slug })
@@ -139,39 +141,46 @@ export default async function Page(props: PageProps): Promise<JSX.Element> {
   ]
 
   return (
-    <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+    <>
+      <GoogleTagPageLevel
+        targeting={{
+          section: googleTagTargeting,
         }}
       />
-      <ListPageTopAd slug={slug} />
-      <IncoverWaterfall />
-      <div className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
-        <ArticlesList
-          initialPosts={initialPosts}
-          totalAmount={totalAmount}
-          color={color}
-          name={name}
-          fetchMorePosts={fetchMorePosts}
-          slug={slug}
-          gtm={sectionGtmEvents}
+      <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+          }}
         />
-        <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
-        <PopularNewsSection
-          slug={slug}
-          gtmClassName={sectionGtmEvents.popularArticle}
+        <ListPageTopAd slug={slug} />
+        <IncoverWaterfall />
+        <div className="mb-10 flex flex-col items-center md:mb-[72px] md:pt-5 lg:mb-[100px] lg:flex-row lg:items-start lg:gap-x-[128px] lg:px-9">
+          <ArticlesList
+            initialPosts={initialPosts}
+            totalAmount={totalAmount}
+            color={color}
+            name={name}
+            fetchMorePosts={fetchMorePosts}
+            slug={slug}
+            gtm={sectionGtmEvents}
+          />
+          <hr className="my-10 hidden w-[670px] border border-[#000928] md:block lg:hidden" />
+          <PopularNewsSection
+            slug={slug}
+            gtmClassName={sectionGtmEvents.popularArticle}
+          />
+        </div>
+        <NonDesktopGptAd
+          mode="normal"
+          slotKey="mirrordaily_section_MW_300x250_list4"
+          customClasses="mt-8 mb-9 mx-auto"
+          targetingId={slug}
         />
-      </div>
-      <NonDesktopGptAd
-        mode="normal"
-        slotKey="mirrordaily_section_MW_300x250_list4"
-        customClasses="mt-8 mb-9 mx-auto"
-        targetingId={slug}
-      />
-      <NonDesktopGptAd mode="sticky" pageType="section_mw" />
-      <DesktopGptAd mode="sticky" pageType="section_pc" />
-    </main>
+        <NonDesktopGptAd mode="sticky" pageType="section_mw" />
+        <DesktopGptAd mode="sticky" pageType="section_pc" />
+      </main>
+    </>
   )
 }
