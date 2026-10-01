@@ -102,6 +102,9 @@ importers:
       '@types/apollo-upload-client':
         specifier: ^18.0.1
         version: 18.0.1(@types/react@19.2.18)(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@types/google-publisher-tag':
+        specifier: ^1.20260907.0
+        version: 1.20260907.0
       '@types/google_interactive_media_ads_types':
         specifier: ^3.697.1
         version: 3.697.1
@@ -1154,6 +1157,9 @@ packages:
 
   '@types/extract-files@13.0.2':
     resolution: {integrity: sha512-4sd7uDB0OVZmwH2wD6w7Qlpr2P5Pn8C9IGwnaq9aiiBDD3Lou7CwFjjkJTDYCDsEvk9zxAtmv9TaMg1lt/YJfA==}
+
+  '@types/google-publisher-tag@1.20260907.0':
+    resolution: {integrity: sha512-50VUcLIzsHVfAFTsd85VRnrFS/Z/GVxeo4KobbRHJjqEI4FRdJIKJOfSO6zdv+bqjFNGaMGyNsZgZDgTeue/9Q==}
 
   '@types/google_interactive_media_ads_types@3.697.1':
     resolution: {integrity: sha512-gRjJoPKQRjjTuySHqZe8Pnu6a5B0bKbTUD2ioDLPSWlEuBaAc2p1mzUzy42SCeWkyYffo2Mnv+blUGuvVvx3dQ==}
@@ -5618,6 +5624,8 @@ snapshots:
   '@types/caseless@0.12.5': {}
 
   '@types/extract-files@13.0.2': {}
+
+  '@types/google-publisher-tag@1.20260907.0': {}
 
   '@types/google_interactive_media_ads_types@3.697.1': {}
 
