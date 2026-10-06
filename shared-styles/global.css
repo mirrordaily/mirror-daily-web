@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Replaces next/font so responses do not advertise a font file in the Link header. */
+html {
+  font-family: 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+}
+
 :root {
   --shorts-header-height: 80px;
   --shorts-body-padding: 0px;
