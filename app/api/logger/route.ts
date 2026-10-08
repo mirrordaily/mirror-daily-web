@@ -48,6 +48,14 @@ const ViewLogPayloadSchema = z.object({
 })
 
 export async function POST(request: Request) {
+  if (!isTrustedRequest(request)) {
+    console.warn('[api/logger] rejected untrusted origin', {
+      origin: request.headers.get('origin'),
+      referer: request.headers.get('referer'),
+    })
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
   const declaredLength = Number(request.headers.get('content-length'))
 
   if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
@@ -77,10 +85,8 @@ export async function POST(request: Request) {
   const result = ViewLogPayloadSchema.safeParse(body)
 
   if (!result.success) {
-    return NextResponse.json(
-      { error: 'Invalid payload', issues: result.error.issues },
-      { status: 400 }
-    )
+    console.warn('[api/logger] invalid payload', result.error.issues)
+    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 })
   }
 
   try {
@@ -93,6 +99,18 @@ export async function POST(request: Request) {
     console.error('[api/logger] failed', err)
     return NextResponse.json({ error: 'Failed to write log' }, { status: 500 })
   }
+}
+
+function isTrustedRequest(request: Request): boolean {
+  const origin = request.headers.get('origin')
+
+  // A present Origin is authoritative. Only fall back to Referer when it is absent.
+  if (origin) {
+    return origin !== 'null' && isOwnSiteUrl(origin)
+  }
+
+  const referer = request.headers.get('referer')
+  return !!referer && isOwnSiteUrl(referer)
 }
 
 function isOwnSiteUrl(rawUrl: string): boolean {
