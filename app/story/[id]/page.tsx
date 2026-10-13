@@ -21,8 +21,14 @@ import { fetchLatestPost, fetchPopularPost } from '@/app/actions-general'
 import StorySidebar from '../_components/story-sidebar'
 import IncoverWaterfall from '@/shared-components/gpt-ad/incover-waterfall'
 import { GoogleTagPageLevel } from '@/utils/googletag-page-level'
+import { type Post } from '@/types/story'
 
 type PageProps = { params: Promise<{ id: string }> }
+
+// 優先使用依 CMS 輸入順序排列的作者（writersInInputOrder），為 null 時 fallback 至 writers
+function getOrderedWriters(postData: Post) {
+  return postData.writersInInputOrder ?? postData.writers
+}
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params
@@ -34,6 +40,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   }
 
   const defaultMetadata = getDefaultMetadata()
+  const writers = getOrderedWriters(postData)
 
   const title = `${postData.title} - ${SITE_NAME}`
   const description = getFirstParagraphFromApiData(postData.apiDataBrief) || ''
@@ -63,9 +70,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       'article:modified_time': updatedTime,
     }),
     'article:section': postData.sections?.[0]?.name || 'UnCategorized',
-    'dable:author': postData.writers?.[0]
-      ? postData.writers[0].name
-      : 'Unknown Author',
+    'dable:author': writers[0] ? writers[0].name : 'Unknown Author',
     'dable:item_id': postData.id,
     'section:color': postData.sections?.[0]?.color || '#000000',
     news_keywords: newsKeywords,
@@ -115,7 +120,7 @@ export default async function Page(props: PageProps) {
   const extra = {
     storyId: postData.id,
     storyTitle: postData.title,
-    authorNames: postData.writers.map((w) => w.name),
+    authorNames: getOrderedWriters(postData).map((w) => w.name),
     sectionName: postData.sections?.[0]?.name || '',
     tags: postData.tags.map((t) => t.name),
     algoTags: postData.algoTags.map((t) => t.name),
@@ -124,8 +129,8 @@ export default async function Page(props: PageProps) {
   }
 
   const author =
-    postData.writers && postData.writers.length > 0
-      ? postData.writers.map((writer) => ({
+    getOrderedWriters(postData).length > 0
+      ? getOrderedWriters(postData).map((writer) => ({
           '@type': 'Person',
           name: writer.name,
           url: `${SITE_URL}${writer.link}`,
