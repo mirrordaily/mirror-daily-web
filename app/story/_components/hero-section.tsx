@@ -103,7 +103,9 @@ export default function HeroSection({ postData }: Props) {
               <p
                 className={`flex flex-wrap items-center break-all ${storyGtmEvents.author}`}
               >
-                {getAuthorsContent(postData.writers)}
+                {getAuthorsContent(
+                  postData.writersInInputOrder ?? postData.writers
+                )}
               </p>
             </div>
           )}

@@ -3,19 +3,12 @@ import StoreProvider from '@/redux/store-provider'
 import UploadModal from '@/shared-components/shorts-upload/upload-modal'
 import '@/shared-styles/global.css'
 import type { Metadata } from 'next'
-import { Noto_Sans_TC } from 'next/font/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import { getDefaultMetadata } from '@/utils/common'
 import { headers } from 'next/headers'
 import PromoteTopicSection from './_components/promote-topic/section'
 import PreferredSourceIcon from './_components/preferred-source/preferred-source-icon'
-
-const notoSans = Noto_Sans_TC({
-  preload: true,
-  subsets: ['latin'],
-  display: 'swap',
-})
 
 export async function generateMetadata(): Promise<Metadata> {
   const defaultMetadata = getDefaultMetadata()
@@ -41,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="zh-Hant" className={notoSans.className}>
+    <html lang="zh-Hant">
       <head>
         <meta name="google-adsense-account" content="ca-pub-6288011202409243" />
         <Script
