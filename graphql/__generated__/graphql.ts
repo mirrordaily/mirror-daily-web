@@ -2550,6 +2550,7 @@ export type Post = {
   vocalsCount?: Maybe<Scalars['Int']['output']>
   writers?: Maybe<Array<Contact>>
   writersCount?: Maybe<Scalars['Int']['output']>
+  writersInInputOrder?: Maybe<Array<Maybe<Contact>>>
 }
 
 export type PostWarningsArgs = {
@@ -4132,6 +4133,7 @@ export type User = {
   author?: Maybe<Contact>
   email?: Maybe<Scalars['String']['output']>
   id: Scalars['ID']['output']
+  isPasswordLoginAllowed?: Maybe<Scalars['Boolean']['output']>
   isProtected?: Maybe<Scalars['Boolean']['output']>
   name?: Maybe<Scalars['String']['output']>
   password?: Maybe<PasswordState>
@@ -4158,8 +4160,7 @@ export type UserAuthenticationWithPasswordFailure = {
 }
 
 export type UserAuthenticationWithPasswordResult =
-  | UserAuthenticationWithPasswordFailure
-  | UserAuthenticationWithPasswordSuccess
+  UserAuthenticationWithPasswordFailure | UserAuthenticationWithPasswordSuccess
 
 export type UserAuthenticationWithPasswordSuccess = {
   __typename?: 'UserAuthenticationWithPasswordSuccess'
@@ -4170,6 +4171,7 @@ export type UserAuthenticationWithPasswordSuccess = {
 export type UserCreateInput = {
   author?: InputMaybe<ContactRelateToOneForCreateInput>
   email?: InputMaybe<Scalars['String']['input']>
+  isPasswordLoginAllowed?: InputMaybe<Scalars['Boolean']['input']>
   isProtected?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   password?: InputMaybe<Scalars['String']['input']>
@@ -4180,6 +4182,7 @@ export type UserCreateInput = {
 export type UserOrderByInput = {
   email?: InputMaybe<OrderDirection>
   id?: InputMaybe<OrderDirection>
+  isPasswordLoginAllowed?: InputMaybe<OrderDirection>
   isProtected?: InputMaybe<OrderDirection>
   name?: InputMaybe<OrderDirection>
   role?: InputMaybe<OrderDirection>
@@ -4204,6 +4207,7 @@ export type UserUpdateArgs = {
 export type UserUpdateInput = {
   author?: InputMaybe<ContactRelateToOneForUpdateInput>
   email?: InputMaybe<Scalars['String']['input']>
+  isPasswordLoginAllowed?: InputMaybe<Scalars['Boolean']['input']>
   isProtected?: InputMaybe<Scalars['Boolean']['input']>
   name?: InputMaybe<Scalars['String']['input']>
   password?: InputMaybe<Scalars['String']['input']>
@@ -4218,6 +4222,7 @@ export type UserWhereInput = {
   author?: InputMaybe<ContactWhereInput>
   email?: InputMaybe<StringFilter>
   id?: InputMaybe<IdFilter>
+  isPasswordLoginAllowed?: InputMaybe<BooleanFilter>
   isProtected?: InputMaybe<BooleanFilter>
   name?: InputMaybe<StringFilter>
   role?: InputMaybe<StringFilter>
@@ -4838,6 +4843,11 @@ export type PostDetailFragment = {
     id: string
     name?: string | null
   }> | null
+  writersInInputOrder?: Array<{
+    __typename?: 'Contact'
+    id: string
+    name?: string | null
+  } | null> | null
   photographers?: Array<{
     __typename?: 'Contact'
     id: string
@@ -5590,6 +5600,11 @@ export type GetPostByIdQuery = {
       id: string
       name?: string | null
     }> | null
+    writersInInputOrder?: Array<{
+      __typename?: 'Contact'
+      id: string
+      name?: string | null
+    } | null> | null
     photographers?: Array<{
       __typename?: 'Contact'
       id: string
@@ -5708,6 +5723,11 @@ export type GetPostsBySameSectionQuery = {
       id: string
       name?: string | null
     }> | null
+    writersInInputOrder?: Array<{
+      __typename?: 'Contact'
+      id: string
+      name?: string | null
+    } | null> | null
     photographers?: Array<{
       __typename?: 'Contact'
       id: string
@@ -7233,6 +7253,17 @@ export const PostDetailFragmentDoc = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'writers' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'writersInInputOrder' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -11104,6 +11135,17 @@ export const GetPostByIdDocument = {
           },
           {
             kind: 'Field',
+            name: { kind: 'Name', value: 'writersInInputOrder' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
             name: { kind: 'Name', value: 'photographers' },
             selectionSet: {
               kind: 'SelectionSet',
@@ -11460,6 +11502,17 @@ export const GetPostsBySameSectionDocument = {
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'writers' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'writersInInputOrder' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [

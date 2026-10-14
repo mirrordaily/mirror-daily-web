@@ -49,6 +49,14 @@ function transformPost(
       link: getAuthorPageUrl(id),
       name: name ?? '',
     })) ?? []
+  const writersInInputOrder = Array.isArray(rawData.writersInInputOrder)
+    ? (rawData.writersInInputOrder as NonNullable<typeof rawData.writers>).map(
+        ({ id, name }) => ({
+          link: getAuthorPageUrl(id),
+          name: name ?? '',
+        })
+      )
+    : null
   const photographers =
     rawData.photographers?.map(({ id, name }) => ({
       link: getAuthorPageUrl(id),
@@ -117,6 +125,7 @@ function transformPost(
     isAdult: rawData.isAdult ?? false,
     shouldShowAd: !(rawData.hiddenAdvertised ?? false),
     writers,
+    writersInInputOrder,
     photographers,
     editors,
     mainWriters,

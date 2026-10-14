@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { logVideoView } from '@/app/actions-logging'
 
 export default function useVideoViewLogger({
   isActive,
@@ -43,14 +42,29 @@ export default function useVideoViewLogger({
       }
       viewedPercentages.current.add(percentage)
 
-      await logVideoView({
-        referrer: document.referrer,
-        screenSize,
-        extra: {
-          ...extra,
-          percentage_watched: percentage,
-        },
-      })
+      try {
+        const response = await fetch('/api/logger', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            eventType: 'video-view',
+            currentUrl: window.location.href,
+            referrer: document.referrer,
+            screenSize,
+            extra: {
+              ...extra,
+              percentage_watched: percentage,
+            },
+          }),
+          keepalive: true,
+        })
+
+        if (!response.ok) {
+          throw new Error(`log request failed with status ${response.status}`)
+        }
+      } catch (err) {
+        console.error('[useVideoViewLogger] failed to log video view', err)
+      }
     },
     [duration, link, playedSeconds, screenSize, title]
   )
@@ -76,7 +90,9 @@ export default function useVideoViewLogger({
       }
     }
 
-    log()
+    void log().catch((err) => {
+      console.error('[useVideoViewLogger] failed to log video view', err)
+    })
   }, [duration, isActive, playedSeconds, sendVideoLog])
 
   return { sendVideoLog }

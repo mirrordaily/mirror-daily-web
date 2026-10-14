@@ -21,6 +21,7 @@ export type Post = {
   sections: { name: string; color: string; slug: string }[]
   categories: { name: string; slug: string }[]
   writers: Contact[]
+  writersInInputOrder: Contact[] | null
   photographers: Contact[]
   mainWriters: Contact[]
   editors: Contact[]
