@@ -23,6 +23,7 @@ import {
 import type { Post } from '@/types/story'
 import type { RelatedPost } from '@/types/common'
 import { getStoryPageUrl, getAuthorPageUrl } from '@/utils/site-urls'
+import { sanitizeApiData } from '@/utils/sanitize-api-data'
 
 function transformPost(
   rawData: GetPostByIdQuery['post'] | PostDetailFragment
@@ -72,8 +73,8 @@ function transformPost(
       link: getAuthorPageUrl(id),
       name: name ?? '',
     })) ?? []
-  const apiData = rawData.apiData
-  const apiDataBrief = rawData.apiDataBrief
+  const apiData = sanitizeApiData(rawData.apiData)
+  const apiDataBrief = sanitizeApiData(rawData.apiDataBrief)
   const tags =
     rawData.tags?.map((tag) => ({
       name: tag.name ?? '',
