@@ -27,8 +27,8 @@ export function UnorderListBlock({
 
   return (
     <ul>
-      {list.map((listItem) => (
-        <li key={listItem}>{listItem}</li>
+      {list.map((listItem, index) => (
+        <li key={index} dangerouslySetInnerHTML={{ __html: listItem }} />
       ))}
     </ul>
   )
@@ -48,8 +48,8 @@ export function OrderListBlock({
   }
   return (
     <ol>
-      {list.map((listItem) => (
-        <li key={listItem}>{listItem}</li>
+      {list.map((listItem, index) => (
+        <li key={index} dangerouslySetInnerHTML={{ __html: listItem }} />
       ))}
     </ol>
   )
