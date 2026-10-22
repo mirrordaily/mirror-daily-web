@@ -18,7 +18,6 @@ import SportsSection from './_components/sports/section'
 import LiveSection from './_components/live/section'
 import TopAdSection from './_components/top-ad-section'
 import IncoverWaterfall from '@/shared-components/gpt-ad/incover-waterfall'
-import ElectionIframeEmbed from './_components/election-iframe-embed'
 
 export const dynamic = 'force-dynamic'
 
@@ -33,7 +32,6 @@ export default async function Home() {
       <Header />
       <div className="flex w-full max-w-screen-lg shrink-0 grow flex-col">
         <main className="flex w-full grow flex-col items-center justify-center">
-          <ElectionIframeEmbed />
           <TopAdSection />
           <IncoverWaterfall />
           <SectionDivider customClasses="hidden md:block lg:hidden" />
