@@ -4,17 +4,11 @@ import Custom500 from '@/shared-components/error/ui-500'
 import Footer from '@/shared-components/footer'
 import Header from '@/shared-components/header-for-ui-500'
 import { useEffect } from 'react'
-import { Noto_Sans_TC } from 'next/font/google'
 import StoreProvider from '@/redux/store-provider'
 import UploadModal from '@/shared-components/shorts-upload/upload-modal'
+import GoogleFontLoader from '@/shared-components/google-font-loader'
 import type { Metadata } from 'next'
 import { getDefaultMetadata } from '@/utils/common'
-
-const notoSans = Noto_Sans_TC({
-  preload: false,
-  subsets: ['latin'],
-  display: 'swap',
-})
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -24,7 +18,10 @@ export default function GlobalError({ error }: { error: Error }) {
   }, [error])
 
   return (
-    <html lang="zh-Hant" className={notoSans.className}>
+    <html lang="zh-Hant">
+      <head>
+        <GoogleFontLoader />
+      </head>
       <body className="app-layout">
         <StoreProvider>
           <Header />
