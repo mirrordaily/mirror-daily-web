@@ -14,6 +14,15 @@ module.exports = {
       lg: '1200px',
     },
     extend: {
+      fontFamily: {
+        // Noto Sans TC is loaded from Google Fonts CDN by GoogleFontLoader
+        sans: [
+          '"Noto Sans TC"',
+          '"PingFang TC"',
+          '"Microsoft JhengHei"',
+          'sans-serif',
+        ],
+      },
       borderRadius: {
         '2xs': '4px',
       },
