@@ -1,5 +1,4 @@
 /* topic pages have special css customization, so we create dedicated file for them */
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
