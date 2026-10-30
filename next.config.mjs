@@ -46,6 +46,7 @@ const nextConfig = {
   basePath: SITE_BASE_PATH,
   reactStrictMode: true,
   output: 'standalone',
+  generateEtags: false,
   experimental: {
     serverActions: {
       /** @see maximum HTTP/1 request size, @see https://cloud.google.com/run/quotas#networking_limits */
@@ -59,16 +60,6 @@ const nextConfig = {
 
     /** @see https://paper.dropbox.com/doc/CDN-cache---CicA78_qhXGqWFqc4NC99FkAAg-9oJDty7PW69K9YuC40aic */
     return [
-      // default
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'ETag',
-            value: `"${process.env.GIT_HASH}"`,
-          },
-        ],
-      },
       // 3 minutes
       {
         source: '/',
