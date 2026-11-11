@@ -107,7 +107,7 @@ export const SOCIAL_LINKS = [
   },
   {
     name: 'YouTube',
-    href: 'https://www.youtube.com/@%E9%8F%A1%E5%A0%B1',
+    href: 'https://www.youtube.com/@mirrordaily/featured',
   },
 ] as const satisfies SocialLinks[]
 
