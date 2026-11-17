@@ -2,7 +2,7 @@ import 'server-only'
 
 import { ApolloError } from '@apollo/client'
 import errors from '@twreporter/errors'
-import { GCP_PROJECT_ID } from '@/constants/config'
+import { GCP_LOG_PROJECT_ID } from '@/constants/config'
 import { headers } from 'next/headers'
 
 const createErrorLogger = (
@@ -92,7 +92,7 @@ const getTraceObject = async () => {
     if (traceHeader) {
       const [trace] = traceHeader.split('/')
       globalLogFields['logging.googleapis.com/trace'] =
-        `projects/${GCP_PROJECT_ID}/traces/${trace}`
+        `projects/${GCP_LOG_PROJECT_ID}/traces/${trace}`
     }
     return globalLogFields
   } catch (e) {

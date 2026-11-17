@@ -37,6 +37,8 @@ const ENV = (function () {
 })()
 
 const GCP_PROJECT_ID = 'mirrordaily'
+// Project that receives Cloud Logging writes and traces; defaults to GCP_PROJECT_ID.
+const GCP_LOG_PROJECT_ID = process.env.GCP_PROJECT_ID || GCP_PROJECT_ID
 const RECAPTCHA_SITE_KEY = '6LfXbQIrAAAAAPrIGJH_oBhdpNsDTkO5IwlM4UfX'
 const RECAPTCHA_API_KEY = 'AIzaSyCCEuV8oEN0SZsU0Fg7E6e2gx-fdTCQLAQ'
 const RECAPTCHA_SCORE = 0.7
@@ -168,6 +170,7 @@ export {
   STATIC_JSON_CATEGORY_NEWS,
   STATIC_JSON_TOPIC_NEWS,
   GCP_PROJECT_ID,
+  GCP_LOG_PROJECT_ID,
   RECAPTCHA_SITE_KEY,
   RECAPTCHA_API_KEY,
   RECAPTCHA_SCORE,

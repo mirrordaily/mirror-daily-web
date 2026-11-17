@@ -1,7 +1,12 @@
 import 'server-only'
 
 import { Logging } from '@google-cloud/logging'
-import { GCP_PROJECT_ID, ENV, SITE_URL } from '@/constants/config'
+import {
+  GCP_PROJECT_ID,
+  GCP_LOG_PROJECT_ID,
+  ENV,
+  SITE_URL,
+} from '@/constants/config'
 import { parseUserAgentInfo } from '@/utils/user-agent'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-tw'
@@ -25,7 +30,7 @@ let loggingClient: Logging | null = null
 
 function getLoggingClient() {
   if (!loggingClient) {
-    loggingClient = new Logging({ projectId: GCP_PROJECT_ID })
+    loggingClient = new Logging({ projectId: GCP_LOG_PROJECT_ID })
   }
   return loggingClient
 }
