@@ -6,18 +6,47 @@ import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import type { PromoteTopicData } from '@/types/homepage'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import IConClose from '@/public/icons/close.svg'
 import NextImage from 'next/image'
 import { usePathname } from 'next/navigation'
+import { z } from 'zod'
+import { promoteTopicSchema } from '@/utils/data-schema'
+import { transformRawPromoteTopic } from '@/utils/transform-homepage'
+import { URL_STATIC_PROMOTE_TOPICS } from '@/constants/config'
 
-type Props = {
-  list: PromoteTopicData[]
-}
-
-export default function SwiperComponent({ list }: Props) {
+export default function SwiperComponent() {
+  // 預設不顯示，抓到資料後才渲染
+  const [list, setList] = useState<PromoteTopicData[]>([])
   const [visible, setVisible] = useState(true)
   const pathname = usePathname()
+
+  useEffect(() => {
+    const fetchLatest = async () => {
+      try {
+        const schema = z.object({
+          promoteTopics: z.array(promoteTopicSchema),
+        })
+
+        const resp = await fetch(URL_STATIC_PROMOTE_TOPICS)
+        if (!resp.ok) {
+          throw new Error(
+            `Failed to fetch ${URL_STATIC_PROMOTE_TOPICS}: ${resp.status}`
+          )
+        }
+        const raw = await schema.parseAsync(await resp.json())
+        const updated = raw.promoteTopics.map(transformRawPromoteTopic)
+
+        setList(updated)
+      } catch (err) {
+        // 抓取失敗時維持不顯示
+        console.error(err)
+      }
+    }
+
+    fetchLatest()
+  }, [])
+
   const isSearchPage = pathname.startsWith('/search')
   const validList = list.filter((item) => item.topics)
 

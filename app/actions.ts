@@ -7,7 +7,6 @@ import type {
   CityAndWeather,
   SportsGameData,
   LatestSportsNewsData,
-  PromoteTopicData,
 } from '@/types/homepage'
 import {
   STATIC_JSON_EDITOR_CHOICE,
@@ -16,7 +15,6 @@ import {
   STATIC_JSON_TOPIC,
   STATIC_JSON_WEATHER,
   STATIC_JSON_LATEST_SPORTS_NEWS,
-  STATIC_JSON_PROMOTE_TOPICS,
 } from '@/constants/config'
 import { createErrorLogger, getTraceObject } from '@/utils/log/common'
 import { fetchGQLData } from '@/utils/graphql'
@@ -40,7 +38,6 @@ import {
   cityWeatherSchema,
   sportsEventsApiResponseSchema,
   latestSportsNewsSchema,
-  promoteTopicSchema,
 } from '@/utils/data-schema'
 import {
   transformRawLiveEvents,
@@ -50,7 +47,6 @@ import {
   transformWeather,
   transformSportsEvents,
   transformLatestSportsNews,
-  transformRawPromoteTopic,
 } from '@/utils/transform-homepage'
 
 export const fetchLiveEvent =
@@ -214,25 +210,5 @@ export const fetchLatestSportsNews = async (): Promise<
     return transformLatestSportsNews(parsed)
   } catch (e) {
     errorLogger(e)
-  }
-}
-
-export const fetchPromoteTopics = async (): Promise<PromoteTopicData[]> => {
-  const errorLogger = createErrorLogger(
-    'Error occurs while fetching promote topics',
-    await getTraceObject()
-  )
-
-  const schema = z.object({
-    promoteTopics: z.array(promoteTopicSchema),
-  })
-
-  try {
-    const jsonData = await readStaticJson(STATIC_JSON_PROMOTE_TOPICS)
-    const result = schema.parse(jsonData)
-    return result.promoteTopics.map(transformRawPromoteTopic)
-  } catch (e) {
-    errorLogger(e)
-    return []
   }
 }
