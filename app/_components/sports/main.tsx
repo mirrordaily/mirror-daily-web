@@ -1,7 +1,8 @@
 'use client'
 import DateSwitcher from './date-switcher'
 import GameInfoCard from './game-info-card'
-import SelectMenu from './select-menu'
+// NOTE: TPBL is temporarily hidden
+// import SelectMenu from './select-menu'
 import { useMemo, useState, useCallback } from 'react'
 import type { LatestSportsNewsData, SportsGameData } from '@/types/homepage'
 import dayjs, { type Dayjs } from 'dayjs'
@@ -49,12 +50,19 @@ export default function SportsMain({
   // Use RTK Query data, fall back to initial data
   const activeScheduleData = data.length > 0 ? data : scheduleData
 
+  // NOTE: TPBL is temporarily hidden, so only CPBL is shown (no select menu)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedSport, setSelectedSport] = useState<SportsEvents>(
-    SportsEvents.ALL
+    SportsEvents.CPBL
   )
 
   const processedGameMap = useMemo(() => {
-    return eventGameMap(activeScheduleData)
+    // NOTE: TPBL is temporarily hidden
+    return eventGameMap(
+      activeScheduleData?.filter(
+        (game) => game.league.toUpperCase() !== SportsEvents.TPBL
+      )
+    )
   }, [activeScheduleData])
 
   // Helper function to calculate appropriate date for a sport
@@ -152,6 +160,8 @@ export default function SportsMain({
     // 只有當該日期沒有任何賽事且沒有 futureGames 時，才顯示相關報導
     return !hasFutureGames
   }, [selectedSchedule, futureGames])
+  // NOTE: TPBL is temporarily hidden, sportOptions is unused while SelectMenu is commented out
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sportOptions = useMemo(
     () => [
       { value: SportsEvents.ALL, label: '全部賽事' },
@@ -176,7 +186,8 @@ export default function SportsMain({
   return (
     <div className="flex min-h-fit w-[344px] flex-col md:w-full">
       <section className="flex justify-between">
-        <SelectMenu
+        {/* NOTE: TPBL is temporarily hidden */}
+        {/* <SelectMenu
           options={sportOptions}
           selectedValue={selectedSport}
           onSelectChange={(value) => {
@@ -184,7 +195,8 @@ export default function SportsMain({
             setSelectedSport(newSport)
             setSelectedDate(calculateDateForSport(newSport))
           }}
-        />
+        /> */}
+        <p className="font-bold leading-7 text-gray-800">CPBL</p>
         <DateSwitcher
           date={selectedDate}
           onSelectChange={(value) => {
