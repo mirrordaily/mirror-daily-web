@@ -1,6 +1,6 @@
 'use server'
 
-import { STATIC_FILE_DOMAIN, STATIC_CACHE_TIMESTAMP } from '@/constants/config'
+import { STATIC_FILE_DOMAIN } from '@/constants/config'
 
 /**
  * Read static JSON either from mounted filesystem (fs) or fallback to fetch from HTTPS
@@ -24,8 +24,10 @@ export async function readStaticJson<T = unknown>(
     ? relativePath.slice(1)
     : relativePath
 
-  // Fallback to HTTP fetch
-  const fallbackUrl = `https://${STATIC_FILE_DOMAIN}/json/${cleanPath}?t=${STATIC_CACHE_TIMESTAMP}`
+  // Bust CDN cache per request. A module-level timestamp stays fixed for the
+  // life of the server process, so each instance kept fetching its own stale URL.
+  const cacheTimestamp = Math.floor(Date.now() / 100)
+  const fallbackUrl = `https://${STATIC_FILE_DOMAIN}/json/${cleanPath}?t=${cacheTimestamp}`
   const res = await fetch(fallbackUrl)
   if (!res.ok) {
     throw new Error(
