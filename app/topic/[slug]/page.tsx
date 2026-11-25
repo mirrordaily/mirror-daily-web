@@ -118,6 +118,7 @@ export default async function Page(props: PageProps): Promise<JSX.Element> {
     // manualOrderOfSlideshowImages,
     type,
     tags,
+    groupTags,
   } = topic
 
   // let leadingJsx: React.ReactNode
@@ -224,7 +225,13 @@ export default async function Page(props: PageProps): Promise<JSX.Element> {
 
   switch (type) {
     case TOPIC_LIST_TYPE.GROUP: {
-      listingJsx = <GroupTypeListing slug={slug} tags={tags || []} />
+      listingJsx = (
+        <GroupTypeListing
+          slug={slug}
+          tags={tags || []}
+          groupTags={groupTags || []}
+        />
+      )
       break
     }
     case TOPIC_LIST_TYPE.LIST:

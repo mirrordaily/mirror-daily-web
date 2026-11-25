@@ -28,6 +28,11 @@ export type PostDataWithTags = {
   tags: { id: string }[]
 }
 
+export type GroupTag = {
+  text: string
+  tagId: string | null
+}
+
 export type Topic = {
   id: string
   name: string

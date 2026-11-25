@@ -2510,6 +2510,8 @@ export type Post = {
   manualOrderOfRelateds?: Maybe<Scalars['JSON']['output']>
   manualOrderOfSections?: Maybe<Scalars['JSON']['output']>
   manualOrderOfWriters?: Maybe<Scalars['JSON']['output']>
+  notLine?: Maybe<Scalars['Boolean']['output']>
+  notYahoo?: Maybe<Scalars['Boolean']['output']>
   og_description?: Maybe<Scalars['String']['output']>
   og_image?: Maybe<Photo>
   og_title?: Maybe<Scalars['String']['output']>
@@ -2767,6 +2769,8 @@ export type PostCreateInput = {
   manualOrderOfRelateds?: InputMaybe<Scalars['JSON']['input']>
   manualOrderOfSections?: InputMaybe<Scalars['JSON']['input']>
   manualOrderOfWriters?: InputMaybe<Scalars['JSON']['input']>
+  notLine?: InputMaybe<Scalars['Boolean']['input']>
+  notYahoo?: InputMaybe<Scalars['Boolean']['input']>
   og_description?: InputMaybe<Scalars['String']['input']>
   og_image?: InputMaybe<PhotoRelateToOneForCreateInput>
   og_title?: InputMaybe<Scalars['String']['input']>
@@ -2815,6 +2819,8 @@ export type PostOrderByInput = {
   isFeatured?: InputMaybe<OrderDirection>
   isMember?: InputMaybe<OrderDirection>
   lockExpireAt?: InputMaybe<OrderDirection>
+  notLine?: InputMaybe<OrderDirection>
+  notYahoo?: InputMaybe<OrderDirection>
   og_description?: InputMaybe<OrderDirection>
   og_title?: InputMaybe<OrderDirection>
   publishedDate?: InputMaybe<OrderDirection>
@@ -2891,6 +2897,8 @@ export type PostUpdateInput = {
   manualOrderOfRelateds?: InputMaybe<Scalars['JSON']['input']>
   manualOrderOfSections?: InputMaybe<Scalars['JSON']['input']>
   manualOrderOfWriters?: InputMaybe<Scalars['JSON']['input']>
+  notLine?: InputMaybe<Scalars['Boolean']['input']>
+  notYahoo?: InputMaybe<Scalars['Boolean']['input']>
   og_description?: InputMaybe<Scalars['String']['input']>
   og_image?: InputMaybe<PhotoRelateToOneForUpdateInput>
   og_title?: InputMaybe<Scalars['String']['input']>
@@ -2945,6 +2953,8 @@ export type PostWhereInput = {
   isFeatured?: InputMaybe<BooleanFilter>
   isMember?: InputMaybe<BooleanFilter>
   lockExpireAt?: InputMaybe<DateTimeNullableFilter>
+  notLine?: InputMaybe<BooleanFilter>
+  notYahoo?: InputMaybe<BooleanFilter>
   og_title?: InputMaybe<StringFilter>
   photographers?: InputMaybe<ContactManyRelationFilter>
   publishedDate?: InputMaybe<DateTimeFilter>
@@ -3871,6 +3881,7 @@ export type Topic = {
   dfp?: Maybe<Scalars['String']['output']>
   externals?: Maybe<Array<External>>
   externalsCount?: Maybe<Scalars['Int']['output']>
+  groupTags?: Maybe<Scalars['JSON']['output']>
   heroImage?: Maybe<Photo>
   heroUrl?: Maybe<Scalars['String']['output']>
   heroVideo?: Maybe<Video>
@@ -3970,6 +3981,7 @@ export type TopicCreateInput = {
   createdBy?: InputMaybe<UserRelateToOneForCreateInput>
   dfp?: InputMaybe<Scalars['String']['input']>
   externals?: InputMaybe<ExternalRelateToManyForCreateInput>
+  groupTags?: InputMaybe<Scalars['JSON']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForCreateInput>
   heroUrl?: InputMaybe<Scalars['String']['input']>
   heroVideo?: InputMaybe<VideoRelateToOneForCreateInput>
@@ -4060,6 +4072,7 @@ export type TopicUpdateInput = {
   createdBy?: InputMaybe<UserRelateToOneForUpdateInput>
   dfp?: InputMaybe<Scalars['String']['input']>
   externals?: InputMaybe<ExternalRelateToManyForUpdateInput>
+  groupTags?: InputMaybe<Scalars['JSON']['input']>
   heroImage?: InputMaybe<PhotoRelateToOneForUpdateInput>
   heroUrl?: InputMaybe<Scalars['String']['input']>
   heroVideo?: InputMaybe<VideoRelateToOneForUpdateInput>
@@ -6090,6 +6103,7 @@ export type GetTopicBasicInfoQuery = {
     style?: string | null
     heroUrl?: string | null
     manualOrderOfSlideshowImages?: any | null
+    groupTags?: any | null
     heroVideo?: {
       __typename?: 'Video'
       state?: string | null
@@ -12302,6 +12316,7 @@ export const GetTopicBasicInfoDocument = {
                     ],
                   },
                 },
+                { kind: 'Field', name: { kind: 'Name', value: 'groupTags' } },
               ],
             },
           },

@@ -57,6 +57,7 @@ query GetTopicBasicInfo($slug: String!) {
       name
       slug
     }
+    groupTags # used by `group` type
   }
 }
 

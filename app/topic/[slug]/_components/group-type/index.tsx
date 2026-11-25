@@ -1,4 +1,5 @@
 import type { GetTopicBasicInfoQuery } from '@/graphql/__generated__/graphql'
+import type { GroupTag } from '@/types/topic'
 import { notFound } from 'next/navigation'
 import { fetchGroupTypeTopicPostBySlug } from '../../../action'
 import List from './list'
@@ -7,13 +8,19 @@ import { IMAGE_PATH } from '@/constants/default-path'
 import { filterPostsByTag } from '@/utils/topic'
 
 type Tag = NonNullable<NonNullable<GetTopicBasicInfoQuery['topic']>['tags']>[0]
+type ValidGroupTag = GroupTag & { tagId: NonNullable<GroupTag['tagId']> }
 
 type Props = {
   slug: string
   tags: Tag[]
+  groupTags?: GroupTag[]
 }
 
-export default async function GroupTypeListing({ slug, tags }: Props) {
+export default async function GroupTypeListing({
+  slug,
+  tags,
+  groupTags,
+}: Props) {
   const posts = await fetchGroupTypeTopicPostBySlug(slug)
 
   if (posts.length === 0) notFound()
@@ -42,13 +49,31 @@ export default async function GroupTypeListing({ slug, tags }: Props) {
     }),
   }
 
-  const groupElements = tags.map((tag) => (
-    <List
-      key={tag.id}
-      groupName={tag.name || ''}
-      posts={filterPostsByTag(posts, tag)}
-    />
-  ))
+  const validGroupTags = Array.isArray(groupTags)
+    ? groupTags.filter((gt): gt is ValidGroupTag => Boolean(gt?.tagId))
+    : []
+
+  const groupElements =
+    validGroupTags.length > 0
+      ? validGroupTags.map((gt) => {
+          const matchedTag = tags.find((tag) => tag.id === gt.tagId)
+          const groupName = gt.text?.trim() || matchedTag?.name || ''
+
+          return (
+            <List
+              key={gt.tagId}
+              groupName={groupName}
+              posts={filterPostsByTag(posts, { id: gt.tagId })}
+            />
+          )
+        })
+      : tags.map((tag) => (
+          <List
+            key={tag.id}
+            groupName={tag.name || ''}
+            posts={filterPostsByTag(posts, tag)}
+          />
+        ))
 
   const isEveryGroupEmpty = groupElements.every(
     (element) => element.props?.posts?.length === 0
